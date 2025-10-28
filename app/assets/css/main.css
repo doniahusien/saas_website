@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+@theme {
+  --color-primary: black;
+  --color-secondary:rgba(130, 138, 186, 1);
+  --color-btn:rgba(90, 106, 232, 1);
+  --color-placeholder:rgba(189, 193, 223, 1);
+  --color-accent: #00ff00; 
+  --font-switzer: "Switzer";
+}
+
+@font-face {
+  font-family: "Switzer";
+  src: url("/fonts/Switzer-Regular.otf") format("opentype");
+  font-display: swap;
+}
+
+@layer base {
+   * {
+    @apply font-switzer text-primary;
+  }
+}
+body{
+  background-color: #F1F1F1;
+}

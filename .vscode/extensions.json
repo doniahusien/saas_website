@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "vue.volar",                        // ✅ Official Vue 3 + Nuxt 4 extension
+    "vue.vscode-typescript-vue-plugin", // ✅ Adds TS intellisense for Volar
+    "dbaeumer.vscode-eslint",           // 🧹 Linting support (optional)
+    "ms-vscode.vscode-typescript-next",
+    "visualstudioexptteam.vscodeintellicode",
+    "nuxtr.nuxtr-vscode" // ⚙️ Optional: latest TS features
+  ]
+}
