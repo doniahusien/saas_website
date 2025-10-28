@@ -10,9 +10,9 @@
     </select>
 
     <input
-      type="tel"
+      type="string"
       v-model="phoneNumber"
-      :placeholder="placeholder"
+      :placeholder="t('auth.phone')"
       class="flex-2 border border-placeholder rounded-lg p-2 focus:outline-none focus:ring focus:ring-placeholder text-sm"
     />
 
@@ -21,8 +21,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from "vue";
-
+const { t } = useI18n();
 const props = defineProps({
   modelValue: String,
   placeholder: {
