@@ -13,7 +13,6 @@
           v-model="form.phone"
           :phone_code="{ id: 1, name: 'مصر', phone_code: '20' }"
         />
-
         <inputsBasePassword
           id="password"
           name="password"
@@ -22,7 +21,7 @@
         />
       </div>
 
-      <div class="grid grid-cols-2">
+      <div class="flex justify-between">
         <UCheckbox
           :label="t('auth.rememberMe')"
           :ui="{ label: 'text-secondary' }"
@@ -73,7 +72,7 @@ configure({
 
 const schema = yup.object({
   phone: yup.string().required(t('ERRORS.isRequired', { name: t('LABELS.phone') })),
-  password: yup.string().required(t('ERRORS.password')),
+  password: yup.string().required(t('ERRORS.password')).max(10,"limit 10"),
 })
 
 async function handleSubmit() {
