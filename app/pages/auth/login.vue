@@ -11,7 +11,6 @@
         <inputsPhoneInput
           id="phone"
           v-model="form.phone"
-          :phone_code="{ id: 1, name: 'مصر', phone_code: '20' }"
         />
         <inputsBasePassword
           id="password"
@@ -72,7 +71,7 @@ configure({
 
 const schema = yup.object({
   phone: yup.string().required(t('ERRORS.isRequired', { name: t('LABELS.phone') })),
-  password: yup.string().required(t('ERRORS.password')).max(10,"limit 10"),
+  password: yup.string().required(t('ERRORS.password')),
 })
 
 async function handleSubmit() {
