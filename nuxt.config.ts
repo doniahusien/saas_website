@@ -46,6 +46,8 @@ export default defineNuxtConfig({
         detectBrowserLanguage: false,
       },
     ], "@pinia/nuxt"],
+    pinia: {
+    autoImports: ['defineStore', 'storeToRefs'], },
   css: ["@/assets/css/main.css"],
   vite: {
     plugins: [
