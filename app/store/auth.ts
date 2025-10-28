@@ -1,50 +1,62 @@
-/* import { defineStore } from "pinia";
+import { defineStore } from 'pinia'
 
-export const useAppAuth = defineStore("authStore", {
+export const useAppAuth = defineStore('authStore', {
   state: (): AuthStore => ({
-    token: useCookie<string | null>("jwt_token_almotamyiz").value || null,
-    userData: useCookie<User | null>("almotamayiz_user_data").value || null,
-    session_id: useCookie<string | null>("session_id").value || null,
+    token: useCookie<string | null>('jwt_token_saas').value || null,
+    userData: useCookie<User | null>('saas_user_data').value || null,
   }),
+
   getters: {
-    isLoggedIn: (state) => state.token,
-    getUserData: (state) => state.userData,
+    isLoggedIn: (state): boolean => !!state.token,
+    getUserData: (state): User | null => state.userData,
   },
+
   actions: {
-    async getProfile() {
-      if (this.token) {
-        const axios = useNuxtApp().$axios;
-        await axios.get("profile").then((res) => {
-          this.userData = res.data.data;
-          useCookie("almotamayiz_user_data").value = res.data.data;
-        });
+    async login(payload: { phone: string; password: string }) {
+      const { $api } = useNuxtApp()
+      const toast = useToast()
+      const router = useRouter()
+
+      try {
+        const { data } = await $api.post('/auth/login', payload)
+        const user = data.data
+
+        this.setAuthData(user)
+        toast.success(data.message)
+        router.push('/')
+      } catch (error: any) {
+        toast.error(error.message || 'Login failed')
       }
     },
+
     async logout() {
-      if (this.token) {
-        const axios = useNuxtApp().$axios;
-        axios
-          .post("logout", {
-            device_type: "web",
-          })
-          .then(() => {
-            this.token = null;
-            this.userData = null;
-            useCookie("jwt_token_almotamyiz").value = null;
-            useCookie("almotamayiz_user_data").value = null;
-            useCookie("user_guest_token").value = null;
-            setTimeout(() => reloadNuxtApp(), 200);
-          })
-          .catch(() => {
-            this.token = null;
-            this.userData = null;
-            useCookie("jwt_token_almotamyiz").value = null;
-            useCookie("almotamayiz_user_data").value = null;
-            useCookie("user_guest_token").value = null;
-            setTimeout(() => reloadNuxtApp(), 400);
-          });
+      const { $api } = useNuxtApp()
+      try {
+        await $api.post('/logout', {
+          device_type: 'web',
+          device_token: '12345',
+        })
+      } catch (err) {
+        console.error('Logout failed', err)
+      } finally {
+        this.clearAuthData()
       }
+    },
+
+    clearAuthData() {
+      this.token = null
+      this.userData = null
+      useCookie('jwt_token_saas').value = null
+      useCookie('saas_user_data').value = null
+      useCookie('user_guest_token').value = null
+      setTimeout(() => reloadNuxtApp(), 300)
+    },
+
+    setAuthData(user: User) {
+      this.token = user.token
+      this.userData = user
+      useCookie('jwt_token_saas').value = user.token
+      useCookie('saas_user_data').value = user
     },
   },
-});
- */
+})
