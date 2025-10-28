@@ -2,17 +2,14 @@ import axios, { type AxiosInstance } from 'axios'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const config = useRuntimeConfig()
-
   const api: AxiosInstance = axios.create({
     baseURL: config.public.baseURL,
     headers: { Accept: 'application/json' },
   })
-
   api.interceptors.request.use((req) => {
-    if (process.client) {
       const token = useCookie<string | null>('jwt_token_saas').value
       if (token) req.headers.Authorization = `Bearer ${token}`
-    }
+    console.log(req)
     return req
   })
 
