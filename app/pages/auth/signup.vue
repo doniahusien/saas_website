@@ -58,11 +58,11 @@ const schema = yup.object().shape({
   email: yup
     .string()
     .email(t("ERRORS.validEmailAddress"))
-    .required(t("ERRORS.isRequired", { name: t("LABELS.email") })),
+    .required(t("ERRORS.isRequired", { name: t("auth.email") })),
   name: yup
     .string()
     .email(t("ERRORS.validName"))
-    .required(t("ERRORS.isRequired", { name: t("LABELS.name") })),
+    .required(t("ERRORS.isRequired", { name: t("auth.name") })),
   password: yup.string().required(t("ERRORS.Name")),
 });
 

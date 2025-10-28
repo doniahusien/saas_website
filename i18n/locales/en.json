@@ -18,6 +18,21 @@
     "home": "home page"
   },
   "auth": {
+    "changePasswordTitle": "Change password",
+    "changePasswordInstruction": "Please enter your new password.",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password",
+    "confirm": "Confirm",
+     "forgotPasswordTitle": "Forgot Password",
+    "forgotPasswordInstruction": "Please enter your phone number below to recover your password.",
+    "send": "Send",
+
+    "verifyCode": "Verify code",
+    "verifyInstruction": "We sent a 4 digit verification code to the added number. Enter the code in the box below to continue.",
+    "editPhoneNumber": "Edit Phone Number",
+    "next": "Next",
+    "didNotReceive": "Didn’t receive code?",
+    "resend": "Resend",
     "welcomeBack": "Welcome back",
     "enterCredentials": "Please enter your valid e-mail address and your password",
     "phone": "Phone number",

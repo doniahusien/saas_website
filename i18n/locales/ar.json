@@ -17,7 +17,21 @@
   "NAV": {
     "home": "home page"
   },
- "auth": {
+  "auth": {
+    "changePasswordTitle": "تغيير كلمة المرور",
+    "changePasswordInstruction": "يرجى إدخال كلمة المرور الجديدة.",
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
+    "confirm": "تأكيد",
+    "forgotPasswordTitle": "استعادة كلمة المرور",
+    "forgotPasswordInstruction": "يرجى إدخال رقم الجوال أدناه لاستعادة كلمة المرور الخاصة بك.",
+    "send": "إرسال",
+    "verifyCode": "رمز التحقق",
+    "verifyInstruction": "تم إرسال رمز تحقق مكون من 4 أرقام إلى الرقم المُضاف. أدخل الرمز في الخانة أدناه للمتابعة.",
+    "editPhoneNumber": "تعديل رقم الجوال",
+    "next": "التالي",
+    "didNotReceive": "لم يصلك الرمز؟",
+    "resend": "إعادة الإرسال",
     "welcomeBack": "مرحبًا بعودتك",
     "enterCredentials": "يرجى إدخال بريدك الإلكتروني وكلمة المرور بشكل صحيح",
     "phone": "رقم الجوال",
@@ -33,13 +47,12 @@
     "register": "تسجيل",
     "haveAccount": "لديك حساب بالفعل؟"
   },
-
   "ERRORS": {
     "min": "{name} يجب ان يكون على الأقل {min} أرقام",
     "moreThanOrEqual0": "{name} يجب ان يكون اقل من او يساوي 0",
     "maxValue": "{name} يجب ان يكون اقل من او يساوي {max}",
     "invalid": "{name} غير صالح",
-    "Integer": "{name} يجب ان يكون رقم صحيح", 
+    "Integer": "{name} يجب ان يكون رقم صحيح",
     "atLeastOne": "يجب اضافة علي الاقل {name} واحد(ه)",
     "mustBeInteger": "{name} يجب أن يكون عددًا صحيحًا",
     "Phone Number System": "رقم هاتف النظام",
@@ -95,5 +108,4 @@
     "timeZone": "المنطقة الزمنية مطلوبة",
     "brandLogo": "لوجو البراند مطلوب"
   }
-
 }
