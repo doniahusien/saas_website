@@ -1,102 +1,97 @@
 <template>
   <div class="container flex flex-col flex-1 justify-center">
     <NuxtImg src="/logo.png" alt="logo" class="w-24 h-24 object-contain" />
-    <h2 class="font-bold mb-4 text-3xl md:text-5xl">{{$t('auth.welcomeBack')}}</h2>
+    <h2 class="font-bold mb-4 text-3xl md:text-5xl">{{ t("auth.welcomeBack") }}</h2>
     <p class="text-secondary text-base md:text-lg">
-      {{$t('auth.enterCredentials')}}
+      {{ t("auth.enterCredentials") }}
     </p>
+
     <VeeForm class="w-full" @submit="handleSubmit" :validation-schema="schema">
       <div class="space-y-6 py-10">
-        <inputsPhoneInput/>
-        <inputsBasePassword id="password" name="password" :placeholder="t('auth.password')" />
+        <inputsPhoneInput
+          id="phone"
+          v-model="form.phone"
+          :phone_code="{ id: 1, name: 'مصر', phone_code: '20' }"
+        />
+
+        <inputsBasePassword
+          id="password"
+          name="password"
+          v-model="form.password"
+          :placeholder="t('auth.password')"
+        />
       </div>
+
       <div class="grid grid-cols-2">
         <UCheckbox
           :label="t('auth.rememberMe')"
-          :ui="{
-            label: 'text-secondary',
-          }"
+          :ui="{ label: 'text-secondary' }"
         />
-        <NuxtLink to="/auth/forgot-pass" class="underline text-sm md:text-base"
-          >{{$t('auth.forgotPassword')}}</NuxtLink
-        >
+        <NuxtLink to="/auth/forgot-pass" class="underline text-sm md:text-base">
+          {{ t("auth.forgotPassword") }}
+        </NuxtLink>
       </div>
+
       <button
-        :disabled="loading"
+        
         type="submit"
         class="bg-btn text-white text-base md:text-lg w-full mt-8 rounded-full p-4"
       >
-        {{$t('auth.login')}}
+        {{ t("auth.login") }}
       </button>
+
       <p class="text-center pt-5">
-        {{$t('auth.dontHaveAccount')}}
-        <NuxtLink to="/auth/signup" class="text-btn">{{$t('auth.signUpNow')}}</NuxtLink>
+        {{ t("auth.dontHaveAccount") }}
+        <NuxtLink to="/auth/signup" class="text-btn">
+          {{ t("auth.signUpNow") }}
+        </NuxtLink>
       </p>
     </VeeForm>
   </div>
 </template>
 
 <script setup lang="ts">
-const { t } = useI18n();
-definePageMeta({
-  layout: "auth",
-});
+import { configure } from 'vee-validate'
+import * as yup from 'yup'
+import {useAppAuth} from '~/store/auth'
+definePageMeta({ layout: 'auth' })
+const { t } = useI18n()
+const appAuth = useAppAuth()
+const loading = ref(false)
 
-/* configure({
+const form = reactive({
+  phone: '',
+  password: ''
+})
+
+configure({
   validateOnBlur: true,
   validateOnChange: true,
   validateOnInput: false,
   validateOnModelUpdate: true,
-});
- */
-/* 
-const schema = yup.object().shape({
-  email: yup
-    .string()
-    .email(t("ERRORS.validEmailAddress"))
-    .required(t("ERRORS.isRequired", { name: t("LABELS.email") })),
+})
 
-  password: yup.string().required(t("ERRORS.password")),
-});
- */
-const loading = ref(false);
+const schema = yup.object({
+  phone: yup.string().required(t('ERRORS.isRequired', { name: t('LABELS.phone') })),
+  password: yup.string().required(t('ERRORS.password')),
+})
 
-/* type schem = {
-  email: string;
-  password: string;
-}; */
-
-/* async function handleSubmit(values: schem) {
-  loading.value = true;
-
-  await axios
-    .post("auth/login", values)
-    .then(async (res) => {
-      localStorage.setItem("jwt_token_shebl_global", res.data.data.token);
-      localStorage.setItem(
-        "shebl_global_user_data",
-        JSON.stringify(res.data.data)
-      );
-
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${res.data.data.token}`;
-      setTimeout(() => {
-        toast.success(res.data.message)
-        router.push("/")
-      }, 400);
-
-      appAuth.token = res.data.data.token;
-      appAuth.userData = res.data.data;
-      appAuth.user_type = res.data.data.user_type;
-      localStorage.setItem("shebl_global_user_type", res.data.data.user_type);
-      appStore.is_auth = `Bearer ${res.data.data.token}`;
-
-      loading.value = false;
+async function handleSubmit() {
+  try {
+    loading.value = true
+    await appAuth.login({
+      phone_code: '20', 
+      phone: form.phone,
+      password: form.password,
+      device_type: 'web',
+      device_token: '123456',
     })
-    .catch((e) => {
-      loading.value = false;
-      toast.error(e.response.data.message);
-    });
-} */
+    console.log("done");
+    
+  } catch (error) {
+    console.error('Login error:', error)
+  } finally {
+    loading.value = false
+  }
+}
 </script>
