@@ -1,40 +1,45 @@
 <template>
-  <div class="container flex flex-col flex-1 justify-center">
-    <NuxtImg src="/logo.png" alt="logo" class="w-24 h-24 object-contain" />
+  <div class="container flex flex-col flex-1 justify-center items-center py-10">
+    <NuxtImg src="/logo.png" alt="logo" class="w-24 h-24 object-contain mb-6" />
 
-    <h2 class="font-bold mb-4 text-3xl md:text-5xl">
-      {{ t("auth.verifyCode") }}
-    </h2>
-
-    <p class="text-secondary text-base md:text-lg">
+    <h2 class="font-bold mb-3 text-3xl md:text-5xl">{{ t("auth.verifyCode") }}</h2>
+    <p class="text-secondary text-base md:text-lg mb-6">
       {{ t("auth.verifyInstruction") }}
     </p>
 
-    <VeeForm class="w-full" @submit="handleSubmit" :validation-schema="schema">
+    <VeeForm :validation-schema="schema" @submit="handleSubmit" v-slot="{ errors }" class="w-full max-w-md">
+      <VeeField name="verification_code" v-model="form.verification_code" type="hidden" />
+
       <NuxtLink to="/auth/login" class="text-btn underline">
         {{ t("auth.editPhoneNumber") }}
       </NuxtLink>
 
       <div class="flex flex-col space-y-5 py-5">
         <UPinInput
-          size="xl"
+          v-model="code"
           :length="4"
+          size="xl"
           :ui="{
-            base: 'border border-placeholder bg-transparent flex justify-between w-full h-28',
+            base: 'text-black border border-placeholder bg-transparent flex justify-between w-full h-28',
             input: 'text-center text-3xl rounded-md h-full'
           }"
         />
+
+        <p v-if="errors.verification_code" class="text-red-500 text-sm">
+          {{ errors.verification_code }}
+        </p>
       </div>
 
       <button
-        :disabled="loading"
         type="submit"
-        class="bg-btn text-white text-base md:text-lg w-full mt-8 rounded-full p-4"
+        :disabled="loading"
+        class="bg-btn text-white text-base md:text-lg w-full mt-4 rounded-full p-4 disabled:opacity-50"
       >
-        {{ t("auth.next") }}
+        <span v-if="!loading">{{ t("auth.next") }}</span>
+        <span v-else>...</span>
       </button>
 
-      <p class="pt-5">
+      <p class="pt-5 text-center">
         {{ t("auth.didNotReceive") }}
         <NuxtLink to="/auth/signup" class="text-btn underline">
           {{ t("auth.resend") }}
@@ -45,10 +50,70 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  layout: "auth",
-})
+import * as yup from "yup"
+import { useAppAuth } from "~/store/auth"
+import { useToast } from "vue-toastification"
+
+definePageMeta({ layout: "auth" })
 
 const { t } = useI18n()
+const router = useRouter()
+const route = useRoute()
+const appAuth = useAppAuth()
+const toast = useToast()
 const loading = ref(false)
+
+const form = reactive({
+  phone_code: "",
+  phone: "",
+  verification_code: "",
+})
+
+const code = computed({
+  get: () => form.verification_code.split(""),
+  set: (val) => {
+    form.verification_code = Array.isArray(val) ? val.join("") : val
+  },
+})
+onMounted(() => {
+  if (appAuth.tempVerifyData) {
+    form.phone_code = appAuth.tempVerifyData.phone_code
+    form.phone = appAuth.tempVerifyData.phone
+  } else {
+    form.phone_code = (route.query.phone_code as string) || ""
+    form.phone = (route.query.phone as string) || ""
+  }
+})
+const schema = yup.object({
+  verification_code: yup
+    .string()
+    .required(t("auth.verificationRequired"))
+    .length(4, t("auth.verificationLength")),
+})
+async function handleSubmit(values: any) {
+ /*  console.log(values) */
+  loading.value = true
+  try {
+    const { $api } = useNuxtApp()
+    const { data } = await $api.post("/auth/verify_phone", {
+      phone_code: form.phone_code,
+      phone: form.phone,
+      verification_code: values.verification_code,
+      device_type: "web",
+    })
+
+    if (data.status === "success") {
+      appAuth.setAuthData(data.data)
+      toast.success(data.message || t("auth.verificationSuccess"))
+      router.push("/")
+    } else {
+      toast.error(data.message || t("auth.verificationFailed"))
+    }
+  } catch (err: any) {
+    toast.error(err.response?.data?.message || t("auth.verificationFailed"))
+  } finally {
+    loading.value = false
+  }
+}
+
 </script>

@@ -5,6 +5,7 @@ export const useAppAuth = defineStore('authStore', {
   state: () => ({
     token: useCookie<string | null>('jwt_token_saas').value || null,
     userData: useCookie<any | null>('saas_user_data').value || null,
+    tempVerifyData: null, 
   }),
 
   getters: {
@@ -33,7 +34,7 @@ export const useAppAuth = defineStore('authStore', {
         throw error
       }
     },
- async signup(payload) {
+async signup(payload) {
   const { $api } = useNuxtApp();
   const toast = useToast();
   const router = useRouter();
@@ -51,11 +52,17 @@ export const useAppAuth = defineStore('authStore', {
     }, {
       headers: { 'Content-Type': 'application/json' },
     });
+
     console.log('Signup Response:', data);
 
     if (data && data.data === null) {
+      this.tempVerifyData = {
+        phone_code: payload.phone_code,
+        phone: payload.phone,
+      };
+
       toast.success('Successfully registered. Please activate your account.');
-      router.push('/auth/verify');  
+      router.push('/auth/verify');
     } else {
       toast.error('Registration failed. Please try again.');
     }
@@ -66,6 +73,7 @@ export const useAppAuth = defineStore('authStore', {
     throw error;
   }
 },
+
 
 
     setAuthData(user) {

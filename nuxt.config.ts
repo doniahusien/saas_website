@@ -38,8 +38,6 @@ export default defineNuxtConfig({
         },
       },
     ],
-
-    // ✅ i18n setup
     [
       "@nuxtjs/i18n",
       {
@@ -54,11 +52,8 @@ export default defineNuxtConfig({
       },
     ],
 
-    // ✅ Pinia module
     "@pinia/nuxt",
   ],
-
-  // ✅ Pinia auto-import helpers
   pinia: {
     autoImports: ["defineStore", "storeToRefs"],
   },
