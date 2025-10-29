@@ -34,6 +34,7 @@
 <script setup lang="ts">
 import * as yup from "yup";
 import { useAppAuth } from "~/store/auth";
+import { useToast } from "vue-toastification";
 
 definePageMeta({ layout: "auth" });
 
@@ -41,6 +42,8 @@ const { t } = useI18n();
 const appAuth = useAppAuth();
 const loading = ref(false);
 const toast = useToast();
+const localePath = useLocalePath();
+const router = useRouter();
 
 const form = reactive({
   email: "",
@@ -66,7 +69,7 @@ const schema = yup.object({
 async function handleSubmit(values: any) {
   try {
     loading.value = true;
-    await appAuth.signup({
+    const data = await appAuth.signup({
       name: values.name,
       email: values.email,
       phone_code: values.phone_code,
@@ -75,12 +78,15 @@ async function handleSubmit(values: any) {
       device_type: "web",
       device_token: "123456",
     });
-  } catch (error) {
-    console.error("error is",error);
-   
-    
+
+    toast.success(t("auth.registerSuccess"));
+    router.push(localePath("/auth/verify"));
+  } catch (error: any) {
+  /*   console.error("Signup Error:", error); */
+    toast.error(t(error));
   } finally {
     loading.value = false;
   }
 }
+
 </script>

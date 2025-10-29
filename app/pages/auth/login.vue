@@ -62,6 +62,8 @@ const { t } = useI18n();
 const appAuth = useAppAuth();
 const loading = ref(false);
 const toast = useToast();
+const localePath = useLocalePath();
+const router = useRouter();
 
 const form = reactive({
   phone_code: "",
@@ -74,24 +76,24 @@ const schema = yup.object({
   phone: yup
     .string()
     .required(t("auth.phoneRequired"))
-    .matches(/^[0-9]+$/, t("auth.invalidPhone"))
-    .min(6, t("auth.phoneTooShort"))
-    .max(15, t("auth.phoneTooLong")),
+    .matches(/^[0-9]+$/, t("auth.invalidPhone")),
   password: yup.string().required(t("auth.passwordRequired")),
 });
 
 async function onSubmit(values: any) {
   try {
     loading.value = true;
-    await appAuth.login({
+    const data = await appAuth.login({
       phone_code: values.phone_code,
       phone: values.phone,
       password: values.password,
       device_type: "web",
       device_token: "123456",
     });
-  } catch (error) {
-    /*     toast.error(t("auth.invalidCredentials")); */
+    toast.success(t(`auth.${data.message}`));
+    router.push(localePath("/"));
+  } catch (error: any) {
+    toast.error(t("auth.invalidCredentials"));
   } finally {
     loading.value = false;
   }

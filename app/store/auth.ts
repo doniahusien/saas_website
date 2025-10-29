@@ -16,29 +16,19 @@ export const useAppAuth = defineStore('authStore', {
   actions: {
     async login(payload) {
       const { $api } = useNuxtApp()
-      const toast = useToast()
-      const router = useRouter()
-
       try {
-        const { data } = await $api.post('/auth/login', payload, {
-          headers: { 'Content-Type': 'application/json' },
-        })
-
+        const { data } = await $api.post('/auth/login', payload)
         const user = data.data
         this.setAuthData(user)
-
-        toast.success(data.message || 'Login successful')
-        router.push('/')
+        return data
       } catch (error: any) {
-        toast.error(error.response?.data?.message || 'Login failed')
-        throw error
+        throw error.response?.data || { message: 'Login failed' }
       }
     },
+
     async signup(payload) {
       const { $api } = useNuxtApp();
-      const toast = useToast();
-      const router = useRouter();
-
+    
       try {
         const { data } = await $api.post('/auth/register', {
           full_name: payload.name,
@@ -49,11 +39,7 @@ export const useAppAuth = defineStore('authStore', {
           password_confirmation: payload.password,
           device_type: payload.device_type || 'web',
           device_token: payload.device_token || '123456',
-        }, {
-          headers: { 'Content-Type': 'application/json' },
         });
-
-        console.log('Signup Response:', data);
 
         if (data && data.data === null) {
           this.tempVerifyData = {
@@ -61,22 +47,19 @@ export const useAppAuth = defineStore('authStore', {
             phone: payload.phone,
           };
 
-          toast.success('Successfully registered. Please activate your account.');
-          router.push('/auth/verify');
-        } else {
-          toast.error('Registration failed. Please try again.');
+          return data
         }
-
       } catch (error: any) {
-        console.error('Signup Error:', error);
-        toast.error(error.response?.data?.message || 'Signup failed');
-        throw error;
+        throw error?.message
       }
     },
+
     async verifyPhone(payload) {
       const { $api } = useNuxtApp()
       const toast = useToast()
       const router = useRouter()
+      const localePath = useLocalePath()
+
 
       try {
         const { data } = await $api.post("/auth/verify_phone", {
@@ -89,7 +72,7 @@ export const useAppAuth = defineStore('authStore', {
         if (data.status === "success") {
           this.setAuthData(data.data)
           toast.success(data.message || "Account verified successfully")
-          router.push("/")
+          router.push(localePath("/"))
         } else {
           toast.error(data.message || "Verification failed")
         }
