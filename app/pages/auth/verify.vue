@@ -57,7 +57,6 @@
         </button>
       </p>
     </VeeForm>
-
     <EditPhoneModal v-model="showEditPhone" />
   </div>
 </template>
@@ -72,6 +71,7 @@ definePageMeta({ layout: "auth" })
 const { t } = useI18n()
 const router = useRouter()
 const route = useRoute()
+const { $api } = useNuxtApp()
 const appAuth = useAppAuth()
 const toast = useToast()
 
@@ -85,42 +85,6 @@ const form = reactive({
   phone: "",
   verification_code: "",
 })
-
-async function handleResend() {
-  const { $api } = useNuxtApp()
-  const phoneData = appAuth.tempVerifyData
-
-  if (!phoneData?.phone || !phoneData?.phone_code) {
-    toast.error("Missing phone number. Please edit your phone first.")
-    return
-  }
-
-  try {
-    resendLoading.value = true
-    const payload = {
-      phone_code: phoneData.phone_code,
-      phone: phoneData.phone,
-    }
-
-    const { data } = await $api.post("/auth/resend_verification_code", payload)
-    toast.success(data?.message || "Verification code resent successfully!")
-
-    startCooldown(30)
-  } catch (err: any) {
-    console.error("Resend error:", err)
-    toast.error(err?.response?.data?.message || "Failed to resend code.")
-  } finally {
-    resendLoading.value = false
-  }
-}
-
-function startCooldown(seconds: number) {
-  cooldown.value = seconds
-  const interval = setInterval(() => {
-    cooldown.value--
-    if (cooldown.value <= 0) clearInterval(interval)
-  }, 1000)
-}
 
 const code = computed({
   get: () => form.verification_code.split(""),
@@ -166,16 +130,81 @@ async function handleSubmit(values: any) {
       return
     }
 
-    await appAuth.verifyPhone({
-      phone_code: form.phone_code,
-      phone: form.phone,
-      verification_code: values.verification_code,
-      device_type: "web",
-    })
+    const fromForgot = route.query.from === "forgot"
+
+    if (fromForgot) {
+      const payload = {
+        phone_code: form.phone_code,
+        phone: form.phone,
+        reset_code: values.verification_code,
+      }
+
+      const { data } = await $api.post("/auth/verify_forgot_password_code", payload)
+
+      const isSuccess =
+        data?.status === true || data?.status === "success" || data?.success === true
+
+      if (isSuccess) {
+        toast.success(data?.message || "Code verified successfully!")
+
+        router.push({
+          path: "/auth/change-pass",
+          query: {
+            phone_code: form.phone_code,
+            phone: form.phone,
+            reset_code:values.verification_code,
+          },
+        })
+      } else {
+        toast.error(data?.message || "Invalid code.")
+      }
+    } else {
+      await appAuth.verifyPhone({
+        phone_code: form.phone_code,
+        phone: form.phone,
+        verification_code: values.verification_code,
+        device_type: "web",
+      })
+    }
   } catch (err: any) {
     console.error("Verify Error:", err)
+    toast.error(err?.response?.data?.message || "Verification failed.")
   } finally {
     loading.value = false
   }
+}
+
+async function handleResend() {
+  const phoneData = appAuth.tempVerifyData
+
+  if (!phoneData?.phone || !phoneData?.phone_code) {
+    toast.error("Missing phone number. Please edit your phone first.")
+    return
+  }
+
+  try {
+    resendLoading.value = true
+    const payload = {
+      phone_code: phoneData.phone_code,
+      phone: phoneData.phone,
+    }
+
+    const { data } = await $api.post("/auth/resend_verification_code", payload)
+    toast.success(data?.message || "Verification code resent successfully!")
+    startCooldown(30)
+  } catch (err: any) {
+    console.error("Resend error:", err)
+    toast.error(err?.response?.data?.message || "Failed to resend code.")
+  } finally {
+    resendLoading.value = false
+  }
+}
+
+function startCooldown(seconds: number) {
+  cooldown.value = seconds
+  const interval = setInterval(() => {
+    cooldown.value--
+    if (cooldown.value <= 0) clearInterval(interval)
+  }, 1000)
 }
 </script>
