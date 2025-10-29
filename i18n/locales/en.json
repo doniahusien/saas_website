@@ -54,6 +54,7 @@
     "name": "Name",
     "email": "Email",
     "register": "Register",
-    "haveAccount": "Have an account?"
+    "haveAccount": "Have an account?",
+    "verificationRequired":"verification is Required"
   }
 }
