@@ -33,6 +33,40 @@ export const useAppAuth = defineStore('authStore', {
         throw error
       }
     },
+ async signup(payload) {
+  const { $api } = useNuxtApp();
+  const toast = useToast();
+  const router = useRouter();
+
+  try {
+    const { data } = await $api.post('/auth/register', {
+      full_name: payload.name,
+      email: payload.email,
+      phone_code: payload.phone_code,
+      phone: payload.phone,
+      password: payload.password,
+      password_confirmation: payload.password,
+      device_type: payload.device_type || 'web',
+      device_token: payload.device_token || '123456',
+    }, {
+      headers: { 'Content-Type': 'application/json' },
+    });
+    console.log('Signup Response:', data);
+
+    if (data && data.data === null) {
+      toast.success('Successfully registered. Please activate your account.');
+      router.push('/auth/verify');  
+    } else {
+      toast.error('Registration failed. Please try again.');
+    }
+
+  } catch (error: any) {
+    console.error('Signup Error:', error);
+    toast.error(error.response?.data?.message || 'Signup failed');
+    throw error;
+  }
+},
+
 
     setAuthData(user) {
       this.token = user.token

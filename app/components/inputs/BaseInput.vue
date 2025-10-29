@@ -1,13 +1,10 @@
 <template>
-  <VeeField :type="type" :name="name" v-slot="{ field, meta }">
+  <VeeField :name="name" v-slot="{ field, meta }">
     <div
       class="input_wrapper"
       :class="[
-        {
-          error: !meta.valid && meta.touched,
-          prepend: prepend,
-        },
-        classes,
+        { error: !meta.valid && meta.touched, prepend: prepend },
+        classes
       ]"
     >
       <label
@@ -16,15 +13,13 @@
         :class="labelClass"
         class="label !flex gap-2 capitalize items-center"
       >
-        <svg-icon v-if="labelIcon" :name="labelIcon" classes="text-xl" />
-
         {{ label }}
-        <span v-if="optional" class="text-sub"
-          >({{ $t("LABELS.optional") }})</span
-        >
+        <span v-if="optional" class="text-sub">
+          ({{ $t("LABELS.optional") }})
+        </span>
       </label>
-      <div class="relative" :class="icon ? 'with_icon' : ''">
 
+      <div class="relative">
         <textarea
           v-if="type == 'textarea'"
           :id="id"
@@ -58,6 +53,7 @@
           <slot name="prepend"></slot>
         </div>
       </div>
+
       <VeeErrorMessage
         v-if="!meta.valid && meta.touched"
         :name="name"
@@ -70,7 +66,7 @@
 
 <script setup>
 import { useField } from "vee-validate";
-import { watch, ref } from "vue";
+import { ref, watch } from "vue";
 
 const lockInput = ref(true);
 
@@ -78,66 +74,32 @@ const props = defineProps({
   id: {
     required: true,
   },
-  disabled: {
-    required: false,
-  },
+  disabled: Boolean,
   name: {
     required: true,
   },
-  classes: {
-    required: false,
-  },
-  rows: {
-    required: false,
-  },
-
-  label: {
-    required: false,
-  },
-  step: {
-    required: false,
-  },
-  prepend: {
-    required: false,
-  },
-  minlength: {
-    required: false,
-  },
-  maxlength: {
-    required: false,
-  },
-  size: {
-    required: false,
-  },
-  pattern: {
-    required: false,
-  },
-
-  icon: {
-    required: false,
-  },
-  placeholder: {
-    required: true,
-  },
-  labelIcon: {
-    required: false,
-  },
-  value: {
-    required: false,
-  },
-  labelClass: {
-    required: false,
-  },
+  classes: String,
+  rows: Number,
+  label: String,
+  step: Number,
+  prepend: Boolean,
+  minlength: Number,
+  maxlength: Number,
+  size: Number,
+  pattern: String,
+  placeholder: String,
+  value: [String, Number],
+  labelClass: String,
   type: {
-    required: false,
+    type: String,
     default: "text",
   },
   optional: {
-    required: false,
+    type: Boolean,
     default: false,
   },
   autocomplete: {
-    required: false,
+    type: String,
     default: "off",
   },
 });
@@ -155,4 +117,8 @@ watch(
 );
 </script>
 
-<style></style>
+<style scoped>
+.input_wrapper.error textarea {
+  border-color: #ef4444;
+}
+</style>

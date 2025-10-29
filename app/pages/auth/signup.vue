@@ -6,103 +6,81 @@
     <VeeForm class="w-full" @submit="handleSubmit" :validation-schema="schema">
       <div class="space-y-4 py-5">
         <inputsBaseInput id="name" name="name" :placeholder="t('auth.name')" />
-        <inputsPhoneInput />
+        <inputsPhoneInput
+          codeName="phone_code"
+          phoneName="phone"
+          :placeholder="t('auth.phone')"
+          v-model:code="form.phone_code"
+          v-model:phone="form.phone"
+        />
         <inputsBaseInput id="email" name="email" :placeholder="t('auth.email')" />
         <inputsBasePassword
-          id="password"
           name="password"
+          v-model="form.password"
           :placeholder="t('auth.password')"
-        />
-      </div>
-      <div class="grid grid-cols-2">
-        <UCheckbox
-          :label="t('auth.rememberMe')"
-          :ui="{
-            label: 'text-secondary',
-          }"
         />
       </div>
       <button
         :disabled="loading"
         type="submit"
-        class="bg-btn text-white text-base md:text-lg w-full mt-8 rounded-full p-4"
+        class="bg-btn text-white w-full mt-8 rounded-full p-4"
       >
-        {{ $t("auth.register") }}
+        {{ t("auth.register") }}
       </button>
-      <p class="text-center pt-3">
-        {{ $t("auth.haveAccount") }}
-        <NuxtLink to="/auth/login" class="text-btn">
-          {{ $t("auth.login") }}
-        </NuxtLink>
-      </p>
     </VeeForm>
   </div>
 </template>
 
 <script setup lang="ts">
-import { configure } from "vee-validate";
 import * as yup from "yup";
+import { useAppAuth } from "~/store/auth";
+
+definePageMeta({ layout: "auth" });
+
 const { t } = useI18n();
-definePageMeta({
-  layout: "auth",
-});
-
-configure({
-  validateOnBlur: true,
-  validateOnChange: true,
-  validateOnInput: false,
-  validateOnModelUpdate: true,
-});
-
-const schema = yup.object().shape({
-  email: yup
-    .string()
-    .email(t("ERRORS.validEmailAddress"))
-    .required(t("ERRORS.isRequired", { name: t("auth.email") })),
-  name: yup
-    .string()
-    .email(t("ERRORS.validName"))
-    .required(t("ERRORS.isRequired", { name: t("auth.name") })),
-  password: yup.string().required(t("ERRORS.Name")),
-});
-
+const appAuth = useAppAuth();
 const loading = ref(false);
+const toast = useToast();
 
-type schem = {
-  email: string;
-  name: string;
-  password: string;
-};
+const form = reactive({
+  email: "",
+  name: "",
+  phone_code: "",
+  phone: "",
+  password: "",
+});
 
-async function handleSubmit(values: schem) {
-  loading.value = true;
+const schema = yup.object({
+  name: yup.string().required(t("auth.nameRequired")),
+  email: yup.string().email(t("auth.invalidEmail")).required(t("auth.emailRequired")),
+  phone_code: yup.string().required(t("auth.phoneCodeRequired")),
+  phone: yup
+    .string()
+    .required(t("auth.phoneRequired"))
+    .matches(/^[0-9]+$/, t("auth.invalidPhone"))
+    .min(6, t("auth.phoneTooShort"))
+    .max(15, t("auth.phoneTooLong")),
+  password: yup.string().required(t("auth.passwordRequired")),
+});
 
-  await axios
-    .post("auth/login", values)
-    .then(async (res) => {
-      localStorage.setItem("jwt_token_saas_global", res.data.data.token);
-      /*    localStorage.setItem(
-        "shebl_global_user_data",
-        JSON.stringify(res.data.data)
-      ); */
-
-      axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.data.token}`;
-      setTimeout(() => {
-        toast.success(res.data.message);
-        router.push("/");
-      }, 400);
-
-      appAuth.token = res.data.data.token;
-      appAuth.userData = res.data.data;
-      appAuth.user_type = res.data.data.user_type;
-      localStorage.setItem("saas_global_user_type", res.data.data.user_type);
-      appStore.is_auth = `Bearer ${res.data.data.token}`;
-
-      loading.value = false;
-    })
-    .catch((e) => {
-      loading.value = false;
-      toast.error(e.response.data.message);
+async function handleSubmit(values: any) {
+  try {
+    loading.value = true;
+    await appAuth.signup({
+      name: values.name,
+      email: values.email,
+      phone_code: values.phone_code,
+      phone: values.phone,
+      password: values.password,
+      device_type: "web",
+      device_token: "123456",
     });
+  } catch (error) {
+    console.error("error is",error);
+   
+    
+  } finally {
+    loading.value = false;
+  }
 }
 </script>
