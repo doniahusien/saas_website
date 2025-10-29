@@ -20,6 +20,8 @@
           :placeholder="t('auth.password')"
         />
       </div>
+      <UCheckbox :label="t('auth.rememberMe')" :ui="{ label: 'text-secondary' }" />
+
       <button
         :disabled="loading"
         type="submit"
@@ -28,6 +30,12 @@
         {{ t("auth.register") }}
       </button>
     </VeeForm>
+         <p class="text-center pt-5">
+          {{ t("auth.haveAccount") }}
+          <NuxtLink to="/auth/login" class="text-btn font-semibold">
+            {{ t("auth.login") }}
+          </NuxtLink>
+        </p>
   </div>
 </template>
 
@@ -82,11 +90,10 @@ async function handleSubmit(values: any) {
     toast.success(t("auth.registerSuccess"));
     router.push(localePath("/auth/verify"));
   } catch (error: any) {
-  /*   console.error("Signup Error:", error); */
+    /*   console.error("Signup Error:", error); */
     toast.error(t(error));
   } finally {
     loading.value = false;
   }
 }
-
 </script>
