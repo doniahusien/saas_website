@@ -18,6 +18,8 @@
     "home": "home page"
   },
   "auth": {
+    "nameRequired":"Name is required",
+    "emailRequired":"Email is required",
     "phoneTooShort": "Phone number is too short",
 "phoneTooLong": "Phone number is too long",
     "phoneCodeRequired": "Country code is required",

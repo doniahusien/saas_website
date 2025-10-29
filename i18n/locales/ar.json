@@ -18,6 +18,8 @@
     "home": "home page"
   },
   "auth": {
+    "nameRequired":"الاسم مطلوب",
+    "emailRequired":"الايميل مطلوب",
      "phoneCodeRequired": "رمز الدولة مطلوب",
     "phoneRequired": "رقم الهاتف مطلوب",
     "invalidPhone": "رقم الهاتف غير صالح",
