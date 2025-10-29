@@ -30,7 +30,7 @@
           size="xl"
           :ui="{
             base:
-              'text-btn border border-placeholder bg-transparent m-5 h-28 w-full ',
+              'text-btn border border-placeholder bg-transparent m-1 h-16 md:m-5 md:h-28 w-full ',
             input:
               'text-center text-6xl rounded-lg h-full w-full bg-transparent focus:outline-none',
           }"
