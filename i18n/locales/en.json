@@ -18,6 +18,13 @@
     "home": "home page"
   },
   "auth": {
+    "phoneCodeRequired": "Country code is required",
+    "phoneRequired": "Phone number is required",
+    "invalidPhone": "Invalid phone number",
+    "passwordRequired": "Password is required",
+    "selectCountryCode": "Please select a country code",
+    "loginSuccess": "Login successful",
+    "invalidCredentials": "Invalid phone number or password",
     "changePasswordTitle": "Change password",
     "changePasswordInstruction": "Please enter your new password.",
     "newPassword": "New Password",

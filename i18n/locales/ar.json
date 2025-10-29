@@ -18,6 +18,13 @@
     "home": "home page"
   },
   "auth": {
+     "phoneCodeRequired": "رمز الدولة مطلوب",
+    "phoneRequired": "رقم الهاتف مطلوب",
+    "invalidPhone": "رقم الهاتف غير صالح",
+    "passwordRequired": "كلمة المرور مطلوبة",
+    "selectCountryCode": "يرجى اختيار رمز الدولة",
+    "loginSuccess": "تم تسجيل الدخول بنجاح",
+    "invalidCredentials": "رقم الهاتف أو كلمة المرور غير صحيحة",
     "changePasswordTitle": "تغيير كلمة المرور",
     "changePasswordInstruction": "يرجى إدخال كلمة المرور الجديدة.",
     "newPassword": "كلمة المرور الجديدة",

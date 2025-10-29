@@ -1,58 +1,67 @@
 <template>
-  <div class="flex items-center gap-2 phone-input text-placeholder">
-    <select
-      v-model="selectedCode"
-      class="border border-placeholder rounded-lg p-2 bg-transparent focus:outline-none focus:ring focus:ring-placeholder text-sm"
-    >
-      <option v-for="country in countries" :key="country.code" :value="country.dial_code">
-        {{ country.dial_code }}
-      </option>
-    </select>
+  <div class="flex items-center space-x-2">
+    <VeeField :name="codeName" v-slot="{ field, meta }">
+      <select
+        v-bind="field"
+        v-model="localCode"
+        class="border border-placeholder rounded-lg p-2 bg-transparent focus:outline-none focus:ring focus:ring-placeholder text-sm"
+      >
+        <option disabled value="">{{ $t('auth.selectCountryCode') }}</option>
+        <option
+          v-for="country in countries"
+          :key="country.id"
+          :value="country.phone_code"
+        >
+          {{ country.name }} (+{{ country.phone_code }})
+        </option>
+      </select>
+      <span v-if="meta.touched && meta.error" class="text-red-500 text-xs">
+        {{ meta.error }}
+      </span>
+    </VeeField>
 
-    <input
-      type="tel"
-      v-model="phoneNumber"
-      :placeholder="placeholder"
-      class="flex-2 border border-placeholder rounded-lg p-2 focus:outline-none focus:ring focus:ring-placeholder text-sm"
-    />
-
-    <input type="hidden" :value="fullPhone" />
+    <VeeField :name="phoneName" v-slot="{ field, meta }">
+      <input
+        v-bind="field"
+        v-model="localPhone"
+        type="tel"
+        :placeholder="placeholder"
+        class="flex-2 border border-placeholder rounded-lg p-2 focus:outline-none focus:ring focus:ring-placeholder text-sm"
+      />
+      <span v-if="meta.touched && meta.error" class="text-red-500 text-xs">
+        {{ meta.error }}
+      </span>
+    </VeeField>
   </div>
 </template>
 
 <script setup>
-import { computed, ref, watch } from "vue";
-
 const props = defineProps({
-  modelValue: String,
-  placeholder: {
-    type: String,
-    default: "Phone",
-  },
+  codeName: { type: String, required: true },
+  phoneName: { type: String, required: true },
+  modelValueCode: String,
+  modelValuePhone: String,
+  placeholder: { type: String, default: 'Phone' },
 });
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:code', 'update:phone']);
+const { $api } = useNuxtApp();
 
-const phoneNumber = ref("");
-const selectedCode = ref("+1");
+const localCode = ref(props.modelValueCode || '');
+const localPhone = ref(props.modelValuePhone || '');
+const countries = ref([]);
 
-const countries = [
-  { name: "United States", code: "US", dial_code: "+1", flag: "🇺🇸" },
-  { name: "United Kingdom", code: "GB", dial_code: "+44", flag: "🇬🇧" },
-  { name: "Saudi Arabia", code: "SA", dial_code: "+966", flag: "🇸🇦" },
-  { name: "Egypt", code: "EG", dial_code: "+20", flag: "🇪🇬" },
-  { name: "United Arab Emirates", code: "AE", dial_code: "+971", flag: "🇦🇪" },
-];
-
-const fullPhone = computed(() => `${selectedCode.value}${phoneNumber.value}`);
-
-watch([selectedCode, phoneNumber], () => {
-  emit("update:modelValue", fullPhone.value);
+onMounted(async () => {
+  try {
+    const res = await $api.get('/brand_country');
+    countries.value = res.data?.data || [];
+    if (!localCode.value && countries.value.length > 0)
+      localCode.value = countries.value[0].phone_code;
+  } catch (error) {
+    console.error('Error fetching countries:', error);
+  }
 });
+
+watch(localCode, (val) => emit('update:code', val));
+watch(localPhone, (val) => emit('update:phone', val));
 </script>
-
-<style scoped>
-.phone-input select {
-  min-width: 160px;
-}
-</style>
