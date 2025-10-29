@@ -1,5 +1,5 @@
 <template>
-  <div class="container flex flex-col flex-1 justify-center items-center py-10">
+  <div class="container flex flex-col flex-1 justify-center items-start ">
     <NuxtImg src="/logo.png" alt="logo" class="w-24 h-24 object-contain mb-6" />
 
     <h2 class="font-bold mb-3 text-3xl md:text-5xl">
@@ -13,13 +13,16 @@
       :validation-schema="schema"
       @submit="handleSubmit"
       v-slot="{ errors }"
-      class="w-full max-w-md"
+      class="w-full"
     >
       <VeeField name="verification_code" v-model="form.verification_code" type="hidden" />
-
-      <NuxtLink to="/auth/login" class="text-btn underline">
+      <button
+        type="button"
+        class="text-btn underline"
+        @click="showEditPhone = true"
+      >
         {{ t("auth.editPhoneNumber") }}
-      </NuxtLink>
+      </button>
 
       <div class="flex flex-col space-y-5 py-5">
         <UPinInput
@@ -36,7 +39,6 @@
           {{ errors.verification_code }}
         </p>
       </div>
-
       <button
         type="submit"
         :disabled="loading"
@@ -53,6 +55,7 @@
         </NuxtLink>
       </p>
     </VeeForm>
+    <EditPhoneModal v-model="showEditPhone" />
   </div>
 </template>
 
@@ -69,6 +72,7 @@ const route = useRoute()
 const appAuth = useAppAuth()
 const toast = useToast()
 const loading = ref(false)
+const showEditPhone = ref(false)
 
 const form = reactive({
   phone_code: "",
@@ -76,7 +80,6 @@ const form = reactive({
   verification_code: "",
 })
 
-// UPinInput gives an array, convert to string for VeeValidate
 const code = computed({
   get: () => form.verification_code.split(""),
   set: (val) => {
@@ -93,7 +96,16 @@ onMounted(() => {
     form.phone = (route.query.phone as string) || ""
   }
 })
-
+watch(
+  () => appAuth.tempVerifyData,
+  (newVal) => {
+    if (newVal) {
+      form.phone_code = newVal.phone_code
+      form.phone = newVal.phone
+    }
+  },
+  { immediate: true, deep: true }
+)
 const schema = yup.object({
   verification_code: yup
     .string()
@@ -109,6 +121,7 @@ async function handleSubmit(values: any) {
       toast.error("Missing phone data. Please go back and try again.")
       return
     }
+
     await appAuth.verifyPhone({
       phone_code: form.phone_code,
       phone: form.phone,
