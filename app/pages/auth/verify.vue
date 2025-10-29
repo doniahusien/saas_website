@@ -1,5 +1,5 @@
 <template>
-  <div class="container flex flex-col flex-1 justify-center items-start ">
+  <div class="container flex flex-col flex-1 justify-center items-start">
     <NuxtImg src="/logo.png" alt="logo" class="w-24 h-24 object-contain mb-6" />
 
     <h2 class="font-bold mb-3 text-3xl md:text-5xl">
@@ -8,7 +8,6 @@
     <p class="text-secondary text-base md:text-lg mb-6">
       {{ t("auth.verifyInstruction") }}
     </p>
-
     <VeeForm
       :validation-schema="schema"
       @submit="handleSubmit"
@@ -16,11 +15,7 @@
       class="w-full"
     >
       <VeeField name="verification_code" v-model="form.verification_code" type="hidden" />
-      <button
-        type="button"
-        class="text-btn underline"
-        @click="showEditPhone = true"
-      >
+      <button type="button" class="text-btn underline" @click="showEditPhone = true">
         {{ t("auth.editPhoneNumber") }}
       </button>
 
@@ -30,11 +25,11 @@
           :length="4"
           size="xl"
           :ui="{
-            base: 'text-black border border-placeholder bg-transparent flex justify-between w-full h-28',
-            input: 'text-center text-3xl rounded-md h-full'
+            base:
+              'text-black border border-placeholder bg-transparent flex justify-between w-full h-28',
+            input: 'text-center text-3xl rounded-md h-full',
           }"
         />
-
         <p v-if="errors.verification_code" class="text-red-500 text-sm">
           {{ errors.verification_code }}
         </p>
@@ -50,11 +45,19 @@
 
       <p class="pt-5 text-center">
         {{ t("auth.didNotReceive") }}
-        <NuxtLink to="/auth/signup" class="text-btn underline">
-          {{ t("auth.resend") }}
-        </NuxtLink>
+        <button
+          type="button"
+          class="text-btn underline"
+          @click="handleResend"
+          :disabled="resendLoading || cooldown > 0"
+        >
+          <span v-if="resendLoading">...</span>
+          <span v-else-if="cooldown > 0">Resend in {{ cooldown }}s</span>
+          <span v-else>{{ t("auth.resend") }}</span>
+        </button>
       </p>
     </VeeForm>
+
     <EditPhoneModal v-model="showEditPhone" />
   </div>
 </template>
@@ -71,7 +74,10 @@ const router = useRouter()
 const route = useRoute()
 const appAuth = useAppAuth()
 const toast = useToast()
+
 const loading = ref(false)
+const resendLoading = ref(false)
+const cooldown = ref(0)
 const showEditPhone = ref(false)
 
 const form = reactive({
@@ -79,6 +85,42 @@ const form = reactive({
   phone: "",
   verification_code: "",
 })
+
+async function handleResend() {
+  const { $api } = useNuxtApp()
+  const phoneData = appAuth.tempVerifyData
+
+  if (!phoneData?.phone || !phoneData?.phone_code) {
+    toast.error("Missing phone number. Please edit your phone first.")
+    return
+  }
+
+  try {
+    resendLoading.value = true
+    const payload = {
+      phone_code: phoneData.phone_code,
+      phone: phoneData.phone,
+    }
+
+    const { data } = await $api.post("/auth/resend_verification_code", payload)
+    toast.success(data?.message || "Verification code resent successfully!")
+
+    startCooldown(30)
+  } catch (err: any) {
+    console.error("Resend error:", err)
+    toast.error(err?.response?.data?.message || "Failed to resend code.")
+  } finally {
+    resendLoading.value = false
+  }
+}
+
+function startCooldown(seconds: number) {
+  cooldown.value = seconds
+  const interval = setInterval(() => {
+    cooldown.value--
+    if (cooldown.value <= 0) clearInterval(interval)
+  }, 1000)
+}
 
 const code = computed({
   get: () => form.verification_code.split(""),
@@ -96,6 +138,7 @@ onMounted(() => {
     form.phone = (route.query.phone as string) || ""
   }
 })
+
 watch(
   () => appAuth.tempVerifyData,
   (newVal) => {
@@ -106,6 +149,7 @@ watch(
   },
   { immediate: true, deep: true }
 )
+
 const schema = yup.object({
   verification_code: yup
     .string()
