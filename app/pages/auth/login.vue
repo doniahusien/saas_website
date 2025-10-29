@@ -13,6 +13,7 @@
           <inputsPhoneInput
             codeName="phone_code"
             phoneName="phone"
+            :placeholder="t('auth.phone')"
             v-model:code="form.phone_code"
             v-model:phone="form.phone"
           />
@@ -73,7 +74,9 @@ const schema = yup.object({
   phone: yup
     .string()
     .required(t("auth.phoneRequired"))
-    .matches(/^[0-9]+$/, t("auth.invalidPhone")),
+    .matches(/^[0-9]+$/, t("auth.invalidPhone"))
+    .min(6, t("auth.phoneTooShort"))
+    .max(15, t("auth.phoneTooLong")),
   password: yup.string().required(t("auth.passwordRequired")),
 });
 
@@ -87,9 +90,8 @@ async function onSubmit(values: any) {
       device_type: "web",
       device_token: "123456",
     });
-   
   } catch (error) {
-/*     toast.error(t("auth.invalidCredentials")); */
+    /*     toast.error(t("auth.invalidCredentials")); */
   } finally {
     loading.value = false;
   }

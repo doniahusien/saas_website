@@ -79,10 +79,5 @@ async function copyPassword(password) {
 </script>
 
 <style scoped>
-.input_wrapper.error input {
-  border-color: #ef4444;
-}
-.label_active {
-  color: var(--text-color, #333);
-}
+
 </style>
