@@ -3,8 +3,12 @@
     "ar": "EN",
     "en": "AR"
   },
-  "NAV": {
-    "home": "home page"
+ "nav": {
+    "home": "الرئيسية",
+    "about": "من نحن",
+    "reservation": "الحجز",
+    "menu": "القائمة",
+    "contact": "تواصل معنا"
   },
   "auth": {
     "The email field has already been taken.": "البريد الإلكتروني مستخدم بالفعل.",

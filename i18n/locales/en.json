@@ -3,8 +3,12 @@
     "ar": "EN",
     "en": "AR"
   },
-  "NAV": {
-    "home": "home page"
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "reservation": "Reservation",
+    "menu": "Menu",
+    "contact": "Contact"
   },
   "auth": {
     "The email field has already been taken.": "The email field has already been taken.",
