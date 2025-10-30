@@ -24,30 +24,17 @@ const isOnline = ref(true);
 
 useSeoMeta({
   ogImage: "/logo.png",
-  ogSiteName: locale.value === "ar" ? "" : "",
-  description:
-    locale.value === "ar"
-      ? ""
-:"",
-  keywords:
-    locale.value === "ar"
-      ? ""
-      : "",
-  twitterTitle: locale.value === "ar" ? "" : "",
-  twitterDescription:
-    locale.value === "ar"
-      ? ""
-      : "",
+  ogSiteName: "SaaS",
+  description: "",
+  keywords:"",
+  twitterTitle: "",
+  twitterDescription:"",
   twitterImage: "/logo.png",
 });
 
 useHead({
   titleTemplate: (title) =>
-    title
-      ? `${title} | ${locale.value === "ar" ? "" : ""}`
-      : locale.value === "ar"
-      ? ""
-      : "",
+    title:"SaaS",
 });
 
 

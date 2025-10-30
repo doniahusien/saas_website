@@ -1,14 +1,14 @@
 import { useAppAuth } from '~/store/auth'
 
 export default defineNuxtRouteMiddleware((to) => {
-  const auth = useAppAuth()
+  const auth = useAppAuth();
+  const localePath = useLocalePath()
   const publicPaths = [
     '/auth/login',
     '/auth/signup',
     '/auth/verify',
     '/auth/forgot-password',
     '/auth/change-pass',
-    '/', 
   ]
 
   const pathWithoutLocale = to.path.replace(/^\/(ar|en)(?=\/|$)/, '')
@@ -18,10 +18,10 @@ export default defineNuxtRouteMiddleware((to) => {
   )
 
   if (!auth.isLoggedIn && !isPublic) {
-    return navigateTo('/auth/login')
+    return navigateTo(localePath('/auth/login'))
   }
 
   if (auth.isLoggedIn && isPublic) {
-    return navigateTo('/')
+    return navigateTo(localePath('/'))
   }
 })
