@@ -4,7 +4,10 @@
       v-if="modelValue"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
     >
-      <div class="bg-white rounded-2xl shadow-lg p-6 relative animate-fadeIn w-full max-w-md">
+      <div
+        class="bg-white rounded-2xl shadow-lg p-6 relative animate-fadeIn w-full max-w-md"
+        :dir="locale === 'ar' ? 'rtl' : 'ltr'"
+      >
         <button
           @click="emit('update:modelValue', false)"
           class="absolute top-4 right-4 text-gray-500 hover:text-black text-2xl"
@@ -12,21 +15,21 @@
           &times;
         </button>
 
-        <h2 class="text-2xl font-bold mb-4">Select Store</h2>
+        <h2 class="text-2xl font-bold mb-4">{{ t('select_store') }}</h2>
 
         <div v-if="loading" class="text-center text-gray-500 py-6">
-          Loading branches...
+          {{ t('loading_branches') }}
         </div>
 
         <div v-else-if="error" class="text-center text-red-500 py-6">
-          Failed to load branches
+          {{ t('failed_to_load') }}
         </div>
 
         <div v-else class="flex flex-col gap-3 max-h-80 overflow-y-auto">
           <div
             v-for="branch in branches"
             :key="branch.id"
-            @click="selectedBranchId = branch.id"
+            @click="selectBranch(branch)"
             class="flex items-center gap-4 border rounded-xl p-3 cursor-pointer transition"
             :class="selectedBranchId === branch.id
               ? 'border-btn bg-primary/20'
@@ -38,7 +41,7 @@
               class="w-16 h-16 object-cover rounded-full"
             />
             <div class="flex flex-col flex-1">
-              <p class="font-semibold text-lg">{{ branch.name }}</p>
+              <p class="font-semibold text-lg">{{ branch.name || t('unnamed_branch') }}</p>
               <p class="text-sm text-gray-600">{{ branch.location_description }}</p>
             </div>
             <div
@@ -52,54 +55,57 @@
             </div>
           </div>
         </div>
-
-       <!--  <button
-          v-if="selectedBranchId"
-          @click="confirmSelection"
-          class="mt-4 w-full py-2 rounded-xl bg-primary text-white font-semibold hover:bg-primary/90 transition"
-        >
-          Confirm Selection
-        </button> -->
       </div>
     </div>
   </transition>
 </template>
+
 <script setup>
-const { $api } = useNuxtApp();
+import { useI18n } from 'vue-i18n'
+
+const { t, locale } = useI18n()
+const { $api } = useNuxtApp()
 
 const props = defineProps({
-  modelValue: { type: Boolean, required: true },
-});
-const emit = defineEmits(['update:modelValue', 'select']);
+  modelValue: Boolean,
+})
+const emit = defineEmits(['update:modelValue', 'select'])
 
-const branches = ref([]);
-const loading = ref(false);
-const error = ref(false);
-const selectedBranchId = ref(null);
+const branches = ref([])
+const loading = ref(false)
+const error = ref(false)
+const selectedBranchId = ref(null)
 
 const fetchBranches = async () => {
   try {
-    loading.value = true;
-    error.value = false;
-    const { data } = await $api.get('/branches');
-    branches.value = data.data || [];
+    loading.value = true
+    error.value = false
+    const { data } = await $api.get('/branches')
+    branches.value = data.data || []
   } catch (err) {
-    console.error('Error fetching branches:', err);
-    error.value = true;
+    console.error('Error fetching branches:', err)
+    error.value = true
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
+}
 
-const confirmSelection = () => {
-  const selected = branches.value.find((b) => b.id === selectedBranchId.value);
-  if (selected) {
-    emit('select', selected);
-    emit('update:modelValue', false);
-  }
-};
+const selectBranch = (branch) => {
+  selectedBranchId.value = branch.id
+  emit('select', branch)
+  emit('update:modelValue', false)
+}
 
-onMounted(() => {
-  fetchBranches();
-});
+onMounted(fetchBranches)
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
