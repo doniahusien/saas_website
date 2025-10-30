@@ -23,6 +23,8 @@ export default defineNuxtConfig({
   },
 
   modules: [
+    'unplugin-icons/nuxt',
+    'nuxt-swiper',
     "@nuxt/image",
     "@nuxt/ui",
 'nuxt-icon',
