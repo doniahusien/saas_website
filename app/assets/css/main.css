@@ -7,8 +7,14 @@
   --color-placeholder:rgba(189, 193, 223, 1);
   --color-accent: #00ff00; 
   --font-switzer: "Switzer";
+  --font-allura: "Allura";
 }
 
+@font-face {
+  font-family: "Allura";
+  src: url("/fonts/Allura-Regular.ttf") format("truetype");
+  font-display: swap;
+}
 @font-face {
   font-family: "Switzer";
   src: url("/fonts/Switzer-Regular.otf") format("opentype");
@@ -16,12 +22,9 @@
 }
 
 @layer base {
-   * {
-    @apply font-switzer text-primary;
+   body {
+    @apply font-switzer bg-white text-primary;
   }
-}
-body{
-  background-color: white;
 }
 
 .input_wrapper.error select,
