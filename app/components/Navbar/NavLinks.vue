@@ -1,6 +1,6 @@
 <template>
   <ul class="hidden md:flex gap-10">
-    <li v-for="item in items" :key="item.to" class="hover:text-gold">
+    <li v-for="item in items" :key="item.to" class="hover:text-btn">
       <NuxtLink :to="item.to">
         {{ item.label }}
       </NuxtLink>
@@ -45,7 +45,7 @@ const { t } = useI18n()
 const localePath = useLocalePath()
 
 const items = computed(() => [
-  { label: t('nav.home'), to: localePath('/home') },
+  { label: t('nav.home'), to: localePath('/') },
   { label: t('nav.about'), to: localePath('/about') },
   { label: t('nav.reservation'), to: localePath('/reservation') },
   { label: t('nav.menu'), to: localePath('/menu') },
