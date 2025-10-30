@@ -1,3 +1,2 @@
 <template>
-  <h1>Website is under construction</h1>
 </template>

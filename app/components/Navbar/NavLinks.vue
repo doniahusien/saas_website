@@ -1,5 +1,5 @@
 <template>
-  <ul class="hidden md:flex gap-16 font-din">
+  <ul class="hidden md:flex gap-10">
     <li v-for="item in items" :key="item.to" class="hover:text-gold">
       <NuxtLink :to="item.to">
         {{ item.label }}
@@ -23,10 +23,10 @@
       </li>
     </ul>
 
-    <div class="flex flex-col justify-center py-5 gap-5">
+<!--<div class="flex flex-col justify-center py-5 gap-5">
       <UILocaleSwitcher />
       <BaseButton :text="t('hero.button')" />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -45,9 +45,10 @@ const { t } = useI18n()
 const localePath = useLocalePath()
 
 const items = computed(() => [
-  { label: t('nav.contact'), to: localePath('/contact') },
-  { label: t('nav.common'), to: localePath('/faq') },
-  { label: t('nav.services'), to: localePath('/services') },
+  { label: t('nav.home'), to: localePath('/home') },
   { label: t('nav.about'), to: localePath('/about') },
+  { label: t('nav.reservation'), to: localePath('/reservation') },
+  { label: t('nav.menu'), to: localePath('/menu') },
+  { label: t('nav.contact'), to: localePath('/contact') },
 ])
 </script>
