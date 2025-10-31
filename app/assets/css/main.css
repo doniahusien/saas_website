@@ -6,6 +6,7 @@
   --color-btn:rgba(90, 106, 232, 1);
   --color-placeholder:rgba(189, 193, 223, 1);
   --color-accent: #00ff00; 
+  --color-overlay: rgba(0, 0, 0, 0.6);
   --font-switzer: "Switzer";
   --font-allura: "Allura";
 }
@@ -25,6 +26,10 @@
    body {
     @apply font-switzer bg-white text-primary;
   }
+  .overlay{
+  @apply absolute inset-0 bg-black/50;
+}
+
 }
 
 .input_wrapper.error select,

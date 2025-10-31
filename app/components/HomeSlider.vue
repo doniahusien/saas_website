@@ -1,21 +1,21 @@
 <template>
-  <div v-if="sliders?.length" class="relative w-full min-h-screen overflow-hidden">
+  <div v-if="sliders?.length" class="relative w-full h-full ">
     <Swiper
       :modules="[Navigation, Autoplay]"
       :slides-per-view="1"
       :loop="true"
       :autoplay="{ delay: 5000 }"
       :navigation="{ prevEl: prevEl, nextEl: nextEl }"
-      class="w-full min-h-screen"
+      class="w-full h-screen"
     >
       <SwiperSlide
         v-for="item in sliders"
         :key="item.id"
-        class="relative w-full h-screen"
+        class="relative w-full "
       >
         <NuxtImg :src="item.image" alt="slider" class="w-full h-full object-cover" />
 
-        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="overlay"></div>
 
         <div
           class="absolute inset-0 flex flex-col items-center justify-center text-center text-white z-10 px-6"
@@ -55,7 +55,7 @@
       </SwiperSlide>
     </Swiper>
 
-    <div class="absolute bottom-8 right-12 flex gap-3 z-30">
+    <div class="hidden absolute bottom-8 right-12 md:flex gap-3 z-30">
       <button
         ref="prevEl"
         class="w-10 h-10 flex items-center justify-center bg-white/20 hover:bg-white/40 text-white rounded-full backdrop-blur-md transition"
