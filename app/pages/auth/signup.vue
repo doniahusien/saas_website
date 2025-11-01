@@ -1,42 +1,40 @@
 <template>
-  <div class="container flex flex-col flex-1 justify-center">
-    <NuxtImg src="/logo.png" alt="logo" class="w-24 h-24 object-contain" />
-    <h2 class="font-bold mb-4 text-3xl md:text-5xl">{{ $t("auth.createAccount") }}</h2>
+  <NuxtImg src="/logo.png" alt="logo" class="w-24 h-24 object-contain" />
+  <h2 class="font-bold mb-4 text-3xl md:text-5xl">{{ $t("auth.createAccount") }}</h2>
 
-    <VeeForm class="w-full" @submit="handleSubmit" :validation-schema="schema">
-      <div class="space-y-4 py-5">
-        <inputsBaseInput id="name" name="name" :placeholder="t('auth.name')" />
-        <inputsPhoneInput
-          codeName="phone_code"
-          phoneName="phone"
-          :placeholder="t('auth.phone')"
-          v-model:code="form.phone_code"
-          v-model:phone="form.phone"
-        />
-        <inputsBaseInput id="email" name="email" :placeholder="t('auth.email')" />
-        <inputsBasePassword
-          name="password"
-          v-model="form.password"
-          :placeholder="t('auth.password')"
-        />
-      </div>
-      <UCheckbox :label="t('auth.rememberMe')" :ui="{ label: 'text-secondary' }" />
+  <VeeForm @submit="handleSubmit" :validation-schema="schema">
+    <div class="space-y-4 py-5">
+      <inputsBaseInput id="name" name="name" :placeholder="t('auth.name')" />
+      <inputsPhoneInput
+        codeName="phone_code"
+        phoneName="phone"
+        :placeholder="t('auth.phone')"
+        v-model:code="form.phone_code"
+        v-model:phone="form.phone"
+      />
+      <inputsBaseInput id="email" name="email" :placeholder="t('auth.email')" />
+      <inputsBasePassword
+        name="password"
+        v-model="form.password"
+        :placeholder="t('auth.password')"
+      />
+    </div>
+    <UCheckbox :label="t('auth.rememberMe')" :ui="{ label: 'text-secondary' }" />
 
-      <button
-        :disabled="loading"
-        type="submit"
-        class="bg-btn text-white w-full mt-8 rounded-full p-4"
-      >
-        {{ t("auth.register") }}
-      </button>
-    </VeeForm>
-         <p class="text-center pt-5">
-          {{ t("auth.haveAccount") }}
-          <NuxtLink to="/auth/login" class="text-btn font-semibold">
-            {{ t("auth.login") }}
-          </NuxtLink>
-        </p>
-  </div>
+    <button
+      :disabled="loading"
+      type="submit"
+      class="bg-btn text-white w-full mt-8 rounded-full p-4"
+    >
+      {{ t("auth.register") }}
+    </button>
+  </VeeForm>
+  <p class="text-center pt-5">
+    {{ t("auth.haveAccount") }}
+    <NuxtLink to="/auth/login" class="text-btn font-semibold">
+      {{ t("auth.login") }}
+    </NuxtLink>
+  </p>
 </template>
 
 <script setup lang="ts">
@@ -52,6 +50,7 @@ const loading = ref(false);
 const toast = useToast();
 const localePath = useLocalePath();
 const router = useRouter();
+const { $api } = useNuxtApp();
 
 const form = reactive({
   email: "",
@@ -77,21 +76,30 @@ const schema = yup.object({
 async function handleSubmit(values: any) {
   try {
     loading.value = true;
-    const data = await appAuth.signup({
-      name: values.name,
+
+    const { data } = await $api.post("/auth/register", {
+      full_name: values.name,
       email: values.email,
       phone_code: values.phone_code,
       phone: values.phone,
       password: values.password,
+      password_confirmation: values.password,
       device_type: "web",
       device_token: "123456",
     });
 
-    toast.success(t("auth.registerSuccess"));
+    if (data && data.data === null) {
+      appAuth.setTempVerifyData({
+        phone_code: values.phone_code,
+        phone: values.phone,
+      });
+    }
+
+    toast.success(t(data.message));
     router.push(localePath("/auth/verify"));
   } catch (error: any) {
-    /*   console.error("Signup Error:", error); */
-    toast.error(t(error));
+    console.error(error);
+    toast.error(error?.message || "Registration failed");
   } finally {
     loading.value = false;
   }

@@ -5,7 +5,7 @@ export const useAppAuth = defineStore('authStore', {
   state: () => ({
     token: useCookie<string | null>('jwt_token_saas').value || null,
     userData: useCookie<any | null>('saas_user_data').value || null,
-    tempVerifyData: null,
+    tempVerifyData: useCookie<any | null>('saas_temp_verify').value || null,
   }),
 
   getters: {
@@ -14,36 +14,6 @@ export const useAppAuth = defineStore('authStore', {
   },
 
   actions: {
-  
-
-    async signup(payload) {
-      const { $api } = useNuxtApp();
-    
-      try {
-        const { data } = await $api.post('/auth/register', {
-          full_name: payload.name,
-          email: payload.email,
-          phone_code: payload.phone_code,
-          phone: payload.phone,
-          password: payload.password,
-          password_confirmation: payload.password,
-          device_type: payload.device_type || 'web',
-          device_token: payload.device_token || '123456',
-        });
-
-        if (data && data.data === null) {
-          this.tempVerifyData = {
-            phone_code: payload.phone_code,
-            phone: payload.phone,
-          };
-
-          return data
-        }
-      } catch (error: any) {
-        throw error?.message
-      }
-    },
-
     async verifyPhone(payload) {
       const { $api } = useNuxtApp()
       const toast = useToast()
@@ -70,8 +40,10 @@ export const useAppAuth = defineStore('authStore', {
         toast.error(error.response?.data?.message || "Verification failed")
       }
     },
-    
-
+  setTempVerifyData(data) {
+    this.tempVerifyData = data;
+    useCookie("temp_verify_data").value = data;
+  },
 
     setAuthData(user) {
       this.token = user.token
