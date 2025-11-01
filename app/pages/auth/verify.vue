@@ -1,5 +1,5 @@
 <template>
-  <div class="container flex flex-col flex-1 justify-center items-start">
+  <div class="container px-5 md:px-20 lg:px-25 mx-auto ">
     <NuxtImg src="/logo.png" alt="logo" class="w-24 h-24 object-contain mb-6" />
 
     <h2 class="font-bold mb-3 text-3xl md:text-5xl">
@@ -12,7 +12,6 @@
       :validation-schema="schema"
       @submit="handleSubmit"
       v-slot="{ errors }"
-      class="w-full"
     >
       <VeeField name="verification_code" v-model="form.verification_code" type="hidden" />
       <button
@@ -30,7 +29,7 @@
           size="xl"
           :ui="{
             base:
-              'text-btn border border-placeholder bg-transparent m-1 h-16 md:m-5 md:h-28 w-full ',
+              'text-btn border border-placeholder bg-transparent md:m-1 w-full h-16 md:h-28',
             input:
               'text-center text-6xl rounded-lg h-full w-full bg-transparent focus:outline-none',
           }"
@@ -63,7 +62,7 @@
       </p>
     </VeeForm>
     <EditPhoneModal v-model="showEditPhone" />
-  </div>
+     </div>
 </template>
 
 <script setup lang="ts">
