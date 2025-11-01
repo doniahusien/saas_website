@@ -16,8 +16,8 @@
             {{ t(`locale.${locale}`) }}
           </NuxtLink>
         </div>
-        <div class="container flex items-center ">
-          <div class="mx-auto">
+        <div class="container mx-auto flex items-center justify-center">
+          <div>
             <slot />
           </div>
         </div>
@@ -27,8 +27,8 @@
 </template>
 
 <script setup>
-const { locale, t } = useI18n()
-const switchLocalePath = useSwitchLocalePath()
-const targetLocale = computed(() => (locale.value === 'ar' ? 'en' : 'ar'))
-const switchPath = computed(() => switchLocalePath(targetLocale.value))
+const { locale, t } = useI18n();
+const switchLocalePath = useSwitchLocalePath();
+const targetLocale = computed(() => (locale.value === "ar" ? "en" : "ar"));
+const switchPath = computed(() => switchLocalePath(targetLocale.value));
 </script>
