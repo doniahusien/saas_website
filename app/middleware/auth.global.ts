@@ -24,4 +24,11 @@ export default defineNuxtRouteMiddleware((to) => {
   if (auth.isLoggedIn && isPublic) {
     return navigateTo(localePath('/'))
   }
+
+    if (['/auth/verify', '/auth/change-pass'].includes(to.path)) {
+      const { tempVerifyData } = auth; 
+    if (!tempVerifyData || !tempVerifyData.phone) {
+      return navigateTo(localePath('/auth/login')); 
+    }
+  }
 })
