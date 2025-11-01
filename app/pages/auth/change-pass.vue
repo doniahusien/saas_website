@@ -1,5 +1,4 @@
 <template>
-  <div class="container gap-3 flex flex-col flex-1 justify-center">
     <NuxtImg src="/logo.png" alt="logo" class="w-24 h-24 object-contain" />
 
     <h2 class="font-bold mb-4 text-3xl md:text-5xl">
@@ -10,7 +9,7 @@
       {{ t("auth.changePasswordInstruction") }}
     </p>
 
-    <VeeForm class="w-full" @submit="handleSubmit" :validation-schema="schema">
+    <VeeForm @submit="handleSubmit" :validation-schema="schema">
       <div class="space-y-4 pt-2">
         <inputsBasePassword
           id="password"
@@ -35,7 +34,6 @@
         <span v-else>...</span>
       </button>
     </VeeForm>
-  </div>
 </template>
 
 <script setup lang="ts">

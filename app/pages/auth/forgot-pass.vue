@@ -1,16 +1,15 @@
 <template>
-  <div class="container flex flex-col gap-5 flex-1 justify-center">
     <NuxtImg src="/logo.png" alt="logo" class="w-24 h-24 object-contain" />
 
-    <h2 class="font-bold mb-4 text-3xl md:text-5xl">
+    <h2 class="font-bold text-3xl md:text-5xl">
       {{ t("auth.forgotPasswordTitle") }}
     </h2>
 
-    <p class="text-secondary text-base md:text-lg">
+    <p class="text-secondary my-5 text-base md:text-lg">
       {{ t("auth.forgotPasswordInstruction") }}
     </p>
 
-    <VeeForm class="w-full" @submit="handleSubmit" :validation-schema="schema">
+    <VeeForm @submit="handleSubmit" :validation-schema="schema">
       <inputsPhoneInput
         codeName="phone_code"
         phoneName="phone"
@@ -26,7 +25,6 @@
         <span v-else>...</span>
       </button>
     </VeeForm>
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -68,12 +66,10 @@ async function handleSubmit() {
     if (data?.status === "success") {
       toast.success(data?.message || "Verification code sent successfully!");
 
-      appAuth.tempVerifyData = payload;
+      appAuth.setTempVerifyData(payload);
       router.push({
         path: "/auth/verify",
         query: {
-          phone_code: form.phone_code,
-          phone: form.phone,
           from: "forgot",
         },
       });
