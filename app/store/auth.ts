@@ -14,17 +14,7 @@ export const useAppAuth = defineStore('authStore', {
   },
 
   actions: {
-    async login(payload) {
-      const { $api } = useNuxtApp()
-      try {
-        const { data } = await $api.post('/auth/login', payload)
-        const user = data.data
-        this.setAuthData(user)
-        return data
-      } catch (error: any) {
-        throw error.response?.data || { message: 'Login failed' }
-      }
-    },
+  
 
     async signup(payload) {
       const { $api } = useNuxtApp();
@@ -80,6 +70,7 @@ export const useAppAuth = defineStore('authStore', {
         toast.error(error.response?.data?.message || "Verification failed")
       }
     },
+    
 
 
     setAuthData(user) {

@@ -1,14 +1,11 @@
 <template>
-  <div class="container flex flex-col flex-1 justify-center items-start">
     <NuxtImg src="/logo.png" alt="logo" class="w-24 h-24 object-contain mb-6" />
 
-    <h2 class="font-bold mb-2 text-3xl md:text-5xl">{{ t("auth.welcomeBack") }}</h2>
-    <p class="text-secondary text-base md:text-lg mb-8">
+    <h2 class="font-bold text-3xl md:text-5xl">{{ t("auth.welcomeBack") }}</h2>
+    <p class="text-secondary text-base md:text-lg my-5">
       {{ t("auth.enterCredentials") }}
     </p>
-
-    <div class="w-full">
-      <VeeForm class="w-full" :validation-schema="schema" @submit="onSubmit">
+      <VeeForm  :validation-schema="schema" @submit="onSubmit">
         <div class="space-y-5 py-6">
           <inputsPhoneInput
             codeName="phone_code"
@@ -24,7 +21,7 @@
           />
         </div>
 
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between">
           <UCheckbox :label="t('auth.rememberMe')" :ui="{ label: 'text-secondary' }" />
           <NuxtLink to="/auth/forgot-pass" class="underline text-sm md:text-base">
             {{ t("auth.forgotPassword") }}
@@ -47,8 +44,7 @@
           </NuxtLink>
         </p>
       </VeeForm>
-    </div>
-  </div>
+
 </template>
 
 <script setup lang="ts">
@@ -64,6 +60,7 @@ const loading = ref(false);
 const toast = useToast();
 const localePath = useLocalePath();
 const router = useRouter();
+const {$api}= useNuxtApp();
 
 const form = reactive({
   phone_code: "",
@@ -83,17 +80,20 @@ const schema = yup.object({
 async function onSubmit(values: any) {
   try {
     loading.value = true;
-    const data = await appAuth.login({
+    const {data} = await $api.post('/auth/login', {
       phone_code: values.phone_code,
       phone: values.phone,
       password: values.password,
       device_type: "web",
       device_token: "123456",
     });
+    const user= data.data;
+    appAuth.setAuthData(user)
     toast.success(t(`auth.${data.message}`));
     router.push(localePath("/"));
   } catch (error: any) {
-    toast.error(t("auth.invalidCredentials"));
+    const msg = error?.response?.data?.message || t("auth.invalidCredentials")
+    toast.error(msg);
   } finally {
     loading.value = false;
   }

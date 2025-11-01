@@ -1,8 +1,8 @@
 <template>
   <Html :lang="locale" :dir="locale === 'ar' ? 'rtl' : 'ltr'">
     <Body :dir="locale === 'ar' ? 'rtl' : 'ltr'">
-      <div class="min-h-screen flex items-stretch gap-5">
-        <div class="container auth_bg hidden xl:flex flex-col relative overflow-hidden">
+      <div class="h-screen flex gap-5">
+        <div class="container hidden xl:flex flex-col relative overflow-hidden">
           <img
             src="/images/bg/auth_bg.png"
             alt="Auth background"
@@ -16,8 +16,8 @@
             {{ t(`locale.${locale}`) }}
           </NuxtLink>
         </div>
-        <div class="container mx-auto flex items-center justify-center px-4 lg:px-20 py-10">
-          <div class="w-full">
+        <div class="container flex items-center ">
+          <div class="mx-auto">
             <slot />
           </div>
         </div>
