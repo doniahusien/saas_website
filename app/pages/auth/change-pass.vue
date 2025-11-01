@@ -89,6 +89,7 @@ async function handleSubmit(values: any) {
     const { data } = await $api.post("/auth/reset_password", payload);
 
     if (data?.status === "success") {
+      appAuth.clearTempVerifyData(); 
       toast.success(data?.message || "Password changed successfully!");
       router.push("/auth/login");
     } 

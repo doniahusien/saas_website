@@ -174,6 +174,7 @@ async function verifyPhone(payload) {
 
     if (data.status === "success") {
       appAuth.setAuthData(data.data);
+      appAuth.clearTempVerifyData(); 
       toast.success(data.message || "Account verified successfully");
       router.push({ path: "/" });
     }

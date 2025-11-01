@@ -14,8 +14,12 @@ export const useAppAuth = defineStore('authStore', {
 
   actions: {
     setTempVerifyData(data) {
-      this.tempVerifyData = data; 
+      this.tempVerifyData = data;
       useCookie("saas_temp_verify").value = data; // Use consistent cookie name
+    },
+    clearTempVerifyData() {
+      this.tempVerifyData = null;
+      useCookie('saas_temp_verify').value = null; // Clear the cookie
     },
 
     setAuthData(user) {
