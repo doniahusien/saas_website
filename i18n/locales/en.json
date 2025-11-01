@@ -59,6 +59,9 @@
     "email": "Email",
     "register": "Register",
     "haveAccount": "Have an account?",
-    "verificationRequired":"verification is Required"
+    "verificationRequired":"verification is Required",
+     "editPhoneTitle": "Edit Phone Number",
+     "edit":"Edit",
+    "editPhoneInstruction": "Please enter your phone number so we can verify it"
   }
 }
