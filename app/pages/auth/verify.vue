@@ -66,8 +66,6 @@
 import * as yup from "yup";
 import { useAppAuth } from "~/store/auth";
 import { useToast } from "vue-toastification";
-import { useRoute, useRouter } from "vue-router";
-import { onMounted, ref, reactive, computed, watch } from "vue";
 
 definePageMeta({ layout: "auth" });
 
