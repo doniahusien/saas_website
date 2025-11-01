@@ -1,5 +1,5 @@
 <template>
-  <div class="container px-5 md:px-20 lg:px-25 mx-auto ">
+  <div class="container px-5 md:px-20 lg:px-25 mx-auto">
     <NuxtImg src="/logo.png" alt="logo" class="w-24 h-24 object-contain mb-6" />
 
     <h2 class="font-bold mb-3 text-3xl md:text-5xl">
@@ -8,11 +8,8 @@
     <p class="text-secondary text-base md:text-lg mb-6">
       {{ t("auth.verifyInstruction") }}
     </p>
-    <VeeForm
-      :validation-schema="schema"
-      @submit="handleSubmit"
-      v-slot="{ errors }"
-    >
+
+    <VeeForm :validation-schema="schema" @submit="handleSubmit" v-slot="{ errors }">
       <VeeField name="verification_code" v-model="form.verification_code" type="hidden" />
       <button
         type="button"
@@ -62,13 +59,15 @@
       </p>
     </VeeForm>
     <EditPhoneModal v-model="showEditPhone" />
-     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import * as yup from "yup";
 import { useAppAuth } from "~/store/auth";
 import { useToast } from "vue-toastification";
+import { useRoute, useRouter } from "vue-router";
+import { onMounted, ref, reactive, computed, watch } from "vue";
 
 definePageMeta({ layout: "auth" });
 
@@ -101,9 +100,6 @@ onMounted(() => {
   if (appAuth.tempVerifyData) {
     form.phone_code = appAuth.tempVerifyData.phone_code;
     form.phone = appAuth.tempVerifyData.phone;
-  } else {
-    form.phone_code = (route.query.phone_code as string) || "";
-    form.phone = (route.query.phone as string) || "";
   }
 });
 
@@ -111,6 +107,7 @@ watch(
   () => appAuth.tempVerifyData,
   (newVal) => {
     if (newVal) {
+    /*   console.log('Updated TempVerifyData from Pinia:', newVal); */
       form.phone_code = newVal.phone_code;
       form.phone = newVal.phone;
     }
@@ -129,12 +126,7 @@ async function handleSubmit(values: any) {
   try {
     loading.value = true;
 
-    if (!form.phone_code || !form.phone) {
-      toast.error("Missing phone data. Please go back and try again.");
-      return;
-    }
-
-    const fromForgot = route.query.from === "forgot";
+    const fromForgot = route.query?.from === "forgot";
 
     if (fromForgot) {
       const payload = {
@@ -150,20 +142,15 @@ async function handleSubmit(values: any) {
 
       if (isSuccess) {
         toast.success(data?.message || "Code verified successfully!");
-
+        appAuth.setTempVerifyData(payload);
         router.push({
           path: "/auth/change-pass",
-          query: {
-            phone_code: form.phone_code,
-            phone: form.phone,
-            reset_code: values.verification_code,
-          },
         });
       } else {
         toast.error(data?.message || "Invalid code.");
       }
     } else {
-      await appAuth.verifyPhone({
+      await verifyPhone({
         phone_code: form.phone_code,
         phone: form.phone,
         verification_code: values.verification_code,
@@ -178,14 +165,27 @@ async function handleSubmit(values: any) {
   }
 }
 
+async function verifyPhone(payload) {
+  try {
+    const { data } = await $api.post("/auth/verify_phone", {
+      phone_code: payload.phone_code,
+      phone: payload.phone,
+      verification_code: payload.verification_code,
+      device_type: "web",
+    });
+
+    if (data.status === "success") {
+      appAuth.setAuthData(data.data);
+      toast.success(data.message || "Account verified successfully");
+      router.push({ path: "/" });
+    }
+  } catch (error: any) {
+    toast.error(error.response?.data?.message || "Verification failed");
+  }
+}
+
 async function handleResend() {
   const phoneData = appAuth.tempVerifyData;
-
-  if (!phoneData?.phone || !phoneData?.phone_code) {
-    toast.error("Missing phone number. Please edit your phone first.");
-    return;
-  }
-
   try {
     resendLoading.value = true;
     const payload = {
@@ -197,7 +197,6 @@ async function handleResend() {
     toast.success(data?.message || "Verification code resent successfully!");
     startCooldown(30);
   } catch (err: any) {
-    console.error("Resend error:", err);
     toast.error(err?.response?.data?.message || "Failed to resend code.");
   } finally {
     resendLoading.value = false;
@@ -207,8 +206,11 @@ async function handleResend() {
 function startCooldown(seconds: number) {
   cooldown.value = seconds;
   const interval = setInterval(() => {
-    cooldown.value--;
-    if (cooldown.value <= 0) clearInterval(interval);
+    if (cooldown.value > 0) {
+      cooldown.value--;
+    } else {
+      clearInterval(interval);
+    }
   }, 1000);
 }
 </script>
