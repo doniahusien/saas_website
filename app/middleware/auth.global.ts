@@ -7,7 +7,7 @@ export default defineNuxtRouteMiddleware((to) => {
     '/auth/login',
     '/auth/signup',
     '/auth/verify',
-    '/auth/forgot-password',
+    '/auth/forgot-pass',
     '/auth/change-pass',
   ]
 
