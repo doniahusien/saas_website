@@ -23,7 +23,7 @@
 
         <div class="flex justify-between">
           <UCheckbox :label="t('auth.rememberMe')" :ui="{ label: 'text-secondary' }" />
-          <NuxtLink to="/auth/forgot-pass" class="underline text-sm md:text-base">
+          <NuxtLink :to="localePath('/auth/forgot-pass')" class="underline text-sm md:text-base">
             {{ t("auth.forgotPassword") }}
           </NuxtLink>
         </div>
@@ -39,7 +39,7 @@
 
         <p class="text-center pt-5">
           {{ t("auth.dontHaveAccount") }}
-          <NuxtLink to="/auth/signup" class="text-btn font-semibold">
+          <NuxtLink :to="localePath('/auth/signup')" class="text-btn font-semibold">
             {{ t("auth.signUpNow") }}
           </NuxtLink>
         </p>

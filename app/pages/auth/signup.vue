@@ -31,7 +31,7 @@
   </VeeForm>
   <p class="text-center pt-5">
     {{ t("auth.haveAccount") }}
-    <NuxtLink to="/auth/login" class="text-btn font-semibold">
+    <NuxtLink :to="localePath('/auth/login')" class="text-btn font-semibold">
       {{ t("auth.login") }}
     </NuxtLink>
   </p>
