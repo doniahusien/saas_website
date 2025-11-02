@@ -3,6 +3,8 @@
     <HomeSlider :sliders="sliderData" />
     <MenuSection/>
     <OurStorySection/>
+    <PopularSection/>
+    <Reservation/>
   </div>
 </template>
 

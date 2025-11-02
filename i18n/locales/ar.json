@@ -65,6 +65,10 @@
     "title": "عرض قوائمنا",
     "viewAll": "عرض الكل"
   },
+   "popularSection": {
+    "title": "المنتجات الشائعة",
+    "viewAll": "عرض الكل"
+  },
   "ourStory": {
     "eyebrow": "مرحبًا! أهلاً بكم في MEA TELECOM",
     "title": "نقدّم طعامًا شهيًا لعائلتك!",
