@@ -60,5 +60,9 @@
      "editPhoneTitle": "تعديل رقم الهاتف",
      "edit":"تعديل",
     "editPhoneInstruction": "يرجى إدخال رقم هاتفك لكي نتمكن من التحقق منه"
+  },
+   "menuSection": {
+    "title": "عرض قوائمنا",
+    "viewAll": "عرض الكل"
   }
 }

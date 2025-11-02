@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div class="space-y-20">
     <HomeSlider :sliders="sliderData" />
+    <MenuSection/>
   </div>
 </template>
 

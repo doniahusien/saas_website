@@ -1,0 +1,45 @@
+<template>
+  <div
+    class="bg-white rounded-2xl p-3 shadow-md overflow-hidden relative w-[85%] sm:w-80 md:w-96 flex-shrink-0 transition-transform duration-300 hover:scale-[1.01]"
+  >
+    <div class="relative">
+      <NuxtImg
+        :src="image"
+        alt="Food image"
+        class="w-full rounded-lg h-48 sm:h-56 md:h-64 object-cover"
+      />
+      <div
+        class="absolute top-3 left-3 flex items-center bg-white/80 backdrop-blur-sm px-2 py-1 rounded-full shadow-md"
+      >
+        <Icon name="mdi:star" class="text-yellow-400 text-lg" />
+        <span class="ml-1 text-sm font-semibold">{{ rating }}</span>
+      </div>
+    </div>
+
+    <div class="space-y-2 py-4">
+      <h3 class="font-semibold text-lg sm:text-xl md:text-2xl">{{ title }}</h3>
+      <p class="text-xs sm:text-sm text-secondary line-clamp-2">
+        {{ description }}
+      </p>
+
+      <div class="flex justify-between items-center">
+        <span class="text-lg sm:text-xl md:text-2xl font-bold">{{ price }} EGP</span>
+        <button
+          class="text-btn cursor-pointer rounded-full flex justify-center p-2 bg-gray-100 hover:text-red-500"
+        >
+          <Icon name="mdi:heart-outline" class="w-5 h-5 sm:w-6 sm:h-6" />
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+defineProps({
+  image: String,
+  title: String,
+  description: String,
+  rating: Number,
+  price: String,
+});
+</script>

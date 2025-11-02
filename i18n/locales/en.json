@@ -63,5 +63,9 @@
      "editPhoneTitle": "Edit Phone Number",
      "edit":"Edit",
     "editPhoneInstruction": "Please enter your phone number so we can verify it"
+  },
+  "menuSection": {
+    "title": "View Our Menus",
+    "viewAll": "View All"
   }
 }
