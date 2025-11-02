@@ -2,6 +2,7 @@
   <div class="space-y-20">
     <HomeSlider :sliders="sliderData" />
     <MenuSection/>
+    <OurStorySection/>
   </div>
 </template>
 

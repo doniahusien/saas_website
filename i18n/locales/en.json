@@ -67,5 +67,12 @@
   "menuSection": {
     "title": "View Our Menus",
     "viewAll": "View All"
+  },
+  "ourStory": {
+    "eyebrow": "HEY! WELCOME TO MEA TELECOM",
+    "title": "We Provide Good Food For Your Family!",
+    "paragraph1": "Food is the foundation of true happiness. Lorem ipsum dolor sit amet, consectetuer adipiscing elit aenean commodo.",
+    "paragraph2": "We see our customers as invited guests to a party, and we are the hosts. It's our job every day to make every important aspect of the customer experience a little bit better. Donec quam felis, ultricies nec, pellentesque eu.",
+    "cta": "Discover More"
   }
 }
