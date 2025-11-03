@@ -8,6 +8,7 @@
     <HomeAppSection/>
     <HomeInstagramGallery/>
     <HomeOffersSection/>
+    <HomeSubcribeSection/>
   </div>
 </template>
 
