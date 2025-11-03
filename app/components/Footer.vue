@@ -30,7 +30,7 @@
 
       <div>
         <h4 class="font-semibold text-white mb-3">Contact</h4>
-        <div class="text-sm space-y-2">
+        <div class="text-sm space-y-3">
           <p>Call Center</p>
           <p class="text-gray-400">(13) 3078-6114</p>
           <p>Email</p>
@@ -40,7 +40,7 @@
     </div>
 
     <div
-      class="container mx-auto mt-10 border-t border-white pt-5 flex flex-col md:flex-row justify-between items-center gap-4 px-5"
+      class="container mx-auto mt-16 border-t border-white pt-5 flex flex-col md:flex-row justify-between items-center gap-4 px-5"
     >
       <p class="text-xs text-white flex items-center gap-2">
         <Icon name="mdi:copyright" class="w-5 h-5" /> 2023 All Rights Reserved
