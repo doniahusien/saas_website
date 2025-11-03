@@ -1,7 +1,7 @@
 <template>
   <Html :lang="locale" :dir="locale == 'ar' ? 'rtl' : 'ltr'">
     <Body :dir="locale == 'ar' ? 'rtl' : 'ltr'">
-      <div class="mb-20 flex min-h-[100vh] flex-col md:mb-0">
+      <div class=" flex min-h-[100vh] flex-col md:mb-0">
         <Navbar />
         <NoInternetConnection v-if="!isOnline" />
         <div v-else>
