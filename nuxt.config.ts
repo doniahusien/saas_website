@@ -4,10 +4,13 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
 
+   build: {
+    transpile: ['@vuepic/vue-datepicker']
+  },
   runtimeConfig: {
     public: {
-      baseURL: "https://saas.khlod.aait-d.com/Mac/api/app",
-      general: "https://saas.khlod.aait-d.com/Mac/api",
+      baseURL: "https://saas.khlod.aait-d.com/front_brand/api/app",
+      general: "https://saas.khlod.aait-d.com/front_brand/api",
     },
   },
 
