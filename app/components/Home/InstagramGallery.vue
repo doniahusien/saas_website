@@ -1,5 +1,4 @@
 <template>
-  <section class="w-full py-16 bg-white">
     <div class="container mx-auto px-4">
       <div class="relative grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
         <div
@@ -34,7 +33,6 @@
         </div>
       </div>
     </div>
-  </section>
 </template>
 
 <script setup>
