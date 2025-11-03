@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-20">
+  <div class="space-y-20 pb-16">
     <HomeSlider :sliders="sliderData" />
     <MenuSection/>
     <HomeOurStorySection/>

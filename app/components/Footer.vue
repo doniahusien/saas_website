@@ -1,102 +1,68 @@
 <template>
-  <footer
-    v-if="data"
-    class="relative px-5 py-16 text-white bg-cover bg-center bg-[url('/images/header4.jpg')]"
-  >
-    <div class="overlay"></div>
-
-    <UContainer class="space-y-10 relative z-10">
-
-      <div class="grid gap-1 md:grid-cols-[auto_1fr] md:items-center">
-        <UILogo classes="w-16 h-16 md:w-28 md:h-28" />
-        <div>
-          <h2 class="text-2xl font-din font-bold">{{ $t('footer.title') }}</h2>
-          <p class="text-sm text-light-gray">
-            {{ footerDescription }}
-          </p>
-        </div>
+  <footer class="bg-black text-gray-300 py-10 md:py-14">
+    <div class="container mx-auto px-5 grid grid-cols-1 md:grid-cols-5 gap-10">
+      <div class="space-y-6 col-span-1 md:col-span-2 ">
+        <NuxtImg src="/images/logo_white.png" alt="MEA TELECOM" class="w-32" />
+        <p class="text-sm leading-relaxed text-gray-400">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Commodo libero viverra
+          dapibus odio sit malesuada in quis. Arcu tristique elementum viverra integer id.
+        </p>
       </div>
 
-      <div class="border-t border-white/20 my-2"></div>
+      <div>
+        <h4 class="font-semibold text-white mb-3">Sections</h4>
+        <ul class="space-y-5 text-sm">
+          <li><NuxtLink to="/" class="hover:text-white">Menu</NuxtLink></li>
+          <li><NuxtLink to="/" class="hover:text-white">Offers</NuxtLink></li>
+          <li><NuxtLink to="/" class="hover:text-white">Reservation</NuxtLink></li>
+          <li><NuxtLink to="/" class="hover:text-white">Favorit</NuxtLink></li>
+        </ul>
+      </div>
 
-      <div class="grid gap-4 md:grid-cols-2 md:items-center">
-        <div class="grid grid-flow-col auto-cols-max gap-6 text-sm text-banner-100 justify-self-start">
-          <NuxtLink to="/terms" class="hover:text-gold">
-            {{ $t('footer.terms') }}
-          </NuxtLink>
-          <NuxtLink to="/privacy" class="hover:text-gold">
-            {{ $t('footer.privacy') }}
-          </NuxtLink>
-        </div>
+      <div>
+        <h4 class="font-semibold text-white mb-3">Links</h4>
+        <ul class="space-y-6 text-sm">
+          <li><NuxtLink to="/" class="hover:text-white">Privacy policy</NuxtLink></li>
+          <li><NuxtLink to="/" class="hover:text-white">FAQs</NuxtLink></li>
+          <li><NuxtLink to="/" class="hover:text-white">Terms & conditions</NuxtLink></li>
+        </ul>
+      </div>
 
-        <div class="grid grid-flow-col auto-cols-max gap-4 justify-self-end">
-          <NuxtLink
-            v-for="(social, index) in contactItems"
-            :key="index"
-            :to="social.value"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="grid place-items-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition duration-300 ease-in-out transform hover:scale-105"
-          >
-            <BaseIcon
-              :src="social.icon"
-              wrapperClass="w-8 h-8"
-              iconClass="w-5 h-5"
-            />
-          </NuxtLink>
+      <div>
+        <h4 class="font-semibold text-white mb-3">Contact</h4>
+        <div class="text-sm space-y-2">
+          <p>Call Center</p>
+          <p class="text-gray-400">(13) 3078-6114</p>
+          <p>Email</p>
+          <p class="text-gray-400">michelle.rivera@example.com</p>
         </div>
       </div>
-    </UContainer>
+    </div>
+
+    <div
+      class="container mx-auto mt-10 border-t border-white pt-5 flex flex-col md:flex-row justify-between items-center gap-4 px-5"
+    >
+      <p class="text-xs text-white flex items-center gap-2">
+        <Icon name="mdi:copyright" class="w-5 h-5" /> 2023 All Rights Reserved
+      </p>
+
+      <div class="flex items-center gap-4 text-white">
+        <NuxtLink to="/" class="hover:text-gray-400">
+          <span class="rounded-full border-white border p-2 flex items-center">
+            <Icon name="lucide:facebook" />
+          </span>
+        </NuxtLink>
+        <NuxtLink to="/" class="hover:text-gray-400">
+          <span class="rounded-full border-white border p-2 flex items-center">
+            <Icon name="mdi:twitter" />
+          </span>
+        </NuxtLink>
+        <NuxtLink to="/" class="hover:text-gray-400">
+          <span class="rounded-full border-white border p-2 flex items-center">
+            <Icon name="mdi:instagram" />
+          </span>
+        </NuxtLink>
+      </div>
+    </div>
   </footer>
 </template>
-
-<script setup>
-const { locale } = useI18n()
-
-const { data, pending, error } = await useAsyncData(
-  'desc',
-  () => useGlobalFetch('/preview'),
-  { watch: [locale] }
-)
-
-const { data: info } = await useAsyncData(
-  'info',
-  () => useGlobalFetch('/preview/social'),
-  { watch: [locale] }
-)
-
-const footerDescription = computed(
-  () => data.value?.data?.footer_description || ''
-)
-
-const iconMap = {
-  whatsapp: '/icons/whats.svg',
-  phone: '/icons/phone.svg',
-  x: '/icons/x.svg',
-  instagram: '/icons/insta.svg',
-  facebook: '/icons/face.svg',
-}
-
-const contactItems = computed(() => {
-  const items = info.value?.data || []
-  return items
-    .filter((item) => iconMap[item.key])
-    .map((item) => {
-      let value = item.value
-      if (['whatsapp', 'phone'].includes(item.key)) {
-        const phone = value.replace(/\D/g, '')
-        value = `https://wa.me/${phone}`
-      }
-      return {
-        value,
-        icon: iconMap[item.key],
-      }
-    })
-})
-</script>
-
-<style scoped>
-.text-banner-100 {
-  color: #c8d1e0;
-}
-</style>
