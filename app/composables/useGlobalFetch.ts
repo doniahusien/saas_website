@@ -1,26 +1,30 @@
 export const useGlobalFetch = async <T = any>(
   url: string,
-  method: string = "GET",
-  body?: any
+  options: {
+    method?: string
+    body?: any
+    headers?: Record<string, string>
+  } = {}
 ): Promise<T> => {
-  const config = useRuntimeConfig();
-  const { locale } = useI18n();
+  const config = useRuntimeConfig()
+  const { locale } = useI18n()
+
+  const method = (options.method || 'GET').toString().toUpperCase()
 
   try {
     return await $fetch<T>(url, {
-      method,
-      ...(body && { body: body }),
       baseURL: config.public.baseURL,
+      method,
+      ...(options.body && { body: options.body }),
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Accept-Language": locale.value
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Accept-Language': locale.value,
+        ...options.headers,
       },
-    });
-  }
-  catch (error: any) {
-    console.error(error);
+    })
+  } catch (error: any) {
+    console.error(error)
     throw error
   }
-
-};
+}

@@ -9,8 +9,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      baseURL: "https://saas.khlod.aait-d.com/front_brand/api/app",
-      general: "https://saas.khlod.aait-d.com/front_brand/api",
+      baseURL: "https://saas.khlod.aait-d.com/front_brand/api/app/",
+      general: "https://saas.khlod.aait-d.com/front_brand/api/",
     },
   },
 

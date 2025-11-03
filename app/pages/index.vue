@@ -1,6 +1,6 @@
 <template>
   <div class="space-y-20 pb-16">
-    <HomeSlider :sliders="sliderData" />
+    <HomeSlider :sliders="sliders" />
     <MenuSection/>
     <HomeOurStorySection/>
     <PopularSection/>
@@ -14,14 +14,16 @@
 
 <script setup lang="ts">
 
-const { data } = await useAsyncData('home', () =>
-  useGlobalFetch<any>('home?type=app')
+const { data } = await useAsyncData('HomeData', () =>
+  useGlobalFetch<any>('home', {
+    headers: { os: 'web' }
+  })
 )
 
-const sliderData = computed(() => {
-  const slidersBlock = data.value?.data?.find(
-    (section: any) => section.type === 'sliders'
-  )
-  return slidersBlock?.content || []
-})
+const sliders = computed(() => data.value?.data?.sliders);
+const webContent = computed(() => data.value?.data?.web_content || null)
+const popularProducts = computed(() => data.value?.data?.popular_products || [])
+const offers = computed(() => data.value?.data?.offers || [])
+const subscriptionContent = computed(() => data.value?.data?.subscription_content || null)
+const webContentLink = computed(() => data.value?.data?.web_content_link || null)
 </script>
