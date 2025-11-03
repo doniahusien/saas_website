@@ -93,7 +93,7 @@
             />
             <div class="flex flex-col">
               <p class="font-semibold text-base">
-                {{ selectedBranch?.name ?? 'Branch' }}
+                {{ selectedBranch?.name }}
               </p>
               <p class="text-sm text-placeholder">
                 {{ selectedBranch?.location_description || t('select_store') }}
