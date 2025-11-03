@@ -8,7 +8,8 @@
     <HomeAppSection/>
     <HomeInstagramGallery/>
     <HomeOffersSection/>
-    <HomeSubcribeSection/>
+    <HomeSubcribeSection v-if="subscriptionContent && Object.keys(subscriptionContent).length > 0"
+     :subscriptionContent="subscriptionContent"/>
   </div>
 </template>
 
