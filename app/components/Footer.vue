@@ -34,7 +34,7 @@
           <p>Call Center</p>
           <p class="text-gray-400">(13) 3078-6114</p>
           <p>Email</p>
-          <p class="text-gray-400">michelle.rivera@example.com</p>
+          <p class="text-gray-400">michelle@example.com</p>
         </div>
       </div>
     </div>
