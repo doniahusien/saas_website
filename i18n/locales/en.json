@@ -78,5 +78,32 @@
     "paragraph1": "Food is the foundation of true happiness. Lorem ipsum dolor sit amet, consectetuer adipiscing elit aenean commodo.",
     "paragraph2": "We see our customers as invited guests to a party, and we are the hosts. It's our job every day to make every important aspect of the customer experience a little bit better. Donec quam felis, ultricies nec, pellentesque eu.",
     "cta": "Discover More"
+  },
+   "reservation": {
+    "eyebrow": "Our Story",
+    "title": "Online Reservation",
+    "subtitle": "Reservations",
+    "heading": "Book a Table",
+    "namePlaceholder": "Name",
+    "phonePlaceholder": "Phone",
+    "selectPersons": "Select",
+    "person1": "1 Person",
+    "person2": "2 Persons",
+    "person3": "3 Persons",
+    "person4plus": "4+ Persons",
+    "selectBranch": "Select Branch",
+    "branchCairo": "Cairo",
+    "branchAlex": "Alexandria",
+    "branchGiza": "Giza",
+    "submit": "Book a Table"
+  },
+   "app": {
+    "appTitle": "Now It’s More Easy to",
+    "appSubtitle": "Order by Our App",
+    "appDescription": "All you need to do is download one of the best delivery apps, and most companies are opting for mobile app development for food delivery."
+  },
+  "offers": {
+    "title": "Offers",
+    "viewAll": "View All"
   }
 }

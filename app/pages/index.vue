@@ -2,9 +2,12 @@
   <div class="space-y-20">
     <HomeSlider :sliders="sliderData" />
     <MenuSection/>
-    <OurStorySection/>
+    <HomeOurStorySection/>
     <PopularSection/>
-    <Reservation/>
+    <HomeReservation/>
+    <HomeAppSection/>
+    <HomeInstagramGallery/>
+    <HomeOffersSection/>
   </div>
 </template>
 

@@ -4,8 +4,9 @@
       <h2 class="text-2xl md:text-3xl lg:text-5xl font-semibold">
         {{ $t("menuSection.title") }}
       </h2>
-      <NuxtLink to="/menu" class="text-primary hover:underline">
+     <NuxtLink to="/menu" class="text-btn flex items-center gap-2 hover:underline">
         {{ $t("menuSection.viewAll") }}
+        <Icon name="mdi:arrow-right" class="w-5 h-5 sm:w-6 sm:h-6" />
       </NuxtLink>
     </div>
     <div

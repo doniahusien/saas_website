@@ -23,8 +23,23 @@
       </p>
 
       <div class="flex justify-between items-center">
-        <span class="text-lg sm:text-xl md:text-2xl font-bold">{{ price }} EGP</span>
+        <div class="flex flex-col mt-6">
+          <span v-if="offer" class="text-sm line-through text-secondary"
+            >{{ oldPrice }} EGP</span
+          >
+
+          <span class="text-lg sm:text-xl md:text-2xl font-bold">{{ price }} EGP</span>
+        </div>
+
+        <div
+          v-if="offer"
+          class="bg-btn cursor-pointer text-sm w-12 h-12 rounded-full text-center flex items-center justify-center text-white p-3"
+        >
+         <span>Off 25%</span> 
+        </div>
+
         <button
+          v-else="offer"
           class="text-btn cursor-pointer rounded-full flex justify-center p-2 bg-gray-100 hover:text-red-500"
         >
           <Icon name="mdi:heart-outline" class="w-5 h-5 sm:w-6 sm:h-6" />
@@ -41,5 +56,7 @@ defineProps({
   description: String,
   rating: Number,
   price: String,
+  oldPrice: String,
+  offer: Boolean,
 });
 </script>
