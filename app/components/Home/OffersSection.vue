@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto  space-y-10">
+  <div class="container mx-auto space-y-10">
     <div class="flex justify-between items-center">
       <h2 class="text-2xl md:text-3xl lg:text-5xl font-semibold">
         {{ $t("offers.title") }}
@@ -31,7 +31,7 @@
       <SwiperSlide
         v-for="item in foodItems"
         :key="item.id"
-        class="flex justify-center gap-10"
+        class="w-full"
       >
         <CardFoodCard
           :image="item.image"
