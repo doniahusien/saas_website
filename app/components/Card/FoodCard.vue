@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white rounded-2xl p-3 shadow-md overflow-hidden relative w-[85%] sm:w-80 md:w-96 flex-shrink-0 transition-transform duration-300 hover:scale-[1.01]"
+    class="bg-white rounded-4xl p-3 shadow-md overflow-hidden relative w-[70%] sm:w-70 md:w-80 transition-transform duration-300 hover:scale-[1.01]"
   >
     <div class="relative">
       <NuxtImg
@@ -40,7 +40,7 @@
 
         <button
           v-else="offer"
-          class="text-btn cursor-pointer rounded-full flex justify-center p-2 bg-gray-100 hover:text-red-500"
+          class="text-btn cursor-pointer rounded-full flex items-center justify-center p-2 bg-gray-100 hover:text-red-500"
         >
           <Icon name="mdi:heart-outline" class="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
