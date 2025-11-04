@@ -38,7 +38,7 @@
 
       <button
         @click="showSelect = true"
-        class="hidden md:flex text-left items-center gap-3 bg-white"
+        class="hidden cursor-pointer md:flex text-left items-center gap-3 bg-white"
       >
         <NuxtImg
           v-if="selectedBranch?.image"
@@ -52,7 +52,7 @@
           </p>
           <p class="text-sm text-placeholder">
             {{ selectedBranch?.location_description || t('select_store') }}
-            <span class="pl-2">&#709;</span>
+            <Icon name="mdi-chevron-down" class="w-4 h-4" />
           </p>
         </div>
       </button>
