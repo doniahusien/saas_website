@@ -7,7 +7,6 @@ const props = defineProps({
     default: () => ({
       image: "/images/food1.png",
       title: "offers.title",
-      subtitle: "offers.subtitle",
     }),
   },
 });

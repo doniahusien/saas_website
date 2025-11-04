@@ -8,7 +8,6 @@ const { t } = useI18n();
       :bannerData="{
         image: '/images/food1.png',
         title: 'Offers',
-        subtitle: 'Home Offers',
       }"
     />
     <OffersSection />
