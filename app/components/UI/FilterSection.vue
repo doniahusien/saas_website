@@ -40,7 +40,7 @@
 
       <div class="my-10 space-y-4">
         <h3 class="text-gray-400 text-sm font-medium">Select main category</h3>
-        <div class="grid grid-cols-2 gap-2">
+        <div class="grid grid-cols-2 gap-4">
           <UButton
             v-for="cat in mainCategories"
             :key="cat"
@@ -61,7 +61,7 @@
 
       <div class="space-y-4">
         <h3 class="text-gray-400 text-sm font-medium">Select sub category</h3>
-        <div class="grid grid-cols-2 gap-2">
+        <div class="grid grid-cols-2 gap-4">
           <UButton
             v-for="sub in subCategories"
             :key="sub"
@@ -73,7 +73,7 @@
               padding: 'px-0 py-0',
         
             }"
-            :class="selectedSub === Sub ? 'bg-btn text-white' : ' bg-white'"
+            :class="selectedSub === sub ? 'bg-btn text-white' : ' bg-white'"
             @click="selectSub(sub)"
           >
             {{ sub }}
