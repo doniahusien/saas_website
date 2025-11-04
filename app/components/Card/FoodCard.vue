@@ -1,12 +1,12 @@
 <template>
   <div
-    class="bg-white rounded-4xl p-3 shadow-md overflow-hidden relative w-[82%] sm:w-72 md:w-80 transition-transform duration-300 hover:scale-[1.01]"
+    class="bg-white rounded-4xl p-3 shadow-md overflow-hidden relative w-[80%] sm:w-72 md:w-70"
   >
     <div class="relative">
       <NuxtImg
         :src="image"
         alt="Food image"
-        class="w-full rounded-lg h-48 sm:h-56 md:h-64 object-cover"
+        class="w-full rounded-lg h-48 sm:h-56 md:h-60 object-cover"
       />
       <div
         class="absolute top-3 left-3 flex items-center bg-white/80 backdrop-blur-sm px-2 py-1 rounded-full shadow-md"

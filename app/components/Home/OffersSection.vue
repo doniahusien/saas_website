@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto space-y-10">
+  <div class="container mx-auto  space-y-10">
     <div class="flex justify-between items-center">
       <h2 class="text-2xl md:text-3xl lg:text-5xl font-semibold">
         {{ $t("offers.title") }}
@@ -9,27 +9,53 @@
         <Icon name="mdi:arrow-right" class="w-5 h-5 sm:w-6 sm:h-6" />
       </NuxtLink>
     </div>
-    <div
-      class="flex overflow-x-auto w-full bg-white space-x-8 pb-4 scrollbar-hide scroll-smooth"
+
+<div class="py-10">
+    <Swiper
+      :modules="[Autoplay, FreeMode]"
+      :slides-per-view="1.2"
+      :space-between="20"
+      :breakpoints="{
+        640: { slidesPerView: 2.2 },
+        1024: { slidesPerView: 3.2 },
+        1280: { slidesPerView: 4.2 }
+      }"
+      :autoplay="{
+        delay: 2500,
+        disableOnInteraction: false
+      }"
+      loop
+      free-mode
+      grab-cursor
     >
-      <CardFoodCard
+      <SwiperSlide
         v-for="item in foodItems"
         :key="item.id"
-        :image="item.image"
-        :title="item.title"
-        :description="item.description"
-        :rating="item.rating"
-        :price="item.price"
-        :oldPrice="item.oldPrice"
-        :offer="true"
-        class="flex-shrink-0"
-      />
+        class="flex justify-center gap-10"
+      >
+        <CardFoodCard
+          :image="item.image"
+          :title="item.title"
+          :description="item.description"
+          :rating="item.rating"
+          :price="item.price"
+          :oldPrice="item.oldPrice"
+          :offer="true"
+        />
+      </SwiperSlide>
+    </Swiper>
     </div>
   </div>
 </template>
 
 <script setup>
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Autoplay, FreeMode } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/free-mode';
+
 const { t } = useI18n();
+
 const foodItems = [
   {
     id: 1,
@@ -80,11 +106,7 @@ const foodItems = [
 </script>
 
 <style scoped>
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.swiper {
+  transition-timing-function: linear !important;
 }
 </style>
