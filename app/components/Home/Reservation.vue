@@ -51,11 +51,11 @@
                   name="persons"
                   class="w-full border-b border-gray-400 bg-transparent focus:outline-none focus:border-btn"
                 >
-                  <option disabled value="">{{ $t('reservation.selectPersons') }}</option>
-                  <option>{{ $t('reservation.person1') }}</option>
-                  <option>{{ $t('reservation.person2') }}</option>
-                  <option>{{ $t('reservation.person3') }}</option>
-                  <option>{{ $t('reservation.person4plus') }}</option>
+                  <option disabled value="">{{ $t("reservation.selectPersons") }}</option>
+                  <option>{{ $t("reservation.person1") }}</option>
+                  <option>{{ $t("reservation.person2") }}</option>
+                  <option>{{ $t("reservation.person3") }}</option>
+                  <option>{{ $t("reservation.person4plus") }}</option>
                 </VeeField>
                 <VeeErrorMessage name="persons" class="text-red-500 text-xs mt-1" />
               </div>
@@ -66,10 +66,10 @@
                   name="branch"
                   class="w-full border-b border-gray-400 bg-transparent focus:outline-none focus:border-btn"
                 >
-                  <option disabled value="">{{ $t('reservation.selectBranch') }}</option>
-                  <option>{{ $t('reservation.branchCairo') }}</option>
-                  <option>{{ $t('reservation.branchAlex') }}</option>
-                  <option>{{ $t('reservation.branchGiza') }}</option>
+                  <option disabled value="">{{ $t("reservation.selectBranch") }}</option>
+                  <option>{{ $t("reservation.branchCairo") }}</option>
+                  <option>{{ $t("reservation.branchAlex") }}</option>
+                  <option>{{ $t("reservation.branchGiza") }}</option>
                 </VeeField>
                 <VeeErrorMessage name="branch" class="text-red-500 text-xs mt-1" />
               </div>
@@ -96,12 +96,11 @@
             </div>
 
             <div>
-              <VeeField
+              <DatePicker
                 name="date"
-                type="date"
-                class="w-full border-b border-gray-400 bg-transparent focus:outline-none focus:border-btn"
+                mode="date"
+                placeholder="date"
               />
-              <VeeErrorMessage name="date" class="text-red-500 text-xs mt-1" />
             </div>
           </div>
 
@@ -110,7 +109,7 @@
               type="submit"
               class="px-6 py-2 bg-btn text-white rounded-full hover:bg-btn/80 transition"
             >
-              {{ $t('reservation.submit') }}
+              {{ $t("reservation.submit") }}
             </button>
           </div>
         </VeeForm>
@@ -119,7 +118,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { object, string, date } from "yup";
 
 const schema = object({
@@ -129,11 +128,10 @@ const schema = object({
   branch: string().required("Please select branch"),
   from: string().required("Please select start time"),
   to: string().required("Please select end time"),
-  date: date().required("Please select date"),
+  date: date().required("Please select a date"),
 });
 
-const handleSubmit = (values) => {
+const handleSubmit = (values: any) => {
   console.log("Reservation Details:", values);
-  alert("Reservation submitted successfully!");
 };
 </script>
