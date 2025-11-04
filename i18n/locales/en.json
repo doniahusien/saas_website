@@ -120,5 +120,13 @@
     "menu": "Menu",
     "about": "About Us",
     "contact": "Contact"
+  },
+  "filter":{
+    "title":"Selected filters",
+    "clearAll":"Clear all",
+    "search":"Search" ,
+    "selectMain":"Select main category",
+    "selectSub":"Select sub category",
+    "apply":"Apply Filters"
   }
 }
