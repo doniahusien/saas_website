@@ -4,16 +4,16 @@
   >
     <div>
       <div class="flex items-center justify-between mb-4">
-        <h2 class="font-bold text-lg">Selected filters</h2>
+        <h2 class="font-bold text-lg">{{$t('filter.title')}}</h2>
         <button @click="clearAll" class="text-red-500 text-sm hover:underline">
-          Clear all
+          {{$t('filter.clearAll')}}
         </button>
       </div>
 
       <UInput
         v-model="search"
         icon="i-heroicons-magnifying-glass-20-solid"
-        placeholder="Search"
+        :placeholder="$t('filter.search')"
         :ui="{
           base: ' w-full border text-black border-light-gray bg-white',
           wrapper: 'rounded-xl',
@@ -39,7 +39,7 @@
       </div>
 
       <div class="my-10 space-y-4">
-        <h3 class="text-gray-400 text-sm font-medium">Select main category</h3>
+        <h3 class="text-gray-400 text-sm font-medium">{{$t('filter.selectMain')}}</h3>
         <div class="grid grid-cols-2 gap-4">
           <UButton
             v-for="cat in mainCategories"
@@ -60,7 +60,7 @@
       </div>
 
       <div class="space-y-4">
-        <h3 class="text-gray-400 text-sm font-medium">Select sub category</h3>
+        <h3 class="text-gray-400 text-sm font-medium">{{$t('filter.selectSub')}}</h3>
         <div class="grid grid-cols-2 gap-4">
           <UButton
             v-for="sub in subCategories"
@@ -86,14 +86,14 @@
       <button
         class= 'w-full py-3 bg-btn text-white rounded-full font-semibold text-sm',
       >
-        Apply Filters
+        {{ $t('filter.apply') }}
       </button>
     </div>
   </aside>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+const {t} = useI18n();
 
 const search = ref("");
 const selectedMain = ref("");

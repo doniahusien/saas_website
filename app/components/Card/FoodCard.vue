@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white rounded-4xl p-3 shadow-md overflow-hidden relative w-[70%] sm:w-70 md:w-80 transition-transform duration-300 hover:scale-[1.01]"
+    class="bg-white rounded-4xl p-3 shadow-md overflow-hidden relative w-[82%] sm:w-72 md:w-80 transition-transform duration-300 hover:scale-[1.01]"
   >
     <div class="relative">
       <NuxtImg
