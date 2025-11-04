@@ -1,6 +1,6 @@
 <template>
   <aside
-    class="w-full bg-white rounded-2xl p-5 shadow-md flex flex-col justify-between h-full"
+    class="w-full bg-white rounded-2xl p-5 shadow-md flex flex-col"
   >
     <div>
       <div class="flex items-center justify-between mb-4">
@@ -18,7 +18,7 @@
           base: ' w-full border text-black border-light-gray bg-white',
           wrapper: 'rounded-xl',
           icon: 'text-gray-400',
-          input: 'text-sm  placeholder:text-gray-400',
+          input: 'text-sm placeholder:text-gray-400',
         }"
       />
       <div v-if="selectedFilters.length" class="flex flex-wrap gap-2 my-6">
@@ -82,7 +82,7 @@
       </div>
     </div>
 
-    <div class="mt-6">
+    <div class="mt-32">
       <button
         class= 'w-full py-3 bg-btn text-white rounded-full font-semibold text-sm',
       >
