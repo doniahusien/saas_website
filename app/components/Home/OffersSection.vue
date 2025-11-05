@@ -1,16 +1,14 @@
 <template>
-  <div class="container mx-auto space-y-10">
-    <div class="flex justify-between items-center">
+  <div class="container mx-auto space-y-10 px-6 md:px-0">
+    <div class="grid grid-cols-2 items-center">
       <h2 class="text-2xl md:text-3xl lg:text-5xl font-semibold">
         {{ $t("offers.title") }}
       </h2>
-      <NuxtLink to="/offers" class="text-btn flex items-center gap-2 hover:underline">
+      <NuxtLink to="/offers"  class="text-btn justify-self-end hover:underline">
         {{ $t("offers.viewAll") }}
-        <Icon name="mdi:arrow-right" class="w-5 h-5 sm:w-6 sm:h-6" />
+        <Icon name="mdi:arrow-right" class="w-5 h-5 sm:w-6 inline-block align-middle" />
       </NuxtLink>
     </div>
-
-<div class="py-10">
     <Swiper
       :modules="[Autoplay, FreeMode]"
       :slides-per-view="1.2"
@@ -45,7 +43,6 @@
       </SwiperSlide>
     </Swiper>
     </div>
-  </div>
 </template>
 
 <script setup>
