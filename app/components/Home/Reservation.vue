@@ -21,7 +21,6 @@
             {{ $t("reservation.heading") }}
           </h3>
         </div>
-
         <VeeForm @submit="handleSubmit" :validation-schema="schema" class="space-y-10">
           <div>
             <VeeField
@@ -60,16 +59,12 @@
             </div>
 
             <div>
-              <VeeField
-                as="select"
-                name="branch"
-                class="w-full placeholder:text-black border-b border-btn bg-transparent focus:outline-none focus:border-btn"
+              <div
+                @click="openAddressModal = true"
+                class="cursor-pointer w-full border-b border-btn bg-transparent text-black focus:outline-none"
               >
-                <option disabled value="">{{ $t("reservation.selectBranch") }}</option>
-                <option>{{ $t("reservation.branchCairo") }}</option>
-                <option>{{ $t("reservation.branchAlex") }}</option>
-                <option>{{ $t("reservation.branchGiza") }}</option>
-              </VeeField>
+                {{ selectedBranch?.name || $t("reservation.selectBranch") }}
+              </div>
               <VeeErrorMessage name="branch" class="text-red-500 text-xs mt-1" />
             </div>
           </div>
@@ -86,12 +81,13 @@
           <div class="flex justify-center md:justify-end">
             <button
               type="submit"
-              class="px-6 py-3 bg-btn text-white rounded-full hover:bg-btn/80 transition"
+              class="px-6 py-3 cursor-pointer bg-btn text-white rounded-full hover:bg-btn/80 transition"
             >
               {{ $t("reservation.submit") }}
             </button>
           </div>
         </VeeForm>
+        <AddressModal v-model="openAddressModal" @select="handleBranchSelect" />
       </div>
     </div>
   </div>
@@ -104,13 +100,30 @@ const schema = object({
   name: string().required("Name is required"),
   phone: string().required("Phone is required"),
   persons: string().required("Please select number of persons"),
-  branch: string().required("Please select branch"),
-  from: string().required("Please select start time"),
-  to: string().required("Please select end time"),
+  timeFrom: string().required("Please select start time"),
+  timeTo: string().required("Please select end time"),
   date: date().required("Please select a date"),
 });
+const openAddressModal = ref(false);
+const selectedBranch = ref<any>(null);
+
+const handleBranchSelect = (branch: any) => {
+  selectedBranch.value = branch
+  openAddressModal.value = false
+}
 
 const handleSubmit = (values: any) => {
-  console.log("Reservation Details:", values);
+  if (!selectedBranch.value) {
+    alert("Please select a branch");
+    return;
+  }
+
+  const finalData = {
+    ...values,
+    branch: selectedBranch.value.name,
+  };
+
+  console.log("Reservation Details:", finalData);
 };
+
 </script>
