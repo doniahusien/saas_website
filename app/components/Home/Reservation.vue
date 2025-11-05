@@ -101,8 +101,16 @@ const schema = object({
   phone: string().required("Phone is required"),
   persons: string().required("Please select number of persons"),
   timeFrom: string().required("Please select start time"),
-  timeTo: string().required("Please select end time"),
-  date: date().required("Please select a date"),
+ timeTo: object({
+    hours: string().required(),
+    minutes: string().required(),
+    seconds: string().required(),
+  }).required("Please select end time"),
+  timeFrom: object({
+    hours: string().required(),
+    minutes: string().required(),
+    seconds: string().required(),
+  }).required("Please select start time"),
 });
 const openAddressModal = ref(false);
 const selectedBranch = ref<any>(null);
