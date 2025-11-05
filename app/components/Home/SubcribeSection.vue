@@ -1,45 +1,54 @@
 <template>
-  <div class="container mx-auto space-y-10">
-    <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-5">
-      <div class="w-[260px] h-[400px] md:w-[360px] md:h-[500px] lg:w-[560px] lg:h-[700px] mx-auto">
-        <NuxtImg
-          :src="subscriptionContent.image"
-          alt="bg-story"
-          class="object-cover w-full h-full rounded-full"
-        />
+  <section class="container mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
+      <div class="flex justify-center">
+        <div class="w-full md:w-4/5 lg:w-3/4 aspect-[4/5]">
+          <NuxtImg
+            :src="subscriptionContent.image"
+            alt="subscription image"
+            class="object-cover w-full h-full rounded-full shadow-md"
+          />
+        </div>
       </div>
-
-      <div class="space-y-9 mt-8 md:mt-0 px-8 md:px-15">
+      <div class="space-y-8 mt-10 md:mt-0">
         <div
           v-html="subscriptionContent.title"
-          class="text-2xl md:text-3xl lg:text-5xl font-bold"
+          class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
         ></div>
-        <div v-html="subscriptionContent.desc" class="text-subtitle"></div>
+
+        <div
+          v-html="subscriptionContent.desc"
+          class="text-base md:text-lg text-subtitle"
+        ></div>
 
         <VeeForm
           @submit="handleSubmit"
           :validation-schema="schema"
-          class="flex items-center justify-between"
+          class="grid grid-cols-1 md:grid-cols-3 gap-4"
         >
-          <div>
+          <div class="col-span-2">
             <VeeField
               name="email"
               type="email"
-              class="w-full p-2 rounded-full focus:outline-none text-secondary bg-transparent"
               :placeholder="$t('subscription.placeholder')"
+              class="w-full px-5 py-3 rounded-full border border-secondary bg-white/80 text-subtitle focus:ring-2 focus:ring-btn focus:outline-none"
             />
-            <VeeErrorMessage name="email" class="text-red-500 text-xs mt-1" />
+            <VeeErrorMessage
+              name="email"
+              class="text-red-500 text-xs mt-1 block text-start"
+            />
           </div>
+
           <button
             type="submit"
-            class="rounded-full text-sm md:text-base font-medium cursor-pointer px-6 py-3 text-white bg-btn"
+            class="w-full  rounded-full px-8 py-3 font-medium text-white bg-btn hover:opacity-90 transition"
           >
-            {{ $t("subscription.cta") }}
+            {{ $t('subscription.cta') }}
           </button>
         </VeeForm>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -51,8 +60,9 @@ defineProps({
 });
 
 const schema = object({
-  email: string().required("Email is required"),
+  email: string().required("Email is required").email("Enter a valid email"),
 });
+
 const handleSubmit = (values) => {
   console.log("Details:", values);
 };

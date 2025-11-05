@@ -1,13 +1,24 @@
 <template>
-  <div class="container mx-auto py-16">
+  <section class="container mx-auto px-6">
     <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
-      <div class="space-y-8 px-6 md:px-10 order-2 md:order-1">
-        <h2 class="text-2xl md:text-3xl lg:text-5xl font-bold leading-snug">
-          {{ t('app.appTitle') }}<br />
-          {{ t('app.appSubtitle') }}
-        </h2>
+      <div class="flex justify-center order-1 md:order-2">
+        <div
+          class="relative w-full md:w-4/5 lg:w-3/4 aspect-[4/5] rounded-full overflow-hidden shadow-md bg-[url('/images/bg/bg_app.jpg')] bg-cover bg-center flex items-center justify-center"
+        >
+          <NuxtImg
+            src="/images/bg/app.png"
+            alt="App mockup"
+            class="w-3/4 md:w-2/3 lg:w-1/2"
+          />
+        </div>
+      </div>
+      <div class="space-y-8 mt-10 md:mt-0 order-2 md:order-1">
+        <div
+          class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
+          v-html="`${t('app.appTitle')}<br>${t('app.appSubtitle')}`"
+        ></div>
 
-        <p class="text-subtitle max-w-lg">
+        <p class="text-base md:text-lg text-subtitle max-w-lg">
           {{ t('app.appDescription') }}
         </p>
 
@@ -29,19 +40,8 @@
           </NuxtLink>
         </div>
       </div>
-
-     
-      <div
-        class="relative aspect-[5/7] overflow-hidden bg-[url('/images/bg/bg_app.jpg')] bg-cover bg-center rounded-full mx-auto flex items-center justify-center order-1 md:order-2"
-      >
-        <NuxtImg
-          src="/images/bg/app.png"
-          alt="App mockup"
-          class="w-3/4 md:w-[50%] "
-        />
-      </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>

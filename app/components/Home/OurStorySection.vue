@@ -1,35 +1,40 @@
 <template>
-  <div class="container mx-auto space-y-10">
-    <div class="grid grid-cols-1 md:grid-cols-2 items-center ">
-      <div class="aspect-[5/7] mx-auto">
-        <NuxtImg
-          src="/images/bg/auth_bg.png"
-          alt="bg-story"
-          class="object-cover w-full h-full rounded-full"
-        />
+  <section class="container mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
+      <div class="flex justify-center">
+        <div class="w-full md:w-4/5 lg:w-3/4 aspect-[4/5]">
+          <NuxtImg
+            src="/images/bg/auth_bg.png"
+            alt="bg-story"
+            class="object-cover w-full h-full rounded-full shadow-md"
+          />
+        </div>
       </div>
 
-      <div class="space-y-8 mt-8 md:mt-0 px-10">
-        <div class="flex items-center space-x-4">
-          <span class="text-btn">
-            {{ $t("ourStory.eyebrow") }}
-          </span>
+      <div class="space-y-8 mt-10 md:mt-0">
+        <div class="flex items-center gap-4">
+          <span class="text-btn font-medium">{{ $t("ourStory.eyebrow") }}</span>
           <div class="flex-1 h-px bg-btn"></div>
         </div>
 
-        <h2 class="text-2xl md:text-3xl lg:text-5xl font-bold">{{ $t("ourStory.title") }}</h2>
-        <p class="text-subtitle">{{ $t("ourStory.paragraph1") }}</p>
-        <p class="text-subtitle">{{ $t("ourStory.paragraph2") }}</p>
+        <div
+          class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
+          v-html="$t('ourStory.title')"
+        ></div>
 
+        <div class="space-y-4 text-base md:text-lg text-subtitle">
+          <p v-html="$t('ourStory.paragraph1')"></p>
+          <p v-html="$t('ourStory.paragraph2')"></p>
+        </div>
         <NuxtLink
           to="/"
-          class="rounded-full font-medium cursor-pointer px-6 py-3 text-btn border border-btn"
+          class="rounded-full font-medium px-8 py-3 border border-btn text-btn hover:bg-btn hover:text-white transition"
         >
           {{ $t("ourStory.cta") }}
         </NuxtLink>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
