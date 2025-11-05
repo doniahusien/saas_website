@@ -6,7 +6,6 @@
     >
       <div
         class="bg-white rounded-2xl shadow-lg p-6 relative animate-fadeIn w-full max-w-md"
-        :dir="locale === 'ar' ? 'rtl' : 'ltr'"
       >
         <button
           @click="emit('update:modelValue', false)"
@@ -15,14 +14,14 @@
           &times;
         </button>
 
-        <h2 class="text-2xl font-bold mb-4">{{ t("select_store") }}</h2>
+        <h2 class="text-2xl font-bold mb-4">{{ t('select_store') }}</h2>
 
-        <div v-if="loading" class="text-center text-gray-500 py-6">
-          {{ t("loading_branches") }}
+        <div v-if="pending" class="text-center text-gray-500 py-6">
+          {{ t('loading_branches') }}
         </div>
 
         <div v-else-if="error" class="text-center text-red-500 py-6">
-          {{ t("failed_to_load") }}
+          {{ t('failed_to_load') }}
         </div>
 
         <div v-else class="flex flex-col gap-3 max-h-80 overflow-y-auto">
@@ -31,11 +30,9 @@
             :key="branch.id"
             @click="selectBranch(branch)"
             class="flex items-center gap-4 border rounded-xl p-3 cursor-pointer transition"
-            :class="
-              selectedBranchId === branch.id
-                ? 'border-btn bg-primary/20'
-                : 'border-gray-200 hover:bg-gray-100'
-            "
+            :class="selectedBranchId === branch.id
+              ? 'border-btn bg-primary/20'
+              : 'border-gray-200 hover:bg-gray-100'"
           >
             <img
               :src="branch.image"
@@ -44,7 +41,9 @@
             />
             <div class="flex flex-col flex-1">
               <p class="font-semibold text-lg">{{ branch.name }}</p>
-              <p class="text-sm text-gray-600">{{ branch.location_description }}</p>
+              <p class="text-sm text-gray-600">
+                {{ branch.location_description }}
+              </p>
             </div>
             <div
               class="w-5 h-5 rounded-full border flex items-center justify-center"
@@ -62,45 +61,42 @@
   </transition>
 </template>
 
-<script setup>
-import { useI18n } from "vue-i18n";
+<script setup lang="ts">
+const { t } = useI18n()
+const emit = defineEmits(['update:modelValue', 'select'])
+const props = defineProps({ modelValue: Boolean })
 
-const { t, locale } = useI18n();
-const { $api } = useNuxtApp();
+const selectedBranchId = ref<number | null>(null)
+const branches = ref<any[]>([])
+const pending = ref(false)
+const error = ref<string | null>(null)
 
-const props = defineProps({
-  modelValue: Boolean,
-});
-const emit = defineEmits(["update:modelValue", "select"]);
+const { $api } = useNuxtApp()
 
-const branches = ref([]);
-const loading = ref(false);
-const error = ref(false);
-const selectedBranchId = ref(null);
+watch(
+  () => props.modelValue,
+  async (isOpen) => {
+    if (!isOpen) return
 
-const fetchBranches = async () => {
-  try {
-    loading.value = true;
-    error.value = false;
-    const { data } = await useAsyncData("stores", () =>
-      useGlobalFetch("/stores")
-    );
+    pending.value = true
+    error.value = null
+    try {
+      const res = await $api.get('/stores')
+      branches.value = res.data?.data || []
+    } catch (err: any) {
+      console.error('Error fetching branches:', err)
+      error.value = err.message || 'Failed to load branches'
+    } finally {
+      pending.value = false
+    }
+  },
+)
 
-    branches.value = data.value.data || [];
-  } catch (err) {
-    error.value = true;
-  } finally {
-    loading.value = false;
-  }
-};
-
-const selectBranch = (branch) => {
-  selectedBranchId.value = branch.id;
-  emit("select", branch);
-  emit("update:modelValue", false);
-};
-
-onMounted(fetchBranches);
+const selectBranch = (branch: any) => {
+  selectedBranchId.value = branch.id
+  emit('select', branch)
+  emit('update:modelValue', false)
+}
 </script>
 
 <style scoped>
