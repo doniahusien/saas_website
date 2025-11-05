@@ -9,7 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from "vue-router";
 const { t } = useI18n();
 
 const route = useRoute();

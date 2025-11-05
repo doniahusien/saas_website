@@ -104,14 +104,15 @@ const paginatedItems = computed(() => {
             :ui="{
               base: 'w-full',
               list: 'flex gap-2 bg-transparent rounded-full p-1',
-              trigger: `hover:cursor-pointer bg-transparent rounded-full text-sm transition-colors duration-200
-                        data-[state=active]:text-white data-[state=inactive]:text-secondary`,
-              indicator:
-                'absolute rounded-full bg-btn shadow-sm transition-[translate,width] duration-200',
+              trigger:
+                'cursor-pointer bg-transparent rounded-full text-sm transition-colors duration-200 text-secondary aria-selected:text-white',
+              indicator: 'absolute rounded-full bg-btn shadow-sm',
             }"
           />
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-items-center gap-16">
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-items-center gap-16"
+          >
             <CardFoodCard
               v-for="item in paginatedItems"
               :key="item.id"
@@ -123,7 +124,7 @@ const paginatedItems = computed(() => {
             />
           </div>
 
-          <Pagination
+          <UIPagination
             :items="filteredItems"
             :items-per-page="itemsPerPage"
             v-model:current-page="currentPage"

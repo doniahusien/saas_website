@@ -70,12 +70,12 @@
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <TimePicker name="timeTo" :placeholder="$t('reservation.timeTo')" />
-            <TimePicker name="timeFrom" :placeholder="$t('reservation.timeFrom')" />
+            <inputsTimePicker name="timeTo" :placeholder="$t('reservation.timeTo')" />
+            <inputsTimePicker name="timeFrom" :placeholder="$t('reservation.timeFrom')" />
           </div>
 
           <div>
-            <DatePicker name="date" placeholder="date" />
+            <inputsDatePicker name="date" placeholder="date" />
           </div>
 
           <div class="flex justify-center md:justify-end">

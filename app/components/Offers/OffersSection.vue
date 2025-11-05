@@ -13,7 +13,7 @@
       />
     </div>
 
-    <Pagination
+    <UIPagination
       :items="foodItems"
       :itemsPerPage="itemsPerPage"
       :currentPage="currentPage"

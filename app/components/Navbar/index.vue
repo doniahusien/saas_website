@@ -59,7 +59,7 @@
 
       <button
         @click="toggle"
-        class="md:hidden flex items-center justify-center w-10 h-10 rounded focus:outline-none"
+        class="cursor-pointer md:hidden flex items-center justify-center w-10 h-10 rounded focus:outline-none"
       >
         <span v-if="!isOpen" class="text-3xl">☰</span>
         <span v-else class="text-3xl">✕</span>

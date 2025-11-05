@@ -84,7 +84,7 @@
 
     <div class="mt-32">
       <button
-        class= 'w-full py-3 bg-btn text-white rounded-full font-semibold text-sm',
+        class= 'w-full py-3 bg-btn text-white rounded-full font-semibold text-sm'
       >
         {{ $t('filter.apply') }}
       </button>
