@@ -6,7 +6,7 @@
       :locale="dateFnsLocale"
       auto-apply
       :placeholder="placeholder"
-      class="w-full datepicker-wrapper"
+      class="w-full placeholder:text-black datepicker-wrapper"
       input-class="datepicker-input"
     />
     <VeeErrorMessage :name="name" class="text-red-500 text-xs mt-1" />
@@ -44,5 +44,9 @@ const { value: internalValue } = useField(props.name);
 
 .datepicker-wrapper :deep(.dp__input:focus) {
   border-color: var(--color-btn, #c49a6c);
+}
+.datepicker-wrapper :deep(.dp__input::placeholder) {
+  color: black !important;
+  opacity: 1; 
 }
 </style>

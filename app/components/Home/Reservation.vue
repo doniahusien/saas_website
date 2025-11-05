@@ -27,7 +27,7 @@
             <VeeField
               name="name"
               type="text"
-              class="w-full border-b border-btn bg-transparent focus:outline-none focus:border-btn"
+              class="w-full placeholder:text-black border-b border-btn bg-transparent focus:outline-none focus:border-btn"
               :placeholder="$t('reservation.namePlaceholder')"
             />
             <VeeErrorMessage name="name" class="text-red-500 text-xs mt-1" />
@@ -37,7 +37,7 @@
             <VeeField
               name="phone"
               type="tel"
-              class="w-full border-b border-btn bg-transparent focus:outline-none focus:border-btn"
+              class="w-full placeholder:text-black border-b border-btn bg-transparent focus:outline-none focus:border-btn"
               :placeholder="$t('reservation.phonePlaceholder')"
             />
             <VeeErrorMessage name="phone" class="text-red-500 text-xs mt-1" />
@@ -48,7 +48,7 @@
               <VeeField
                 as="select"
                 name="persons"
-                class="w-full border-b border-btn bg-transparent focus:outline-none focus:border-btn"
+                class="w-full placeholder:text-black border-b border-btn bg-transparent focus:outline-none focus:border-btn"
               >
                 <option disabled value="">{{ $t("reservation.selectPersons") }}</option>
                 <option>{{ $t("reservation.person1") }}</option>
@@ -63,7 +63,7 @@
               <VeeField
                 as="select"
                 name="branch"
-                class="w-full border-b border-btn bg-transparent focus:outline-none focus:border-btn"
+                class="w-full placeholder:text-black border-b border-btn bg-transparent focus:outline-none focus:border-btn"
               >
                 <option disabled value="">{{ $t("reservation.selectBranch") }}</option>
                 <option>{{ $t("reservation.branchCairo") }}</option>
@@ -83,10 +83,10 @@
             <DatePicker name="date" placeholder="date" />
           </div>
 
-          <div class="flex justify-center md:justify-end pt-6">
+          <div class="flex justify-center md:justify-end">
             <button
               type="submit"
-              class="px-6 py-2 bg-btn text-white rounded-full hover:bg-btn/80 transition"
+              class="px-6 py-3 bg-btn text-white rounded-full hover:bg-btn/80 transition"
             >
               {{ $t("reservation.submit") }}
             </button>

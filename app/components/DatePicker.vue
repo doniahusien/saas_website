@@ -48,4 +48,8 @@ const { value: internalValue } = useField(props.name);
 .datepicker-wrapper :deep(.dp__input:focus) {
   border-color: var(--color-btn, #c49a6c);
 }
+.datepicker-wrapper :deep(.dp__input::placeholder) {
+  color: black !important;
+  opacity: 1; 
+}
 </style>
