@@ -30,7 +30,7 @@
     @apply font-switzer bg-white text-primary;
   }
   .overlay{
-  @apply absolute inset-0 bg-black/50;
+  @apply absolute inset-0 bg-black/70;
 }
 
 }
