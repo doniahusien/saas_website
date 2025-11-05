@@ -82,7 +82,7 @@
    "reservation": {
     "eyebrow": "Our Story",
     "title": "Online Reservation",
-    "subtitle": "Reservations",
+    "subtitle": "reservations",
     "heading": "Book a Table",
     "namePlaceholder": "Name",
     "phonePlaceholder": "Phone",
@@ -91,10 +91,12 @@
     "person2": "2 Persons",
     "person3": "3 Persons",
     "person4plus": "4+ Persons",
-    "selectBranch": "Select Branch",
+    "selectBranch": "Branch",
     "branchCairo": "Cairo",
     "branchAlex": "Alexandria",
     "branchGiza": "Giza",
+    "timeFrom": "From",
+    "timeTo": "To",
     "submit": "Book a Table"
   },
    "app": {
@@ -128,5 +130,6 @@
     "selectMain":"Select main category",
     "selectSub":"Select sub category",
     "apply":"Apply Filters"
-  }
+  },
+  "follow":"Follow us on"
 }

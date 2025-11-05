@@ -92,6 +92,8 @@
     "branchCairo": "القاهرة",
     "branchAlex": "الإسكندرية",
     "branchGiza": "الجيزة",
+    "timeFrom": "من",
+    "timeTo": "الى",
     "submit": "احجز الطاولة"
   },
   "app": {
@@ -109,21 +111,22 @@
     "placeholder": "عنوان البريد الالكتروني",
     "cta": "اشترك"
   },
-   "common": {
+  "common": {
     "home": "الرئيسية"
   },
-   "pages": {
+  "pages": {
     "offers": "العروض",
     "menu": "القائمة",
     "about": "من نحن",
     "contact": "اتصل بنا"
   },
   "filter": {
-  "title": "الفلاتر المختارة",
-  "clearAll": "إزالة الكل",
-  "search": "بحث",
-  "selectMain": "اختر التصنيف الرئيسي",
-  "selectSub": "اختر التصنيف الفرعي",
-  "apply": "تطبيق الفلاتر"
-}
+    "title": "الفلاتر المختارة",
+    "clearAll": "إزالة الكل",
+    "search": "بحث",
+    "selectMain": "اختر التصنيف الرئيسي",
+    "selectSub": "اختر التصنيف الفرعي",
+    "apply": "تطبيق الفلاتر"
+  },
+  "follow": "تابعنا على "
 }

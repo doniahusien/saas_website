@@ -2,11 +2,9 @@
   <div>
     <VueDatePicker
       v-model="internalValue"
+      time-picker
       :locale="dateFnsLocale"
-      mode="date"
-      :time-config="{ enableTimePicker: false }"
       auto-apply
-      :min-date="minDate"
       :placeholder="placeholder"
       class="w-full datepicker-wrapper"
       input-class="datepicker-input"
@@ -24,8 +22,7 @@ import ar from "date-fns/locale/ar";
 
 const props = defineProps({
   name: { type: String, required: true },
-  placeholder: { type: String, default: "Select date" },
-  minDate: { type: Date, default: () => new Date() },
+  placeholder: { type: String, default: "Select time" },
 });
 
 const { locale } = useI18n();
