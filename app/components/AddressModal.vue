@@ -28,7 +28,7 @@
               selected?.id === branch.id ? 'border-btn bg-btn/5' : 'border-gray-200'
             "
           >
-            <img
+            <NuxtImg
               :src="branch.image"
               alt="map"
               class="w-16 h-16 rounded-lg object-cover"
