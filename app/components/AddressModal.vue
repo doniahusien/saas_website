@@ -4,18 +4,19 @@
       v-if="modelValue"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
     >
-      <div
-        class="bg-white rounded-2xl shadow-lg p-6 relative w-full max-w-lg mx-4"
-      >
+      <div class="bg-white rounded-2xl shadow-lg p-6 relative w-full md:w-1/2 mx-4">
         <button
           class="absolute top-4 right-4 text-gray-600 hover:text-black"
           @click="$emit('update:modelValue', false)"
         >
-          ✕
+          <Icon name="mdi:close" class="w-6 h-6" />
         </button>
-
-        <h2 class="text-2xl font-bold mb-2">Branches Address</h2>
-        <p class="text-gray-500 mb-6">Please, select your location</p>
+        <h2 class="text-2xl font-bold mb-2">
+          {{ t("reservation.branchesTitle") }}
+        </h2>
+        <p class="text-gray-500 mb-6">
+          {{ t("reservation.branchesSubtitle") }}
+        </p>
 
         <div class="space-y-4">
           <div
@@ -23,7 +24,9 @@
             :key="branch.id"
             @click="selectBranch(branch)"
             class="flex items-center gap-4 p-3 rounded-xl border cursor-pointer transition hover:bg-gray-50"
-            :class="selected?.id === branch.id ? 'border-btn bg-btn/5' : 'border-gray-200'"
+            :class="
+              selected?.id === branch.id ? 'border-btn bg-btn/5' : 'border-gray-200'
+            "
           >
             <img
               :src="branch.image"
@@ -46,9 +49,9 @@
         <div class="mt-6">
           <button
             @click="confirm"
-            class="w-full py-3 bg-btn text-white font-semibold rounded-full hover:bg-btn/80 transition"
+            class="w-full py-3 bg-btn text-white font-semibold rounded-full hover:bg-btn/80 transition flex items-center justify-center gap-2"
           >
-            Confirm
+            {{ t("reservation.confirmBranch") }}
           </button>
         </div>
       </div>
@@ -57,39 +60,41 @@
 </template>
 
 <script setup lang="ts">
+const { t, locale } = useI18n();
+
 const props = defineProps({
   modelValue: Boolean,
-})
-const emit = defineEmits(['update:modelValue', 'select'])
+});
+const emit = defineEmits(["update:modelValue", "select"]);
 
 const branches = [
   {
     id: 1,
-    name: 'Burj Khalifa, Dubai Branch',
-    address: 'Dubai mall and adjacent to burj khalifa, address',
-    image: '/images/food1.png',
+    name: "Burj Khalifa, Dubai Branch",
+    address: "Dubai Mall, adjacent to Burj Khalifa",
+    image: "/images/food1.png",
   },
   {
     id: 2,
-    name: 'Abu Dhabi Branch',
+    name: "Abu Dhabi Branch",
     address:
       "Al Maryah Island at the core of Abu Dhabi's New International Financial Center",
-    image: '/images/food2.png',
+    image: "/images/food2.png",
   },
-]
+];
 
-const selected = ref(null)
+const selected = ref<any>(null);
 
 const selectBranch = (branch: any) => {
-  selected.value = branch
-}
+  selected.value = branch;
+};
 
 const confirm = () => {
   if (selected.value) {
-    emit('select', selected.value)
-    emit('update:modelValue', false)
+    emit("select", selected.value);
+    emit("update:modelValue", false);
   }
-}
+};
 </script>
 
 <style scoped>

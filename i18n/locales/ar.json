@@ -94,7 +94,10 @@
     "branchGiza": "الجيزة",
     "timeFrom": "من",
     "timeTo": "الى",
-    "submit": "احجز الطاولة"
+    "submit": "احجز الطاولة",
+    "branchesTitle": "عناوين الفروع",
+    "branchesSubtitle": "من فضلك اختر موقعك",
+    "confirmBranch": "تأكيد"
   },
   "app": {
     "appTitle": "أصبح من السهل الآن",
