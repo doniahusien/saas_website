@@ -3,7 +3,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
       <div class="flex justify-center order-1 md:order-2">
         <div
-          class="relative w-full md:w-4/5 lg:w-3/4 aspect-[4/5] rounded-full overflow-hidden shadow-md bg-[url('/images/bg/bg_app.jpg')] bg-cover bg-center flex items-center justify-center"
+          class="relative w-full md:w-4/5 lg:w-3/4 aspect-4/5 rounded-full overflow-hidden shadow-md bg-[url('/images/bg/bg_app.jpg')] bg-cover bg-center flex items-center justify-center"
         >
           <NuxtImg
             src="/images/bg/app.png"

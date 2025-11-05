@@ -2,7 +2,7 @@
   <section class="container mx-auto px-6">
     <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
       <div class="flex justify-center">
-        <div class="w-full md:w-4/5 lg:w-3/4 aspect-[4/5]">
+        <div class="w-full md:w-4/5 lg:w-3/4 aspect-4/5">
           <NuxtImg
             src="/images/bg/auth_bg.png"
             alt="bg-story"
