@@ -1,5 +1,5 @@
 <template>
-  <div v-if="sliders?.length" class="relative w-full h-full ">
+  <div v-if="sliders?.length" class="relative w-full h-full">
     <Swiper
       :modules="[Navigation, Autoplay]"
       :slides-per-view="1"
@@ -8,18 +8,13 @@
       :navigation="{ prevEl: prevEl, nextEl: nextEl }"
       class="w-full h-screen"
     >
-      <SwiperSlide
-        v-for="item in sliders"
-        :key="item.id"
-        class="relative w-full "
-      >
+      <SwiperSlide v-for="item in sliders" :key="item.id">
         <NuxtImg :src="item.image" alt="slider" class="w-full h-full object-cover" />
 
         <div class="overlay"></div>
 
         <div
-          class="absolute inset-0 flex flex-col items-center justify-center text-center text-white z-10 px-6"
-        >
+          class="absolute inset-0 flex flex-col items-center justify-center text-center text-white z-10 px-6">
           <div
             v-html="item.title"
             class="font-allura text-4xl md:text-6xl lg:text-7xl"
@@ -27,21 +22,22 @@
 
           <div
             v-html="item.desc"
-            class="text-sm md:text-base lg:text-lg max-w-xl mx-auto mb-6 opacity-90"
+            class="text-sm md:text-base lg:text-lg mb-6 opacity-90"
           ></div>
 
           <NuxtLink
             v-if="item.link"
             :href="item.link"
-            class="text-sm md:text-base flex items-center gap-2"
+            class="text-sm md:text-base cursor-pointer flex items-center gap-2"
           >
             <span class="border-b-2">Discover More</span>
             <Icon name="lucide:arrow-up-right" class="w-4 h-4" />
           </NuxtLink>
         </div>
+
         <div
           v-if="contactItems.length"
-          class="absolute bottom-8 left-12 flex space-x-4 z-20"
+          class="absolute bottom-8 left-12 flex gap-3 z-20"
         >
           <template v-for="(item, index) in contactItems" :key="index">
             <NuxtLink
@@ -71,8 +67,6 @@
       </button>
     </div>
   </div>
-
-  <p v-else class="text-center py-10 text-gray-400">No sliders available</p>
 </template>
 
 <script setup>
