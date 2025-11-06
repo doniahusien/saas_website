@@ -1,7 +1,6 @@
 <template>
   <nav
     class="relative flex items-center justify-between px-6 md:px-10 py-4 bg-white shadow-sm"
-    :dir="locale === 'ar' ? 'rtl' : 'ltr'"
   >
     <div class="flex items-center gap-6">
       <NuxtImg src="/logo.png" alt="logo" class="w-16 h-16 object-contain" />
@@ -108,25 +107,27 @@
   </nav>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const { t, locale } = useI18n()
 const localePath = useLocalePath()
 
 const isOpen = ref(false)
 const showSelect = ref(false)
-const selectedBranch = ref(null)
-const { $api } = useNuxtApp()
+const selectedBranch = ref<any>(null)
+
+const branchCookie = useCookie('selectedBranch', { sameSite: 'lax' })
 
 const toggle = () => (isOpen.value = !isOpen.value)
 
 const onBranchSelected = (branch) => {
   selectedBranch.value = branch
-  localStorage.setItem('selectedBranch', JSON.stringify(branch))
+  branchCookie.value = branch 
 }
 
 onMounted(() => {
-  const saved = localStorage.getItem('selectedBranch')
-  if (saved) selectedBranch.value = JSON.parse(saved)
+  if (branchCookie.value) {
+    selectedBranch.value = branchCookie.value
+  }
 })
 
 const items = computed(() => [

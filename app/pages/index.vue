@@ -2,26 +2,35 @@
   <div class="space-y-34 pb-16">
     <HomeSlider :sliders="sliders" />
     <MenuSection/>
-    <HomeOurStorySection  v-if="webContent && Object.keys(webContent).length > 0" :about="webContent"/>
+    <HomeOurStorySection v-if="webContent && Object.keys(webContent).length > 0" :about="webContent"/>
     <PopularSection/>
     <HomeReservation/>
-    <HomeAppSection/>
+    <HomeAppSection :appData="webContentLink"/>
     <HomeInstagramGallery/>
     <HomeOffersSection/>
     <HomeSubcribeSection v-if="subscriptionContent && Object.keys(subscriptionContent).length > 0"
      :subscriptionContent="subscriptionContent"/>
   </div>
 </template>
-
 <script setup lang="ts">
+const branchCookie = useCookie('selectedBranch', { sameSite: 'lax' }) 
+const storeId = computed(() => branchCookie.value?.id || null);
+console.log(storeId.value);
 
-const { data } = await useAsyncData('HomeData', () =>
-  useGlobalFetch<any>('home?store_id=13', {
-    headers: { os: 'web' }
+const { data, refresh } = await useAsyncData('HomeData', () =>
+  useGlobalFetch<any>('home', {
+    headers: { os: 'web' },
+    params: storeId.value ? { store_id: storeId.value } : {},
   })
 )
 
-const sliders = computed(() => data.value?.data?.sliders);
+watch(storeId, async (newId, oldId) => {
+  if (newId && newId !== oldId) {
+    await refresh()
+  }
+})
+
+const sliders = computed(() => data.value?.data?.sliders)
 const webContent = computed(() => data.value?.data?.web_content || null)
 const popularProducts = computed(() => data.value?.data?.popular_products || [])
 const offers = computed(() => data.value?.data?.offers || [])

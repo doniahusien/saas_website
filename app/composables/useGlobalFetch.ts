@@ -4,6 +4,7 @@ export const useGlobalFetch = async <T = any>(
     method?: string
     body?: any
     headers?: Record<string, string>
+    params?: Record<string, any>
   } = {}
 ): Promise<T> => {
   const config = useRuntimeConfig()
@@ -22,6 +23,7 @@ export const useGlobalFetch = async <T = any>(
         'Accept-Language': locale.value,
         ...options.headers,
       },
+      ...(options.params && { params: options.params }),
     })
   } catch (error: any) {
     console.error(error)
