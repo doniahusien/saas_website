@@ -3,7 +3,7 @@
     <HomeSlider :sliders="sliders" />
     <MenuSection/>
     <HomeOurStorySection v-if="webContent && Object.keys(webContent).length > 0" :about="webContent"/>
-    <PopularSection/>
+    <PopularSection v-if="popularProducts && popularProducts.length > 0" :products="popularProducts"/>
     <HomeReservation/>
     <HomeAppSection v-if="webContentLink && Object.keys(webContentLink).length > 0"
      :appData="webContentLink"/>

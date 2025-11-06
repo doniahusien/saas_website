@@ -30,7 +30,7 @@
       grab-cursor
     >
       <SwiperSlide
-        v-for="item in foodItems"
+        v-for="item in products"
         :key="item.id"
       >
         <CardFoodCard
@@ -38,7 +38,9 @@
           :title="item.title"
           :description="item.description"
           :rating="item.rating"
-          :price="item.price"
+          :price="item.price.price"
+          :currency="item.price.currency"
+          :id="item.id"
         />
       </SwiperSlide>
     </Swiper>
@@ -52,7 +54,9 @@ import "swiper/css";
 import "swiper/css/free-mode";
 
 const { t } = useI18n();
-
+defineProps({
+  products:Array
+})
 const foodItems = [
   {
     id: 1,
