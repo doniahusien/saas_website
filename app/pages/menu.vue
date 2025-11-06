@@ -95,9 +95,9 @@ const paginatedItems = computed(() => {
     />
 
     <div class="container mx-auto px-2">
-      <div class="grid grid-cols-1 lg:grid-cols-[1.6fr_7fr] gap-16">
-        <UIFilterSection />
-        <section class="space-y-8">
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-16">
+        <UIFilterSection class="lg:col-span-1" />
+        <section class="space-y-8 lg:col-span-3">
           <UTabs
             v-model="selectedTab"
             :items="categories"
@@ -111,7 +111,7 @@ const paginatedItems = computed(() => {
           />
 
           <div
-            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-items-center gap-16"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-items-center gap-5"
           >
             <CardFoodCard
               v-for="item in paginatedItems"

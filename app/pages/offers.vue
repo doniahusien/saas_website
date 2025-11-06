@@ -1,5 +1,14 @@
 <script setup>
 const { t } = useI18n();
+
+const branchCookie = useCookie('selectedBranch', { sameSite: 'lax' }) 
+const storeId = computed(() => branchCookie.value?.id || null);
+const { data } = await useAsyncData('offersData', () =>
+  useGlobalFetch<any>('offers', {
+    params: storeId.value ? { store_id: storeId.value } : {},
+  })
+)
+
 </script>
 
 <template>
@@ -10,6 +19,6 @@ const { t } = useI18n();
         title: 'Offers',
       }"
     />
-    <OffersSection />
+    <OffersSection :offers="data?.data" />
   </div>
 </template>
