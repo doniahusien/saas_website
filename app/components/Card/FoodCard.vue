@@ -6,7 +6,7 @@
       <NuxtImg
         :src="image"
         alt="Food image"
-        class="w-full rounded-lg h-48 sm:h-56 md:h-60 object-cover"
+        class="w-full rounded-lg h-60 object-cover"
       />
       <div
         class="absolute top-3 left-3 flex items-center bg-white/80 backdrop-blur-sm px-2 py-1 rounded-full shadow-md"
@@ -23,7 +23,7 @@
       </p>
 
       <div class="flex justify-between items-center">
-        <div class="flex flex-col mt-6">
+        <div class="flex flex-col">
           <span v-if="offer" class="text-sm line-through text-secondary"
             >{{ oldPrice }}{{currency}}</span
           >
