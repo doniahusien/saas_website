@@ -35,8 +35,8 @@
       >
         <CardFoodCard
           :image="item.image"
-          :title="item.title"
-          :description="item.description"
+          :title="item.name"
+          :description="item.description|| 'description'"
           :rating="item.rating"
           :price="item.price.price"
           :currency="item.price.currency"
