@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white mx-auto rounded-4xl p-3 shadow-md overflow-hidden relative w-[95%] sm:w-70 md:w-72"
+    class="bg-white mx-auto rounded-4xl p-3 shadow-md overflow-hidden relative w-full"
   >
     <div class="relative">
       <NuxtImg

@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto space-y-16">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-5">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
       <CardFoodCard
         v-for="item in paginatedItems"
         :key="item.id"
@@ -22,6 +22,10 @@
   </div>
 </template>
 <script setup>
+
+defineProps({
+  offers:Object
+})
 const foodItems = [
   {
     id: 1,
