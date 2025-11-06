@@ -29,13 +29,14 @@
       free-mode
       grab-cursor
     >
-      <SwiperSlide v-for="item in foodItems" :key="item.id">
+      <SwiperSlide v-for="item in products" :key="item.id">
         <CardFoodCard
           :image="item.image"
-          :title="item.title"
-          :description="item.description"
+          :title="item.name"
+          :description="item.desc || 'No description available'"
           :rating="item.rating"
-          :price="item.price"
+          :price="item.price.price"
+          :currency="item.price.currency"
           :id="item.id"
         />
       </SwiperSlide>
@@ -50,7 +51,9 @@ import "swiper/css";
 import "swiper/css/free-mode";
 
 const { t } = useI18n();
-
+defineProps({
+  products:Array
+})
 const foodItems = [
   {
     id: 1,

@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-34 pb-16">
     <HomeSlider :sliders="sliders" />
-    <MenuSection/>
+    <MenuSection v-if="menuProducts && menuProducts.length > 0" :products="menuProducts"/>
     <HomeOurStorySection v-if="webContent && Object.keys(webContent).length > 0" :about="webContent"/>
     <PopularSection v-if="popularProducts && popularProducts.length > 0" :products="popularProducts"/>
     <HomeReservation/>
@@ -33,6 +33,7 @@ watch(storeId, async (newId, oldId) => {
 const sliders = computed(() => data.value?.data?.sliders)
 const webContent = computed(() => data.value?.data?.web_content || null)
 const popularProducts = computed(() => data.value?.data?.popular_products || [])
+const menuProducts = computed(() => data.value?.data?.products || [])
 const offers = computed(() => data.value?.data?.offers || [])
 const subscriptionContent = computed(() => data.value?.data?.subscription_content || null)
 const webContentLink = computed(() => data.value?.data?.web_content_link || null)
