@@ -2,7 +2,7 @@
   <div class="space-y-34 pb-16">
     <HomeSlider :sliders="sliders" />
     <MenuSection/>
-    <HomeOurStorySection/>
+    <HomeOurStorySection  v-if="webContent && Object.keys(webContent).length > 0" :about="webContent"/>
     <PopularSection/>
     <HomeReservation/>
     <HomeAppSection/>
@@ -16,7 +16,7 @@
 <script setup lang="ts">
 
 const { data } = await useAsyncData('HomeData', () =>
-  useGlobalFetch<any>('home', {
+  useGlobalFetch<any>('home?store_id=13', {
     headers: { os: 'web' }
   })
 )

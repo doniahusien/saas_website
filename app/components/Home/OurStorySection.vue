@@ -1,10 +1,10 @@
 <template>
-  <section class="container mx-auto px-6">
+  <section  class="container mx-auto px-6">
     <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
       <div class="flex justify-center">
         <div class="w-full md:w-4/5 lg:w-3/4 aspect-4/5">
           <NuxtImg
-            src="/images/bg/auth_bg.png"
+            :src="about.image"
             alt="bg-story"
             class="object-cover w-full h-full rounded-full shadow-md"
           />
@@ -19,15 +19,14 @@
 
         <div
           class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
-          v-html="$t('ourStory.title')"
+          v-html="about.title"
         ></div>
 
-        <div class="space-y-4 text-base md:text-lg text-subtitle">
-          <p v-html="$t('ourStory.paragraph1')"></p>
-          <p v-html="$t('ourStory.paragraph2')"></p>
+        <div v-html="about.desc" class="space-y-4 text-base md:text-lg text-subtitle">
+         
         </div>
         <NuxtLink
-          to="/"
+          to="/about"
           class="rounded-full font-medium px-8 py-3 border border-btn text-btn hover:bg-btn hover:text-white transition"
         >
           {{ $t("ourStory.cta") }}
@@ -39,4 +38,7 @@
 
 <script setup>
 const { t } = useI18n();
+defineProps({
+  about: Object,
+})
 </script>
