@@ -4,7 +4,7 @@ export const useAppAuth = defineStore('authStore', {
   state: () => ({
     token: useCookie<string | null>('jwt_token_saas').value || null,
     userData: useCookie<any | null>('saas_user_data').value || null,
-    tempVerifyData: useCookie<any | null>('saas_temp_verify').value || null, // Ensure correct cookie name
+    tempVerifyData: useCookie<any | null>('saas_temp_verify').value || null, 
   }),
 
   getters: {
@@ -15,11 +15,11 @@ export const useAppAuth = defineStore('authStore', {
   actions: {
     setTempVerifyData(data) {
       this.tempVerifyData = data;
-      useCookie("saas_temp_verify").value = data; // Use consistent cookie name
+      useCookie("saas_temp_verify").value = data; 
     },
     clearTempVerifyData() {
       this.tempVerifyData = null;
-      useCookie('saas_temp_verify').value = null; // Clear the cookie
+      useCookie('saas_temp_verify').value = null;
     },
 
     setAuthData(user) {
