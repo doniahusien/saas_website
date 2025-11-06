@@ -36,6 +36,7 @@
           :description="item.description"
           :rating="item.rating"
           :price="item.price"
+          :id="item.id"
         />
       </SwiperSlide>
     </Swiper>

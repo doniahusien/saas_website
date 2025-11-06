@@ -21,6 +21,7 @@ const emit = defineEmits(['updatePage']);
         :oldPrice="item.price.price"
         :currency="item.price.currency"
         :percentage="item.price.percentage"
+        :id="item.id"
         :offer="true"
       />
     </div>

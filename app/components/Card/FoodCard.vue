@@ -1,6 +1,7 @@
 <template>
-  <div
-    class="bg-white mx-auto rounded-4xl p-3 shadow-md overflow-hidden relative w-full"
+  <NuxtLink
+  :to="`/item/${id}`"
+    class="bg-white mx-auto rounded-4xl p-3 cursor-pointer shadow-md overflow-hidden relative w-full"
   >
     <div class="relative">
       <NuxtImg
@@ -46,7 +47,7 @@
         </button>
       </div>
     </div>
-  </div>
+  </NuxtLink>
 </template>
 
 <script setup>
@@ -59,6 +60,7 @@ defineProps({
   price: Number,
   oldPrice: Number,
   offer: Boolean,
-  currency: String
+  currency: String,
+  id:[String,Number]
 });
 </script>
