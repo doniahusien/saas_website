@@ -1,8 +1,9 @@
 <template>
-  <NuxtLink
-  :to="`/item/${id}`"
+  <div
     class="bg-white mx-auto rounded-4xl p-3 cursor-pointer shadow-md overflow-hidden relative w-full"
   >
+  <NuxtLink
+  :to="`/item/${id}`">
     <div class="relative">
       <NuxtImg
         :src="image"
@@ -16,6 +17,7 @@
         <span class="ml-1 text-sm font-semibold">{{ rating }}</span>
       </div>
     </div>
+    </NuxtLink>
 
     <div class="space-y-2 py-4">
       <h3 class="font-semibold text-lg sm:text-xl md:text-2xl">{{ title }}</h3>
@@ -40,6 +42,7 @@
         </div>
 
         <button
+        @click="addFav(id)"
           v-else="offer"
           class="text-btn cursor-pointer rounded-full flex items-center justify-center p-2 bg-gray-100 hover:text-red-500"
         >
@@ -47,7 +50,7 @@
         </button>
       </div>
     </div>
-  </NuxtLink>
+  </div>
 </template>
 
 <script setup>
