@@ -5,9 +5,10 @@
     <HomeOurStorySection v-if="webContent && Object.keys(webContent).length > 0" :about="webContent"/>
     <PopularSection/>
     <HomeReservation/>
-    <HomeAppSection :appData="webContentLink"/>
+    <HomeAppSection v-if="webContentLink && Object.keys(webContentLink).length > 0"
+     :appData="webContentLink"/>
     <HomeInstagramGallery/>
-    <HomeOffersSection/>
+    <HomeOffersSection v-if="offers && offers.length > 0" :offers="offers"/>
     <HomeSubcribeSection v-if="subscriptionContent && Object.keys(subscriptionContent).length > 0"
      :subscriptionContent="subscriptionContent"/>
   </div>
@@ -15,7 +16,6 @@
 <script setup lang="ts">
 const branchCookie = useCookie('selectedBranch', { sameSite: 'lax' }) 
 const storeId = computed(() => branchCookie.value?.id || null);
-console.log(storeId.value);
 
 const { data, refresh } = await useAsyncData('HomeData', () =>
   useGlobalFetch<any>('home', {

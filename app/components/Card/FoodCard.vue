@@ -25,17 +25,17 @@
       <div class="flex justify-between items-center">
         <div class="flex flex-col mt-6">
           <span v-if="offer" class="text-sm line-through text-secondary"
-            >{{ oldPrice }} EGP</span
+            >{{ oldPrice }}{{currency}}</span
           >
 
-          <span class="text-lg sm:text-xl md:text-2xl font-bold">{{ price }} EGP</span>
+          <span class="text-lg sm:text-xl md:text-2xl font-bold">{{ price }} {{currency}}</span>
         </div>
 
         <div
           v-if="offer"
           class="bg-btn cursor-pointer text-sm w-12 h-12 rounded-full text-center flex items-center justify-center text-white p-3"
         >
-         <span>Off 25%</span> 
+         <span>Off {{percentage}}%</span> 
         </div>
 
         <button
@@ -55,8 +55,10 @@ defineProps({
   title: String,
   description: String,
   rating: Number,
-  price: String,
-  oldPrice: String,
+  percentage: Number,
+  price: Number,
+  oldPrice: Number,
   offer: Boolean,
+  currency: String
 });
 </script>

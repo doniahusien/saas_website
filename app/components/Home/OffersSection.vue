@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto space-y-10 px-6 md:px-0">
+  <div v-if="offers.length" class="container mx-auto space-y-10 px-6 md:px-0">
     <div class="grid grid-cols-2 items-center">
       <h2 class="text-2xl md:text-3xl lg:text-5xl font-semibold">
         {{ $t("offers.title") }}
@@ -27,17 +27,20 @@
       grab-cursor
     >
       <SwiperSlide
-        v-for="item in foodItems"
+        v-for="item in offers"
         :key="item.id"
         class="w-full"
       >
         <CardFoodCard
           :image="item.image"
-          :title="item.title"
-          :description="item.description"
+          :title="item.name"
+          :description="item.desc ||' description'"
           :rating="item.rating"
-          :price="item.price"
-          :oldPrice="item.oldPrice"
+          :price="item.price.price_after"
+          :oldPrice="item.price.price"
+          :id="item.id"
+          :currency="item.price.currency"
+          :percentage="item.price.percentage"
           :offer="true"
         />
       </SwiperSlide>
@@ -52,7 +55,9 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 
 const { t } = useI18n();
-
+defineProps({
+  offers:Array
+})
 const foodItems = [
   {
     id: 1,
