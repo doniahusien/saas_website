@@ -134,5 +134,31 @@
     "selectSub": "Select sub category",
     "apply": "Apply Filters"
   },
-  "follow": "Follow us on"
+  "follow": "Follow us on",
+   "reviews": {
+    "title": "Customer Reviews",
+    "overall": "Overall Rating",
+    "totalReviews": "{count} Reviews",
+    "stars": "{count} Stars",
+    "reviewBy": "Reviewed by {name}",
+    "date": "Date: {date}",
+    "noReviews": "No reviews yet."
+  },
+  "itemDetail":"Item Details",
+  "Note":"Note",
+  "notePlaceholder":"Write notes here",
+  "productOptions": {
+    "size": "Size",
+    "selectSizeNote": "Select 2 sizes*",
+    "topping": "Topping",
+    "selectToppingNote": "Select 2 Toppings*",
+    "addToCart": "Add to cart",
+    "totalPrice": "{price} EGP",
+    "quantity": "Quantity",
+    "single": "Single",
+    "double": "Double",
+    "triple": "Triple",
+    "weight": "{weight}",
+    "currency": "EGP"
+  }
 }

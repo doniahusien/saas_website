@@ -131,5 +131,31 @@
     "selectSub": "اختر التصنيف الفرعي",
     "apply": "تطبيق الفلاتر"
   },
-  "follow": "تابعنا على "
+  "follow": "تابعنا على ",
+  "reviews": {
+    "title": "آراء العملاء",
+    "overall": "التقييم العام",
+    "totalReviews": "{count} تقييم",
+    "stars": "{count} نجوم",
+    "reviewBy": "تم التقييم بواسطة {name}",
+    "date": "التاريخ: {date}",
+    "noReviews": "لا توجد تقييمات بعد."
+  },
+  "itemDetail":"تفاصيل المنتج",
+  "Note":"ملاحظات",
+  "notePlaceholder":"اكتب ملاحظات هنا",
+    "productOptions": {
+    "size": "الحجم",
+    "selectSizeNote": "اختر حجمين*",
+    "topping": "الإضافات",
+    "selectToppingNote": "اختر إضافتين*",
+    "addToCart": "أضف إلى السلة",
+    "totalPrice": "{price} جنيه",
+    "quantity": "الكمية",
+    "single": "فردي",
+    "double": "مزدوج",
+    "triple": "ثلاثي",
+    "weight": "{weight}",
+    "currency": "جنيه"
+  }
 }
