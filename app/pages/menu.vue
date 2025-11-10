@@ -1,44 +1,3 @@
-<script setup lang="ts">
-
-const { t } = useI18n();
-
-const branchCookie = useCookie('selectedBranch');
-const storeId = computed(() => branchCookie.value?.id || 13);
-
-const { data, pending, error } = await useAsyncData('productsData', () =>
-  useGlobalFetch<any>('product', {
-    headers: { os: 'web' },
-    params: { store_id: storeId.value },
-  })
-);
-
-const itemsPerPage = 6;
-const currentPage = ref(1);
-const selectedTab = ref('all');
-
-const categories = [
-  { label: 'All', value: 'all' },
-  { label: 'Breakfast', value: 'breakfast' },
-  { label: 'Lunch', value: 'lunch' },
-  { label: 'Dinner', value: 'dinner' },
-  { label: 'Desserts', value: 'desserts' },
-  { label: 'Drinks', value: 'drinks' },
-];
-
-const filteredItems = computed(() => {
-  if (!data.value?.data) return [];
-  if (selectedTab.value === 'all') return data.value.data;
-  return data.value.data.filter((item: any) =>
-    item.name.toLowerCase().includes(selectedTab.value.toLowerCase())
-  );
-});
-
-const paginatedItems = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage;
-  return filteredItems.value.slice(start, start + itemsPerPage);
-});
-</script>
-
 <template>
   <div class="space-y-20 pb-10">
     <Banner
@@ -47,10 +6,9 @@ const paginatedItems = computed(() => {
 
     <div class="container mx-auto px-2">
       <div class="grid grid-cols-1 lg:grid-cols-4 gap-16">
-        <UIFilterSection class="lg:col-span-1" />
+        <UIFilterSection class="lg:col-span-1" @apply="handleApplyFilters" />
 
         <section class="space-y-8 lg:col-span-3">
-
           <UTabs
             v-model="selectedTab"
             :items="categories"
@@ -63,7 +21,8 @@ const paginatedItems = computed(() => {
             }"
           />
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-items-center gap-5">
+          <div v-if="paginatedItems.length > 0" 
+               class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-items-center gap-5">
             <CardFoodCard
               v-for="item in paginatedItems"
               :key="item.id"
@@ -74,7 +33,13 @@ const paginatedItems = computed(() => {
               :price="item.price?.price_after || 0"
             />
           </div>
+
+          <div v-else class="text-center py-10 text-gray-500">
+            {{ t('menu.noProducts') }}
+          </div>
+
           <UIPagination
+            v-if="filteredItems.length > 0"
             :items="filteredItems"
             :items-per-page="itemsPerPage"
             v-model:current-page="currentPage"
@@ -84,3 +49,58 @@ const paginatedItems = computed(() => {
     </div>
   </div>
 </template>
+
+
+<script setup lang="ts">
+const { t } = useI18n();
+const { $api } = useNuxtApp();
+const branchCookie = useCookie("selectedBranch");
+const storeId = computed(() => branchCookie.value?.id || 13);
+
+const itemsPerPage = 6;
+const currentPage = ref(1);
+const selectedTab = ref("all");
+const products = ref<any[]>([]);
+
+const fetchProducts = async (extraParams = {}) => {
+  const params = {
+    store_id: storeId.value,
+    ...extraParams,
+  };
+
+  const res = await $api.get("product", {
+    headers: { os: "web" },
+    params,
+  });
+
+  products.value = res.data.data || [];
+};
+
+const handleApplyFilters = (params: any) => {
+  fetchProducts(params);
+};
+onMounted(() => {
+  fetchProducts();
+});
+
+const categories = [
+  { label: "All", value: "all" },
+  { label: "Breakfast", value: "breakfast" },
+  { label: "Lunch", value: "lunch" },
+  { label: "Dinner", value: "dinner" },
+  { label: "Desserts", value: "desserts" },
+  { label: "Drinks", value: "drinks" },
+];
+
+const filteredItems = computed(() => {
+  if (selectedTab.value === "all") return products.value;
+  return products.value.filter((item: any) =>
+    item.name.toLowerCase().includes(selectedTab.value.toLowerCase())
+  );
+});
+
+const paginatedItems = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+  return filteredItems.value.slice(start, start + itemsPerPage);
+});
+</script>

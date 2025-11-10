@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const emit = defineEmits(["apply"]);
+
 const { t } = useI18n();
 const { $api } = useNuxtApp();
 
@@ -6,7 +8,6 @@ const search = ref("");
 const selectedMain = ref("");
 const selectedSub = ref("");
 const selectedFilters = ref<string[]>([]);
-
 const mainCategories = ref<any[]>([]);
 const subCategories = ref<any[]>([]);
 
@@ -20,34 +21,26 @@ const getMainCategories = async () => {
       params: { store_id: storeId.value },
     });
     mainCategories.value = res.data.data || [];
-    console.log("Main categories:", mainCategories.value);
   } catch (err) {
     console.error("Error fetching main categories", err);
   }
 };
 
-
-
-const getSubCategories = async (mainCatId: number) => {
+const getSubCategories = async (mainCatId) => {
   try {
     const res = await $api.get("sub-categories", {
       headers: { os: "web" },
       params: { store_id: storeId.value, category_id: mainCatId },
     });
     subCategories.value = res.data.data || [];
-    console.log("Subcategories:", subCategories.value);
   } catch (err) {
     console.error("Error fetching subcategories", err);
   }
 };
 
-
 watch(selectedMain, (newVal) => {
-  if (newVal) {
-    getSubCategories(newVal);
-  } else {
-    subCategories.value = [];
-  }
+  if (newVal) getSubCategories(newVal);
+  else subCategories.value = [];
 });
 
 const selectMain = (cat: any) => {
@@ -79,12 +72,16 @@ const clearAll = () => {
 };
 
 const applyFilters = () => {
-  console.log("Applied filters:", {
-    search: search.value,
-    main: selectedMain.value,
-    sub: selectedSub.value,
-    filters: selectedFilters.value,
+  const params: any = {
+    search_by: search.value || "",
+  };
+
+  const categoryIds = [selectedMain.value, selectedSub.value].filter(Boolean);
+  categoryIds.forEach((id, index) => {
+    params[`category_id[${index}]`] = id;
   });
+
+  emit("apply", params);
 };
 
 onMounted(() => {
@@ -145,6 +142,7 @@ onMounted(() => {
           </UButton>
         </div>
       </div>
+
       <div class="space-y-4" v-if="subCategories.length">
         <h3 class="text-gray-400 text-sm font-medium">{{ t("filter.selectSub") }}</h3>
         <div class="grid grid-cols-2 gap-4">
@@ -160,6 +158,7 @@ onMounted(() => {
         </div>
       </div>
     </div>
+
     <div class="mt-32">
       <button
         @click="applyFilters"

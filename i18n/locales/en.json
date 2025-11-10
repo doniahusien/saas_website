@@ -68,6 +68,9 @@
     "title": "View Our Menus",
     "viewAll": "View All"
   },
+  "menu":{
+     "noProducts": "No products found"
+  },
   "popularSection": {
     "title": "Popular Items",
     "viewAll": "View All"

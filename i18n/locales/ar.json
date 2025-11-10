@@ -157,5 +157,8 @@
     "triple": "ثلاثي",
     "weight": "{weight}",
     "currency": "جنيه"
-  }
+  },
+  "menu": {
+  "noProducts": "لا توجد منتجات"
+}
 }
