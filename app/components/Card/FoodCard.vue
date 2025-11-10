@@ -54,6 +54,9 @@
 </template>
 
 <script setup>
+import { useAppStore } from "~/store/app";
+import { useToast } from "vue-toastification";
+
 defineProps({
   image: String,
   title: String,
@@ -64,6 +67,14 @@ defineProps({
   oldPrice: Number,
   offer: Boolean,
   currency: String,
-  id:[String,Number]
+  id:[String,Number],
+  isfav: Boolean
 });
+const appStore = useAppStore();
+const toast = useToast();
+
+const addFav = async (id) => {
+  await appStore.addToFavourites(id);
+  toast.success("Added to favourites");
+};
 </script>

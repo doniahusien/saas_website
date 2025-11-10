@@ -38,6 +38,7 @@
           :price="item.price.price"
           :currency="item.price.currency"
           :id="item.id"
+          :isfav="item.is_favourite"
         />
       </SwiperSlide>
     </Swiper>
