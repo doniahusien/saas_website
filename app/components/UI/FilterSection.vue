@@ -118,7 +118,7 @@ onMounted(() => {
           variant="solid"
           :ui="{
             base:
-              'bg-light-gray text-btn flex items-center gap-1 rounded-full text-xs font-medium px-2 py-1',
+              'bg-light-gray text-btn flex items-center justify-center text-center gap-1 rounded-full text-xs font-medium px-2 py-1',
           }"
         >
           {{ filter }}
@@ -130,12 +130,12 @@ onMounted(() => {
 
       <div class="my-10 space-y-4">
         <h3 class="text-gray-400 text-sm font-medium">{{ t("filter.selectMain") }}</h3>
-        <div class="grid grid-cols-2 gap-4">
+        <div class=" grid grid-cols-2 gap-4">
           <UButton
             v-for="cat in mainCategories"
             :key="cat.id"
             :variant="selectedMain === cat.id ? 'solid' : 'outline'"
-            :class="selectedMain === cat.id ? 'bg-btn text-white' : ' bg-white'"
+            :class="selectedMain === cat.id ? 'bg-btn text-white' : ' bg-white' "
             @click="selectMain(cat)"
           >
             {{ cat.name }}
@@ -145,7 +145,7 @@ onMounted(() => {
 
       <div class="space-y-4" v-if="subCategories.length">
         <h3 class="text-gray-400 text-sm font-medium">{{ t("filter.selectSub") }}</h3>
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-2  gap-4">
           <UButton
             v-for="sub in subCategories"
             :key="sub.id"
@@ -162,7 +162,7 @@ onMounted(() => {
     <div class="mt-32">
       <button
         @click="applyFilters"
-        class="w-full py-3 bg-btn text-white rounded-full font-semibold text-sm"
+        class="cursor-pointer w-full py-3 bg-btn text-white rounded-full font-semibold text-sm"
       >
         {{ t("filter.apply") }}
       </button>

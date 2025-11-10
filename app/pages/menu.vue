@@ -9,7 +9,7 @@
         <UIFilterSection class="lg:col-span-1" @apply="handleApplyFilters" />
 
         <section class="space-y-8 lg:col-span-3">
-          <UTabs
+       <!--    <UTabs
             v-model="selectedTab"
             :items="categories"
             :ui="{
@@ -19,7 +19,7 @@
                 'cursor-pointer bg-transparent rounded-full text-sm transition-colors duration-200 text-secondary aria-selected:text-white',
               indicator: 'absolute rounded-full bg-btn shadow-sm',
             }"
-          />
+          /> -->
 
           <div v-if="paginatedItems.length > 0" 
                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-items-center gap-5">
