@@ -20,7 +20,7 @@ export const useGlobalFetch = async <T = any>(
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'Accept-Language': locale.value,
+        'Accept-Language': locale.value||'en',
         ...options.headers,
       },
       ...(options.params && { params: options.params }),

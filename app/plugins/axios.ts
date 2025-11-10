@@ -11,6 +11,13 @@ export default defineNuxtPlugin((nuxtApp) => {
   api.interceptors.request.use((req) => {
     const token = useCookie<string | null>('jwt_token_saas').value
     if (token) req.headers.Authorization = `Bearer ${token}`
+
+    const i18n = nuxtApp.$i18n
+
+    const locale = typeof i18n?.locale === 'string' ? i18n.locale : i18n?.locale?.value
+
+    req.headers['Accept-Language'] = locale || 'en' 
+
     return req
   })
 
