@@ -1,81 +1,35 @@
 <script setup lang="ts">
+
 const { t } = useI18n();
 
-const foodItems = [
-  {
-    id: 1,
-    image: "/images/food1.png",
-    title: "Shish Tawook meal",
-    description: "Pickled carrots, celery, tomatoes, cilantro, blue cheese, za’atar",
-    rating: 4.5,
-    price: "50.00",
-    offer: false,
-  },
-  {
-    id: 2,
-    image: "/images/food2.png",
-    title: "Grilled steak",
-    description: "Pickled carrots, celery, tomatoes, cilantro, blue cheese, za’atar",
-    rating: 4.5,
-    price: "50.00",
-    offer: false,
-  },
-  {
-    id: 3,
-    image: "/images/food3.png",
-    title: "Supreme pizza",
-    description: "Pickled carrots, celery, tomatoes, cilantro, blue cheese, za’atar",
-    rating: 4.5,
-    price: "50.00",
-    offer: true,
-    oldPrice: "65.00",
-  },
-  {
-    id: 4,
-    image: "/images/food4.png",
-    title: "Grilled steak",
-    description: "Pickled carrots, celery, tomatoes, cilantro, blue cheese, za’atar",
-    rating: 4.5,
-    price: "50.00",
-    offer: false,
-  },
-  {
-    id: 5,
-    image: "/images/food5.png",
-    title: "Shish Tawook meal",
-    description: "Pickled carrots, celery, tomatoes, cilantro, blue cheese, za’atar",
-    rating: 4.5,
-    price: "50.00",
-    offer: false,
-  },
-  {
-    id: 6,
-    image: "/images/food2.png",
-    title: "Grilled steak",
-    description: "Pickled carrots, celery, tomatoes, cilantro, blue cheese, za’atar",
-    rating: 4.5,
-    price: "50.00",
-    offer: false,
-  },
-];
+const branchCookie = useCookie('selectedBranch');
+const storeId = computed(() => branchCookie.value?.id || 13);
+
+const { data, pending, error } = await useAsyncData('productsData', () =>
+  useGlobalFetch<any>('product', {
+    headers: { os: 'web' },
+    params: { store_id: storeId.value },
+  })
+);
 
 const itemsPerPage = 6;
 const currentPage = ref(1);
-const selectedTab = ref("all");
+const selectedTab = ref('all');
 
 const categories = [
-  { label: "All", value: "all" },
-  { label: "Breakfast", value: "breakfast" },
-  { label: "Lunch", value: "lunch" },
-  { label: "Dinner", value: "dinner" },
-  { label: "Desserts", value: "desserts" },
-  { label: "Drinks", value: "drinks" },
+  { label: 'All', value: 'all' },
+  { label: 'Breakfast', value: 'breakfast' },
+  { label: 'Lunch', value: 'lunch' },
+  { label: 'Dinner', value: 'dinner' },
+  { label: 'Desserts', value: 'desserts' },
+  { label: 'Drinks', value: 'drinks' },
 ];
 
 const filteredItems = computed(() => {
-  if (selectedTab.value === "all") return foodItems;
-  return foodItems.filter((item) =>
-    item.title.toLowerCase().includes(selectedTab.value.toLowerCase())
+  if (!data.value?.data) return [];
+  if (selectedTab.value === 'all') return data.value.data;
+  return data.value.data.filter((item: any) =>
+    item.name.toLowerCase().includes(selectedTab.value.toLowerCase())
   );
 });
 
@@ -88,16 +42,15 @@ const paginatedItems = computed(() => {
 <template>
   <div class="space-y-20 pb-10">
     <Banner
-      :bannerData="{
-        image: '/images/food1.png',
-        title: 'Menu',
-      }"
+      :bannerData="{ image: '/images/food1.png', title: t('TITLES.menu') }"
     />
 
     <div class="container mx-auto px-2">
       <div class="grid grid-cols-1 lg:grid-cols-4 gap-16">
         <UIFilterSection class="lg:col-span-1" />
+
         <section class="space-y-8 lg:col-span-3">
+
           <UTabs
             v-model="selectedTab"
             :items="categories"
@@ -110,20 +63,17 @@ const paginatedItems = computed(() => {
             }"
           />
 
-          <div
-            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-items-center gap-5"
-          >
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-items-center gap-5">
             <CardFoodCard
               v-for="item in paginatedItems"
               :key="item.id"
               :image="item.image"
-              :title="item.title"
-              :description="item.description"
+              :title="item.name"
+              :description="item.desc || 'No description available'"
               :rating="item.rating"
-              :price="item.price"
+              :price="item.price?.price_after || 0"
             />
           </div>
-
           <UIPagination
             :items="filteredItems"
             :items-per-page="itemsPerPage"
