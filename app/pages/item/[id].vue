@@ -4,10 +4,10 @@
       <h2 class="text-2xl md:text-3xl font-bold">{{$t('itemDetail')}}</h2>
 
       <ItemDetails
-        title="Pepperoni Pizza"
-        image="/images/food4.png"
-        :rating="4.5"
-        description="Cooked with vegetables in a rich curry coconut sauce served with coconut rice, Australian beef patty, tomatoes, onions, and lettuce served with homemade fries. Deconstructed millefeuille with wild fresh mixed berries, crème anglaise."
+        :title="item?.data[0].name"
+        :image="item?.data[0].image"
+        :rating="item?.data[0].rating"
+        :description="item?.data[0].desc||'Cooked with vegetables in a rich curry coconut sauce served with coconut rice, Australian beef patty, tomatoes, onions, and lettuce served with homemade fries. Deconstructed millefeuille with wild fresh mixed berries, crème anglaise.'"
       />
 
       <ItemOptions />
@@ -58,7 +58,7 @@ const distribution = [
 const route = useRoute();
 const id = route.params.id;
 
-const branchCookie = useCookie('selectedBranch', { sameSite: 'lax' }) 
+const branchCookie = useCookie('selectedBranch') 
 const storeId = computed(() => branchCookie.value?.id || null);
 
 const { data, refresh } = await useAsyncData('data', () =>
@@ -68,6 +68,18 @@ const { data, refresh } = await useAsyncData('data', () =>
   })
 )
 
+
+const { data:item } = await useAsyncData('itemData', () =>
+  useGlobalFetch<any>('product', {
+    headers: { os: 'web' },
+     params: {
+      product_id: id,
+      ...(storeId.value ? { store_id: storeId.value } : { store_id: 13}),
+    },
+  })
+)
+/* 
+console.log(item.value.data[0]) */
 watch(storeId, async (newId, oldId) => {
   if (newId && newId !== oldId) {
     await refresh()
