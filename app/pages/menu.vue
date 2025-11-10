@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-20 pb-10">
     <Banner
-      :bannerData="{ image: '/images/food1.png', title: t('TITLES.menu') }"
+      :bannerData="{ image: '/images/food1.png', title: t('menuSection.title') }"
     />
 
     <div class="container mx-auto px-2">
