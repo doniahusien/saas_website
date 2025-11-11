@@ -75,7 +75,7 @@ const props = defineProps({
   currency: String,
   id: [String, Number],
   isfav: Boolean,
-  favourite_id: [String, Number],
+  favourite_id:Number
 });
 
 const { isfav, favourite_id, id } = toRefs(props);
@@ -86,7 +86,7 @@ const toast = useToast();
 const localFav = ref(isfav.value);
 
 watch(isfav, (newVal) => {
-  localFav.value = newVal;
+  localFav.value = newVal;  
 });
 
 const handleFav = async () => {
