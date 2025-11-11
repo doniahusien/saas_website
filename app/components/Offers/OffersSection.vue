@@ -4,7 +4,7 @@ defineProps({
   paginationMeta: Object,
 });
 
-const emit = defineEmits(['updatePage']);
+const emit = defineEmits(["updatePage"]);
 </script>
 
 <template>
@@ -23,6 +23,8 @@ const emit = defineEmits(['updatePage']);
         :percentage="item.price.percentage"
         :id="item.id"
         :offer="true"
+        :isfav="item.is_favourite"
+        :favourite_id="item.favourite_id"
       />
     </div>
     <UIPagination
