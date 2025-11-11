@@ -163,5 +163,9 @@
     "triple": "Triple",
     "weight": "{weight}",
     "currency": "EGP"
+  },
+  "errors":{
+    "emailRequired":"Email is required",
+    "validEmail":"Enter a valid email"
   }
 }

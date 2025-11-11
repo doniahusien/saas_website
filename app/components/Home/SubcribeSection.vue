@@ -63,7 +63,7 @@ defineProps({
 });
 
 const schema = object({
-  email: string().required("Email is required").email("Enter a valid email"),
+  email: string().required(`${t("errors.emailRequired")}`).email(`${t("errors.emailRequired")}`),
 });
 
 async function handleSubmit(values) {
@@ -74,8 +74,8 @@ async function handleSubmit(values) {
     });
     toast.success(data.message);
   }
-  catch (error) {
-    toast.error(error?.message )
+  catch (err) {
+    toast.error(err?.message )
     /* toast.error(error?.response?.data?.message || "Something went wrong."); */
   }
 }
