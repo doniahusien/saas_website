@@ -53,12 +53,12 @@
 
           <div class="flex items-center gap-2">
             <button
-              class="cursor-pointer w-6 h-6 rounded-full bg-gray-100 text-gray-600 text-sm"
+              class="cursor-pointer w-6 h-6 rounded-sm bg-gray-100 text-gray-600 text-sm"
               @click="topping.count = Math.max(0, topping.count - 1)"
             >−</button>
             <span class="text-gray-700 text-sm font-medium">{{ topping.count }}</span>
             <button
-              class="cursor-pointer w-6 h-6 rounded-full bg-btn text-white text-sm"
+              class="cursor-pointer w-6 h-6 rounded-sm bg-btn text-white text-sm"
               @click="topping.count++"
             >+</button>
           </div>
@@ -68,9 +68,9 @@
 
     <div class="flex justify-end items-center gap-4 pt-4 border-t border-gray-100">
       <div class="flex items-center gap-2">
-        <button class="cursor-pointer w-7 h-7 rounded-full bg-gray-100 text-gray-600 text-sm" @click="quantity--">−</button>
+        <button class="cursor-pointer w-7 h-7 rounded-sm bg-gray-100 text-gray-600 text-sm" @click="quantity--">−</button>
         <span class="text-gray-700 text-sm font-medium">{{ quantity }}</span>
-        <button class="cursor-pointer w-7 h-7 rounded-full bg-btn text-white text-sm" @click="quantity++">+</button>
+        <button class="cursor-pointer w-7 h-7 rounded-sm bg-btn text-white text-sm" @click="quantity++">+</button>
       </div>
 
       <button
@@ -87,7 +87,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue"
+
+defineProps({
+  sizeModifiers:Object,
+  sub_modifiers:Object
+})
 
 const selectedSize = ref("")
 const quantity = ref(1)
@@ -110,4 +114,10 @@ const totalPrice = computed(() => {
   const toppingsPrice = toppings.value.reduce((sum, t) => sum + t.price * t.count, 0)
   return (sizePrice + toppingsPrice) * quantity.value
 })
+
+/* const sizeToppings= computed(() =>{props.sub_modifiers.find((s) => s.selections_type === "exact")} );
+
+
+console.log("sizeToppings", sizeToppings.value); */
+
 </script>

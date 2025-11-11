@@ -13,7 +13,9 @@
         "
       />
 
-      <ItemOptions />
+      <ItemOptions :sizeModifiers="sizeModifiers"
+      :optionModifiers="optionModifiers"
+       />
 
       <ItemReviewSection
         :reviews="reviews"
@@ -45,6 +47,19 @@ const { data: item } = await useAsyncData('itemData', () =>
    /*  params: { product_id: id, store_id: storeId.value }, */
   })
 )
+
+const subModifiers = computed(() => {
+  return item.value?.data?.sub_modifiers || []
+})
+
+const sizeModifiers = computed(() => {
+  return subModifiers.value.filter((mod) => mod.selection_type === 'exact')
+})
+
+const optionModifiers = computed(() => {
+  return subModifiers.value.filter((mod) => mod.selection_type === 'min_max')
+})
+
 
 
 const { data } = await useAsyncData('homeData', () =>
