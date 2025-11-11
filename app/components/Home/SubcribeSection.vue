@@ -40,10 +40,11 @@
           </div>
 
           <button
+          @click="handleSubmit"
             type="submit"
-            class="w-full  rounded-full px-8 py-3 font-medium text-white bg-btn hover:opacity-90 transition"
+            class="w-full cursor-pointer rounded-full px-8 py-3 font-medium text-white bg-btn hover:opacity-90 transition"
           >
-            {{ $t('subscription.cta') }}
+            {{ $t("subscription.cta") }}
           </button>
         </VeeForm>
       </div>
@@ -53,8 +54,10 @@
 
 <script setup>
 import { object, string } from "yup";
+import { useToast } from "vue-toastification";
 const { t } = useI18n();
-
+const {$api}= useNuxtApp();
+const toast = useToast();
 defineProps({
   subscriptionContent: Object,
 });
@@ -63,7 +66,17 @@ const schema = object({
   email: string().required("Email is required").email("Enter a valid email"),
 });
 
-const handleSubmit = (values) => {
+async function handleSubmit(values) {
   console.log("Details:", values);
-};
+  try {
+    const { data } = await $api.post("/news-letter-subscription", {
+      email: values.email,
+    });
+    toast.success(data.message);
+  }
+  catch (error) {
+    toast.error(error?.message )
+    /* toast.error(error?.response?.data?.message || "Something went wrong."); */
+  }
+}
 </script>
