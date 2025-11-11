@@ -4,11 +4,11 @@
       <h2 class="text-2xl md:text-3xl font-bold">{{$t('itemDetail')}}</h2>
 
       <ItemDetails
-        :title="item?.data[0]?.name"
-        :image="item?.data[0]?.image"
-        :rating="item?.data[0]?.rating"
+        :title="item?.data?.name"
+        :image="item?.data?.image"
+        :rating="item?.data?.rating"
         :description="
-          item?.data[0]?.desc ||
+          item?.data?.desc ||
           'Cooked with vegetables in a rich curry coconut sauce served with coconut rice...'
         "
       />
@@ -33,17 +33,19 @@
 <script setup lang="ts">
 const { t } = useI18n()
 const route = useRoute()
-const id = route.params.id
+const slug = route.params.slug
+console.log(slug);
 
 const branchCookie = useCookie('selectedBranch')
 const storeId = computed(() => branchCookie.value?.id || 13) 
 
 const { data: item } = await useAsyncData('itemData', () =>
-  useGlobalFetch<any>('product', {
+  useGlobalFetch<any>('product/'+slug, {
     headers: { os: 'web' },
-    params: { product_id: id, store_id: storeId.value },
+   /*  params: { product_id: id, store_id: storeId.value }, */
   })
 )
+
 
 const { data } = await useAsyncData('homeData', () =>
   useGlobalFetch<any>('home', {
@@ -52,9 +54,12 @@ const { data } = await useAsyncData('homeData', () =>
   })
 )
 const popularProducts = computed(() => data.value?.data?.popular_products || [])
+const id= computed(() => item.value?.data?.id)
+
+ 
 
 const { data: reviewResponse } = await useAsyncData('reviewsData', () =>
-  useGlobalFetch<any>(`products/${id}/reviews`, {
+  useGlobalFetch<any>(`products/${id.value}/reviews`, {
     headers: { os: 'web' },
     params: { store_id: storeId.value },
   })

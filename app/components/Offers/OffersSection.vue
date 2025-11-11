@@ -25,6 +25,7 @@ const emit = defineEmits(["updatePage"]);
         :offer="true"
         :isfav="item.is_favourite"
         :favourite_id="item.favourite_id"
+        :slug="item.slug"
       />
     </div>
     <UIPagination

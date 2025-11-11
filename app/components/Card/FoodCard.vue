@@ -2,7 +2,7 @@
   <div
     class="bg-white mx-auto rounded-4xl p-3 cursor-pointer shadow-md overflow-hidden relative w-full"
   >
-    <NuxtLink :to="`/item/${id}`">
+    <NuxtLink :to="`/item/${slug}`">
       <div class="relative">
         <NuxtImg
           :src="image"
@@ -59,7 +59,6 @@
 
 
 <script setup>
-import { toRefs, watch } from "vue";
 import { useAppStore } from "~/store/app";
 import { useToast } from "vue-toastification";
 
@@ -75,7 +74,8 @@ const props = defineProps({
   currency: String,
   id: [String, Number],
   isfav: Boolean,
-  favourite_id:Number
+  favourite_id:Number,
+  slug: String
 });
 
 const { isfav, favourite_id, id } = toRefs(props);

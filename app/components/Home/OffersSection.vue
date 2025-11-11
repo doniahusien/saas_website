@@ -40,6 +40,7 @@
           :offer="true"
           :isfav="item.is_favourite"
           :favourite_id="item.favourite_id"
+          :slug="item.slug"
         />
       </SwiperSlide>
     </Swiper>
