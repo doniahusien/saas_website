@@ -102,4 +102,10 @@ const handleFav = async () => {
     toast.error("Something went wrong");
   }
 };
+
+watchEffect(() => {
+  console.log("isfav",isfav.value);
+  console.log("local",localFav.value);
+  console.log("favid",favourite_id.value);
+})
 </script>

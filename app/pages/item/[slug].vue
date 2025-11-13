@@ -45,7 +45,7 @@ const storeId = computed(() => branchCookie.value?.id || 13)
 const { data: item } = await useAsyncData('itemData', () =>
   useGlobalFetch<any>('product/'+slug, {
     headers: { os: 'web' },
-   /*  params: { product_id: id, store_id: storeId.value }, */
+    params: { store_id: storeId.value },
   })
 )
 
@@ -62,10 +62,7 @@ const optionModifiers = computed(() => {
 })
 
 
-watchEffect(() => {
-console.log(optionModifiers.value);
 
-})
 const { data } = await useAsyncData('homeData', () =>
   useGlobalFetch<any>('home', {
     headers: { os: 'web' },

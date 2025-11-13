@@ -95,7 +95,8 @@ watch(
 const selectBranch = (branch: any) => {
   selectedBranchId.value = branch.id
   emit('select', branch)
-  emit('update:modelValue', false)
+  emit('update:modelValue', false);
+ /*  window.location.reload(); */
 }
 </script>
 

@@ -6,10 +6,7 @@
       <NuxtImg src="/logo.png" alt="logo" class="w-16 h-16 object-contain" />
       <ul class="hidden md:flex gap-8 font-din text-lg">
         <li v-for="item in items" :key="item.to">
-          <NuxtLink
-            :to="item.to"
-            class="hover:text-btn transition-colors"
-          >
+          <NuxtLink :to="item.to" class="hover:text-btn transition-colors">
             {{ item.label }}
           </NuxtLink>
         </li>
@@ -47,10 +44,10 @@
         />
         <div class="flex flex-col">
           <p class="font-semibold text-base">
-            {{ selectedBranch?.name ?? 'Branch' }}
+            {{ selectedBranch?.name ?? "Branch" }}
           </p>
           <p class="text-sm text-placeholder">
-            {{ selectedBranch?.location_description || t('select_store') }}
+            {{ selectedBranch?.location_description || t("select_store") }}
             <Icon name="mdi-chevron-down" class="w-4 h-4" />
           </p>
         </div>
@@ -71,11 +68,7 @@
         class="absolute top-full left-0 w-full bg-white text-black shadow-lg z-50 md:hidden"
       >
         <ul class="flex flex-col text-lg font-din px-6 py-4 space-y-4">
-          <li
-            v-for="item in items"
-            :key="item.to"
-            class="hover:text-btn transition"
-          >
+          <li v-for="item in items" :key="item.to" class="hover:text-btn transition">
             <NuxtLink :to="item.to" @click="isOpen = false">
               {{ item.label }}
             </NuxtLink>
@@ -83,7 +76,10 @@
         </ul>
 
         <div class="border-t mt-4 pt-4 px-6 pb-6">
-          <button @click="showSelect = true" class="w-full text-left flex items-center gap-3">
+          <button
+            @click="showSelect = true"
+            class="w-full text-left flex items-center gap-3"
+          >
             <NuxtImg
               v-if="selectedBranch?.image"
               :src="selectedBranch.image"
@@ -95,7 +91,7 @@
                 {{ selectedBranch?.name }}
               </p>
               <p class="text-sm text-placeholder">
-                {{ selectedBranch?.location_description || t('select_store') }}
+                {{ selectedBranch?.location_description || t("select_store") }}
               </p>
             </div>
           </button>
@@ -108,36 +104,38 @@
 </template>
 
 <script setup lang="ts">
-const { t, locale } = useI18n()
-const localePath = useLocalePath()
+const { t, locale } = useI18n();
+const localePath = useLocalePath();
 
-const isOpen = ref(false)
-const showSelect = ref(false)
-const selectedBranch = ref<any>(null)
+const isOpen = ref(false);
+const showSelect = ref(false);
+const selectedBranch = ref<any>(null);
 
-const branchCookie = useCookie('selectedBranch', { sameSite: 'lax' })
+const branchCookie = useCookie("selectedBranch", { sameSite: "lax" });
 
-const toggle = () => (isOpen.value = !isOpen.value)
+const toggle = () => (isOpen.value = !isOpen.value);
 
 const onBranchSelected = (branch) => {
-  selectedBranch.value = branch
-  branchCookie.value = branch 
-}
+  selectedBranch.value = branch;
+  branchCookie.value = branch;
+};
 
 onMounted(() => {
-  showSelect.value = true;
-  if (branchCookie.value) {
-    selectedBranch.value = branchCookie.value
+  if (!branchCookie.value) {
+    showSelect.value = true;
   }
-})
+  if (branchCookie.value) {
+    selectedBranch.value = branchCookie.value;
+  }
+});
 
 const items = computed(() => [
-  { label: t('nav.home'), to: localePath('/') },
-  { label: t('nav.about'), to: localePath('/about') },
-  { label: t('nav.reservation'), to: localePath('/reservation') },
-  { label: t('nav.menu'), to: localePath('/menu') },
-  { label: t('nav.contact'), to: localePath('/contact') },
-])
+  { label: t("nav.home"), to: localePath("/") },
+  { label: t("nav.about"), to: localePath("/about") },
+  { label: t("nav.reservation"), to: localePath("/reservation") },
+  { label: t("nav.menu"), to: localePath("/menu") },
+  { label: t("nav.contact"), to: localePath("/contact") },
+]);
 </script>
 
 <style scoped>
