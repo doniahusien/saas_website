@@ -30,7 +30,7 @@ export default defineNuxtConfig({
     'nuxt-swiper',
     "@nuxt/image",
     "@nuxt/ui",
-'nuxt-icon',
+    'nuxt-icon',
     [
       "@vee-validate/nuxt",
       {
@@ -56,8 +56,8 @@ export default defineNuxtConfig({
         detectBrowserLanguage: false,
       },
     ],
-
     "@pinia/nuxt",
+    "@stefanobartoletti/nuxt-social-share",
   ],
   pinia: {
     autoImports: ["defineStore", "storeToRefs"],

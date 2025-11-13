@@ -7,6 +7,7 @@
         :title="item?.data?.name"
         :image="item?.data?.image"
         :rating="item?.data?.rating"
+        :id="item?.data?.id"
         :description="
           item?.data?.desc ||
           'Cooked with vegetables in a rich curry coconut sauce served with coconut rice...'

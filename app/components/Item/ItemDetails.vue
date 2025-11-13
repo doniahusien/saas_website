@@ -9,12 +9,14 @@
     </div>
 
     <div class="flex items-center justify-between">
-      <h3 class="text-xl md:text-2xl font-semibold">
-        {{ title }}
-      </h3>
+      <h3 class="text-xl md:text-2xl font-semibold">{{ title }}</h3>
       <div class="flex items-center gap-3 text-gray-500">
         <Icon name="mdi:heart-outline" class="w-6 h-6 hover:text-red-500 cursor-pointer" />
-        <Icon name="lucide:share-2" class="w-6 h-6 hover:text-blue-500 cursor-pointer" />
+        <Icon
+          name="lucide:share-2"
+          class="w-6 h-6 hover:text-blue-500 cursor-pointer"
+          @click="showShare = true"
+        />
       </div>
     </div>
 
@@ -36,16 +38,19 @@
     <div>
       <label class="block text-gray-800 font-medium mb-2">{{$t('Note')}}</label>
       <textarea
-       :placeholder="$t('notePlaceholder')"
+        :placeholder="$t('notePlaceholder')"
         class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
         rows="3"
       ></textarea>
     </div>
+    <ShareModal v-model="showShare" />
   </div>
 </template>
 
 <script setup lang="ts">
-const {t} = useI18n();
+import { ref } from 'vue'
+
+const { t } = useI18n()
 defineProps({
   title: String,
   image: String,
@@ -53,6 +58,9 @@ defineProps({
   rating: {
     type: Number,
     default: 4.5
-  }
+  },
+  id: Number
 })
+
+const showShare = ref(false)
 </script>
