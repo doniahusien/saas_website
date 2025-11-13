@@ -13,8 +13,8 @@
         "
       />
 
-      <ItemOptions :sizeModifiers="sizeModifiers"
-      :optionModifiers="optionModifiers"
+      <ItemOptions :productId="item?.data?.id"
+      :subModifiers="subModifiers"
        />
 
       <ItemReviewSection
@@ -53,15 +53,18 @@ const subModifiers = computed(() => {
 })
 
 const sizeModifiers = computed(() => {
-  return subModifiers.value.filter((mod) => mod.selection_type === 'exact')
+  return subModifiers.value.filter((mod) => mod.selections_type == 'exact')
 })
 
 const optionModifiers = computed(() => {
-  return subModifiers.value.filter((mod) => mod.selection_type === 'min_max')
+  return subModifiers.value.filter((mod) => mod.selections_type == 'min_max')
 })
 
 
+watchEffect(() => {
+console.log(optionModifiers.value);
 
+})
 const { data } = await useAsyncData('homeData', () =>
   useGlobalFetch<any>('home', {
     headers: { os: 'web' },

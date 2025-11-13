@@ -9,6 +9,7 @@ export const useAppStore = defineStore("app", {
     notificationsLoading: false,
     favourites: [] as any[],
     favLoading: false,
+    cartLoading: false,
   }),
 
   actions: {
@@ -26,7 +27,7 @@ export const useAppStore = defineStore("app", {
          }
        }, */
 
-    async addToFavourites(product_id) {
+    async addToFavourites(product_id:any) {
       const toast = useToast();
       const { $api } = useNuxtApp();
       this.favLoading = true;
@@ -47,7 +48,7 @@ export const useAppStore = defineStore("app", {
       }
     },
 
-     async deleteFav(favourite_id) {
+     async deleteFav(favourite_id:any) {
       const toast = useToast();
       const { $api } = useNuxtApp();
       this.favLoading = true;
@@ -64,5 +65,20 @@ export const useAppStore = defineStore("app", {
         this.favLoading = false;
       }
     },
+     async addToCart(payload: any) {
+      const toast = useToast();
+      const { $api } = useNuxtApp();
+      this.cartLoading = true;
+
+      try {
+        const res = await $api.post("carts", payload);
+      } catch (error: any) {
+        console.error("Error adding to cart:", error);
+        toast.error(error?.response?.data?.message || "Failed to add to cart");
+      } finally {
+        this.cartLoading = false;
+      }
+    },
+
   },
 });
