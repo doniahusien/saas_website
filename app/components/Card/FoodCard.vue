@@ -103,9 +103,4 @@ const handleFav = async () => {
   }
 };
 
-watchEffect(() => {
-  console.log("isfav",isfav.value);
-  console.log("local",localFav.value);
-  console.log("favid",favourite_id.value);
-})
 </script>

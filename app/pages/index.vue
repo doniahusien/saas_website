@@ -19,7 +19,7 @@ const storeId = computed(() => branchCookie.value?.id || null);
 
 const { data, refresh } = await useAsyncData('HomeData', () =>
   useGlobalFetch<any>('home', {
-    headers: { os: 'web' },
+    headers: { os: 'web',Authorization: `Bearer ${useCookie('jwt_token_saas').value}` },
     params: storeId.value ? { store_id: storeId.value } : {},
   })
 )

@@ -40,8 +40,7 @@ export const useAppStore = defineStore("app", {
         toast.success(res.message);
 
       } catch (error) {
-        console.error("Error adding to favourites:", error);
-        toast.success(error.message);
+        toast.error(error.message);
 
       } finally {
         this.favLoading = false;
@@ -55,7 +54,7 @@ export const useAppStore = defineStore("app", {
 
       try {
         const res = await $api.delete("favourite/" + favourite_id);
-        toast.success(res.message);
+        toast.success(res.data.message);
 
       } catch (error) {
         console.error("Error adding to favourites:", error);

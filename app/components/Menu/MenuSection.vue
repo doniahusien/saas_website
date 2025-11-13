@@ -42,6 +42,7 @@
           :favourite_id="item.favourite_id"
           :slug="item.slug"
         />
+        item {{item.is_favourite}}
       </SwiperSlide>
     </Swiper>
   </div>
@@ -54,7 +55,7 @@ import "swiper/css";
 import "swiper/css/free-mode";
 
 const { t } = useI18n();
-defineProps({
+const props=defineProps({
   products:Array
 })
 
