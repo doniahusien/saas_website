@@ -27,7 +27,7 @@
       <div class="flex justify-between items-center">
         <div class="flex flex-col">
           <span v-if="offer" class="text-sm line-through text-secondary">
-            {{ oldPrice }}{{ currency }}
+            {{ oldPrice }} {{ currency }}
           </span>
           <span class="text-lg sm:text-xl md:text-2xl font-bold">
             {{ price }} {{ currency }}
@@ -36,19 +36,18 @@
 
         <div
           v-if="offer"
-          class="bg-btn cursor-pointer text-sm w-12 h-12 rounded-full text-center flex items-center justify-center text-white p-3"
+          class="bg-btn text-sm w-12 h-12 rounded-full text-center flex items-center justify-center text-white p-3"
         >
           <span>Off {{ percentage }}%</span>
         </div>
 
         <button
-          @click="handleFav"
-          v-else
-          class="text-btn cursor-pointer rounded-full flex items-center justify-center p-2 bg-gray-100"
+          @click.stop="handleFav"
+          class="cursor-pointer rounded-full flex items-center justify-center p-2 bg-gray-100 hover:bg-gray-200 transition"
         >
           <Icon
-            name="mdi:heart-outline"
-            class="w-5 h-5 sm:w-6 sm:h-6"
+            :name="localFav ? 'noto:heart-suit' : 'mdi:heart-outline'"
+            class="w-6 h-6 transition-colors duration-200"
             :class="{ 'text-red-500': localFav }"
           />
         </button>
@@ -56,7 +55,6 @@
     </div>
   </div>
 </template>
-
 
 <script setup>
 import { useAppStore } from "~/store/app";
@@ -74,33 +72,38 @@ const props = defineProps({
   currency: String,
   id: [String, Number],
   isfav: Boolean,
-  favourite_id:Number,
-  slug: String
+  favourite_id: [String, Number],
+  slug: String,
 });
 
 const { isfav, favourite_id, id } = toRefs(props);
-
 const appStore = useAppStore();
 const toast = useToast();
 
 const localFav = ref(isfav.value);
+const favId = ref(favourite_id.value);
 
 watch(isfav, (newVal) => {
-  localFav.value = newVal;  
+  localFav.value = newVal;
 });
 
 const handleFav = async () => {
   try {
     if (localFav.value) {
-      await appStore.deleteFav(favourite_id.value);
-      localFav.value = false;
+      const res = await appStore.deleteFav(favId.value);
+      if (res && res.data) {
+        localFav.value = res.data.is_favourite;
+        favId.value = res.data.favourite_id;
+      }
     } else {
-      await appStore.addToFavourites(id.value);
-      localFav.value = true;
+      const res = await appStore.addToFavourites(id.value);
+      if (res && res.data) {
+        localFav.value = res.data.is_favourite;
+        favId.value = res.data.favourite_id;
+      }
     }
   } catch (err) {
-    toast.error("Something went wrong");
+    toast.error("حدث خطأ أثناء تحديث المفضلة");
   }
 };
-
 </script>

@@ -12,6 +12,9 @@
           item?.data?.desc ||
           'Cooked with vegetables in a rich curry coconut sauce served with coconut rice...'
         "
+        :isfav="item?.data?.is_favourite"
+          :favourite_id="item?.data?.favourite_id"
+          :slug="item?.data.slug"
       />
 
       <ItemOptions :productId="item?.data?.id"

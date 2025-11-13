@@ -27,44 +27,42 @@ export const useAppStore = defineStore("app", {
          }
        }, */
 
-    async addToFavourites(product_id:any) {
+    async addToFavourites(product_id: any) {
       const toast = useToast();
       const { $api } = useNuxtApp();
       this.favLoading = true;
 
       try {
-        const res = await $api.post("favourite", {
-          product_id: product_id,
-        });
-
-        toast.success(res.message);
-
-      } catch (error) {
-        toast.error(error.message);
-
-      } finally {
-        this.favLoading = false;
-      }
-    },
-
-     async deleteFav(favourite_id:any) {
-      const toast = useToast();
-      const { $api } = useNuxtApp();
-      this.favLoading = true;
-
-      try {
-        const res = await $api.delete("favourite/" + favourite_id);
+        const res = await $api.post("favourite", { product_id });
         toast.success(res.data.message);
 
-      } catch (error) {
-        console.error("Error adding to favourites:", error);
-        toast.success(error.message);
-
+        return res.data;
+      } catch (error: any) {
+        toast.error(error?.response?.data?.message || error.message);
+        return null;
       } finally {
         this.favLoading = false;
       }
     },
-     async addToCart(payload: any) {
+
+    async deleteFav(favourite_id: any) {
+      const toast = useToast();
+      const { $api } = useNuxtApp();
+      this.favLoading = true;
+
+      try {
+        const res = await $api.delete(`favourite/${favourite_id}`);
+        toast.success(res.data.message);
+        return res.data;
+      } catch (error: any) {
+        toast.error(error?.response?.data?.message || error.message);
+        return null;
+      } finally {
+        this.favLoading = false;
+      }
+    },
+
+    async addToCart(payload: any) {
       const toast = useToast();
       const { $api } = useNuxtApp();
       this.cartLoading = true;

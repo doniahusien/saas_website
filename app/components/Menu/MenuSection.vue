@@ -42,7 +42,6 @@
           :favourite_id="item.favourite_id"
           :slug="item.slug"
         />
-        item {{item.is_favourite}}
       </SwiperSlide>
     </Swiper>
   </div>
