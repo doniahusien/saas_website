@@ -18,9 +18,9 @@
         <div class="flex justify-between items-center text-center px-2">
           <div class="flex flex-col items-center space-y-1" @click="copyLink">
             <div
-              class="bg-gray-100 hover:bg-gray-200 flex justify-center p-2 rounded-full transition cursor-pointer"
+              class="bg-gray-100 hover:bg-gray-200 flex justify-center p-3 rounded-full transition cursor-pointer"
             >
-              <Icon name="mdi:link-variant" class="w-6 h-6 text-btn" />
+              <Icon name="lucide:book-copy" class="w-6 h-6 text-btn" />
             </div>
             <p class="text-xs text-gray-700 mt-1">Copy Link</p>
           </div>
@@ -29,13 +29,33 @@
             network="whatsapp"
             :url="shareUrl"
             class="flex flex-col items-center space-y-1"
-          />
+          >
+           <template #icon>
+              <Icon
+                name="logos:whatsapp-icon"
+                class="w-8 h-8 text-blue-600 hover:text-blue-700"
+              />
+            </template>
+            <template #label>
+              <p class="text-xs text-gray-700 mt-1">Whatsapp</p>
+            </template>
+          </SocialShare>
 
           <SocialShare
             network="facebook"
             :url="shareUrl"
             class="flex flex-col items-center space-y-1"
-          />
+          >
+            <template #icon>
+              <Icon
+                name="mdi:facebook"
+                class="w-8 h-8 text-blue-600 hover:text-blue-700"
+              />
+            </template>
+            <template #label>
+              <p class="text-xs text-gray-700 mt-1">Facebook</p>
+            </template>
+          </SocialShare>
 
           <div
             class="flex flex-col items-center space-y-1 cursor-pointer"
@@ -45,7 +65,7 @@
               <Icon name="mdi:instagram" class="w-8 h-8 text-pink-500" />
             </div>
             <p class="text-xs text-gray-700">Instagram</p>
-          </div>      
+          </div>
         </div>
       </div>
     </div>
