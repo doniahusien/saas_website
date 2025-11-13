@@ -5,9 +5,9 @@
       class="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
       @click.self="$emit('update:modelValue', false)"
     >
-      <div class="bg-white rounded-2xl p-6 shadow-xl w-[90%] max-w-lg space-y-6">
+      <div class="bg-white rounded-2xl p-6 shadow-xl w-1/3 space-y-6">
         <div class="flex items-center justify-between mb-4">
-          <h2 class="text-lg font-semibold text-gray-900">Share This Item</h2>
+          <h2 class="text-lg font-semibold text-gray-900">{{$t('share')}}</h2>
           <Icon
             name="mdi:close"
             class="w-5 h-5 cursor-pointer hover:text-gray-600"
@@ -73,6 +73,7 @@
 </template>
 
 <script setup lang="ts">
+const {t}= useI18n()
 defineProps({
   modelValue: Boolean,
 });
