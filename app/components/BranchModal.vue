@@ -14,14 +14,14 @@
           &times;
         </button>
 
-        <h2 class="text-2xl font-bold mb-4">{{ t('select_store') }}</h2>
+        <h2 class="text-2xl font-bold mb-4">{{ t("select_store") }}</h2>
 
         <div v-if="pending" class="text-center text-gray-500 py-6">
-          {{ t('loading_branches') }}
+          {{ t("loading_branches") }}
         </div>
 
         <div v-else-if="error" class="text-center text-red-500 py-6">
-          {{ t('failed_to_load') }}
+          {{ t("failed_to_load") }}
         </div>
 
         <div v-else class="flex flex-col gap-3 max-h-80 overflow-y-auto">
@@ -30,11 +30,13 @@
             :key="branch.id"
             @click="selectBranch(branch)"
             class="flex items-center gap-4 border rounded-xl p-3 cursor-pointer transition"
-            :class="selectedBranchId === branch.id
-              ? 'border-btn bg-primary/20'
-              : 'border-gray-200 hover:bg-gray-100'"
+            :class="
+              selectedBranchId === branch.id
+                ? 'border-btn bg-primary/20'
+                : 'border-gray-200 hover:bg-gray-100'
+            "
           >
-            <img
+            <NuxtImg
               :src="branch.image"
               alt="branch"
               class="w-16 h-16 object-cover rounded-full"
@@ -50,7 +52,7 @@
               :class="selectedBranchId === branch.id ? 'border-btn' : 'border-gray-300'"
             >
               <div
-                v-if="selectedBranchId === branch.id"
+                v-if="selectedBranchId == branch.id"
                 class="w-2.5 h-2.5 rounded-full bg-primary"
               ></div>
             </div>
@@ -62,41 +64,50 @@
 </template>
 
 <script setup lang="ts">
-const { t } = useI18n()
-const emit = defineEmits(['update:modelValue', 'select'])
-const props = defineProps({ modelValue: Boolean })
+const { t } = useI18n();
+const emit = defineEmits(["update:modelValue", "select"]);
+const props = defineProps({ modelValue: Boolean });
 
-const selectedBranchId = ref<number | null>(null)
-const branches = ref<any[]>([])
-const pending = ref(false)
-const error = ref<string | null>(null)
+const selectedBranchId = ref<number | null>(null);
+const branches = ref<any[]>([]);
+const pending = ref(false);
+const error = ref<string | null>(null);
 
-const { $api } = useNuxtApp()
-
+const { $api } = useNuxtApp();
+const branchCookie = useCookie('selectedBranch', { sameSite: 'lax' }) 
+const storeId = computed(() => branchCookie.value?.id || null);
+onMounted(() => {storeId})
 watch(
   () => props.modelValue,
   async (isOpen) => {
-    if (!isOpen) return
+    if (!isOpen) return;
 
-    pending.value = true
-    error.value = null
+    pending.value = true;
+    error.value = null;
     try {
-      const res = await $api.get('/stores')
-      branches.value = res.data?.data || []
+      const res = await $api.get("/stores");
+      branches.value = res.data?.data || [];
     } catch (err: any) {
-      console.error('Error fetching branches:', err)
-      error.value = err.message || 'Failed to load branches'
+      console.error("Error fetching branches:", err);
+      error.value = err.message || "Failed to load branches";
     } finally {
-      pending.value = false
+      pending.value = false;
     }
-  },
-)
+  }
+);
 
 const selectBranch = (branch: any) => {
-  selectedBranchId.value = branch.id
-  emit('select', branch)
-  emit('update:modelValue', false)
-}
+  selectedBranchId.value = branch.id;
+  const branchCookie = useCookie("selectedBranch", { sameSite: "lax" });
+  branchCookie.value = branch;
+
+  emit("update:modelValue", false);
+ /*  window.location.reload(); */
+};
+
+onMounted(() => {
+
+})
 </script>
 
 <style scoped>

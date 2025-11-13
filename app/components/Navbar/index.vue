@@ -125,6 +125,7 @@ const onBranchSelected = (branch) => {
 }
 
 onMounted(() => {
+  showSelect.value = true;
   if (branchCookie.value) {
     selectedBranch.value = branchCookie.value
   }
