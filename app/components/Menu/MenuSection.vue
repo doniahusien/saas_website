@@ -4,10 +4,10 @@
       <h2 class="text-2xl md:text-3xl lg:text-5xl font-semibold">
         {{ $t("menuSection.title") }}
       </h2>
-      <NuxtLink to="/menu" class="text-btn justify-self-end hover:underline">
+      <NuxtLink :to='localePath("/menu")' class="text-btn justify-self-end hover:underline">
         {{ $t("menuSection.viewAll") }}
         <Icon
-          name="mdi:arrow-right"
+            :name="isRTL ? 'mdi:arrow-left' : 'mdi:arrow-right'"
           class="w-5 h-5 sm:w-6 sm:h-6 inline-block align-middle"
         />
       </NuxtLink>
@@ -53,7 +53,10 @@ import { Autoplay, FreeMode } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
 
-const { t } = useI18n();
+const { t,locale } = useI18n();
+const localePath = useLocalePath();
+const isRTL = computed(() => locale.value === 'ar');
+
 const props=defineProps({
   products:Array
 })

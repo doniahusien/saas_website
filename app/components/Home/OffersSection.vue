@@ -4,9 +4,12 @@
       <h2 class="text-2xl md:text-3xl lg:text-5xl font-semibold">
         {{ $t("offers.title") }}
       </h2>
-      <NuxtLink to="/offers" class="text-btn justify-self-end hover:underline">
+      <NuxtLink :to='localePath("/offers")' class="text-btn justify-self-end hover:underline">
         {{ $t("offers.viewAll") }}
-        <Icon name="mdi:arrow-right" class="w-5 h-5 sm:w-6 inline-block align-middle" />
+        <Icon
+          :name="isRTL ? 'mdi:arrow-left' : 'mdi:arrow-right'"
+          class="w-5 h-5 sm:w-6 sm:h-6 inline-block align-middle"
+        />
       </NuxtLink>
     </div>
     <Swiper
@@ -53,11 +56,12 @@ import { Autoplay, FreeMode } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
 
-const { t } = useI18n();
+const { t,locale } = useI18n();
+const localePath = useLocalePath();
+const isRTL = computed(() => locale.value === "ar");
 defineProps({
   offers: Array,
 });
-
 </script>
 
 <style scoped>
