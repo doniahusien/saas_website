@@ -65,8 +65,6 @@
 </template>
 
 <script setup>
-import { useField } from "vee-validate";
-import { ref, watch } from "vue";
 
 const lockInput = ref(true);
 
