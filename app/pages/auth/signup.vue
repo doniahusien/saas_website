@@ -11,6 +11,7 @@
         :placeholder="t('auth.phone')"
         v-model:code="form.phone_code"
         v-model:phone="form.phone"
+        @country-selected="onCountrySelected"
       />
       <inputsBaseInput id="email" name="email" :placeholder="t('auth.email')" />
       <inputsBasePassword
@@ -26,7 +27,8 @@
       type="submit"
       class="bg-btn text-white w-full mt-8 rounded-full p-4"
     >
-      {{ t("auth.register") }}
+      <span v-if="!loading">{{ t("auth.register") }}</span>
+      <span v-else>...</span>
     </button>
   </VeeForm>
   <p class="text-center pt-5">
@@ -51,6 +53,7 @@ const toast = useToast();
 const localePath = useLocalePath();
 const router = useRouter();
 const { $api } = useNuxtApp();
+const phoneLimit = ref(null);
 
 const form = reactive({
   email: "",
@@ -60,6 +63,10 @@ const form = reactive({
   password: "",
 });
 
+function onCountrySelected(country) {
+  phoneLimit.value = country?.phone_limit || null;
+}
+
 const schema = yup.object({
   name: yup.string().required(t("auth.nameRequired")),
   email: yup.string().email(t("auth.invalidEmail")).required(t("auth.emailRequired")),
@@ -68,8 +75,20 @@ const schema = yup.object({
     .string()
     .required(t("auth.phoneRequired"))
     .matches(/^[0-9]+$/, t("auth.invalidPhone"))
-    .min(6, t("auth.phoneTooShort"))
-    .max(15, t("auth.phoneTooLong")),
+    .test(
+      "phone-limit",
+      (value) => {
+        if (!value) return "Phone number is required";
+
+        return `Phone number must be ${phoneLimit.value} digits`;
+      },
+      (value) => {
+        if (!value) return false;
+        if (!phoneLimit.value) return true;
+        return value.length === phoneLimit.value;
+      }
+    ),
+
   password: yup.string().required(t("auth.passwordRequired")),
 });
 
@@ -99,7 +118,7 @@ async function handleSubmit(values: any) {
     router.push(localePath("/auth/verify"));
   } catch (error: any) {
     console.error(error);
-    toast.error(error?.message || "Registration failed");
+    toast.error(error?.message || $t('auth.Registration failed'));
   } finally {
     loading.value = false;
   }

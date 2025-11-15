@@ -15,11 +15,12 @@
       phoneName="phone"
       v-model:code="form.phone_code"
       v-model:phone="form.phone"
+      @country-selected="onCountrySelected"
     />
     <button
       :disabled="loading"
       type="submit"
-      class="bg-btn text-white text-base md:text-lg w-full mt-8 rounded-full p-4"
+      class="bg-btn cursor-pointer text-white text-base md:text-lg w-full mt-8 rounded-full p-4"
     >
       <span v-if="!loading">{{ t("auth.send") }}</span>
       <span v-else>...</span>
@@ -41,15 +42,32 @@ const router = useRouter();
 const toast = useToast();
 const appAuth = useAppAuth();
 const loading = ref(false);
-
+const localePath = useLocalePath();
+const phoneLimit = ref(null);
 const form = reactive({
   phone_code: "",
   phone: "",
 });
+function onCountrySelected(country) {
+  phoneLimit.value = country?.phone_limit || null;
+}
 
 const schema = yup.object({
-  phone_code: yup.string().required(),
-  phone: yup.string().required(),
+  phone_code: yup.string().required(t("auth.phoneCodeRequired")),
+  phone: yup.string().required(t("auth.phoneRequired")).test(
+  "phone-limit",
+  (value) => {
+    if (!value) return "Phone number is required";
+
+    return `Phone number must be ${phoneLimit.value} digits`;
+  },
+  (value) => {
+    if (!value) return false;
+    if (!phoneLimit.value) return true;
+    return value.length === phoneLimit.value;
+  }
+),
+
 });
 
 async function handleSubmit() {
@@ -63,11 +81,11 @@ async function handleSubmit() {
     const { data } = await $api.post("/auth/forgot_password", payload);
 
     if (data?.status === "success") {
-      toast.success(data?.message || "Verification code sent successfully!");
+      toast.success($t('auth.Verification code sent successfully'));
 
       appAuth.setTempVerifyData(payload);
       router.push({
-        path: "/auth/verify",
+        path: localePath("/auth/verify"),
         query: {
           from: "forgot",
         },
@@ -77,7 +95,7 @@ async function handleSubmit() {
     }
   } catch (err: any) {
     console.error("Forgot password error:", err);
-    toast.error(err?.response?.data?.message || "Something went wrong.");
+    toast.error(err?.message || "Something went wrong.");
   } finally {
     loading.value = false;
   }

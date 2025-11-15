@@ -10,7 +10,17 @@
     "menu": "Menu",
     "contact": "Contact"
   },
-  "auth": {
+  "auth": { 
+    "passwordLength":"password must be at least 6 characters", 
+     "passwordMatch": "Passwords do not match",
+    "passwordConfirmRequired": "Password confirmation is required",
+    "Registration failed":"Registration failed",
+    "verificationRequired": "Verification code is required",
+    "verificationLength": "Verification code length is incorrect",
+    "Verification failed":"Verification failed",
+    "Resend in":"Resend in",
+    "Verification code sent successfully":"Verification code sent successfully",
+    "The code has been sent to your phone number":"The code has been sent to your phone number",
     "The email field has already been taken.": "The email field has already been taken.",
     "The phone field has already been taken.": "The phone field has already been taken.",
     "Successfully registered. Please activate your account.": "Successfully registered. Please activate your account.",
@@ -26,6 +36,7 @@
     "phoneTooLong": "Phone number is too long",
     "phoneCodeRequired": "Country code is required",
     "phoneRequired": "Phone number is required",
+    "invalidPhoneLength": "Phone number length is incorrect.",
     "invalidPhone": "Invalid phone number",
     "passwordRequired": "Password is required",
     "selectCountryCode": "Please select a country code",
@@ -59,7 +70,6 @@
     "email": "Email",
     "register": "Register",
     "haveAccount": "Have an account?",
-    "verificationRequired": "verification is Required",
     "editPhoneTitle": "Edit Phone Number",
     "edit": "Edit",
     "editPhoneInstruction": "Please enter your phone number so we can verify it"

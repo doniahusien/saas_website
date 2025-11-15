@@ -38,7 +38,7 @@
       <button
         type="submit"
         :disabled="loading"
-        class="bg-btn text-white text-base md:text-lg w-full mt-4 rounded-full p-4 disabled:opacity-50"
+        class="bg-btn cursor-pointer text-white text-base md:text-lg w-full mt-4 rounded-full p-4 disabled:opacity-50"
       >
         <span v-if="!loading">{{ t("auth.next") }}</span>
         <span v-else>...</span>
@@ -53,7 +53,7 @@
           :disabled="resendLoading || cooldown > 0"
         >
           <span v-if="resendLoading">...</span>
-          <span v-else-if="cooldown > 0">Resend in {{ cooldown }}s</span>
+          <span v-else-if="cooldown > 0"> {{ $t('auth.Resend in')}} {{cooldown }}s</span>
           <span v-else>{{ t("auth.resend") }}</span>
         </button>
       </p>
@@ -80,7 +80,7 @@ const loading = ref(false);
 const resendLoading = ref(false);
 const cooldown = ref(0);
 const showEditPhone = ref(false);
-
+const localePath = useLocalePath();
 const form = reactive({
   phone_code: "",
   phone: "",
@@ -105,7 +105,6 @@ watch(
   () => appAuth.tempVerifyData,
   (newVal) => {
     if (newVal) {
-    /*   console.log('Updated TempVerifyData from Pinia:', newVal); */
       form.phone_code = newVal.phone_code;
       form.phone = newVal.phone;
     }
@@ -142,7 +141,7 @@ async function handleSubmit(values: any) {
         toast.success(data?.message || "Code verified successfully!");
         appAuth.setTempVerifyData(payload);
         router.push({
-          path: "/auth/change-pass",
+          path: localePath("/auth/change-pass"),
         });
       } else {
         toast.error(data?.message || "Invalid code.");
@@ -156,8 +155,7 @@ async function handleSubmit(values: any) {
       });
     }
   } catch (err: any) {
-    console.error("Verify Error:", err);
-    toast.error(err?.response?.data?.message || "Verification failed.");
+    toast.error(err.message || "Verification failed.");
   } finally {
     loading.value = false;
   }
@@ -175,11 +173,11 @@ async function verifyPhone(payload) {
     if (data.status === "success") {
       appAuth.setAuthData(data.data);
       appAuth.clearTempVerifyData(); 
-      toast.success(data.message || "Account verified successfully");
-      router.push({ path: "/" });
+      toast.success(data.message || $t("auth.Account verified successfully"));
+      router.push(localePath("/"));
     }
   } catch (error: any) {
-    toast.error(error.response?.data?.message || "Verification failed");
+    toast.error(error.response?.data?.message ||$t("auth.Verification failed"))
   }
 }
 

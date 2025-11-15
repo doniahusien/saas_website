@@ -1,54 +1,47 @@
 <template>
   <div class="w-full">
     <VeeField :name="phoneName" v-slot="{ meta }">
-      <div class="input_wrapper flex flex-col">
-        <div class="flex items-center gap-3">
-          <VeeField :name="codeName" v-slot="{ field: codeField, meta: codeMeta }">
-            <div
-              class="relative w-20 md:w-28"
-              :class="{ error: !codeMeta.valid && codeMeta.touched }"
+      <div class="flex items-center gap-3">
+        <VeeField :name="codeName" v-slot="{ field: codeField, meta: codeMeta }">
+          <div
+            class="relative w-20 md:w-28"
+            :class="{ error: !codeMeta.valid && codeMeta.touched }"
+          >
+            <select
+              v-bind="codeField"
+             @change="onSelectCountry"
+              class="input cursor-pointer"
             >
-              <select
-                v-bind="codeField"
-                @change="emit('update:code', $event.target.value)"
-                class="w-full border border-placeholder text-placeholder rounded-lg px-2 py-3 bg-transparent text-sm
-                       focus:outline-none focus:ring-2 focus:ring-secondary transition-all duration-150 appearance-none"
+              <option disabled value="">
+                {{ $t("auth.selectCountryCode") }}
+              </option>
+              <option
+                v-for="country in countries"
+                :key="country.id"
+                :value="country.phone_code"
               >
-                <option disabled value="">
-                  {{ $t('auth.selectCountryCode') }}
-                </option>
-                <option
-                  v-for="country in countries"
-                  :key="country.id"
-                  :value="country.phone_code"
-                >
-                  +{{ country.phone_code }}
-                </option>
-              </select>
-            </div>
-          </VeeField>
+                +{{ country.phone_code }}
+              </option>
+            </select>
+          </div>
+        </VeeField>
 
-          <VeeField :name="phoneName" v-slot="{ field: phoneField, meta: phoneMeta }">
-            <div
-              class="flex-1"
-              :class="{ error: !phoneMeta.valid && phoneMeta.touched }"
-            >
-              <input
-                v-bind="phoneField"
-                type="tel"
-                :placeholder="placeholder"
-                @input="emit('update:phone', $event.target.value)"
-                class="w-full border border-placeholder rounded-lg px-3 py-3 bg-transparent text-placeholder text-sm
-                       focus:outline-none focus:ring-2 focus:ring-secondary transition-all duration-150"
-              />
-            </div>
-          </VeeField>
-        </div>
+        <VeeField :name="phoneName" v-slot="{ field: phoneField, meta: phoneMeta }">
+          <div class="flex-1" :class="{ error: !phoneMeta.valid && phoneMeta.touched }">
+            <input
+              v-bind="phoneField"
+              type="tel"
+              :placeholder="placeholder"
+              @input="emit('update:phone', $event.target.value)"
+              class="input"
+            />
+          </div>
+        </VeeField>
+      </div>
 
-        <div class="flex gap-3 mt-1">
-          <VeeErrorMessage :name="codeName" as="div" class="text-red-500 text-xs" />
-          <VeeErrorMessage :name="phoneName" as="div" class="text-red-500 text-xs" />
-        </div>
+      <div class="flex gap-3 mt-1">
+        <VeeErrorMessage :name="codeName" as="div" class="text-red-500 text-sm" />
+        <VeeErrorMessage :name="phoneName" as="div" class="text-red-500 text-sm" />
       </div>
     </VeeField>
   </div>
@@ -65,7 +58,13 @@ const props = defineProps({
   placeholder: { type: String, default: "Phone" },
 });
 
-const emit = defineEmits(["update:code", "update:phone"]);
+const emit = defineEmits(["update:code", "update:phone", "country-selected"]);
+function onSelectCountry(e) {
+  const code = e.target.value;
+  emit("update:code", code);
+  const selected = countries.value.find(c => c.phone_code == code);
+  emit("country-selected", selected);
+}
 const { $api } = useNuxtApp();
 const countries = ref([]);
 
@@ -80,11 +79,10 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-
 select option {
   background-color: #fff;
   color: #374151;
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem 0.70rem;
   font-size: 0.875rem;
 }
 select option:hover {

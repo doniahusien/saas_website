@@ -28,7 +28,7 @@
     <button
       :disabled="loading"
       type="submit"
-      class="bg-btn text-white text-base md:text-lg w-full mt-8 rounded-full p-4 disabled:opacity-50"
+      class="bg-btn cursor-pointer text-white text-base md:text-lg w-full mt-8 rounded-full p-4 disabled:opacity-50"
     >
       <span v-if="!loading">{{ t("auth.confirm") }}</span>
       <span v-else>...</span>
@@ -51,6 +51,7 @@ const router = useRouter();
 const route = useRoute();
 const appAuth = useAppAuth();
 const loading = ref(false);
+const localePath = useLocalePath();
 
 const form = reactive({
   phone_code: "",
@@ -61,7 +62,7 @@ const form = reactive({
 });
 
 const schema = yup.object({
-  password: yup.string().required(t("auth.passwordRequired")).min(6),
+  password: yup.string().required(t("auth.passwordRequired")).min(6, t("auth.passwordLength")),
   password_confirmation: yup
     .string()
     .oneOf([yup.ref("password")], t("auth.passwordMatch"))
@@ -91,10 +92,10 @@ async function handleSubmit(values: any) {
     if (data?.status === "success") {
       appAuth.clearTempVerifyData(); 
       toast.success(data?.message || "Password changed successfully!");
-      router.push("/auth/login");
+      router.push(localePath("/auth/login"));
     } 
   } catch (err: any) {
-    toast.error(err?.response?.data?.message || "Something went wrong.");
+    toast.error(err?.message || "Something went wrong.");
   } finally {
     loading.value = false;
   }

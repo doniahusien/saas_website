@@ -13,6 +13,7 @@
             :placeholder="t('auth.phone')"
             v-model:code="form.phone_code"
             v-model:phone="form.phone"
+            @country-selected="onCountrySelected"
           />
           <inputsBasePassword
             name="password"
@@ -30,7 +31,7 @@
 
         <button
           type="submit"
-          class="bg-btn text-white text-base md:text-lg w-full mt-8 rounded-full p-4 transition-transform hover:scale-[1.02] disabled:opacity-50"
+          class="bg-btn cursor-pointer text-white text-base md:text-lg w-full mt-8 rounded-full p-4 transition-transform hover:scale-[1.02] disabled:opacity-50"
           :disabled="loading"
         >
           <span v-if="!loading">{{ t("auth.login") }}</span>
@@ -61,21 +62,41 @@ const toast = useToast();
 const localePath = useLocalePath();
 const router = useRouter();
 const {$api}= useNuxtApp();
+const phoneLimit = ref(null);
 
 const form = reactive({
   phone_code: "",
   phone: "",
   password: "",
 });
+function onCountrySelected(country) {
+  phoneLimit.value = country?.phone_limit || null;
+}
 
 const schema = yup.object({
   phone_code: yup.string().required(t("auth.phoneCodeRequired")),
+
   phone: yup
     .string()
     .required(t("auth.phoneRequired"))
-    .matches(/^[0-9]+$/, t("auth.invalidPhone")),
+    .matches(/^[0-9]+$/, t("auth.invalidPhone"))
+    .test(
+  "phone-limit",
+  (value) => {
+    if (!value) return "Phone number is required";
+
+    return `Phone number must be ${phoneLimit.value} digits`;
+  },
+  (value) => {
+    if (!value) return false;
+    if (!phoneLimit.value) return true;
+    return value.length === phoneLimit.value;
+  }
+),
+
   password: yup.string().required(t("auth.passwordRequired")),
 });
+
 
 async function onSubmit(values: any) {
   try {
@@ -89,7 +110,7 @@ async function onSubmit(values: any) {
     });
     const user= data.data;
     appAuth.setAuthData(user)
-    toast.success(t(`auth.${data.message}`));
+    toast.success(t(data.message));
     router.push(localePath("/"));
   } catch (error: any) {
     const msg = error?.response?.data?.message || t("auth.invalidCredentials")
