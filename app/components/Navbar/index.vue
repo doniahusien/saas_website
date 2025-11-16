@@ -6,7 +6,11 @@
       <NuxtImg src="/logo.png" alt="logo" class="w-16 h-16 object-contain" />
       <ul class="hidden md:flex gap-3 lg:gap-8 text-base lg:text-lg">
         <li v-for="item in items" :key="item.to">
-          <NuxtLink :to="item.to" class="hover:text-btn transition-colors">
+          <NuxtLink
+            :to="item.to"
+            class="hover:text-btn transition-colors"
+            :class="[isActive(item.to) ? 'text-btn' : '']"
+          >
             {{ item.label }}
           </NuxtLink>
         </li>
@@ -77,9 +81,8 @@
               {{ item.label }}
             </NuxtLink>
           </li>
-          
         </ul>
-        <ul class="flex items-center px-6 py-4  gap-5">
+        <ul class="flex items-center px-6 py-4 gap-5">
           <li>
             <NuxtLink to="" class="cursor-pointer">
               <NuxtImg src="/images/icons/shopping.svg" alt="shopping" class="w-5 h-5" />
@@ -128,16 +131,16 @@
 <script setup lang="ts">
 const { t, locale } = useI18n();
 const localePath = useLocalePath();
-
+const route = useRoute();
 const isOpen = ref<boolean>(false);
 const showSelect = ref<boolean>(false);
-const selectedBranch = ref<Branch|null>(null);
+const selectedBranch = ref<Branch | null>(null);
 
-const branchCookie = useCookie<Branch|null>("selectedBranch", { sameSite: "lax" });
+const branchCookie = useCookie<Branch | null>("selectedBranch", { sameSite: "lax" });
 
 const toggle = () => (isOpen.value = !isOpen.value);
 
-const onBranchSelected = (branch:Branch) => {
+const onBranchSelected = (branch: Branch) => {
   selectedBranch.value = branch;
   branchCookie.value = branch;
 };
@@ -150,6 +153,7 @@ onMounted(() => {
     selectedBranch.value = branchCookie.value;
   }
 });
+const isActive = (to: string) => route.path === to;
 
 const items = computed(() => [
   { label: t("nav.home"), to: localePath("/") },
