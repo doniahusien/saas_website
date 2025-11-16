@@ -42,6 +42,7 @@
         </div>
 
         <button
+        v-else
           @click.stop="handleFav"
           class="cursor-pointer rounded-full flex items-center justify-center p-2 bg-gray-100 hover:bg-gray-200 transition"
         >
