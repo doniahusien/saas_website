@@ -123,4 +123,8 @@ async function handleSubmit(values: any) {
     loading.value = false;
   }
 }
+useDynamicMeta({
+  title: t("auth.register"),
+  description: t("auth.createAccount")
+});
 </script>

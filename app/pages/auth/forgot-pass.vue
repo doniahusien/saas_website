@@ -100,4 +100,8 @@ async function handleSubmit() {
     loading.value = false;
   }
 }
+useDynamicMeta({
+  title: t("auth.forgotPasswordTitle"),
+  description: t("auth.forgotPasswordInstruction")
+});
 </script>

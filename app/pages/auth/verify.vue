@@ -210,4 +210,8 @@ function startCooldown(seconds: number) {
     }
   }, 1000);
 }
+useDynamicMeta({
+  title: t("auth.verifyCode"),
+  description: t("auth.verifyInstruction")
+});
 </script>

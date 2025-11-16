@@ -131,6 +131,10 @@ const paginatedItems = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
   return filteredItems.value.slice(start, start + itemsPerPage);
 });
+
+useDynamicMeta({
+  title: t("menuSection.title")
+});
 </script>
 <style scoped>
 .loader-small {

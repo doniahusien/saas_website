@@ -119,4 +119,8 @@ async function onSubmit(values: any) {
     loading.value = false;
   }
 }
+useDynamicMeta({
+  title: t("auth.login"),
+  description: t("auth.enterCredentials")
+});
 </script>

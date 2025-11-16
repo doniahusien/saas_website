@@ -38,6 +38,9 @@ watch(
 function updatePage(newPage: number) {
   page.value = newPage;
 }
+useDynamicMeta({
+  title: t("Offers.title"),
+});
 </script>
 
 
