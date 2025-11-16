@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen py-10 bg-gray-50">
     <div class="container mx-auto space-y-10 p-4 md:p-6">
-      <h2 class="text-2xl md:text-3xl font-bold">{{$t('itemDetail')}}</h2>
+      <h2 class="text-2xl md:text-3xl font-bold">{{ $t("itemDetail") }}</h2>
 
       <ItemDetails
         :title="item?.data?.name"
@@ -13,13 +13,11 @@
           'Cooked with vegetables in a rich curry coconut sauce served with coconut rice...'
         "
         :isfav="item?.data?.is_favourite"
-          :favourite_id="item?.data?.favourite_id"
-          :slug="item?.data.slug"
+        :favourite_id="item?.data?.favourite_id"
+        :slug="item?.data.slug"
       />
 
-      <ItemOptions :productId="item?.data?.id"
-      :subModifiers="subModifiers"
-       />
+      <ItemOptions :productId="item?.data?.id" :subModifiers="subModifiers" />
 
       <ItemReviewSection
         :reviews="reviews"
@@ -37,80 +35,72 @@
 </template>
 
 <script setup lang="ts">
-const { t } = useI18n()
-const route = useRoute()
-const slug = route.params.slug
-console.log(slug);
 
-const branchCookie = useCookie('selectedBranch')
-const storeId = computed(() => branchCookie.value?.id || 13) 
+const { t } = useI18n();
+const route = useRoute();
+const slug = route.params.slug;
 
-const { data: item } = await useAsyncData('itemData', () =>
-  useGlobalFetch<any>('product/'+slug, {
-    headers: { os: 'web' },
+const branchCookie = useCookie<Branch | null>("selectedBranch");
+const storeId = computed(() => branchCookie.value?.id || 13);
+
+const { data: item } = await useAsyncData<ApiResponse<Product>>("itemData", () =>
+  useGlobalFetch<ApiResponse<Product>>("product/" + slug, {
+    headers: { os: "web", Authorization: `Bearer ${useCookie("jwt_token_saas").value}` },
     params: { store_id: storeId.value },
   })
-)
+);
 
 const subModifiers = computed(() => {
-  return item.value?.data?.sub_modifiers || []
-})
+  return item.value?.data?.sub_modifiers || [];
+});
 
 const sizeModifiers = computed(() => {
-  return subModifiers.value.filter((mod) => mod.selections_type == 'exact')
-})
+  return subModifiers.value.filter((mod) => mod.selections_type == "exact");
+});
 
 const optionModifiers = computed(() => {
-  return subModifiers.value.filter((mod) => mod.selections_type == 'min_max')
-})
+  return subModifiers.value.filter((mod) => mod.selections_type == "min_max");
+});
 
-
-
-const { data } = await useAsyncData('homeData', () =>
-  useGlobalFetch<any>('home', {
-    headers: { os: 'web' },
+const { data } = await useAsyncData<ApiResponse<HomeData>>("homeData", () =>
+  useGlobalFetch<ApiResponse<HomeData>>("home", {
+    headers: { os: "web" },
     params: { store_id: storeId.value },
   })
-)
-const popularProducts = computed(() => data.value?.data?.popular_products || [])
-const id= computed(() => item.value?.data?.id)
+);
+const popularProducts = computed(() => data.value?.data?.popular_products || []);
+const id = computed(() => item.value?.data?.id);
 
- 
-
-const { data: reviewResponse } = await useAsyncData('reviewsData', () =>
-  useGlobalFetch<any>(`products/${id.value}/reviews`, {
-    headers: { os: 'web' },
-    params: { store_id: storeId.value },
-  })
-)
+const { data: reviewResponse } = await useAsyncData<ApiResponse<ReviewsResponse>>(
+  "reviewsData",
+  () =>
+    useGlobalFetch<ApiResponse<ReviewsResponse>>(`products/${id.value}/reviews`, {
+      headers: { os: "web" },
+      params: { store_id: storeId.value },
+    })
+);
 
 const reviews = computed(() => {
   return (
     reviewResponse.value?.data?.map((r: any) => ({
       id: r.id,
-      author: r.user?.full_name || 'Anonymous',
-      avatar: r.user?.avatar || 'https://i.pravatar.cc/150?u=default',
+      author: r.user?.full_name || "Anonymous",
+      avatar: r.user?.avatar || "https://i.pravatar.cc/150?u=default",
       rating: r.rate,
-      text: r.review || '',
+      text: r.review || "",
       date: r.created_at,
     })) || []
-  )
-})
+  );
+});
 
-const overallRating = computed(() => reviewResponse.value?.rate || 0)
-const total = computed(() => reviewResponse.value?.review_count || 0)
+const overallRating = computed(() => reviewResponse.value?.rate || 0);
+const total = computed(() => reviewResponse.value?.review_count || 0);
 
 const distribution = computed(() => {
-  const stars = reviewResponse.value?.star_rate || []
+  const stars = reviewResponse.value?.star_rate || [];
   return stars.map((s: any) => ({
-    stars: parseInt(s.key.replace('star_', '')),
+    stars: parseInt(s.key.replace("star_", "")),
     percent: s.value,
-  }))
-}) 
-
-watch(storeId, async (newId, oldId) => {
-  if (newId && newId !== oldId) {
-    
-  }
-})
+  }));
+});
 </script>
