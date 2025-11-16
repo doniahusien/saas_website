@@ -4,7 +4,7 @@
   >
     <div class="flex items-center gap-6">
       <NuxtImg src="/logo.png" alt="logo" class="w-16 h-16 object-contain" />
-      <ul class="hidden md:flex gap-8 font-din text-lg">
+      <ul class="hidden md:flex gap-3 lg:gap-8 text-base lg:text-lg">
         <li v-for="item in items" :key="item.to">
           <NuxtLink :to="item.to" class="hover:text-btn transition-colors">
             {{ item.label }}
@@ -14,7 +14,7 @@
     </div>
 
     <div class="flex items-center gap-5">
-      <ul class="hidden md:flex items-center gap-5">
+      <ul class="hidden md:flex items-center gap-2 md:gap-5">
         <li>
           <NuxtLink to="">
             <NuxtImg src="/images/icons/shopping.svg" alt="shopping" class="w-5 h-5" />
@@ -57,8 +57,12 @@
         @click="toggle"
         class="cursor-pointer md:hidden flex items-center justify-center w-10 h-10 rounded focus:outline-none"
       >
-        <span v-if="!isOpen" class="text-3xl">☰</span>
-        <span v-else class="text-3xl">✕</span>
+        <span v-if="!isOpen" class="text-3xl">
+          <Icon name="fe:bar" />
+        </span>
+        <span v-else class="text-3xl">
+          <Icon name="fe:close" />
+        </span>
       </button>
     </div>
 
@@ -73,12 +77,30 @@
               {{ item.label }}
             </NuxtLink>
           </li>
+          
+        </ul>
+        <ul class="flex items-center px-6 py-4  gap-5">
+          <li>
+            <NuxtLink to="" class="cursor-pointer">
+              <NuxtImg src="/images/icons/shopping.svg" alt="shopping" class="w-5 h-5" />
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="" class="cursor-pointer">
+              <NuxtImg src="/images/icons/bell.svg" alt="bell" class="w-5 h-5" />
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="" class="cursor-pointer">
+              <NuxtImg src="/images/icons/profile.svg" alt="profile" class="w-5 h-5" />
+            </NuxtLink>
+          </li>
         </ul>
 
         <div class="border-t mt-4 pt-4 px-6 pb-6">
           <button
             @click="showSelect = true"
-            class="w-full text-left flex items-center gap-3"
+            class="cursor-pointer w-full text-left flex items-center gap-3"
           >
             <NuxtImg
               v-if="selectedBranch?.image"
