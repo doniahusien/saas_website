@@ -13,9 +13,9 @@
           v-for="item in group.item_modifiers"
           :key="item.id"
           @click="toggleExact(group, item.id)"
-          :class="[
-            'px-5 py-3 rounded-xl text-sm font-medium border transition w-fit',
-            isSelected(group.id, item.id)
+          class='px-5 py-3 cursor-pointer rounded-xl text-sm font-medium border transition w-fit'
+           
+            :class="[ isSelected(group.id, item.id)
               ? 'border-blue-500 text-blue-600 bg-blue-50'
               : 'border-gray-200 text-gray-700 hover:border-blue-400',
           ]"
@@ -32,7 +32,7 @@
         <div
           v-for="item in group.item_modifiers"
           :key="item.id"
-          class="flex items-center justify-between border border-gray-200 rounded-xl p-4"
+          class="flex items-center  justify-between border border-gray-200 rounded-xl p-4"
         >
           <div>
             <p class="font-medium text-gray-800">
@@ -119,8 +119,8 @@ const props = defineProps({
 const {t} = useI18n();
 const appStore = useAppStore();
 const toast = useToast();
-const addingToCart = ref(false);
-const quantity = ref(1);
+const addingToCart = ref<boolean>(false);
+const quantity = ref<number>(1);
 const selectedItems = ref<Record<number, any>>({});
 
 const toggleExact = (group: any, itemId: number) => {
@@ -199,8 +199,8 @@ const handleAddToCart = async () => {
 
   addingToCart.value = true;
 
-  const branchCookie = useCookie("selectedBranch");
-  const storeId = branchCookie.value?.id || 13;
+  const branchCookie = useCookie<Branch| null>("selectedBranch");
+  const storeId = branchCookie.value?.id;
 
   const userLocation = useCookie("userLocation").value;
 
@@ -230,7 +230,7 @@ const handleAddToCart = async () => {
     toast.success(`${$t("added_to_cart")}`);
   } catch (err: any) {
     console.error(err);
-    toast.error(err?.response?.data?.message || "Failed to add to cart");
+    toast.error(err?.message || "Failed to add to cart");
   } finally {
     addingToCart.value = false;
   }
