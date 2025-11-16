@@ -16,17 +16,17 @@
     <div class="flex items-center gap-5">
       <ul class="hidden md:flex items-center gap-2 md:gap-5">
         <li>
-          <NuxtLink to="">
+          <NuxtLink to="" class="cursor-pointer">
             <NuxtImg src="/images/icons/shopping.svg" alt="shopping" class="w-5 h-5" />
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink to="">
+          <NuxtLink to="" class="cursor-pointer">
             <NuxtImg src="/images/icons/bell.svg" alt="bell" class="w-5 h-5" />
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink to="">
+          <NuxtLink to="" class="cursor-pointer">
             <NuxtImg src="/images/icons/profile.svg" alt="profile" class="w-5 h-5" />
           </NuxtLink>
         </li>
