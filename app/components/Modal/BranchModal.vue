@@ -5,13 +5,13 @@
       class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
     >
       <div
-        class="bg-white rounded-2xl shadow-lg p-6 relative animate-fadeIn w-full max-w-md"
+        class="bg-white rounded-2xl shadow-lg p-6 relative animate-fadeIn w-full md:w-1/3 "
       >
         <button
           @click="emit('update:modelValue', false)"
-          class="absolute top-4 right-4 text-gray-500 hover:text-black text-2xl"
+          class="absolute cursor-pointer top-6 right-5 text-gray-500 hover:text-black text-2xl"
         >
-          &times;
+            <Icon name="fe:close" />
         </button>
 
         <h2 class="text-2xl font-bold mb-4">{{ t('select_store') }}</h2>
@@ -24,7 +24,7 @@
           {{ t('failed_to_load') }}
         </div>
 
-        <div v-else class="flex flex-col gap-3 max-h-80 overflow-y-auto">
+        <div v-else class="flex flex-col gap-3">
           <div
             v-for="branch in branches"
             :key="branch.id"
@@ -67,7 +67,7 @@ const emit = defineEmits(['update:modelValue', 'select'])
 const props = defineProps({ modelValue: Boolean })
 
 const selectedBranchId = ref<number | null>(null)
-const branches = ref<any[]>([])
+const branches = ref<Branch[]>([])
 const pending = ref(false)
 const error = ref<string | null>(null)
 
@@ -81,10 +81,9 @@ watch(
     pending.value = true
     error.value = null
     try {
-      const res = await $api.get('/stores')
+      const res = await $api.get<ApiResponse<Branch[]>>('/stores')
       branches.value = res.data?.data || []
     } catch (err: any) {
-      console.error('Error fetching branches:', err)
       error.value = err.message || 'Failed to load branches'
     } finally {
       pending.value = false
@@ -92,7 +91,7 @@ watch(
   },
 )
 
-const selectBranch = (branch: any) => {
+const selectBranch = (branch: Branch) => {
   selectedBranchId.value = branch.id
   emit('select', branch)
   emit('update:modelValue', false);

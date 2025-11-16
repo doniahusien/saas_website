@@ -121,7 +121,7 @@
       </div>
     </transition>
 
-    <BranchModal v-model="showSelect" @select="onBranchSelected" />
+    <ModalBranchModal v-model="showSelect" @select="onBranchSelected" />
   </nav>
 </template>
 
@@ -129,15 +129,15 @@
 const { t, locale } = useI18n();
 const localePath = useLocalePath();
 
-const isOpen = ref(false);
-const showSelect = ref(false);
-const selectedBranch = ref<any>(null);
+const isOpen = ref<boolean>(false);
+const showSelect = ref<boolean>(false);
+const selectedBranch = ref<Branch|null>(null);
 
-const branchCookie = useCookie("selectedBranch", { sameSite: "lax" });
+const branchCookie = useCookie<Branch|null>("selectedBranch", { sameSite: "lax" });
 
 const toggle = () => (isOpen.value = !isOpen.value);
 
-const onBranchSelected = (branch) => {
+const onBranchSelected = (branch:Branch) => {
   selectedBranch.value = branch;
   branchCookie.value = branch;
 };
