@@ -47,6 +47,7 @@
                 :isfav="item?.is_favourite"
                 :favourite_id="item?.favourite_id"
                 :slug="item?.slug"
+                :id="item?.id"
               />
             </div>
 
@@ -126,7 +127,6 @@ const filteredItems = computed(() => {
   );
 });
 
-// Paginated items
 const paginatedItems = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
   return filteredItems.value.slice(start, start + itemsPerPage);

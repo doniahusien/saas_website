@@ -189,6 +189,24 @@ interface ReviewsResponse {
   review_count: number;
   rate: number;
   star_rate: StarRate[];
+  }
+  interface Category {
+  id: number;
+  name: string;
+  desc: string | null;
+  image: string;
+  icon: string;
+}
+
+interface CategoriesResponse {
+  data: Category[];
+  status: string;
+  message: string;
+  }
+  interface SubCategoriesResponse {
+  data: Category;
+  status: string;
+  message: string;
 }
 }
 
