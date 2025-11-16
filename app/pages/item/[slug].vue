@@ -1,41 +1,46 @@
 <template>
-  <div class="min-h-screen py-10 bg-gray-50">
-    <div class="container mx-auto space-y-10 p-4 md:p-6">
-      <h2 class="text-2xl md:text-3xl font-bold">{{ $t("itemDetail") }}</h2>
+  <UILoader v-if="status === 'pending'" />
+  <UINotFound v-else-if="error?.statusCode === 404" />
+  <UIBackError v-else-if="error?.statusCode === 500" />
 
-      <ItemDetails
-        :title="item?.data?.name"
-        :image="item?.data?.image"
-        :rating="item?.data?.rating"
-        :id="item?.data?.id"
-        :description="
-          item?.data?.desc ||
-          'Cooked with vegetables in a rich curry coconut sauce served with coconut rice...'
-        "
-        :isfav="item?.data?.is_favourite"
-        :favourite_id="item?.data?.favourite_id"
-        :slug="item?.data.slug"
-      />
+  <template v-else-if="status === 'success'">
+    <div class="min-h-screen py-10 bg-gray-50">
+      <div class="container mx-auto space-y-10 p-4 md:p-6">
+        <h2 class="text-2xl md:text-3xl font-bold">{{ $t("itemDetail") }}</h2>
 
-      <ItemOptions :productId="item?.data?.id" :subModifiers="subModifiers" />
+        <ItemDetails
+          :title="item?.data?.name"
+          :image="item?.data?.image"
+          :rating="item?.data?.rating"
+          :id="item?.data?.id"
+          :description="
+            item?.data?.desc ||
+            'Cooked with vegetables in a rich curry coconut sauce served with coconut rice...'
+          "
+          :isfav="item?.data?.is_favourite"
+          :favourite_id="item?.data?.favourite_id"
+          :slug="item?.data.slug"
+        />
 
-      <ItemReviewSection
-        :reviews="reviews"
-        :overall-rating="overallRating"
-        :total="total"
-        :distribution="distribution"
-      />
+        <ItemOptions :productId="item?.data?.id" :subModifiers="subModifiers" />
 
-      <PopularSection
-        v-if="popularProducts && popularProducts.length > 0"
-        :products="popularProducts"
-      />
+        <ItemReviewSection
+          :reviews="reviews"
+          :overall-rating="overallRating"
+          :total="total"
+          :distribution="distribution"
+        />
+
+        <PopularSection
+          v-if="popularProducts && popularProducts.length > 0"
+          :products="popularProducts"
+        />
+      </div>
     </div>
-  </div>
+  </template>
 </template>
 
 <script setup lang="ts">
-
 const { t } = useI18n();
 const route = useRoute();
 const slug = route.params.slug;
@@ -43,7 +48,7 @@ const slug = route.params.slug;
 const branchCookie = useCookie<Branch | null>("selectedBranch");
 const storeId = computed(() => branchCookie.value?.id || 13);
 
-const { data: item } = await useAsyncData<ApiResponse<Product>>("itemData", () =>
+const { data: item,status,error } = await useAsyncData<ApiResponse<Product>>("itemData", () =>
   useGlobalFetch<ApiResponse<Product>>("product/" + slug, {
     headers: { os: "web", Authorization: `Bearer ${useCookie("jwt_token_saas").value}` },
     params: { store_id: storeId.value },
