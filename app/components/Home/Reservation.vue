@@ -87,7 +87,7 @@
             </button>
           </div>
         </VeeForm>
-        <AddressModal v-model="openAddressModal" @select="handleBranchSelect" />
+        <ModalAddressModal v-model="openAddressModal" @select="handleBranchSelect" />
       </div>
     </div>
   </div>
@@ -96,29 +96,30 @@
 <script setup lang="ts">
 import { object, string, date } from "yup";
 
-const schema = object({
-  name: string().required("Name is required"),
-  phone: string().required("Phone is required"),
-  persons: string().required("Please select number of persons"),
-  timeFrom: string().required("Please select start time"),
- timeTo: object({
-    hours: string().required(),
-    minutes: string().required(),
-    seconds: string().required(),
-  }).required("Please select end time"),
-  timeFrom: object({
-    hours: string().required(),
-    minutes: string().required(),
-    seconds: string().required(),
-  }).required("Please select start time"),
-});
-const openAddressModal = ref(false);
-const selectedBranch = ref<any>(null);
+const { t } = useI18n();
 
-const handleBranchSelect = (branch: any) => {
-  selectedBranch.value = branch
-  openAddressModal.value = false
-}
+const schema = object({
+  name: string().required(t("validation.name_required")),
+  phone: string().required(t("validation.phone_required")),
+  persons: string().required(t("validation.persons_required")),
+  timeFrom: object({
+    hours: string().required(t("validation.hours_required")),
+    minutes: string().required(t("validation.minutes_required")),
+    seconds: string().required(t("validation.seconds_required")),
+  }).required(t("validation.time_from_required")),
+  timeTo: object({
+    hours: string().required(t("validation.hours_required")),
+    minutes: string().required(t("validation.minutes_required")),
+    seconds: string().required(t("validation.seconds_required")),
+  }).required(t("validation.time_to_required")),
+});
+const openAddressModal = ref<boolean>(false);
+const selectedBranch = ref<Branch | null>(null);
+
+const handleBranchSelect = (branch: Branch) => {
+  selectedBranch.value = branch;
+  openAddressModal.value = false;
+};
 
 const handleSubmit = (values: any) => {
   if (!selectedBranch.value) {
@@ -133,5 +134,4 @@ const handleSubmit = (values: any) => {
 
   console.log("Reservation Details:", finalData);
 };
-
 </script>

@@ -69,7 +69,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -84,8 +84,8 @@ defineProps({
     required: true,
   },
 });
-const { data } = await useAsyncData("contact_data", () =>
-  useGlobalFetch("contact_data/web")
+const { data } = await useAsyncData<ApiResponse<ContactData>>("contact_data", () =>
+  useGlobalFetch<ApiResponse<ContactData>>("contact_data/web")
 );
 
 const contact = computed(() => data.value?.data || []);

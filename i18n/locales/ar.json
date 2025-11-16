@@ -178,5 +178,15 @@
   },
   "added_to_cart":"تمت اضافة المنتج الى السلة!",
   "added_to_favorites":"تمت اضافة المنتج الى المفضلة!",
-  "share":"مشاركة المنتج"
+  "share":"مشاركة المنتج",
+   "validation": {
+    "name_required": "الاسم مطلوب",
+    "phone_required": "رقم الهاتف مطلوب",
+    "persons_required": "يرجى اختيار عدد الأشخاص",
+    "time_from_required": "يرجى اختيار وقت البدء",
+    "time_to_required": "يرجى اختيار وقت الانتهاء",
+    "hours_required": "الساعات مطلوبة",
+    "minutes_required": "الدقائق مطلوبة",
+    "seconds_required": "الثواني مطلوبة"
+  }
 }

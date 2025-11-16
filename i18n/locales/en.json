@@ -180,5 +180,15 @@
   },
   "added_to_cart":"Added to cart!",
   "added_to_favorites":"Added to favorites!",
-  "share":"Share This Item"
+  "share":"Share This Item",
+  "validation": {
+    "name_required": "Name is required",
+    "phone_required": "Phone is required",
+    "persons_required": "Please select number of persons",
+    "time_from_required": "Please select start time",
+    "time_to_required": "Please select end time",
+    "hours_required": "Hours are required",
+    "minutes_required": "Minutes are required",
+    "seconds_required": "Seconds are required"
+  }
 }
