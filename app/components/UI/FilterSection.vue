@@ -11,12 +11,12 @@ const selectedFilters = ref<string[]>([]);
 const mainCategories = ref<any[]>([]);
 const subCategories = ref<any[]>([]);
 
-const branchCookie = useCookie("selectedBranch");
-const storeId = ref(branchCookie.value?.id || 13);
+const branchCookie = useCookie<Branch | null>("selectedBranch");
+const storeId = ref(branchCookie.value?.id);
 
 const getMainCategories = async () => {
   try {
-    const res = await $api.get("categories", {
+    const res = await $api.get<ApiResponse<CategoriesResponse>>("categories", {
       headers: { os: "web" },
       params: { store_id: storeId.value },
     });
@@ -28,7 +28,7 @@ const getMainCategories = async () => {
 
 const getSubCategories = async (mainCatId) => {
   try {
-    const res = await $api.get("sub-categories", {
+    const res = await $api.get<ApiResponse<SubCategoriesResponse>>("sub-categories", {
       headers: { os: "web" },
       params: { store_id: storeId.value, category_id: mainCatId },
     });
@@ -104,7 +104,7 @@ onMounted(() => {
         icon="i-heroicons-magnifying-glass-20-solid"
         :placeholder="t('filter.search')"
         :ui="{
-          base: ' w-full border text-black border-light-gray bg-white',
+          base: 'w-full border text-black border-light-gray bg-white',
           wrapper: 'rounded-xl',
           icon: 'text-gray-400',
           input: 'text-sm placeholder:text-gray-400',
@@ -118,7 +118,7 @@ onMounted(() => {
           variant="solid"
           :ui="{
             base:
-              'bg-light-gray text-btn flex items-center justify-center text-center gap-1 rounded-full text-xs font-medium px-2 py-1',
+              'bg-light-gray text-btn flex items-center justify-center text-center gap-1 rounded-full text-base font-medium px-3 py-2',
           }"
         >
           {{ filter }}
@@ -130,12 +130,13 @@ onMounted(() => {
 
       <div class="my-10 space-y-4">
         <h3 class="text-gray-400 text-sm font-medium">{{ t("filter.selectMain") }}</h3>
-        <div class=" grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-2 gap-4">
           <UButton
             v-for="cat in mainCategories"
             :key="cat.id"
             :variant="selectedMain === cat.id ? 'solid' : 'outline'"
-            :class="selectedMain === cat.id ? 'bg-btn text-white' : ' bg-white' "
+            class="cursor-pointer justify-center ring-0 focus:ring-0 border border-placeholder text-placeholder"
+            :class="selectedMain === cat.id ? 'bg-btn text-white' : ''"
             @click="selectMain(cat)"
           >
             {{ cat.name }}
@@ -145,11 +146,12 @@ onMounted(() => {
 
       <div class="space-y-4" v-if="subCategories.length">
         <h3 class="text-gray-400 text-sm font-medium">{{ t("filter.selectSub") }}</h3>
-        <div class="grid grid-cols-2  gap-4">
+        <div class="grid grid-cols-2 gap-4">
           <UButton
             v-for="sub in subCategories"
             :key="sub.id"
             :variant="selectedSub === sub.id ? 'solid' : 'outline'"
+            class="cursor-pointer justify-center ring-0 focus:ring-0 border border-placeholder text-placeholder"
             :class="selectedSub === sub.id ? 'bg-btn text-white' : ' bg-white'"
             @click="selectSub(sub)"
           >
