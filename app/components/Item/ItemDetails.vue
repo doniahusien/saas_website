@@ -12,12 +12,12 @@
       <h3 class="text-xl md:text-2xl font-semibold">{{ title }}</h3>
       <div class="flex items-center gap-3 text-gray-500">
         <button
-          @click="handleFav"
-          class="text-btn cursor-pointer rounded-full flex items-center justify-center p-2 bg-gray-100"
+          @click.stop="handleFav"
+          class="cursor-pointer rounded-full flex items-center justify-center p-2 bg-gray-100 hover:bg-gray-200 transition"
         >
           <Icon
-            name="mdi:heart-outline"
-            class="w-5 h-5 sm:w-6 sm:h-6"
+            :name="localFav ? 'noto:heart-suit' : 'mdi:heart-outline'"
+            class="w-6 h-6 transition-colors duration-200"
             :class="{ 'text-red-500': localFav }"
           />
         </button>
@@ -52,11 +52,12 @@
         rows="3"
       ></textarea>
     </div>
-    <ShareModal v-model="showShare" />
+    <ModalShareModal v-model="showShare" />
   </div>
 </template>
 
 <script setup lang="ts">
+import { useToast } from "vue-toastification";
 import { useAppStore } from "~/store/app";
 const { t } = useI18n();
 const props=defineProps({
@@ -74,28 +75,34 @@ const props=defineProps({
 
 
 const { isfav, favourite_id, id } = toRefs(props);
-
+const toast=useToast();
 const appStore = useAppStore();
 
 const localFav = ref(isfav.value);
-
+const favId = ref(favourite_id.value);
 watch(isfav, (newVal) => {
   localFav.value = newVal;  
 });
 
 const handleFav = async () => {
+  
   try {
     if (localFav.value) {
-      await appStore.deleteFav(favourite_id.value);
-      localFav.value = false;
+      const res = await appStore.deleteFav(favId.value);
+      if (res && res.data) {
+        localFav.value = res.data.is_favourite;
+        favId.value = res.data.favourite_id;
+      }
     } else {
-      await appStore.addToFavourites(id.value);
-      localFav.value = true;
+      const res = await appStore.addToFavourites(id.value);
+      if (res && res.data) {
+        localFav.value = res.data.is_favourite;
+        favId.value = res.data.favourite_id;
+      }
     }
   } catch (err) {
-    toast.error("Something went wrong");
+    toast.error(err.message);
   }
 };
-
 const showShare = ref(false);
 </script>

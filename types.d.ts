@@ -162,6 +162,34 @@ interface PhoneNumber {
     status: string;
     message: string;
   }
+ interface ReviewUser {
+  id: number;
+  full_name: string;
+  avatar: string;
+}
+
+interface ReviewData {
+  id: number;
+  rate: number;
+  review: string;
+  note: string;
+  created_at: string;
+  user: ReviewUser;
+}
+
+interface StarRate {
+  key: string;
+  value: number;
+}
+
+interface ReviewsResponse {
+  data: ReviewData[];
+  status: string;
+  message: string;
+  review_count: number;
+  rate: number;
+  star_rate: StarRate[];
+}
 }
 
 declare module "#app" {

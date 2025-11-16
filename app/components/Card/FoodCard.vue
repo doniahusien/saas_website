@@ -103,7 +103,7 @@ const handleFav = async () => {
       }
     }
   } catch (err) {
-    toast.error("حدث خطأ أثناء تحديث المفضلة");
+        toast.error(err.message);
   }
 };
 </script>
