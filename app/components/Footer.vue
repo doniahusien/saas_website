@@ -12,10 +12,10 @@
       <div>
         <h4 class="font-semibold text-white mb-3">Sections</h4>
         <ul class="space-y-5 text-sm">
-          <li><NuxtLink to="/" class="hover:text-white">Menu</NuxtLink></li>
-          <li><NuxtLink to="/" class="hover:text-white">Offers</NuxtLink></li>
-          <li><NuxtLink to="/" class="hover:text-white">Reservation</NuxtLink></li>
-          <li><NuxtLink to="/" class="hover:text-white">Favorit</NuxtLink></li>
+          <li><NuxtLink :to='localePath("/menu")' class="hover:text-white">Menu</NuxtLink></li>
+          <li><NuxtLink :to='localePath("/offers")' class="hover:text-white">Offers</NuxtLink></li>
+          <li><NuxtLink :to='localePath("/reservation")' class="hover:text-white">Reservation</NuxtLink></li>
+          <li><NuxtLink :to='localePath("/")' class="hover:text-white">Favorit</NuxtLink></li>
         </ul>
       </div>
 
@@ -66,3 +66,6 @@
     </div>
   </footer>
 </template>
+<script setup>
+const localePath = useLocalePath();
+</script>

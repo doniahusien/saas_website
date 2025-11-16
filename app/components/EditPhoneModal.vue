@@ -53,14 +53,15 @@ const appAuth = useAppAuth();
 const toast = useToast();
 const router = useRouter();
 const { $api } = useNuxtApp();
+const localePath = useLocalePath();
 const form = reactive({
   phone_code: "",
   phone: "",
 });
 
 const schema = yup.object({
-  phone_code: yup.string().required("Please select a country code"),
-  phone: yup.string().required("Please enter your phone number"),
+  phone_code: yup.string().required(t("auth.phoneCodeRequired")),
+  phone: yup.string().required(t("auth.phoneRequired")),
 });
 
 const loading = ref(false);
@@ -95,13 +96,13 @@ async function handleSubmit() {
 
       toast.success(data?.message || "Phone number updated successfully!");
       emit("update:modelValue", false);
-      router.push("/auth/verify");
+      router.push(localePath("/auth/verify"));
     } else {
       toast.error(data?.message || "Failed to update phone number.");
     }
   } catch (error) {
     console.error(error);
-    toast.error(error.response?.data?.message || "Something went wrong.");
+    toast.error(error.message || "Something went wrong.");
   } finally {
     loading.value = false;
   }
