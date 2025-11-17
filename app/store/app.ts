@@ -15,8 +15,7 @@ export const useAppStore = defineStore("app", {
   getters: {
     getCartCount: (state) => state.cartCount,
     getCartData: (state) => state.cart,
-  }
-  ,
+  },
   actions: {
     /*    async getFavourites() {
          this.favLoading = true;
@@ -120,7 +119,28 @@ export const useAppStore = defineStore("app", {
       } finally {
         this.cartLoading = false;
       }
+    },
+    async updateCounter(cartProductId: number, quantity: number, type: string) {
+      const toast = useToast();
+      const { $api } = useNuxtApp();
+      this.cartLoading = true;
+
+      try {
+        const frmData = new FormData();
+        frmData.append("cart_product_id", cartProductId);
+        frmData.append("quantity", type === "decrease" ? --quantity : ++quantity);
+        frmData.append("_method", "put");
+
+        await $api.post("carts/update-count", frmData);
+        await this.getCarts();
+
+      } catch (error: any) {
+        toast.error(error?.response?.data?.message || "Failed to update quantity");
+      } finally {
+        this.cartLoading = false;
+      }
     }
+
 
   },
 });

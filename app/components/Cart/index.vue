@@ -55,14 +55,14 @@
           >
             <button
               class="text-placeholder cursor-pointer"
-              @click="appStore.decrease(item.id)"
+              @click="updateQty(item, 'decrease')"
             >
               -
             </button>
             <span>{{ item.quantity }}</span>
             <button
               class="text-placeholder cursor-pointer"
-              @click="appStore.increase(item.id)"
+              @click="updateQty(item, 'increase')"
             >
               +
             </button>
@@ -79,22 +79,30 @@
 
         <div class="flex justify-between text-gray-700">
           <span>{{ t("cart.subtotal") }} (2 {{ t("cart.items") }})</span>
-          <span class="font-semibold">{{price.sun_total}}<span class="text-xs">{{currency}}</span></span>
+          <span class="font-semibold"
+            >{{ price.sun_total }}<span class="text-xs">{{ currency }}</span></span
+          >
         </div>
 
         <div class="flex justify-between text-gray-700">
           <span>{{ t("cart.shipping") }}</span>
-          <span class="font-semibold">{{price.delivery_price}}<span class="text-xs">{{currency}}</span></span>
+          <span class="font-semibold"
+            >{{ price.delivery_price }}<span class="text-xs">{{ currency }}</span></span
+          >
         </div>
 
         <div class="flex justify-between text-gray-700">
           <span>{{ t("cart.discount") }}</span>
-          <span class="font-semibold">{{price.tax_rate_value}}<span class="text-xs">{{currency}}</span></span>
+          <span class="font-semibold"
+            >{{ price.tax_rate_value }}<span class="text-xs">{{ currency }}</span></span
+          >
         </div>
 
         <div class="flex justify-between text-black text-lg font-bold">
           <span>{{ t("cart.totalAmount") }}</span>
-          <span>{{price.total}}<span class="text-xs">{{currency}}</span></span>
+          <span
+            >{{ price.total }}<span class="text-xs">{{ currency }}</span></span
+          >
         </div>
       </div>
 
@@ -122,7 +130,7 @@ const { t } = useI18n();
 const close = () => emit("update:modelValue", false);
 const localProducts = ref([]);
 const price = ref({});
-const currency=ref("LE")
+const currency = ref("LE");
 const cartsCount = computed(() => appStore.getCartCount);
 const carts = computed(() => appStore.getCartData);
 
@@ -130,10 +138,14 @@ async function removeFromCart(id) {
   await appStore.removeFromCart(id);
 }
 
+const updateQty = (item, type) => {
+  appStore.updateCounter(item.id, item.quantity, type);
+};
+
 watch(
   carts,
   (newVal) => {
-    console.log(appStore.getCartData);
+ /*    console.log(appStore.getCartData); */
     if (!newVal || !newVal?.data?.products || !newVal.price) {
       localProducts.value = [];
 
@@ -143,7 +155,7 @@ watch(
     }
     localProducts.value = newVal.data.products.map((item: any) => ({
       ...item.product,
-      id:item.id,
+      id: item.id,
       quantity: item.quantity,
       total_price: item.total_price,
       note: item.note,
@@ -152,9 +164,9 @@ watch(
     }));
 
     price.value = newVal.price;
-    currency.value=newVal.currency;
-
-    console.log("Mapped products:", localProducts.value);
+    currency.value = newVal.currency;
+    /* 
+    console.log("Mapped products:", localProducts.value); */
   },
   { deep: true, immediate: true }
 );
