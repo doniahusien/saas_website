@@ -19,10 +19,8 @@
 
     <div class="flex items-center gap-5">
       <ul class="hidden md:flex items-center gap-2 md:gap-5">
-        <li>
-          <NuxtLink to="" class="cursor-pointer">
+        <li @click="cartOpen = true" class="cursor-pointer">
             <NuxtImg src="/images/icons/shopping.svg" alt="shopping" class="w-5 h-5" />
-          </NuxtLink>
         </li>
         <li>
           <NuxtLink to="" class="cursor-pointer">
@@ -83,11 +81,9 @@
           </li>
         </ul>
         <ul class="flex items-center px-6 py-4 gap-5">
-          <li>
-            <NuxtLink to="" class="cursor-pointer">
-              <NuxtImg src="/images/icons/shopping.svg" alt="shopping" class="w-5 h-5" />
-            </NuxtLink>
-          </li>
+      <li @click="cartOpen = true" class="cursor-pointer">
+            <NuxtImg src="/images/icons/shopping.svg" alt="shopping" class="w-5 h-5" />
+        </li>
           <li>
             <NuxtLink to="" class="cursor-pointer">
               <NuxtImg src="/images/icons/bell.svg" alt="bell" class="w-5 h-5" />
@@ -125,6 +121,7 @@
     </transition>
 
     <ModalBranchModal v-model="showSelect" @select="onBranchSelected" />
+    <Cart v-model="cartOpen" />
   </nav>
 </template>
 
@@ -133,6 +130,7 @@ const { t, locale } = useI18n();
 const localePath = useLocalePath();
 const route = useRoute();
 const isOpen = ref<boolean>(false);
+const cartOpen = ref<boolean>(false);
 const showSelect = ref<boolean>(false);
 const selectedBranch = ref<Branch | null>(null);
 

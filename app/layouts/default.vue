@@ -16,6 +16,8 @@
 </template>
 
 <script setup>
+import { useAppStore } from "~/store/app";
+const appStore= useAppStore();
 const { locale } = useI18n();
 const isOnline = ref(true);
 
@@ -33,7 +35,8 @@ useHead({
   titleTemplate: () => "SaaS",
 });
 
-onMounted(() => {
+onMounted(async() => {
+  await appStore.getCarts();
   isOnline.value = window.navigator.onLine;
   window.addEventListener("online", () => {
     isOnline.value = true;

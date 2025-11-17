@@ -190,5 +190,15 @@
     "hours_required": "Hours are required",
     "minutes_required": "Minutes are required",
     "seconds_required": "Seconds are required"
+  },
+  "cart":{
+    "title":"My Cart",
+    "items":"items",
+    "checkout":"Checkout",
+    "orderSum":"Order Summary",
+    "subtotal":"Subtotal",
+    "shipping":"Shipping Fee",
+    "discount":"Discount",
+    "totalAmount":"Total Amount"
   }
 }

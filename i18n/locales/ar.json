@@ -188,5 +188,8 @@
     "hours_required": "الساعات مطلوبة",
     "minutes_required": "الدقائق مطلوبة",
     "seconds_required": "الثواني مطلوبة"
+  },
+   "cart":{
+    "title":"My Cart"
   }
 }
