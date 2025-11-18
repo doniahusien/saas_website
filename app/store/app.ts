@@ -140,7 +140,5 @@ export const useAppStore = defineStore("app", {
         this.cartLoading = false;
       }
     }
-
-
   },
 });
