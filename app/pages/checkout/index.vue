@@ -49,7 +49,7 @@
                 Abu Al Feda, Zamalek, Cairo Governorate 4271110
               </p>
             </div>
-            <button  @click="openAddressModal = true" class="ml-auto cursor-pointer text-placeholder hover:text-black">
+            <button @click="openAddressModal = true" class="ml-auto cursor-pointer text-placeholder hover:text-black">
               <Icon name="fe:arrow-down" class="w-6 h-6" />
             </button>
           </div>
@@ -98,6 +98,8 @@
             v-model="paymentType"
           />
         </div>
+        <ModalCreditModal v-model="openCreditModal" />
+
 
         <div class="flex">
           <button
@@ -149,7 +151,7 @@ const takeway = ref(false);
 const openAddressModal = ref<boolean>(false);
 const openDeliveryAddressModal= ref<boolean>(false);
 const selectedBranch = ref<Branch | null>(null);
-
+const openCreditModal = ref<boolean>(true);
 const handleBranchSelect = (branch: Branch) => {
   selectedBranch.value = branch;
   openAddressModal.value = false;
@@ -158,4 +160,10 @@ const handleBranchSelect = (branch: Branch) => {
 const handleAddressSelect = (address) => {
   openDeliveryAddressModal.value = false;
 };
+
+watch(paymentType, (val) => {
+  if (val === 'card') {
+    openCreditModal.value = true;
+  }
+});
 </script>
