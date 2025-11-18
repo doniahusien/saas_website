@@ -52,7 +52,7 @@
         </div>
       </div>
 
-        <ModalAddAddresModal v-else />
+        <ModalAddAddresModal v-else @switch-back="switchToModal1" />
    
     </div>
   </transition>
@@ -65,6 +65,10 @@ const showModal2 = ref(false);
 const switchToModal2 = () => {
   showModal1.value = false;
   showModal2.value = true;
+};
+const switchToModal1 = () => {
+  showModal2.value = false;
+  showModal1.value = true;
 };
 const { t, locale } = useI18n();
 

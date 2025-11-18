@@ -1,9 +1,12 @@
 <template>
   <div
-    class="bg-semi-white rounded-2xl flex flex-col overflow-hidden  p-6 relative w-full md:w-1/3 h-auto mx-4"
+    class="bg-semi-white rounded-2xl flex flex-col overflow-hidden p-6 relative w-full md:w-1/3 h-auto mx-4"
   >
-    <button class="absolute top-8 right-5 text-black">
-      <Icon name="mdi:close" class="cursor-pointer w-7 h-7" />
+    <button
+      class="absolute top-4 right-4 text-gray-600 hover:text-black"
+      @click="$emit('switch-back')"
+    >
+      <Icon name="mdi:close" class="cursor-pointer w-6 h-6" />
     </button>
 
     <h2 class="text-3xl font-bold mb-6">Add new address</h2>
@@ -73,7 +76,9 @@
           class="w-full flex flex-col justify-end bg-white rounded-2xl h-50 shadow-xl p-6 text-center z-50"
         >
           <h2 class="text-2xl font-bold">Con-Grates</h2>
-          <p class="text-gray-500 text-sm mt-1">Your Address Has Been Added Successfully</p>
+          <p class="text-gray-500 text-sm mt-1">
+            Your Address Has Been Added Successfully
+          </p>
         </div>
       </div>
     </transition>
@@ -89,7 +94,7 @@ const saveAddress = () => {
   showSuccess.value = true;
   setTimeout(() => {
     showSuccess.value = false;
-  }, 6000);
+  }, 3000);
 };
 </script>
 
