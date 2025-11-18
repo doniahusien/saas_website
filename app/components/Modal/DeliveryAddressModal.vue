@@ -59,6 +59,7 @@
 </template>
 
 <script setup>
+const { t,locale } = useI18n();
 const showModal1 = ref(true);
 const showModal2 = ref(false);
 
@@ -70,7 +71,6 @@ const switchToModal1 = () => {
   showModal2.value = false;
   showModal1.value = true;
 };
-const { t, locale } = useI18n();
 
 const props = defineProps({
   modelValue: Boolean,

@@ -21,7 +21,7 @@
           />
         </div>
 
-        <div v-if="orderType === 'delivery'" class="space-y-4 ">
+        <div v-if="orderType === 'delivery'" class="space-y-4">
           <h5 class="text-xl font-bold">Your Shipping Address</h5>
           <div class="flex items-center gap-4 p-2 bg-white">
             <img src="/images/download.webp" class="w-16 h-14 rounded-lg" />
@@ -32,7 +32,10 @@
                 Abu Al Feda, Zamalek, Cairo Governorate 4271110
               </p>
             </div>
-            <button @click="openDeliveryAddressModal = true" class="ml-auto cursor-pointer text-subtitle hover:text-black">
+            <button
+              @click="openDeliveryAddressModal = true"
+              class="ml-auto cursor-pointer text-subtitle hover:text-black"
+            >
               <Icon name="mynaui:edit-one" class="w-6 h-6" />
             </button>
           </div>
@@ -49,7 +52,10 @@
                 Abu Al Feda, Zamalek, Cairo Governorate 4271110
               </p>
             </div>
-            <button @click="openAddressModal = true" class="ml-auto cursor-pointer text-placeholder hover:text-black">
+            <button
+              @click="openAddressModal = true"
+              class="ml-auto cursor-pointer text-placeholder hover:text-black"
+            >
               <Icon name="fe:arrow-down" class="w-6 h-6" />
             </button>
           </div>
@@ -75,8 +81,9 @@
 
           <div
             class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3"
-            v-if="selectedSchedule === 'schedule'">
-            <inputsDatePicker name="date" placeholder="date" :checkout="true"/>
+            v-if="selectedSchedule === 'schedule'"
+          >
+            <inputsDatePicker name="date" placeholder="date" :checkout="true" />
             <inputsTimePicker name="timeTo" placeholder="time" :checkout="true" />
           </div>
         </div>
@@ -98,9 +105,8 @@
             v-model="paymentType"
           />
           <ModalCreditModal v-model="openCreditModal" />
-
         </div>
-        
+
         <div class="flex">
           <button
             class="w-1/2 h-14 bg-btn text-white text-lg font-semibold rounded-full mt-4 shadow-md hover:opacity-90 ml-auto"
@@ -118,17 +124,11 @@
           </button>
         </div>
 
-        <ItemCard
-          name="Shredded Brussels Sprout"
-          desc="Cheese Empanadas, confit & roaste"
-          price="45.00"
-          img="/images/food1.png"
-        />
-        <ItemCard
-          name="Shredded Brussels Sprout"
-          desc="Cheese Empanadas, confit & roasted"
-          price="45.00"
-          img="/images/food2.png"
+        <CartItems
+          :localProducts="localProducts"
+          :removeFromCart="removeFromCart"
+          :updateQty="updateQty"
+          :isCheckout="true"
         />
 
         <h4 class="text-xl font-bold">Promo Code</h4>
@@ -144,12 +144,18 @@
 </template>
 
 <script setup lang="ts">
+import { useAppStore } from "~/store/app";
+const appStore = useAppStore();
+const { t } = useI18n();
+const cartsCount = computed(() => appStore.getCartCount);
+const carts = computed(() => appStore.getCartData);
+const { localProducts, price, currency } = useCartMapper(carts);
 const orderType = ref("delivery");
 const paymentType = ref("card");
 const selectedSchedule = ref("now");
 const takeway = ref(false);
 const openAddressModal = ref<boolean>(false);
-const openDeliveryAddressModal= ref<boolean>(false);
+const openDeliveryAddressModal = ref<boolean>(false);
 const selectedBranch = ref<Branch | null>(null);
 const openCreditModal = ref<boolean>(true);
 const handleBranchSelect = (branch: Branch) => {
@@ -162,7 +168,7 @@ const handleAddressSelect = (address) => {
 };
 
 watch(paymentType, (val) => {
-  if (val === 'card') {
+  if (val === "card") {
     openCreditModal.value = true;
   }
 });
