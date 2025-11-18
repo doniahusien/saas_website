@@ -73,14 +73,14 @@
     <CartOrderSummary :price="price" :currency="currency"/>
 
       <div class="mt-6 pt-4">
-        <button
+        <NuxtLink :to="localePath('/checkout')"
           class="w-full cursor-pointer bg-btn text-white gap-2 py-3 rounded-full font-semibold flex items-center justify-center"
         >
           {{ t("cart.checkout") }}
           <span class="w-4 h-4 flex justify-center items-center bg-white rounded-full"
             ><Icon name="mdi:arrow-right" class="w-3 h-3 text-btn"
           /></span>
-        </button>
+        </NuxtLink>
       </div>
     </div>
   </transition>
@@ -89,7 +89,7 @@
 <script setup lang="ts">
 import { useAppStore } from "~/store/app";
 const appStore = useAppStore();
-
+const localePath = useLocalePath();
 const props = defineProps<{ modelValue: boolean }>();
 const emit = defineEmits(["update:modelValue"]);
 const { t } = useI18n();
