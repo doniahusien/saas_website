@@ -3,7 +3,7 @@
     class="bg-semi-white rounded-2xl flex flex-col overflow-hidden p-6 relative w-full md:w-1/3 h-auto mx-4"
   >
     <button
-      class="absolute top-4 right-4 text-gray-600 hover:text-black"
+       class="absolute top-8 right-6 text-black"
       @click="$emit('switch-back')"
     >
       <Icon name="mdi:close" class="cursor-pointer w-6 h-6" />
