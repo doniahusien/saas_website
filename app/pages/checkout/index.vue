@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-[#f8f8f8] flex justify-center py-8">
+  <div class="min-h-screen bg-semi-white flex justify-center py-8">
     <div class="container mx-auto p-8 grid grid-cols-1 lg:grid-cols-5 gap-10">
       <div class="lg:col-span-3 px-10 space-y-5">
         <h2 class="text-xl font-bold">Types of Order</h2>
@@ -21,7 +21,7 @@
           />
         </div>
 
-        <div v-if="orderType === 'delivery'" class="space-y-5 ">
+        <div v-if="orderType === 'delivery'" class="space-y-4 ">
           <h5 class="text-xl font-bold">Your Shipping Address</h5>
           <div class="flex items-center gap-4 p-2 bg-white">
             <img src="/images/download.webp" class="w-16 h-14 rounded-lg" />
@@ -32,10 +32,11 @@
                 Abu Al Feda, Zamalek, Cairo Governorate 4271110
               </p>
             </div>
-            <button class="ml-auto cursor-pointer text-subtitle hover:text-black">
+            <button @click="openDeliveryAddressModal = true" class="ml-auto cursor-pointer text-subtitle hover:text-black">
               <Icon name="mynaui:edit-one" class="w-6 h-6" />
             </button>
           </div>
+          <ModalDeliveryAddressModal v-model="openDeliveryAddressModal" />
         </div>
         <div v-else>
           <h5 class="text-xl font-bold">Branch</h5>
@@ -74,8 +75,7 @@
 
           <div
             class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3"
-            v-if="selectedSchedule === 'schedule'"
-          >
+            v-if="selectedSchedule === 'schedule'">
             <inputsDatePicker name="date" placeholder="date" />
             <inputsTimePicker name="timeTo" placeholder="time" />
           </div>
@@ -147,10 +147,15 @@ const paymentType = ref("card");
 const selectedSchedule = ref("now");
 const takeway = ref(false);
 const openAddressModal = ref<boolean>(false);
+const openDeliveryAddressModal= ref<boolean>(false);
 const selectedBranch = ref<Branch | null>(null);
 
 const handleBranchSelect = (branch: Branch) => {
   selectedBranch.value = branch;
   openAddressModal.value = false;
+};
+
+const handleAddressSelect = (address) => {
+  openDeliveryAddressModal.value = false;
 };
 </script>
