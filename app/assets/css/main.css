@@ -6,9 +6,11 @@
   --color-btn:rgba(90, 106, 232, 1);
   --color-subtitle:rgba(151, 158, 197, 1);
   --color-light-gray:rgba(245, 246, 255, 1);
+  --color-line: rgba(218, 214, 255, 1);
   --color-graish:rgba(233, 232, 248, 1);
   --color-gold:rgba(252, 194, 48, 1);
-
+  --color-semi-white:#f8f8f8;
+  --color-light-white:#fbfbfb;
   --color-placeholder:rgba(189, 193, 223, 1);
   --color-accent: #00ff00; 
   --color-overlay: rgba(0, 0, 0, 0.6);
