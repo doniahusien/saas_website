@@ -70,7 +70,7 @@
         </div>
       </div>
 
-    <OrderSummary :price="price" :currency="currency"/>
+    <CartOrderSummary :price="price" :currency="currency"/>
 
       <div class="mt-6 pt-4">
         <button
