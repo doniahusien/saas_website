@@ -4,12 +4,12 @@
       v-if="modelValue"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
     >
-      <div class="bg-white rounded-2xl shadow-lg p-6 relative w-full md:w-1/2 mx-4">
+      <div class="bg-white rounded-2xl flex flex-col overflow-hidden shadow-lg p-6 relative w-full md:w-1/3 h-120 mx-4">
         <button
           class="absolute top-4 right-4 text-gray-600 hover:text-black"
           @click="$emit('update:modelValue', false)"
         >
-          <Icon name="mdi:close" class="w-6 h-6" />
+          <Icon name="mdi:close" class="cursor-pointer w-6 h-6" />
         </button>
         <h2 class="text-2xl font-bold mb-2">
           {{ t("reservation.branchesTitle") }}
@@ -46,14 +46,15 @@
           </div>
         </div>
 
-        <div class="mt-6">
+        <div class="flex mt-auto">
           <button
             @click="confirm"
-            class="w-full py-3 bg-btn text-white font-semibold rounded-full hover:bg-btn/80 transition flex items-center justify-center gap-2"
+            class="w-full py-3 cursor-pointer  bg-btn text-white font-semibold rounded-full hover:bg-btn/80 transition flex items-center justify-center gap-2"
           >
             {{ t("reservation.confirmBranch") }}
           </button>
         </div>
+        
       </div>
     </div>
   </transition>
