@@ -70,41 +70,7 @@
         </div>
       </div>
 
-      <div class="bg-white rounded-2xl mt-auto space-y-6">
-        <div>
-          <h2 class="text-xl font-bold">
-            {{ t("cart.orderSum") }}
-          </h2>
-        </div>
-
-        <div class="flex justify-between text-gray-700">
-          <span>{{ t("cart.subtotal") }} (2 {{ t("cart.items") }})</span>
-          <span class="font-semibold"
-            >{{ price.sun_total }}<span class="text-xs">{{ currency }}</span></span
-          >
-        </div>
-
-        <div class="flex justify-between text-gray-700">
-          <span>{{ t("cart.shipping") }}</span>
-          <span class="font-semibold"
-            >{{ price.delivery_price }}<span class="text-xs">{{ currency }}</span></span
-          >
-        </div>
-
-        <div class="flex justify-between text-gray-700">
-          <span>{{ t("cart.discount") }}</span>
-          <span class="font-semibold"
-            >{{ price.tax_rate_value }}<span class="text-xs">{{ currency }}</span></span
-          >
-        </div>
-
-        <div class="flex justify-between text-black text-lg font-bold">
-          <span>{{ t("cart.totalAmount") }}</span>
-          <span
-            >{{ price.total }}<span class="text-xs">{{ currency }}</span></span
-          >
-        </div>
-      </div>
+    <OrderSummary :price="price" :currency="currency"/>
 
       <div class="mt-6 pt-4">
         <button
