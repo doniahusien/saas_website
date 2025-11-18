@@ -76,8 +76,8 @@
           <div
             class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3"
             v-if="selectedSchedule === 'schedule'">
-            <inputsDatePicker name="date" placeholder="date" />
-            <inputsTimePicker name="timeTo" placeholder="time" />
+            <inputsDatePicker name="date" placeholder="date" :checkout="true"/>
+            <inputsTimePicker name="timeTo" placeholder="time" :checkout="true" />
           </div>
         </div>
         <h6 class="text-xl font-bold">Payment methods</h6>
@@ -99,7 +99,6 @@
           />
         </div>
         <ModalCreditModal v-model="openCreditModal" />
-
 
         <div class="flex">
           <button
