@@ -97,9 +97,10 @@
             value="cash"
             v-model="paymentType"
           />
-        </div>
-        <ModalCreditModal v-model="openCreditModal" />
+          <ModalCreditModal v-model="openCreditModal" />
 
+        </div>
+        
         <div class="flex">
           <button
             class="w-1/2 h-14 bg-btn text-white text-lg font-semibold rounded-full mt-4 shadow-md hover:opacity-90 ml-auto"

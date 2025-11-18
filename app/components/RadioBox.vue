@@ -7,17 +7,24 @@
       <span class="text-sm font-medium">{{ label }}</span>
     </p>
 
-    <input
-      type="radio"
-      :name="name"
-      class="checked:bg-btn checked:border-btn appearance-none w-5 h-5 border-2 border-gray-400 rounded-full"
-      :value="value"
-      v-model="model"
-    />
+    <div class="flex items-center">
+      <input
+        type="radio"
+        :name="name"
+        class="peer sr-only"
+        :value="value"
+        v-model="model"
+      />
+      <div class="w-5 h-5 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center transition-colors peer-checked:border-btn peer-checked:bg-btn/10 peer-focus:ring-2 peer-focus:ring-btn">
+        <span class="w-2 h-2 rounded-full bg-btn transform scale-0 transition-transform peer-checked:scale-100"></span>
+      </div>
+    </div>
   </label>
 </template>
 
 <script setup>
+import { computed } from 'vue';
+
 const props = defineProps({
   label: String,
   icon: String,
