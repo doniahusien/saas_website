@@ -85,8 +85,9 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
+<script setup lang="ts">
+
+const emit = defineEmits(['switch-back']);
 
 const showSuccess = ref(false);
 
@@ -94,6 +95,7 @@ const saveAddress = () => {
   showSuccess.value = true;
   setTimeout(() => {
     showSuccess.value = false;
+    emit('switch-back');
   }, 3000);
 };
 </script>
