@@ -1,10 +1,12 @@
 <template>
-        <div
+  <div>
+    <div v-if="localProducts && localProducts.length > 0">
+      <div
         v-for="item in localProducts"
         :key="item.id"
         class="px-2 py-4 grid justify-between grid-cols-4 gap-3"
       >
-        <NuxtImg :src="item.image" class=" rounded-2xl object-cover" :class="[isCheckout==true?'w-24 h-18 rounded-lg':'w-32 h-28']"  />    
+        <NuxtImg :src="item.image" class=" rounded-2xl object-cover" :class="[isCheckout==true?'w-24 h-18 rounded-lg':'w-28 h-28']"  />    
          <div class="flex flex-col":class="[isCheckout==true?'col-span-3':'col-span-2']" >
 
           <p class="font-semibold text-lg">{{ item.name }}</p>
@@ -43,6 +45,13 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div v-else class="p-6 text-center text-secondary">
+      <p class="font-semibold text-lg">Your cart is empty</p>
+      <p class="text-base">Add items to get started.</p>
+    </div>
+  </div>
 </template>
 <script setup>
 defineProps({

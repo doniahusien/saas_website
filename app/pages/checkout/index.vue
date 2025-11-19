@@ -27,9 +27,9 @@
             <img src="/images/download.webp" class="w-16 h-14 rounded-lg" />
 
             <div class="flex flex-col gap-4 p-2 justify-between">
-              <p class="text-base font-semibold">Shipping Address</p>
+              <p class="text-base font-semibold">{{ selectedAddress?.title ?? selectedAddress?.name ?? 'Shipping Address' }}</p>
               <p class="text-sm text-placeholder">
-                Abu Al Feda, Zamalek, Cairo Governorate 4271110
+                {{ selectedAddress?.location_description ?? selectedAddress?.desc ?? 'Abu Al Feda, Zamalek, Cairo Governorate 4271110' }}
               </p>
             </div>
             <button
@@ -39,7 +39,7 @@
               <Icon name="mynaui:edit-one" class="w-6 h-6" />
             </button>
           </div>
-          <ModalDeliveryAddressModal v-model="openDeliveryAddressModal" />
+          <ModalDeliveryAddressModal v-model="openDeliveryAddressModal" @selectAddress="handleAddressSelect" />
         </div>
         <div v-else>
           <h5 class="text-xl font-bold">Branch</h5>
@@ -47,9 +47,9 @@
             <img src="/images/download.webp" class="w-16 h-14 rounded-lg" />
 
             <div class="flex flex-col gap-4 p-2 justify-between">
-              <p class="text-base font-semibold">Dubai Branch</p>
+              <p class="text-base font-semibold">{{ selectedBranch?.name ?? 'Select Branch' }}</p>
               <p class="text-sm text-placeholder">
-                Abu Al Feda, Zamalek, Cairo Governorate 4271110
+                {{ selectedBranch?.location_description ?? selectedBranch?.address ?? 'Abu Al Feda, Zamalek, Cairo Governorate 4271110' }}
               </p>
             </div>
             <button
@@ -109,9 +109,12 @@
 
         <div class="flex">
           <button
-            class="w-1/2 h-14 bg-btn text-white text-lg font-semibold rounded-full mt-4 shadow-md hover:opacity-90 ml-auto"
+            @click="confirmOrder"
+            :disabled="submitting"
+            class="w-1/2 h-14 bg-btn text-white text-lg font-semibold rounded-full mt-4 shadow-md hover:opacity-90 ml-auto disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Confirm
+            <span v-if="!submitting">Confirm</span>
+            <span v-else>Placing...</span>
           </button>
         </div>
       </div>
@@ -145,26 +148,91 @@
 
 <script setup lang="ts">
 import { useAppStore } from "~/store/app";
+import { useNuxtApp } from "#app";
+import { useCartMapper } from "~/composables/useCartMapper";
+import { useField } from "vee-validate";
+import { format } from "date-fns";
+import { useToast } from "vue-toastification";
+import { useAppAuth } from "~/store/auth";
+
 const appStore = useAppStore();
 const { t } = useI18n();
 const cartsCount = computed(() => appStore.getCartCount);
 const carts = computed(() => appStore.getCartData);
 const { localProducts, price, currency } = useCartMapper(carts);
+
 const orderType = ref("delivery");
-const paymentType = ref("card");
+const paymentType = ref("cash");
 const selectedSchedule = ref("now");
 const takeway = ref(false);
 const openAddressModal = ref<boolean>(false);
 const openDeliveryAddressModal = ref<boolean>(false);
 const selectedBranch = ref<Branch | null>(null);
+const selectedAddress = ref<any | null>(null);
 const openCreditModal = ref<boolean>(true);
+const submitting = ref(false);
+
+const { value: dateValue } = useField("date");
+const { value: timeValue } = useField("timeTo");
+
+const nuxtApp = useNuxtApp();
+const api = nuxtApp.$api;
+const toast = useToast();
+const authStore = useAppAuth();
+const userWallet = computed(() => authStore.userData?.wallet ?? 0);
+
 const handleBranchSelect = (branch: Branch) => {
   selectedBranch.value = branch;
   openAddressModal.value = false;
 };
 
 const handleAddressSelect = (address) => {
+  selectedAddress.value = address;
   openDeliveryAddressModal.value = false;
+};
+
+const loadAddresses = async () => {
+  try {
+    const res = await api.get('/address');
+    const list = res.data?.data ?? [];
+    if (list.length > 0) {
+      selectedAddress.value = list[0];
+    }
+  } catch (e) {
+    // ignore, modal already handles errors
+  }
+};
+
+onMounted(() => {
+  loadAddresses();
+});
+
+const confirmOrder = async () => {
+  submitting.value = true;
+  try {
+    const form = new FormData();
+    form.append("order_type", orderType.value === "takeaway" ? "take_away" : orderType.value);
+    form.append("has_loyal", String(0));
+    form.append("has_wallet", String(0));
+    form.append("is_schedule", String(selectedSchedule.value === "schedule" ? 1 : 0));
+    if (dateValue.value) form.append("order_date", String(format(new Date(dateValue.value), "dd-MM-yyyy")));
+    if (timeValue.value) form.append("order_time", String(format(new Date(timeValue.value), "hh:mm a")));
+    const addressId = orderType.value === "delivery" ? selectedAddress.value?.id ?? "" : selectedBranch.value?.id ?? "";
+    if (addressId) form.append("address_id", String(addressId));
+    form.append("note", "");
+    if (orderType.value === "take_away") form.append("store_id", String(selectedBranch.value.id));
+    form.append("code", "");
+
+    form.append("pay_type", JSON.stringify([{ wallet: 96 }]));
+
+  const response = await api.post("/orders", form);
+    toast.success(t("Order placed successfully") || "Order placed successfully");
+  } catch (err: any) {
+    const message = err?.message || err?.response?.data?.message || "Order failed";
+    toast.error(message);
+  } finally {
+    submitting.value = false;
+  }
 };
 
 watch(paymentType, (val) => {

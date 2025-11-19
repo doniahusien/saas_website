@@ -62,29 +62,32 @@
 
 <script setup lang="ts">
 const { t, locale } = useI18n();
+const nuxtApp = useNuxtApp();
+const api = nuxtApp.$api;
+const toast = useToast();
 
-const props = defineProps({
-  modelValue: Boolean,
-});
+const props = defineProps({ modelValue: Boolean });
 const emit = defineEmits(["update:modelValue", "select"]);
 
-const branches = [
-  {
-    id: 1,
-    name: "Burj Khalifa, Dubai Branch",
-    address: "Dubai Mall, adjacent to Burj Khalifa",
-    image: "/images/food1.png",
-  },
-  {
-    id: 2,
-    name: "Abu Dhabi Branch",
-    address:
-      "Al Maryah Island at the core of Abu Dhabi's New International Financial Center",
-    image: "/images/food2.png",
-  },
-];
-
+const branches = ref<any[]>([]);
 const selected = ref<any>(null);
+const loading = ref(false);
+
+const loadStores = async () => {
+  loading.value = true;
+  try {
+    const res = await api.get("/stores");
+    branches.value = res.data?.data ?? res.data ?? [];
+  } catch (e: any) {
+    toast.error(e?.message || "Failed to load stores");
+  } finally {
+    loading.value = false;
+  }
+};
+
+onMounted(() => {
+  loadStores();
+});
 
 const selectBranch = (branch: any) => {
   selected.value = branch;
@@ -94,6 +97,8 @@ const confirm = () => {
   if (selected.value) {
     emit("select", selected.value);
     emit("update:modelValue", false);
+  } else {
+    toast.info(t("Please select a branch") || "Please select a branch");
   }
 };
 </script>

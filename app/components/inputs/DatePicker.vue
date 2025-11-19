@@ -51,7 +51,7 @@ const { value: internalValue } = useField(props.name);
 }
 .datepicker-wrapper :deep(.dp__input::placeholder) {
   color: black !important;
-  opacity: 1; 
+  opacity: 1;
 }
 
 /* Checkout-specific styles */

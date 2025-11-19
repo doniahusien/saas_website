@@ -5,6 +5,8 @@
     "dbaeumer.vscode-eslint",           // 🧹 Linting support (optional)
     "ms-vscode.vscode-typescript-next",
     "visualstudioexptteam.vscodeintellicode",
-    "nuxtr.nuxtr-vscode" // ⚙️ Optional: latest TS features
+    "nuxtr.nuxtr-vscode",
+    "github.copilot-chat",
+    "github.copilot"
   ]
 }

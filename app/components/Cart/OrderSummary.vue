@@ -1,5 +1,6 @@
 <template>
-  <div class="bg-white rounded-2xl mt-auto space-y-6">
+  <div>
+    <div v-if="price && Object.keys(price).length" class="bg-white rounded-2xl mt-auto space-y-6">
     <div>
       <h2 class="text-xl font-bold">
         {{ t("cart.orderSum") }}
@@ -32,6 +33,11 @@
       <span
         >{{ price.total }}<span class="text-xs">{{ currency }}</span></span
       >
+    </div>
+    </div>
+
+    <div v-else class="bg-white rounded-2xl mt-auto p-6 text-center text-secondary">
+      <p class="font-semibold">No order summary</p>
     </div>
   </div>
 </template>

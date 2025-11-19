@@ -31,9 +31,8 @@
         :updateQty="updateQty"
       />
 
-      <CartOrderSummary :price="price" :currency="currency" />
-
-      <div class="mt-6 pt-4">
+      <div class="mt-auto space-y-5">
+        <CartOrderSummary :price="price" :currency="currency" />
         <NuxtLink
           :to="localePath('/checkout')"
           class="w-full cursor-pointer bg-btn text-white gap-2 py-3 rounded-full font-semibold flex items-center justify-center"
@@ -68,7 +67,6 @@ async function removeFromCart(id) {
 const updateQty = (item, type) => {
   appStore.updateCounter(item.id, item.quantity, type);
 };
-
 </script>
 
 <style scoped>
