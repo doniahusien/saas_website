@@ -17,14 +17,16 @@
 
       <div class="space-y-4">
         <div>
-          <label class="block text-lg font-semibold mb-1"
-            >Choose Your Payment Method</label
-          >
-          <input
-            type="text"
-            placeholder="Home2"
-            class="w-full bg-white text-placeholder focus:outline-0 rounded-xl p-5 text-sm"
-          />
+          <label class="block text-lg font-semibold mb-1">Choose Your Payment Method</label>
+          <div class="relative">
+            <select v-model="selectedPayment" class="w-full bg-white text-placeholder focus:outline-0 rounded-xl p-5 text-sm appearance-none">
+              <option value="visa">Visa</option>
+              <option value="mastercard">Mastercard</option>
+              <option value="amex">American Express</option>
+              <option value="saved_card_1">Saved Card •••• 1234</option>
+            </select>
+            <span class="absolute inset-y-0 right-4 flex items-center pointer-events-none">▾</span>
+          </div>
         </div>
 
         <div>
@@ -97,8 +99,12 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue", "select"]);
 
 const showSuccess = ref(false);
+const selectedPayment = ref("");
 
 const saveAddress = () => {
+  // emit the selected payment method (if any)
+  emit("select", selectedPayment.value);
+
   showSuccess.value = true;
   setTimeout(() => {
     showSuccess.value = false;

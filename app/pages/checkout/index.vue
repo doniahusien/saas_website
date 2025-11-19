@@ -27,9 +27,17 @@
             <img src="/images/download.webp" class="w-16 h-14 rounded-lg" />
 
             <div class="flex flex-col gap-4 p-2 justify-between">
-              <p class="text-base font-semibold">{{ selectedAddress?.title ?? selectedAddress?.name ?? 'Shipping Address' }}</p>
+              <p class="text-base font-semibold">
+                {{
+                  selectedAddress?.title ?? selectedAddress?.name ?? "Shipping Address"
+                }}
+              </p>
               <p class="text-sm text-placeholder">
-                {{ selectedAddress?.location_description ?? selectedAddress?.desc ?? 'Abu Al Feda, Zamalek, Cairo Governorate 4271110' }}
+                {{
+                  selectedAddress?.location_description ??
+                  selectedAddress?.desc ??
+                  "Abu Al Feda, Zamalek, Cairo Governorate 4271110"
+                }}
               </p>
             </div>
             <button
@@ -39,7 +47,10 @@
               <Icon name="mynaui:edit-one" class="w-6 h-6" />
             </button>
           </div>
-          <ModalDeliveryAddressModal v-model="openDeliveryAddressModal" @selectAddress="handleAddressSelect" />
+          <ModalDeliveryAddressModal
+            v-model="openDeliveryAddressModal"
+            @selectAddress="handleAddressSelect"
+          />
         </div>
         <div v-else>
           <h5 class="text-xl font-bold">Branch</h5>
@@ -47,9 +58,15 @@
             <img src="/images/download.webp" class="w-16 h-14 rounded-lg" />
 
             <div class="flex flex-col gap-4 p-2 justify-between">
-              <p class="text-base font-semibold">{{ selectedBranch?.name ?? 'Select Branch' }}</p>
+              <p class="text-base font-semibold">
+                {{ selectedBranch?.name ?? "Select Branch" }}
+              </p>
               <p class="text-sm text-placeholder">
-                {{ selectedBranch?.location_description ?? selectedBranch?.address ?? 'Abu Al Feda, Zamalek, Cairo Governorate 4271110' }}
+                {{
+                  selectedBranch?.location_description ??
+                  selectedBranch?.address ??
+                  "Abu Al Feda, Zamalek, Cairo Governorate 4271110"
+                }}
               </p>
             </div>
             <button
@@ -116,6 +133,11 @@
             <span v-if="!submitting">Confirm</span>
             <span v-else>Placing...</span>
           </button>
+          <ModalOrderSuccessModal
+            :show="showSuccessModal"
+            :orderId="newOrderId"
+            @update:show="showSuccessModal = $event"
+          />
         </div>
       </div>
 
@@ -149,8 +171,7 @@
 <script setup lang="ts">
 import { useAppStore } from "~/store/app";
 import { useNuxtApp } from "#app";
-import { useCartMapper } from "~/composables/useCartMapper";
-import { useField } from "vee-validate";
+import { useForm, useField } from "vee-validate";
 import { format } from "date-fns";
 import { useToast } from "vue-toastification";
 import { useAppAuth } from "~/store/auth";
@@ -169,17 +190,20 @@ const openAddressModal = ref<boolean>(false);
 const openDeliveryAddressModal = ref<boolean>(false);
 const selectedBranch = ref<Branch | null>(null);
 const selectedAddress = ref<any | null>(null);
-const openCreditModal = ref<boolean>(true);
+const openCreditModal = ref<boolean>(false);
 const submitting = ref(false);
 
-const { value: dateValue } = useField("date");
-const { value: timeValue } = useField("timeTo");
+const { values: formValues } = useForm();
+const dateValue = computed(() => formValues.date);
+const timeValue = computed(() => formValues.timeTo);
 
 const nuxtApp = useNuxtApp();
 const api = nuxtApp.$api;
 const toast = useToast();
 const authStore = useAppAuth();
 const userWallet = computed(() => authStore.userData?.wallet ?? 0);
+const showSuccessModal = ref(false);
+const newOrderId = ref(null);
 
 const handleBranchSelect = (branch: Branch) => {
   selectedBranch.value = branch;
@@ -193,14 +217,12 @@ const handleAddressSelect = (address) => {
 
 const loadAddresses = async () => {
   try {
-    const res = await api.get('/address');
+    const res = await api.get("/address");
     const list = res.data?.data ?? [];
     if (list.length > 0) {
       selectedAddress.value = list[0];
     }
-  } catch (e) {
-    // ignore, modal already handles errors
-  }
+  } catch (e) {}
 };
 
 onMounted(() => {
@@ -211,25 +233,90 @@ const confirmOrder = async () => {
   submitting.value = true;
   try {
     const form = new FormData();
-    form.append("order_type", orderType.value === "takeaway" ? "take_away" : orderType.value);
+    form.append(
+      "order_type",
+      orderType.value === "takeaway" ? "take_away" : orderType.value
+    );
     form.append("has_loyal", String(0));
     form.append("has_wallet", String(0));
     form.append("is_schedule", String(selectedSchedule.value === "schedule" ? 1 : 0));
-    if (dateValue.value) form.append("order_date", String(format(new Date(dateValue.value), "dd-MM-yyyy")));
-    if (timeValue.value) form.append("order_time", String(format(new Date(timeValue.value), "hh:mm a")));
-    const addressId = orderType.value === "delivery" ? selectedAddress.value?.id ?? "" : selectedBranch.value?.id ?? "";
+
+    if (selectedSchedule.value === "schedule") {
+      try {
+        if (dateValue.value) {
+          let dateObj;
+          if (dateValue.value instanceof Date) {
+            dateObj = dateValue.value;
+          } else if (typeof dateValue.value === "string") {
+            dateObj = new Date(dateValue.value);
+          } else if (Array.isArray(dateValue.value)) {
+            dateObj = dateValue.value[0];
+          }
+
+          if (dateObj && dateObj instanceof Date && !isNaN(dateObj.getTime())) {
+            const day = String(dateObj.getDate()).padStart(2, "0");
+            const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+            const year = dateObj.getFullYear();
+            form.append("order_date", `${year}-${month}-${day}`);
+            console.log("Date sent:", `${year}-${month}-${day}`);
+          }
+        }
+      } catch (e) {
+        console.error("Date formatting error:", dateValue.value, e);
+      }
+
+      if (timeValue.value) {
+        try {
+          let timeObj = timeValue.value;
+          if (typeof timeObj === "object" && "hours" in timeObj) {
+            const hours24 = timeObj.hours;
+            const minutes = timeObj.minutes;
+
+            const period = hours24 >= 12 ? "PM" : "AM";
+            const hours12 = hours24 % 12 || 12;
+
+            const formattedHours = String(hours12).padStart(2, "0");
+            const formattedMinutes = String(minutes).padStart(2, "0");
+
+            const timeStr = `${formattedHours}:${formattedMinutes} ${period}`;
+            form.append("order_time", timeStr);
+
+          }
+          if (timeObj instanceof Date && !isNaN(timeObj.getTime())) {
+            const hours24 = timeObj.getHours();
+            const minutes = timeObj.getMinutes();
+
+            const period = hours24 >= 12 ? "PM" : "AM";
+            const hours12 = hours24 % 12 || 12;
+
+            const formattedHours = String(hours12).padStart(2, "0");
+            const formattedMinutes = String(minutes).padStart(2, "0");
+
+            const timeStr = `${formattedHours}:${formattedMinutes} ${period}`;
+            form.append("order_time", timeStr);
+          }
+        } catch (e) {
+          console.error("Time formatting error:", timeValue.value, e);
+        }
+      }
+    }
+
+    const addressId = orderType.value === "delivery"? selectedAddress.value?.id ?? "" : selectedBranch.value?.id ?? "";
     if (addressId) form.append("address_id", String(addressId));
     form.append("note", "");
     if (orderType.value === "take_away") form.append("store_id", String(selectedBranch.value.id));
     form.append("code", "");
 
     form.append("pay_type", JSON.stringify([{ wallet: 96 }]));
-
-  const response = await api.post("/orders", form);
+    const response = await api.post("/orders", form);
+    newOrderId.value = response.data.data.id;
+    console.log("Order Response:", response.data);
+    showSuccessModal.value = true;
     toast.success(t("Order placed successfully") || "Order placed successfully");
   } catch (err: any) {
     const message = err?.message || err?.response?.data?.message || "Order failed";
     toast.error(message);
+    console.log(err);
   } finally {
     submitting.value = false;
   }
