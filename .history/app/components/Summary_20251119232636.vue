@@ -23,7 +23,8 @@
 
       <div 
         v-if="discount > 0"
-        class="flex justify-between font-semibold text-gray-700">
+        class="flex justify-between font-semibold text-gray-700"
+      >
         <span>{{ t("cart.discount") }}</span>
         <span class="text-green-600">
           -{{ discount }}<span class="text-xs">{{ currency || "LE" }}</span>

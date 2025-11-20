@@ -141,10 +141,18 @@
         </div>
       </div>
 
+      <ModalCancelOrderModal
+        v-model="openCancelOrderModal"
+        @confirmed="handleCancelOrder"
+      />
+
       <div class="lg:col-span-2 space-y-5 p-5 rounded-3xl bg-white">
         <div class="flex justify-between items-center">
           <h3 class="text-2xl font-bold">Items</h3>
-          <button class="cursor-pointer text-red-500 text-sm font-medium">
+          <button 
+            @click="openCancelOrderModal = true"
+            class="cursor-pointer text-red-500 text-sm font-medium"
+          >
             Cancel Order
           </button>
         </div>
@@ -161,8 +169,8 @@
         <PromoInput placeholder="Add Loyalty Amount" icon="lucide-lab:coins-stack" />
 
         <p class="text-base text-gold mt-2">Total Amount : 500 Points / 100 EGP</p>
-
-        <Summary />
+<!-- 
+        <Summary /> -->
       </div>
     </div>
   </div>
@@ -191,6 +199,7 @@ const openDeliveryAddressModal = ref<boolean>(false);
 const selectedBranch = ref<Branch | null>(null);
 const selectedAddress = ref<any | null>(null);
 const openCreditModal = ref<boolean>(false);
+const openCancelOrderModal = ref<boolean>(false);
 const submitting = ref(false);
 
 const { values: formValues } = useForm();
@@ -327,4 +336,10 @@ watch(paymentType, (val) => {
     openCreditModal.value = true;
   }
 });
+
+const router = useRouter();
+
+const handleCancelOrder = () => {
+  router.push("/");
+};
 </script>
