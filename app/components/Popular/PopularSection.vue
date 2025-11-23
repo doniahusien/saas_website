@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto space-y-10 px-6 md:px-0">
+  <div v-if="products.length" class="container mx-auto space-y-10 px-6 md:px-0">
     <div class="grid grid-cols-2 items-center">
       <h2 class="text-2xl md:text-3xl lg:text-5xl font-semibold">
         {{ $t("popularSection.title") }}

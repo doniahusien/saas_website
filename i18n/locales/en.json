@@ -10,17 +10,17 @@
     "menu": "Menu",
     "contact": "Contact"
   },
-  "auth": { 
-    "passwordLength":"password must be at least 6 characters", 
-     "passwordMatch": "Passwords do not match",
+  "auth": {
+    "passwordLength": "password must be at least 6 characters",
+    "passwordMatch": "Passwords do not match",
     "passwordConfirmRequired": "Password confirmation is required",
-    "Registration failed":"Registration failed",
+    "Registration failed": "Registration failed",
     "verificationRequired": "Verification code is required",
     "verificationLength": "Verification code length is incorrect",
-    "Verification failed":"Verification failed",
-    "Resend in":"Resend in",
-    "Verification code sent successfully":"Verification code sent successfully",
-    "The code has been sent to your phone number":"The code has been sent to your phone number",
+    "Verification failed": "Verification failed",
+    "Resend in": "Resend in",
+    "Verification code sent successfully": "Verification code sent successfully",
+    "The code has been sent to your phone number": "The code has been sent to your phone number",
     "The email field has already been taken.": "The email field has already been taken.",
     "The phone field has already been taken.": "The phone field has already been taken.",
     "Successfully registered. Please activate your account.": "Successfully registered. Please activate your account.",
@@ -78,8 +78,8 @@
     "title": "View Our Menus",
     "viewAll": "View All"
   },
-  "menu":{
-     "noProducts": "No products found"
+  "menu": {
+    "noProducts": "No products found"
   },
   "popularSection": {
     "title": "Popular Items",
@@ -92,8 +92,9 @@
     "paragraph2": "We see our customers as invited guests to a party, and we are the hosts. It's our job every day to make every important aspect of the customer experience a little bit better. Donec quam felis, ultricies nec, pellentesque eu.",
     "cta": "Discover More"
   },
-  "reservation": {
-    "eyebrow": "Our Story",
+  "reservation": {    
+    "persons":"No of persons",
+    "eyebrow": "MAKE A RESERV",
     "title": "Online Reservation",
     "subtitle": "reservations",
     "heading": "Book a Table",
@@ -108,8 +109,9 @@
     "branchCairo": "Cairo",
     "branchAlex": "Alexandria",
     "branchGiza": "Giza",
-    "timeFrom": "From",
-    "timeTo": "To",
+    "timeFrom": "From Time",
+    "timeTo": "To Time",
+    "date": "Date",
     "submit": "Book a Table",
     "branchesTitle": "Branches Address",
     "branchesSubtitle": "Please, select your location",
@@ -137,7 +139,8 @@
     "offers": "Offers",
     "menu": "Menu",
     "about": "About Us",
-    "contact": "Contact"
+    "contact": "Contact",
+    "orders": "Orders"
   },
   "filter": {
     "title": "Selected filters",
@@ -148,7 +151,7 @@
     "apply": "Apply Filters"
   },
   "follow": "Follow us on",
-   "reviews": {
+  "reviews": {
     "title": "Customer Reviews",
     "overall": "Overall Rating",
     "totalReviews": "{count} Reviews",
@@ -157,9 +160,9 @@
     "date": "Date: {date}",
     "noReviews": "No reviews yet."
   },
-  "itemDetail":"Item Details",
-  "Note":"Note",
-  "notePlaceholder":"Write notes here",
+  "itemDetail": "Item Details",
+  "Note": "Note",
+  "notePlaceholder": "Write notes here",
   "productOptions": {
     "size": "Size",
     "selectSizeNote": "Select 2 sizes*",
@@ -174,31 +177,46 @@
     "weight": "{weight}",
     "currency": "EGP"
   },
-  "errors":{
-    "emailRequired":"Email is required",
-    "validEmail":"Enter a valid email"
+  "errors": {
+    "emailRequired": "Email is required",
+    "validEmail": "Enter a valid email"
   },
-  "added_to_cart":"Added to cart!",
-  "added_to_favorites":"Added to favorites!",
-  "share":"Share This Item",
+  "added_to_cart": "Added to cart!",
+  "added_to_favorites": "Added to favorites!",
+  "share": "Share This Item",
   "validation": {
     "name_required": "Name is required",
     "phone_required": "Phone is required",
-    "persons_required": "Please select number of persons",
     "time_from_required": "Please select start time",
     "time_to_required": "Please select end time",
     "hours_required": "Hours are required",
     "minutes_required": "Minutes are required",
-    "seconds_required": "Seconds are required"
+    "seconds_required": "Seconds are required",
+     "branch_required": "Branch selection is required",
+    "persons_required": "Please enter the number of persons"
   },
-  "cart":{
-    "title":"My Cart",
-    "items":"items",
-    "checkout":"Checkout",
-    "orderSum":"Order Summary",
-    "subtotal":"Subtotal",
-    "shipping":"Shipping Fee",
-    "discount":"Discount",
-    "totalAmount":"Total Amount"
+  "cart": {
+    "title": "My Cart",
+    "items": "items",
+    "checkout": "Checkout",
+    "orderSum": "Order Summary",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping Fee",
+    "discount": "Discount",
+    "totalAmount": "Total Amount"
+  },
+  "orders": {
+    "title": "Orders"
+  },
+  "TITLES": {
+    "Completed": "Completed",
+    "In Progress": "In Progress",
+    "Cancelled": "Cancelled",
+    "log in":"Log In",
+    "select_store":"Select store",
+    "loading_branches":"Loading stores",
+    "confirm":"Confirm",
+    "instagram":"Instagram",
+    "follow":"Follow on"
   }
 }

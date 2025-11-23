@@ -1,16 +1,13 @@
 <template>
-  <NuxtImg src="/logo.png" alt="logo" class="w-24 h-24 object-contain" />
-
-  <h2 class="font-bold mb-4 text-3xl md:text-5xl">
+  <h2 class="font-bold text-3xl md:text-5xl">
     {{ t("auth.changePasswordTitle") }}
   </h2>
 
-  <p class="text-secondary text-base md:text-lg">
+  <p class="text-secondary my-4 text-base md:text-lg">
     {{ t("auth.changePasswordInstruction") }}
   </p>
 
-  <VeeForm @submit="handleSubmit" :validation-schema="schema">
-    <div class="space-y-4 pt-2">
+  <VeeForm class="space-y-5" @submit="handleSubmit" :validation-schema="schema">
       <inputsBasePassword
         id="password"
         name="password"
@@ -23,12 +20,11 @@
         v-model="form.password_confirmation"
         :placeholder="t('auth.confirmNewPassword')"
       />
-    </div>
 
     <button
       :disabled="loading"
       type="submit"
-      class="bg-btn cursor-pointer text-white text-base md:text-lg w-full mt-8 rounded-full p-4 disabled:opacity-50"
+      class="bg-btn cursor-pointer text-white text-base md:text-lg w-full  rounded-full p-4 disabled:opacity-50"
     >
       <span v-if="!loading">{{ t("auth.confirm") }}</span>
       <span v-else>...</span>

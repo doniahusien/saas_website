@@ -1,11 +1,10 @@
 <template>
-  <div class="container px-5 md:px-20 lg:px-25 mx-auto">
-    <NuxtImg src="/logo.png" alt="logo" class="w-24 h-24 object-contain mb-6" />
+  <div class="space-y-5 w-full">
 
-    <h2 class="font-bold mb-3 text-3xl md:text-5xl">
+    <h2 class="font-bold text-3xl md:text-5xl">
       {{ t("auth.verifyCode") }}
     </h2>
-    <p class="text-secondary text-base md:text-lg mb-6">
+    <p class="text-secondary text-base md:text-lg ">
       {{ t("auth.verifyInstruction") }}
     </p>
 
@@ -38,13 +37,13 @@
       <button
         type="submit"
         :disabled="loading"
-        class="bg-btn cursor-pointer text-white text-base md:text-lg w-full mt-4 rounded-full p-4 disabled:opacity-50"
+        class="bg-btn cursor-pointer text-white text-base md:text-lg w-full  rounded-full p-4 disabled:opacity-50"
       >
         <span v-if="!loading">{{ t("auth.next") }}</span>
         <span v-else>...</span>
       </button>
 
-      <p class="pt-5 text-center">
+      <p class=" text-center mt-4">
         {{ t("auth.didNotReceive") }}
         <button
           type="button"

@@ -1,11 +1,10 @@
 <template>
-  <NuxtImg src="/logo.png" alt="logo" class="w-24 h-24 object-contain" />
-
-  <h2 class="font-bold text-3xl md:text-5xl">
+  <div class="w-full space-y-5">
+     <h2 class="font-bold text-3xl md:text-5xl">
     {{ t("auth.forgotPasswordTitle") }}
   </h2>
 
-  <p class="text-secondary my-5 text-base md:text-lg">
+  <p class="text-secondary  text-base md:text-lg">
     {{ t("auth.forgotPasswordInstruction") }}
   </p>
 
@@ -20,12 +19,14 @@
     <button
       :disabled="loading"
       type="submit"
-      class="bg-btn cursor-pointer text-white text-base md:text-lg w-full mt-8 rounded-full p-4"
+      class="bg-btn cursor-pointer mt-5 text-white text-base md:text-lg w-full  rounded-full p-4"
     >
       <span v-if="!loading">{{ t("auth.send") }}</span>
       <span v-else>...</span>
     </button>
   </VeeForm>
+  </div>
+ 
 </template>
 <script setup lang="ts">
 import * as yup from "yup";

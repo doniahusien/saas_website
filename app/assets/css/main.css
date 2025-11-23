@@ -1,18 +1,19 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
+
 @theme {
   --color-primary: black;
-  --color-secondary:rgba(130, 138, 186, 1);
-  --color-btn:rgba(90, 106, 232, 1);
-  --color-subtitle:rgba(151, 158, 197, 1);
-  --color-light-gray:rgba(245, 246, 255, 1);
+  --color-secondary: rgba(130, 138, 186, 1);
+  --color-btn: rgba(90, 106, 232, 1);
+  --color-subtitle: rgba(151, 158, 197, 1);
+  --color-light-gray: rgba(245, 246, 255, 1);
   --color-line: rgba(218, 214, 255, 1);
-  --color-graish:rgba(233, 232, 248, 1);
-  --color-gold:rgba(252, 194, 48, 1);
-  --color-semi-white:#f8f8f8;
-  --color-light-white:#fbfbfb;
-  --color-placeholder:rgba(189, 193, 223, 1);
-  --color-accent: #00ff00; 
+  --color-graish: rgba(233, 232, 248, 1);
+  --color-gold: rgba(252, 194, 48, 1);
+  --color-semi-white: #f8f8f8;
+  --color-light-white: #fbfbfb;
+  --color-placeholder: rgba(189, 193, 223, 1);
+  --color-accent: #00ff00;
   --color-overlay: rgba(0, 0, 0, 0.6);
   --font-switzer: "Switzer";
   --font-allura: "Allura";
@@ -23,6 +24,7 @@
   src: url("/fonts/Allura-Regular.ttf") format("truetype");
   font-display: swap;
 }
+
 @font-face {
   font-family: "Switzer";
   src: url("/fonts/Switzer-Regular.otf") format("opentype");
@@ -30,23 +32,54 @@
 }
 
 @layer base {
-   body {
+  body {
     @apply font-switzer bg-white text-primary;
   }
-  .overlay{
-  @apply absolute inset-0 bg-black/70;
-}
-  .input {
-    @apply w-full border  border-placeholder rounded-lg px-3 py-3 bg-transparent text-placeholder text-sm
-    focus:outline-none focus:ring-2 focus:ring-secondary transition-all duration-150;
+
+  .overlay {
+    @apply absolute inset-0 bg-black/70;
   }
 
+  .input {
+    @apply w-full h-14 border border-placeholder rounded-lg px-2 py-3 bg-transparent text-placeholder text-base focus:outline-none transition-all duration-150;
+  }
+
+ .base-btn {
+  @apply flex items-center border border-btn justify-center gap-4 w-full lg:w-fit flex-wrap py-3.5 px-2 lg:px-8 rounded-full bg-btn text-white;
+}
+
+
+  .base-btn:hover {
+    @apply cursor-pointer bg-white text-btn;
+  }
+  .icon{
+    @apply cursor-pointer flex items-center justify-center bg-light-gray/50 rounded-full size-12;
+  }
 }
 
 .input_wrapper.error select,
 .input_wrapper.error input {
   border-color: #ef4444;
 }
+
 .label_active {
   color: var(--text-color, #333);
+}
+.branch-list::-webkit-scrollbar {
+  width: 6px;
+}
+.branch-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.branch-list::-webkit-scrollbar-thumb {
+  background: #3b82f6; 
+  border-radius: 9999px;
+}
+.branch-list::-webkit-scrollbar-thumb:hover {
+  background: #2563eb; 
+}
+
+.branch-list {
+  scrollbar-width: thin;
+  scrollbar-color: #3b82f6 transparent;
 }

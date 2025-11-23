@@ -1,10 +1,10 @@
 <template>
   <nav
-    class="relative flex items-center justify-between px-6 md:px-10 py-4 bg-white shadow-sm"
+    class="relative flex items-center justify-between px-8 md:px-16 py-5 bg-white shadow-sm"
   >
-    <div class="flex items-center gap-6">
-      <NuxtImg src="/logo.png" alt="logo" class="w-16 h-16 object-contain" />
-      <ul class="hidden md:flex gap-3 lg:gap-8 text-base lg:text-lg">
+    <div class="flex items-center gap-8">
+      <NuxtImg src="/logo.png" alt="logo" class="size-16 object-contain" />
+      <ul class="hidden lg:flex gap-3  text-base ">
         <li v-for="item in items" :key="item.to">
           <NuxtLink
             :to="item.to"
@@ -18,47 +18,58 @@
     </div>
 
     <div class="flex items-center gap-5">
-      <ul class="hidden md:flex items-center gap-2 md:gap-5">
-        <li @click="cartOpen = true" class="cursor-pointer">
-            <NuxtImg src="/images/icons/shopping.svg" alt="shopping" class="w-5 h-5" />
+      <ul class=" text-btn flex justify-center items-center gap-3">
+         <li class="icon ">
+            <Icon name="solar:heart-linear" class="size-6"/>
         </li>
-        <li>
-          <NuxtLink to="" class="cursor-pointer">
-            <NuxtImg src="/images/icons/bell.svg" alt="bell" class="w-5 h-5" />
-          </NuxtLink>
+        <li @click="cartOpen = true" class="icon">
+          <Icon name="solar:bag-5-outline" class="size-6"/>
         </li>
-        <li>
-          <NuxtLink to="" class="cursor-pointer">
-            <NuxtImg src="/images/icons/profile.svg" alt="profile" class="w-5 h-5" />
-          </NuxtLink>
+        <li class="icon" v-if="isLoggedIn">
+            <Icon name="solar:bell-outline" class="size-6"/>
+        </li>
+         <li class="icon" v-if="isLoggedIn">
+          <Icon name="mage:user" class="size-6" />
         </li>
       </ul>
 
       <button
         @click="showSelect = true"
-        class="hidden cursor-pointer md:flex text-left items-center gap-3 bg-white"
-      >
+        class="hidden cursor-pointer lg:flex text-left items-center gap-3 bg-white">
         <NuxtImg
           v-if="selectedBranch?.image"
           :src="selectedBranch.image"
           alt="branch"
-          class="w-10 h-10 rounded-full object-cover"
+          class="size-14 rounded-full object-cover"
         />
-        <div class="flex flex-col">
+        <div class="flex flex-col justify-between">
           <p class="font-semibold text-base">
-            {{ selectedBranch?.name ?? "Branch" }}
+            {{ selectedBranch?.name  }}
           </p>
           <p class="text-sm text-placeholder">
-            {{ selectedBranch?.location_description || t("select_store") }}
-            <Icon name="mdi-chevron-down" class="w-4 h-4" />
+            {{ selectedBranch?.location_description }}
+           <!--  <Icon name="mdi-chevron-down" class="size-4" /> -->
           </p>
         </div>
       </button>
 
+        <NuxtLink
+        v-if="!isLoggedIn" 
+          :to="localePath('/auth/login')"
+          class="base-btn hidden lg:flex">
+          <Icon name="flowbite:arrow-left-to-bracket-outline" class="text-2xl" />
+          <span>{{ t("TITLES.log in") }}</span>
+        </NuxtLink>
+
+
+     <NuxtLink :to="switchPath" class="hidden lg:flex items-center text-btn">
+      <Icon name="fluent:globe-48-filled" class="size-5 "/>
+      <span> {{ t(`locale.${locale}`) }}</span>
+      </NuxtLink>
+
       <button
         @click="toggle"
-        class="cursor-pointer md:hidden flex items-center justify-center w-10 h-10 rounded focus:outline-none"
-      >
+        class="cursor-pointer text-btn lg:hidden flex items-center justify-center size-10 rounded focus:outline-none z-80" >
         <span v-if="!isOpen" class="text-3xl">
           <Icon name="fe:bar" />
         </span>
@@ -71,86 +82,97 @@
     <transition name="fade">
       <div
         v-if="isOpen"
-        class="absolute top-full left-0 w-full bg-white text-black shadow-lg z-50 md:hidden"
-      >
-        <ul class="flex flex-col text-lg font-din px-6 py-4 space-y-4">
+        class="space-y-6 fixed inset-0 z-50 p-6 bg-white text-black lg:hidden overflow-y-auto">
+      <button
+        @click="showSelect = true"
+        class=" cursor-pointer flex text-start items-center gap-3 bg-white">
+        <NuxtImg
+          v-if="selectedBranch?.image"
+          :src="selectedBranch.image"
+          alt="branch"
+          class="size-14 rounded-full object-cover"
+        />
+        <div class="flex flex-col justify-between">
+          <p class="font-semibold text-base">
+            {{ selectedBranch?.name  }}
+          </p>
+          <p class="text-sm text-placeholder">
+            {{ selectedBranch?.location_description }}
+           <!--  <Icon name="mdi-chevron-down" class="size-4" /> -->
+          </p>
+        </div>
+      </button>
+
+        <NuxtLink
+        v-if="!isLoggedIn" 
+          :to="localePath('/auth/login')"
+          class="base-btn flex items-center gap-2">
+          <Icon name="flowbite:arrow-left-to-bracket-outline" class="text-2xl" />
+          <span>{{ t("TITLES.log in") }}</span>
+        </NuxtLink>
+        <ul class="flex flex-col text-base gap-4">
           <li v-for="item in items" :key="item.to" class="hover:text-btn transition">
             <NuxtLink :to="item.to" @click="isOpen = false">
               {{ item.label }}
             </NuxtLink>
           </li>
         </ul>
-        <ul class="flex items-center px-6 py-4 gap-5">
-      <li @click="cartOpen = true" class="cursor-pointer">
-            <NuxtImg src="/images/icons/shopping.svg" alt="shopping" class="w-5 h-5" />
-        </li>
-          <li>
-            <NuxtLink to="" class="cursor-pointer">
-              <NuxtImg src="/images/icons/bell.svg" alt="bell" class="w-5 h-5" />
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="" class="cursor-pointer">
-              <NuxtImg src="/images/icons/profile.svg" alt="profile" class="w-5 h-5" />
-            </NuxtLink>
-          </li>
-        </ul>
+  
+     <NuxtLink :to="switchPath" class="flex items-center text-btn">
+      <Icon name="fluent:globe-48-filled" class="size-5 "/>
+      <span> {{ t(`locale.${locale}`) }}</span>
+      </NuxtLink>
 
-        <div class="border-t mt-4 pt-4 px-6 pb-6">
-          <button
-            @click="showSelect = true"
-            class="cursor-pointer w-full text-left flex items-center gap-3"
-          >
-            <NuxtImg
-              v-if="selectedBranch?.image"
-              :src="selectedBranch.image"
-              alt="branch"
-              class="w-10 h-10 rounded-full object-cover"
-            />
-            <div class="flex flex-col">
-              <p class="font-semibold text-base">
-                {{ selectedBranch?.name }}
-              </p>
-              <p class="text-sm text-placeholder">
-                {{ selectedBranch?.location_description || t("select_store") }}
-              </p>
-            </div>
-          </button>
-        </div>
       </div>
     </transition>
 
-    <ModalBranchModal v-model="showSelect" @select="onBranchSelected" />
+    <ModalBranchModal
+      v-model="showSelect"
+      @select="onBranchSelected"
+      :stores="allStores"
+    />
     <Cart v-model="cartOpen" />
   </nav>
 </template>
 
 <script setup lang="ts">
+import { useAppAuth } from "~/store/auth"
 const { t, locale } = useI18n();
+
+const switchLocalePath = useSwitchLocalePath();
+const targetLocale = computed(() => (locale.value === "ar" ? "en" : "ar"));
+const switchPath = computed(() => switchLocalePath(targetLocale.value));
+const appAuth = useAppAuth();
 const localePath = useLocalePath();
 const route = useRoute();
 const isOpen = ref<boolean>(false);
 const cartOpen = ref<boolean>(false);
 const showSelect = ref<boolean>(false);
-const selectedBranch = ref<Branch | null>(null);
 
-const branchCookie = useCookie<Branch | null>("selectedBranch", { sameSite: "lax" });
+const isLoggedIn= appAuth.isLoggedIn;
 
+const selectedBranch = useCookie<Branch | null>("selectedBranch")
+const allStoresCookie = useCookie<string | null>("all_stores")
+const allStores = computed<Branch[]>(() => {
+  try {
+    return allStoresCookie.value ? JSON.parse(allStoresCookie.value) : [];
+  } catch {
+    return [];
+  }
+});
 const toggle = () => (isOpen.value = !isOpen.value);
 
 const onBranchSelected = (branch: Branch) => {
-  selectedBranch.value = branch;
-  branchCookie.value = branch;
+  selectedBranch.value = branch
 };
 
+
 onMounted(() => {
-  if (!branchCookie.value) {
+  if (!selectedBranch.value) {
     showSelect.value = true;
   }
-  if (branchCookie.value) {
-    selectedBranch.value = branchCookie.value;
-  }
 });
+
 const isActive = (to: string) => route.path === to;
 
 const items = computed(() => [

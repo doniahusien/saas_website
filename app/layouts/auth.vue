@@ -1,23 +1,22 @@
 <template>
   <Html :lang="locale" :dir="locale === 'ar' ? 'rtl' : 'ltr'">
     <Body :dir="locale === 'ar' ? 'rtl' : 'ltr'">
-      <div class="h-screen flex gap-5">
-        <div class="container hidden xl:flex flex-col relative overflow-hidden">
+      <div class="min-h-screen flex">
+        <div
+          class="hidden w-1/2 xl:block bg-cover bg-no-repeat "
+          style="background-image: url('/images/bg/auth_bg.png')"></div>
+
+        <div class="w-full h-screen xl:w-1/2  mx-auto bg-white ps-4 md:ps-7 overflow-y-auto pe-4 md:pe-7 xl:pe-0 flex justify-center z-20 xl:-translate-x-8 flex-col rounded-3xl">
+          <div class="w-116 mx-auto">
+               <NuxtLink :to="localePath('/')" class="relative w-fit">
           <img
-            src="/images/bg/auth_bg.png"
-            alt="Auth background"
-            class="object-cover w-full h-full"
+            class="!mb-7"
+            width="154"
+            src="/logo.png"
+            alt="logo"
           />
 
-          <NuxtLink
-            :to="switchPath"
-            class="absolute top-6 right-6 bg-white text-gray-800 flex items-center justify-center w-10 h-10 rounded-full shadow hover:bg-gray-100 transition"
-          >
-            {{ t(`locale.${locale}`) }}
-          </NuxtLink>
-        </div>
-        <div class="container mx-auto flex items-center justify-center">
-          <div>
+        </NuxtLink>
             <slot />
           </div>
         </div>
@@ -26,8 +25,10 @@
   </Html>
 </template>
 
+
 <script setup>
 const { locale, t } = useI18n();
+const localePath= useLocalePath();
 const switchLocalePath = useSwitchLocalePath();
 const targetLocale = computed(() => (locale.value === "ar" ? "en" : "ar"));
 const switchPath = computed(() => switchLocalePath(targetLocale.value));

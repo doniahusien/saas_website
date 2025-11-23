@@ -1,5 +1,5 @@
 <template>
-  <section class="container mx-auto px-6">
+  <section class="container mx-auto px-6 md:px-0">
     <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
       <div class="flex justify-center">
         <div class="w-full md:w-4/5 lg:w-3/4 aspect-4/5">
@@ -40,9 +40,8 @@
           </div>
 
           <button
-          @click="handleSubmit"
             type="submit"
-            class="w-full cursor-pointer rounded-full px-8 py-3 font-medium text-white bg-btn hover:opacity-90 transition"
+            class="w-full cursor-pointer rounded-full px-3 md:px-8 py-3 font-medium text-white bg-btn hover:opacity-90 transition"
           >
             {{ $t("subscription.cta") }}
           </button>
@@ -56,26 +55,24 @@
 import { object, string } from "yup";
 import { useToast } from "vue-toastification";
 const { t } = useI18n();
-const {$api}= useNuxtApp();
+const { $api } = useNuxtApp();
 const toast = useToast();
 defineProps({
   subscriptionContent: Object,
 });
 
 const schema = object({
-  email: string().required(`${t("errors.emailRequired")}`).email(`${t("errors.emailRequired")}`),
+  email: string().email(`${t("errors.emailRequired")}`),
 });
 
 async function handleSubmit(values) {
-  console.log("Details:", values);
   try {
     const { data } = await $api.post("/news-letter-subscription", {
       email: values.email,
     });
     toast.success(data.message);
-  }
-  catch (err) {
-    toast.error(err?.message )
+  } catch (err) {
+    toast.error(err?.message);
     /* toast.error(error?.response?.data?.message || "Something went wrong."); */
   }
 }

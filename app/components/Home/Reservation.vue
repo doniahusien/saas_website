@@ -12,7 +12,7 @@
     <div
       class="bg-[url('/images/bg/reservation.png')] bg-cover bg-center rounded-xl shadow-lg p-8 md:p-12"
     >
-      <div class="w-full md:w-3/4 lg:w-1/2 mx-auto space-y-16">
+      <div class="w-2/3 mx-auto space-y-16">
         <div class="text-center">
           <p class="font-allura text-3xl md:text-5xl">
             {{ $t("reservation.subtitle") }}
@@ -21,71 +21,74 @@
             {{ $t("reservation.heading") }}
           </h3>
         </div>
-        <VeeForm @submit="handleSubmit" :validation-schema="schema" class="space-y-10">
-          <div>
-            <VeeField
-              name="name"
-              type="text"
-              class="w-full placeholder:text-black border-b border-btn bg-transparent focus:outline-none focus:border-btn"
-              :placeholder="$t('reservation.namePlaceholder')"
-            />
-            <VeeErrorMessage name="name" class="text-red-500 text-xs mt-1" />
-          </div>
-
-          <div>
-            <VeeField
-              name="phone"
-              type="tel"
-              class="w-full placeholder:text-black border-b border-btn bg-transparent focus:outline-none focus:border-btn"
-              :placeholder="$t('reservation.phonePlaceholder')"
-            />
-            <VeeErrorMessage name="phone" class="text-red-500 text-xs mt-1" />
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <VeeForm @submit="handleSubmit" :validation-schema="schema" class="space-y-8">
+          <template v-slot="{ errors }">
             <div>
               <VeeField
-                as="select"
-                name="persons"
-                class="w-full placeholder:text-black border-b border-btn bg-transparent focus:outline-none focus:border-btn"
-              >
-                <option disabled value="">{{ $t("reservation.selectPersons") }}</option>
-                <option>{{ $t("reservation.person1") }}</option>
-                <option>{{ $t("reservation.person2") }}</option>
-                <option>{{ $t("reservation.person3") }}</option>
-                <option>{{ $t("reservation.person4plus") }}</option>
-              </VeeField>
-              <VeeErrorMessage name="persons" class="text-red-500 text-xs mt-1" />
+                name="name"
+                type="text"
+                class="w-full font-medium placeholder:text-black pb-2.5 bg-transparent focus:outline-none border-b"
+                :class="errors.name ? 'border-red-500' : 'border-white'"
+                :placeholder="$t('reservation.namePlaceholder')"
+              />
+              <VeeErrorMessage name="name" class="text-red-500 text-sm mt-1" />
+            </div>
+            <inputsPhoneInput
+              :isRes="true"
+              codeName="phone_code"
+              phoneName="phone"
+              :placeholder="t('auth.phone')"
+              v-model:code="phone_code"
+              v-model:phone="phone"
+              @country-selected="onCountrySelected"
+            />
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <VeeField
+                  name="persons"
+                  type="text"
+                  class="w-full font-medium placeholder:text-black pb-2.5 bg-transparent focus:outline-none border-b"
+                  :class="errors.persons ? 'border-red-500' : 'border-white'"
+                  :placeholder="$t('reservation.persons')"
+                />
+                <VeeErrorMessage name="persons" class="text-red-500 text-sm mt-1" />
+              </div>
+
+              <div>
+                <div
+                  @click="openAddressModal = true"
+                  :class="[
+                    'w-full font-medium placeholder:text-black pb-2.5 bg-transparent focus:outline-none border-b',
+                    errors.branch ? 'border-red-500' : 'border-white',
+                  ]"
+                >
+                  {{ selectedBranch?.name || $t("reservation.selectBranch") }}
+                </div>
+                <VeeErrorMessage name="branch" class="text-red-500 text-sm mt-1" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <inputsTimePicker name="timeTo" :placeholder="$t('reservation.timeTo')" />
+              <inputsTimePicker
+                name="timeFrom"
+                :placeholder="$t('reservation.timeFrom')"
+              />
             </div>
 
             <div>
-              <div
-                @click="openAddressModal = true"
-                class="cursor-pointer w-full border-b border-btn bg-transparent text-black focus:outline-none"
-              >
-                {{ selectedBranch?.name || $t("reservation.selectBranch") }}
-              </div>
-              <VeeErrorMessage name="branch" class="text-red-500 text-xs mt-1" />
+              <inputsDatePicker name="date" placeholder="date" />
             </div>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <inputsTimePicker name="timeTo" :placeholder="$t('reservation.timeTo')" />
-            <inputsTimePicker name="timeFrom" :placeholder="$t('reservation.timeFrom')" />
-          </div>
-
-          <div>
-            <inputsDatePicker name="date" placeholder="date" />
-          </div>
-
-          <div class="flex justify-center md:justify-end">
-            <button
-              type="submit"
-              class="px-6 py-3 cursor-pointer bg-btn text-white rounded-full hover:bg-btn/80 transition"
-            >
-              {{ $t("reservation.submit") }}
-            </button>
-          </div>
+            <div class="flex justify-center md:justify-end">
+              <button
+                type="submit"
+                class="px-6 py-3 cursor-pointer bg-btn text-white rounded-full hover:bg-btn/80 transition"
+              >
+                {{ $t("reservation.submit") }}
+              </button>
+            </div>
+          </template>
         </VeeForm>
         <ModalAddressModal v-model="openAddressModal" @select="handleBranchSelect" />
       </div>
@@ -96,23 +99,47 @@
 <script setup lang="ts">
 import { object, string, date } from "yup";
 
+import * as yup from "yup";
+
 const { t } = useI18n();
+
+const phoneLimit = ref(null);
+function onCountrySelected(country) {
+  phoneLimit.value = country?.phone_limit || null;
+}
 
 const schema = object({
   name: string().required(t("validation.name_required")),
-  phone: string().required(t("validation.phone_required")),
   persons: string().required(t("validation.persons_required")),
-  timeFrom: object({
-    hours: string().required(t("validation.hours_required")),
-    minutes: string().required(t("validation.minutes_required")),
-    seconds: string().required(t("validation.seconds_required")),
-  }).required(t("validation.time_from_required")),
-  timeTo: object({
-    hours: string().required(t("validation.hours_required")),
-    minutes: string().required(t("validation.minutes_required")),
-    seconds: string().required(t("validation.seconds_required")),
-  }).required(t("validation.time_to_required")),
+  phone_code: string().required(t("auth.phoneCodeRequired")),
+
+  phone: string()
+    .required(t("auth.phoneRequired"))
+    .matches(/^[0-9]+$/, t("auth.invalidPhone"))
+    .test(
+      "phone-limit",
+      phoneLimit.value
+        ? t("auth.phoneLimit", { limit: phoneLimit.value })
+        : t("auth.invalidPhone"),
+      function (value) {
+        if (!value) return false;
+        if (!phoneLimit.value) return true;
+        return value.length === phoneLimit.value;
+      }
+    ),
+  timeFrom: yup
+    .mixed()
+    .test("required", t("validation.time_from_required"), (value) => !!value),
+
+  timeTo: yup
+    .mixed()
+    .test("required", t("validation.time_to_required"), (value) => !!value),
+  date: yup
+    .mixed()
+    .transform((value) => (value ? new Date(value) : null))
+    .test("required", t("validation.date_required"), (value) => !!value),
 });
+
 const openAddressModal = ref<boolean>(false);
 const selectedBranch = ref<Branch | null>(null);
 

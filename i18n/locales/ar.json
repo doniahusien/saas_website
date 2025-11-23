@@ -88,6 +88,7 @@
     "cta": "اكتشف المزيد"
   },
   "reservation": {
+    "persons":"عدد الاشخاص",
     "eyebrow": "قصتنا",
     "title": "الحجز الإلكتروني",
     "subtitle": "الحجوزات",
@@ -182,14 +183,23 @@
    "validation": {
     "name_required": "الاسم مطلوب",
     "phone_required": "رقم الهاتف مطلوب",
-    "persons_required": "يرجى اختيار عدد الأشخاص",
     "time_from_required": "يرجى اختيار وقت البدء",
     "time_to_required": "يرجى اختيار وقت الانتهاء",
     "hours_required": "الساعات مطلوبة",
     "minutes_required": "الدقائق مطلوبة",
-    "seconds_required": "الثواني مطلوبة"
+    "seconds_required": "الثواني مطلوبة",
+      "branch_required": "يجب اختيار الفرع",
+    "persons_required": "يرجى إدخال عدد الأشخاص"
   },
    "cart":{
     "title":"My Cart"
+  },
+  "TITLES":{
+    "log in":"تسجيل الدخول",
+    "select_store":"اختار متجر",
+    "loading_branches":"جاري تحميل المتاجر",
+    "confirm":"تأكيد",
+    "instagram":"انستجرام",
+    "follow":"تابعنا على"
   }
 }

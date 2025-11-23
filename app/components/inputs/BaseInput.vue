@@ -1,7 +1,7 @@
 <template>
   <VeeField :name="name" v-slot="{ field, meta }">
     <div
-      class="input_wrapper"
+      class=""
       :class="[
         { error: !meta.valid && meta.touched, prepend: prepend },
         classes
@@ -11,7 +11,7 @@
         :for="id"
         v-if="label"
         :class="labelClass"
-        class="label !flex gap-2 capitalize items-center"
+        class="label flex! gap-2 capitalize items-center"
       >
         {{ label }}
         <span v-if="optional" class="text-sub">
@@ -31,7 +31,7 @@
         ></textarea>
 
         <input
-          class="focus:outline-none w-full border border-placeholder p-3 rounded-lg text-placeholder"
+          class="input"
           :disabled="disabled"
           :step="step"
           v-else

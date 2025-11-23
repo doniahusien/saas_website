@@ -1,12 +1,10 @@
 <template>
-    <NuxtImg src="/logo.png" alt="logo" class="w-24 h-24 object-contain mb-6" />
-
-    <h2 class="font-bold text-3xl md:text-5xl">{{ t("auth.welcomeBack") }}</h2>
-    <p class="text-secondary text-base md:text-lg my-5">
+  <div class="w-full space-y-3">
+    <h2 class="font-bold text-2xl md:text-5xl">{{ t("auth.welcomeBack") }}</h2>
+    <p class="text-secondary text-base mb-5">
       {{ t("auth.enterCredentials") }}
     </p>
-      <VeeForm  :validation-schema="schema" @submit="onSubmit">
-        <div class="space-y-5 py-6">
+      <VeeForm class="space-y-5"  :validation-schema="schema" @submit="onSubmit">
           <inputsPhoneInput
             codeName="phone_code"
             phoneName="phone"
@@ -20,7 +18,6 @@
             v-model="form.password"
             :placeholder="t('auth.password')"
           />
-        </div>
 
         <div class="flex justify-between">
           <UCheckbox :label="t('auth.rememberMe')" :ui="{ label: 'text-secondary' }" />
@@ -31,21 +28,23 @@
 
         <button
           type="submit"
-          class="bg-btn cursor-pointer text-white text-base md:text-lg w-full mt-8 rounded-full p-4 transition-transform hover:scale-[1.02] disabled:opacity-50"
+          class="bg-btn cursor-pointer text-white text-medium md:text-lg w-full rounded-full p-4 transition-transform hover:scale-[1.02] disabled:opacity-50"
           :disabled="loading"
         >
           <span v-if="!loading">{{ t("auth.login") }}</span>
           <span v-else>{{ t("auth.loggingIn") }}...</span>
         </button>
 
-        <p class="text-center pt-5">
+        <p class="text-center">
           {{ t("auth.dontHaveAccount") }}
-          <NuxtLink :to="localePath('/auth/signup')" class="text-btn font-semibold">
+          <NuxtLink :to="localePath('/auth/signup')" class="text-btn text-base font-semibold">
             {{ t("auth.signUpNow") }}
           </NuxtLink>
         </p>
       </VeeForm>
 
+  </div>
+  
 </template>
 
 <script setup lang="ts">

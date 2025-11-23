@@ -14,7 +14,7 @@
           <UIFilterSection class="lg:col-span-1" @apply="handleApplyFilters" />
 
           <section class="space-y-8 lg:col-span-3">
-            <!-- Optional Tabs -->
+        
             <!--
             <UTabs
               v-model="selectedTab"
@@ -106,7 +106,7 @@ const fetchProducts = async (extraParams = {}, showSectionLoader = false) => {
 
   try {
     const params = { store_id: storeId.value, ...extraParams };
-    const res = await $api.get("product", { headers: { os: "web" }, params });
+    const res = await $api.get("product");
     products.value = res.data.data || [];
     if (!showSectionLoader) status.value = "success";
   } catch (err: any) {

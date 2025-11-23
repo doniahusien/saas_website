@@ -1,7 +1,7 @@
 <template>
   <div>
     <VeeField v-model="value" :name="name" v-slot="{ field, meta }">
-      <div class="input_wrapper" :class="{ error: !meta.valid && meta.touched }">
+      <div class="" :class="{ error: !meta.valid && meta.touched }">
         <label
           v-if="label"
           :for="name"
@@ -16,7 +16,7 @@
             v-bind="field"
             :id="name"
             autocomplete="off"
-            class="focus:outline-none w-full border border-placeholder p-3 rounded-lg text-placeholder"
+            class="input"
             :placeholder="placeholder || $t('LABELS.password')"
             :type="showPassword ? 'text' : 'password'"
           />

@@ -1,9 +1,8 @@
 <template>
-  <NuxtImg src="/logo.png" alt="logo" class="w-24 h-24 object-contain" />
-  <h2 class="font-bold mb-4 text-3xl md:text-5xl">{{ $t("auth.createAccount") }}</h2>
+  <h2 class="font-bold mb-5 text-3xl md:text-5xl">{{ $t("auth.createAccount") }}</h2>
 
-  <VeeForm @submit="handleSubmit" :validation-schema="schema">
-    <div class="space-y-4 py-5">
+  <VeeForm class="space-y-5 " @submit="handleSubmit" :validation-schema="schema">
+ 
       <inputsBaseInput id="name" name="name" :placeholder="t('auth.name')" />
       <inputsPhoneInput
         codeName="phone_code"
@@ -19,19 +18,19 @@
         v-model="form.password"
         :placeholder="t('auth.password')"
       />
-    </div>
+
     <UCheckbox :label="t('auth.rememberMe')" :ui="{ label: 'text-secondary' }" />
 
     <button
       :disabled="loading"
       type="submit"
-      class="bg-btn text-white w-full mt-8 rounded-full p-4"
+      class="bg-btn text-white w-full rounded-full p-4"
     >
       <span v-if="!loading">{{ t("auth.register") }}</span>
       <span v-else>...</span>
     </button>
   </VeeForm>
-  <p class="text-center pt-5">
+  <p class="text-center mt-5">
     {{ t("auth.haveAccount") }}
     <NuxtLink :to="localePath('/auth/login')" class="text-btn font-semibold">
       {{ t("auth.login") }}

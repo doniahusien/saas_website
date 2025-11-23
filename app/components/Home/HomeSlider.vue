@@ -1,20 +1,22 @@
 <template>
-  <div v-if="sliders?.length" class="relative w-full h-full">
+  <div v-if="sliders?.length" class="relative">
     <Swiper
       :modules="[Navigation, Autoplay]"
       :slides-per-view="1"
       :loop="true"
       :autoplay="{ delay: 5000 }"
       :navigation="{ prevEl: prevEl, nextEl: nextEl }"
-      class="w-full h-screen"
+      class="h-screen"
     >
-      <SwiperSlide v-for="item in sliders" :key="item.id">
-        <NuxtImg :src="item.image" alt="slider" class="w-full h-full object-cover" />
-
+      <SwiperSlide
+       v-for="item in sliders" :key="item.id"
+       class="bg-cover bg-no-repeat"
+      :style="{ backgroundImage: `url('${item.image}')` }">
+        <!-- <NuxtImg :src="item.image" alt="slider" class="size-full object-cover" /> -->
         <div class="overlay"></div>
-
         <div
-          class="absolute inset-0 flex flex-col items-center justify-center text-center text-white z-10 px-6">
+          class="absolute inset-0 flex flex-col items-center justify-center text-center text-white z-10 px-6"
+        >
           <div
             v-html="item.title"
             class="font-allura text-4xl md:text-6xl lg:text-7xl"
@@ -30,40 +32,35 @@
             :href="item.link"
             class="text-sm md:text-base cursor-pointer flex items-center gap-2"
           >
-            <span class="border-b-2">Discover More</span>
-            <Icon name="lucide:arrow-up-right" class="w-4 h-4" />
+            <span class="border-b-2">{{ $t("Discover More") }}</span>
+            <Icon name="lucide:arrow-up-right" class="size-4" />
           </NuxtLink>
-        </div>
-
-        <div
-          v-if="contactItems.length"
-          class="absolute bottom-8 left-12 flex gap-3 z-20"
-        >
-          <template v-for="(item, index) in contactItems" :key="index">
-            <NuxtLink
-              :to="item.link"
-              class="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/30 transition"
-            >
-              <Icon :name="item.icon" class="text-xl text-white" />
-            </NuxtLink>
-          </template>
         </div>
       </SwiperSlide>
     </Swiper>
-
-    <div class="hidden absolute bottom-8 right-12 md:flex gap-3 z-30">
+    <div v-if="contactItems.length" class="absolute bottom-8 start-12 flex gap-3 z-20">
+      <template v-for="(item, index) in contactItems" :key="index">
+        <NuxtLink
+          :to="item.link"
+          class="size-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/30 transition"
+        >
+          <Icon :name="item.icon" class="text-xl text-white" />
+        </NuxtLink>
+      </template>
+    </div>
+    <div class="hidden absolute bottom-8 end-12 md:flex gap-3 z-30">
       <button
         ref="prevEl"
-        class="w-10 h-10 flex items-center justify-center bg-white/20 hover:bg-white/40 text-white rounded-full backdrop-blur-md transition"
+        class="size-10 cursor-pointer flex items-center justify-center bg-white/20 hover:bg-white/40 text-white rounded-full backdrop-blur-md transition"
       >
-        <Icon name="lucide:chevron-left" class="w-5 h-5" />
+        <Icon name="lucide:chevron-left" class="size-5" />
       </button>
 
       <button
         ref="nextEl"
-        class="w-10 h-10 flex items-center justify-center bg-white/20 hover:bg-white/40 text-white rounded-full backdrop-blur-md transition"
+        class="size-10 cursor-pointer flex items-center justify-center bg-white/20 hover:bg-white/40 text-white rounded-full backdrop-blur-md transition"
       >
-        <Icon name="lucide:chevron-right" class="w-5 h-5" />
+        <Icon name="lucide:chevron-right" class="size-5" />
       </button>
     </div>
   </div>

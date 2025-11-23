@@ -8,7 +8,7 @@ const emit = defineEmits(["updatePage"]);
 </script>
 
 <template>
-  <div class="container mx-auto space-y-16">
+  <div v-if="offers.length" class="container mx-auto space-y-16">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
       <CardFoodCard
         v-for="item in offers"

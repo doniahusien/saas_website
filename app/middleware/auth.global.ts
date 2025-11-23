@@ -10,14 +10,16 @@ export default defineNuxtRouteMiddleware((to) => {
     '/auth/forgot-pass',
     '/auth/change-pass',
   ]
+  const protectedPaths = [
+    '/checkout',
+  ]
 
   const pathWithoutLocale = to.path.replace(/^\/(ar|en)(?=\/|$)/, '')
 
-  const isPublic = publicPaths.some((path) =>
-    pathWithoutLocale.startsWith(path)
-  )
+  const isPublic = publicPaths.some((path) => pathWithoutLocale.startsWith(path))
+  const isProtected = protectedPaths.some((path) => pathWithoutLocale.startsWith(path))
 
-  if (!auth.isLoggedIn && !isPublic) {
+  if (isProtected && !auth.isLoggedIn) {
     return navigateTo(localePath('/auth/login'))
   }
 
