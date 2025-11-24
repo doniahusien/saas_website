@@ -3,7 +3,13 @@
     class="w-1/2 h-12 border border-light-gray rounded-md flex justify-between items-center gap-3 px-4 cursor-pointer bg-white"
   >
     <p class="flex items-center gap-2">
-      <Icon :name="icon" class="text-placeholder w-5 h-5" />
+<div v-if="icon">
+  <Icon :name="icon" class="text-placeholder size-5" />
+</div>
+
+<div v-else class="text-red-500 text-xs">
+  MISSING ICON
+</div>
       <span class="text-sm font-medium">{{ label }}</span>
     </p>
 

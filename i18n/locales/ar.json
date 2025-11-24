@@ -192,9 +192,19 @@
       "branch_required": "يجب اختيار الفرع",
     "persons_required": "يرجى إدخال عدد الأشخاص"
   },
-   "cart":{
-    "title":"My Cart"
-  },
+   "cart": {
+  "title": "سلة التسوق",
+  "items": "منتجات",
+  "checkout": "إتمام الشراء",
+  "orderSum": "ملخص الطلب",
+  "subtotal": "المجموع الفرعي",
+  "surcharge": "الرسوم الإضافية",
+  "shipping": "رسوم الشحن",
+  "discount": "الخصم",
+  "totalAmount": "المبلغ الإجمالي",
+  "empty":"السلة فارغة",
+  "addItems":"اضف منتجات لسلة"
+},
   "TITLES":{
     "Promo Code":"كود الخصم",
     "items":"المنتجات",

@@ -201,9 +201,13 @@
     "checkout": "Checkout",
     "orderSum": "Order Summary",
     "subtotal": "Subtotal",
+    "surcharge": "Surcharge",
     "shipping": "Shipping Fee",
     "discount": "Discount",
-    "totalAmount": "Total Amount"
+    "totalAmount": "Total Amount",
+    "empty":"Your cart is empty",
+    "addItems":"Add items to get started",
+    "VAT":"VAT"
   },
   "orders": {
     "title": "Orders"

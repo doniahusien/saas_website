@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div v-if="localProducts && localProducts.length > 0" class="overflow-y-auto h-80 branch-list">
+    <div v-if="localProducts && localProducts.length > 0" class="overflow-y-auto branch-list" :class="[isCheckout?'h-40':'h-72']">
       <div
         v-for="item in localProducts"
         :key="item.id"
-        class="px-2 py-4 grid justify-between grid-cols-4 gap-3 " >
-        <NuxtImg :src="item.product.image" class=" rounded-2xl object-cover" :class="[isCheckout==true?'w-24 h-18 rounded-lg':'w-28 h-28']"  />    
-         <div class="flex flex-col":class="[isCheckout==true?'col-span-3':'col-span-2']" >
+        class="px-2 py-4 grid justify-between grid-cols-4 gap-5" >
+        <NuxtImg :src="item.product.image" class=" rounded-xl object-cover" :class="[isCheckout==true?'w-24 h-18 rounded-lg':'w-30 h-26']"  />    
+         <div class="flex flex-col" :class="[isCheckout==true?'col-span-3':'col-span-2']" >
 
           <p class="font-semibold text-lg">{{ item.product.name }}</p>
           <p class="text-base text-secondary">
@@ -46,9 +46,9 @@
       </div>
     </div>
 
-    <div v-else class="p-6 text-center text-secondary">
-      <p class="font-semibold text-lg">Your cart is empty</p>
-      <p class="text-base">Add items to get started.</p>
+    <div v-else class="flex flex-col h-80 justify-center gap-5 items-center text-center text-secondary">
+      <p class="font-semibold text-2xl">{{$t('cart.empty')}}</p>
+      <p class="text-lg">{{$t('cart.addItems')}}</p>
     </div>
   </div>
 </template>

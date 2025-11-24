@@ -10,16 +10,16 @@
   <transition name="slide">
     <div
       v-if="modelValue"
-      class="fixed top-0 end-0 w-full md:w-1/3 h-full bg-white z-80 px-5 py-10 flex flex-col"
+      class="fixed top-0 end-0 w-full md:w-1/3 h-full bg-white z-80 px-5 py-10 flex flex-col rounded-s-3xl"
     >
       <div class="flex justify-between mb-5">
-        <h2 class="text-xl font-bold">
-          {{ t("cart.title") }} <span>{{ carts.item_count }} {{ t("cart.items") }}</span>
+        <h2 class="text-4xl font-bold">
+          {{ t("cart.title") }} <span class="text-sm text-btn">( {{ carts.item_count || 0}} {{ t("cart.items") }} )</span>
         </h2>
 
         <button
           @click="close"
-          class="text-gray-500 cursor-pointer hover:text-black text-2xl"
+          class="text-black font-bold cursor-pointer text-4xl"
         >
           <Icon name="fe:close" />
         </button>
@@ -31,15 +31,15 @@
         :updateQty="updateQty"
       />
 
-      <div class="mt-auto space-y-5">
+      <div class="mt-auto space-y-5" v-if="carts.products">
         <CartOrderSummary :price="price" :currency="currency" />
         <NuxtLink
           :to="localePath('/checkout')"
           class="w-full cursor-pointer bg-btn text-white gap-2 py-3 rounded-full font-semibold flex items-center justify-center"
         >
           {{ t("cart.checkout") }}
-          <span class="w-4 h-4 flex justify-center items-center bg-white rounded-full"
-            ><Icon name="mdi:arrow-right" class="w-3 h-3 text-btn"
+          <span class="size-4 flex justify-center items-center bg-white rounded-full"
+            ><Icon  :name="isRTL ? 'mdi:arrow-left' : 'mdi:arrow-right'" class="size-3 text-btn"
           /></span>
         </NuxtLink>
       </div>
@@ -53,14 +53,15 @@ const appStore = useAppStore();
 const localePath = useLocalePath();
 const props = defineProps<{ modelValue: boolean }>();
 const emit = defineEmits(["update:modelValue"]);
-const { t } = useI18n();
+const { t,locale } = useI18n();
 const close = () => emit("update:modelValue", false);
 const carts = computed(() => appStore.getCartData);
 const price= computed(() => appStore.getCartPrice);
 const currency = computed(() => appStore.getCartCurrency);
 /* const { localProducts, price, currency } = useCartMapper(carts); */
 
-  
+const isRTL = computed(() => locale.value === "ar");
+
 async function removeFromCart(id) {
   await appStore.removeFromCart(id);
 }
