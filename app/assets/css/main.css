@@ -44,15 +44,15 @@
     @apply w-full h-14 border border-placeholder rounded-lg px-2 py-3 bg-transparent text-placeholder text-base focus:outline-none transition-all duration-150;
   }
 
- .base-btn {
-  @apply flex items-center border border-btn justify-center gap-4 w-full lg:w-fit flex-wrap py-3.5 px-2 lg:px-8 rounded-full bg-btn text-white;
-}
-
+  .base-btn {
+    @apply flex items-center border border-btn justify-center gap-4 w-full lg:w-fit flex-wrap py-3.5 px-2 lg:px-8 rounded-full bg-btn text-white;
+  }
 
   .base-btn:hover {
     @apply cursor-pointer bg-white text-btn;
   }
-  .icon{
+
+  .icon {
     @apply cursor-pointer flex items-center justify-center bg-light-gray/50 rounded-full size-12;
   }
 }
@@ -65,18 +65,22 @@
 .label_active {
   color: var(--text-color, #333);
 }
+
 .branch-list::-webkit-scrollbar {
   width: 6px;
 }
+
 .branch-list::-webkit-scrollbar-track {
   background: transparent;
 }
+
 .branch-list::-webkit-scrollbar-thumb {
-  background: #3b82f6; 
+  background: #3b82f6;
   border-radius: 9999px;
 }
+
 .branch-list::-webkit-scrollbar-thumb:hover {
-  background: #2563eb; 
+  background: #2563eb;
 }
 
 .branch-list {

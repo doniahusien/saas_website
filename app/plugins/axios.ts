@@ -45,9 +45,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
       req.params = { ...(req.params || {}) }
 
-      // Attach selected store id to every request when available so backend
-      // receives the correct store context without requiring a full page reload.
-      if (storeId.value) {
+       if (storeId.value) {
         req.params.store_id = req.params.store_id ?? storeId.value
       }
       const userDataLocal = appAuth.getUserData || appAuth.userData

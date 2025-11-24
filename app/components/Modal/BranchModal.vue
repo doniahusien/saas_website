@@ -2,9 +2,11 @@
   <transition name="fade">
     <div
       v-if="modelValue"
-      class="fixed inset-0 z-50 flex items-center justify-center p-5 md:p-0 bg-black/60 backdrop-blur-sm"    >
+      class="fixed inset-0 z-50 flex items-center justify-center p-5 md:p-0 bg-black/60 backdrop-blur-sm"
+    >
       <div
-        class="bg-white rounded-3xl shadow-lg p-6 relative animate-fadeIn w-full md:w-170">
+        class="bg-white rounded-3xl shadow-lg p-6 relative animate-fadeIn w-full md:w-170"
+      >
         <div class="flex justify-between pb-8">
           <h2 class="text-3xl font-bold">{{ t("TITLES.select_store") }}</h2>
           <button
@@ -15,16 +17,22 @@
           </button>
         </div>
 
-        <div v-if="pending" class="text-center text-gray-500 py-6">
+        <div v-if="pending" class="text-center text-gray-500 py-10">
           {{ t("TITLES.loading_branches") }}
         </div>
 
-        <div v-else class="flex flex-col gap-3 branch-list overflow-y-auto max-h-60 pe-2">
+        <div v-else-if="storesList.length === 0" class="text-center text-gray-500 py-10">
+          {{ t("TITLES.no_stores_available") }}
+        </div>
+        <div
+          v-else
+          class="flex flex-col gap-3 branch-list overflow-y-auto max-h-60 py-6 pe-2"
+        >
           <div
             v-for="branch in storesList"
             :key="branch.id"
             @click="pickBranch(branch)"
-            class='flex items-center gap-5 bg-gray-50 rounded-xl p-5 cursor-pointer transition'
+            class="flex items-center gap-5 bg-gray-50 rounded-xl p-5 cursor-pointer transition"
           >
             <NuxtImg
               :src="branch.image"
@@ -51,7 +59,7 @@
         <button
           @click="confirmSelection"
           class="w-full text-lg rounded-full bg-btn px-2 py-4 text-white"
-          :disabled="!selectedBranchId"
+          :disabled="!selectedBranchId || storesList.length === 0"
         >
           {{ $t("TITLES.confirm") }}
         </button>
@@ -68,9 +76,9 @@ const props = defineProps({
 });
 
 const storesCookie = useCookie("all_stores");
-const pending = ref(false)
-const selectedBranchCookie = useCookie<Branch | null>('selectedBranch')
-const selectedBranchId = ref<number | null>(null)
+const pending = ref(false);
+const selectedBranchCookie = useCookie<Branch | null>("selectedBranch");
+const selectedBranchId = ref<number | null>(null);
 
 const storesList = computed<Branch[]>(() => {
   try {
@@ -83,27 +91,25 @@ const storesList = computed<Branch[]>(() => {
   }
 });
 
-
-
 onMounted(() => {
-  selectedBranchId.value = selectedBranchCookie.value?.id ?? null
-})
+  selectedBranchId.value = selectedBranchCookie.value?.id ?? null;
+});
 
 const pickBranch = (branch: Branch) => {
-  selectedBranchId.value = branch.id
-}
+  selectedBranchId.value = branch.id;
+};
 
 const selectBranch = (branch: Branch) => {
   selectedBranchId.value = branch.id;
   selectedBranchCookie.value = branch;
   emit("select", branch);
   emit("update:modelValue", false);
-}
+};
 
 const confirmSelection = () => {
-  const branch = storesList.value.find((b) => b.id === selectedBranchId.value)
-  if (branch) selectBranch(branch)
-}
+  const branch = storesList.value.find((b) => b.id === selectedBranchId.value);
+  if (branch) selectBranch(branch);
+};
 </script>
 <style scoped>
 .fade-enter-active,
