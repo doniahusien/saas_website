@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const branchCookie = useCookie("selectedBranch");
 const storeId = computed(() => branchCookie.value?.id || null);
@@ -17,7 +17,6 @@ const { data: offersData, status, error, refresh } = useAsyncData(
   () =>
     useGlobalFetch("offers", {
       params: {
-        store_id: storeId.value,
         page: page.value,
       },
     }),
@@ -43,7 +42,6 @@ useDynamicMeta({
 });
 </script>
 
-
 <template>
   <UILoader v-if="status === 'pending'" />
   <UINotFound v-else-if="error?.statusCode === 404" />
@@ -51,9 +49,7 @@ useDynamicMeta({
 
   <template v-else-if="status === 'success'">
     <div class="space-y-20 pb-10">
-      <Banner
-        :bannerData="{ image: '/images/food1.png', title: 'Offers' }"
-      />
+      <Banner :bannerData="{ image: '/images/food1.png', title: 'Offers' }" />
 
       <OffersSection
         :offers="offers"

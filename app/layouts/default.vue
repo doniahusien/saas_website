@@ -1,6 +1,6 @@
 <template>
-  <Html :lang="locale" :dir="locale == 'ar' ? 'rtl' : 'ltr'">
-    <Body :dir="locale == 'ar' ? 'rtl' : 'ltr'">
+  <Html :lang="locale" :dir="dir">
+    <Body :dir="dir">
       <div class="flex min-h-screen flex-col md:mb-0">
         <Navbar />
         <NoInternetConnection v-if="!isOnline" />
@@ -18,16 +18,17 @@
 <script setup>
 import { useAppStore } from "~/store/app";
 const appStore = useAppStore();
-const { locale } = useI18n();
+const i18n = useI18n();
+const locale = computed(() => i18n.locale.value);
 const isOnline = ref(true);
-const {$api}= useNuxtApp();
-
-const selectedBranch = useCookie('selectedBranch', { sameSite: 'lax' });
-const allStoresCookie = useCookie('all_stores');
+const { $api } = useNuxtApp();
+const dir = computed(() => (locale.value === "ar" ? "rtl" : "ltr"));
+const selectedBranch = useCookie("selectedBranch", { sameSite: "lax" });
+const allStoresCookie = useCookie("all_stores");
 const stores = ref([]);
 
 async function getStores() {
-  const res = await $api.get('/stores');
+  const res = await $api.get("/stores");
   const storesData = res.data?.data || [];
   if (storesData.length > 0) {
     if (!selectedBranch.value) {
@@ -49,7 +50,6 @@ onMounted(async () => {
   });
   await getStores();
 });
-
 
 useSeoMeta({
   ogImage: "/logo.png",

@@ -44,15 +44,13 @@
 const { t } = useI18n();
 const route = useRoute();
 const slug = route.params.slug;
-
+const { $api } = useNuxtApp();
 const branchCookie = useCookie<Branch | null>("selectedBranch");
 const storeId = computed(() => branchCookie.value?.id || 13);
 
-const { data: item,status,error } = await useAsyncData<ApiResponse<Product>>("itemData", () =>
-  useGlobalFetch<ApiResponse<Product>>("product/" + slug, {
-    headers: { os: "web", Authorization: `Bearer ${useCookie("jwt_token_saas").value}` },
-    params: { store_id: storeId.value },
-  })
+const { data: item, status, error } = await useAsyncData<ApiResponse<Product>>(
+  `itemData-${slug}`,
+  () => $api.get(`product/${slug}`)
 );
 
 const subModifiers = computed(() => {

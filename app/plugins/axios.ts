@@ -45,9 +45,9 @@ export default defineNuxtPlugin((nuxtApp) => {
 
       req.params = { ...(req.params || {}) }
 
-       if (storeId.value) {
+/*        if (storeId.value) {
         req.params.store_id = req.params.store_id ?? storeId.value
-      }
+      } */
       const userDataLocal = appAuth.getUserData || appAuth.userData
       const rawUserLocation = useCookie('userLocation').value
 
@@ -87,7 +87,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   api.interceptors.response.use(
     (res) => res,
     (error) => {
-      const status = error.response?.status
+      const status = error?.status
       if (status === 401) {
         appAuth.userData = null
         appAuth.token = null
@@ -98,8 +98,8 @@ export default defineNuxtPlugin((nuxtApp) => {
         return Promise.reject({ statusCode: 401, message: 'Unauthorized' })
       }
 
-      const message = error.response?.data?.message ?? 'Something went wrong'
-      return Promise.reject({ statusCode: status ?? 500, message })
+      const message = error?.message ?? 'Something went wrong'
+     /*  return Promise.reject({ statusCode: status ?? 500, message }) */
     }
   )
 

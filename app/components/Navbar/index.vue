@@ -4,7 +4,7 @@
   >
     <div class="flex items-center gap-8">
       <NuxtImg src="/logo.png" alt="logo" class="size-16 object-contain" />
-      <ul class="hidden lg:flex gap-3  text-base ">
+      <ul class="hidden lg:flex gap-3 text-base">
         <li v-for="item in items" :key="item.to">
           <NuxtLink
             :to="item.to"
@@ -18,24 +18,25 @@
     </div>
 
     <div class="flex items-center gap-5">
-      <ul class=" text-btn flex justify-center items-center gap-3">
-         <li class="icon ">
-            <Icon name="solar:heart-linear" class="size-6"/>
+      <ul class="text-btn flex justify-center items-center gap-3">
+        <li class="icon">
+          <Icon name="solar:heart-linear" class="size-6" />
         </li>
         <li @click="cartOpen = true" class="icon">
-          <Icon name="solar:bag-5-outline" class="size-6"/>
+          <Icon name="solar:bag-5-outline" class="size-6" />
         </li>
         <li class="icon" v-if="isLoggedIn">
-            <Icon name="solar:bell-outline" class="size-6"/>
+          <Icon name="solar:bell-outline" class="size-6" />
         </li>
-         <li class="icon" v-if="isLoggedIn">
+        <li class="icon" v-if="isLoggedIn">
           <Icon name="mage:user" class="size-6" />
         </li>
       </ul>
 
       <button
         @click="showSelect = true"
-        class="hidden cursor-pointer lg:flex text-left items-center gap-3 bg-white">
+        class="hidden cursor-pointer lg:flex text-left items-center gap-3 bg-white"
+      >
         <NuxtImg
           v-if="selectedBranch?.image"
           :src="selectedBranch.image"
@@ -44,32 +45,33 @@
         />
         <div class="flex flex-col justify-between">
           <p class="font-semibold text-base">
-            {{ selectedBranch?.name  }}
+            {{ selectedBranch?.name }}
           </p>
           <p class="text-sm text-placeholder">
             {{ selectedBranch?.location_description }}
-           <!--  <Icon name="mdi-chevron-down" class="size-4" /> -->
+            <!--  <Icon name="mdi-chevron-down" class="size-4" /> -->
           </p>
         </div>
       </button>
 
-        <NuxtLink
-        v-if="!isLoggedIn" 
-          :to="localePath('/auth/login')"
-          class="base-btn hidden lg:flex">
-          <Icon name="flowbite:arrow-left-to-bracket-outline" class="text-2xl" />
-          <span>{{ t("TITLES.log in") }}</span>
-        </NuxtLink>
+      <NuxtLink
+        v-if="!isLoggedIn"
+        :to="localePath('/auth/login')"
+        class="base-btn hidden lg:flex"
+      >
+        <Icon name="flowbite:arrow-left-to-bracket-outline" class="text-2xl" />
+        <span>{{ t("TITLES.log in") }}</span>
+      </NuxtLink>
 
-
-     <NuxtLink :to="switchPath" class="hidden lg:flex items-center text-btn">
-      <Icon name="fluent:globe-48-filled" class="size-5 "/>
-      <span> {{ t(`locale.${locale}`) }}</span>
+      <NuxtLink :to="switchPath" class="hidden lg:flex items-center text-btn">
+        <Icon name="fluent:globe-48-filled" class="size-5" />
+        <span> {{ t(`locale.${locale}`) }}</span>
       </NuxtLink>
 
       <button
         @click="toggle"
-        class="cursor-pointer text-btn lg:hidden flex items-center justify-center size-10 rounded focus:outline-none z-80" >
+        class="cursor-pointer text-btn lg:hidden flex items-center justify-center size-10 rounded focus:outline-none z-80"
+      >
         <span v-if="!isOpen" class="text-3xl">
           <Icon name="fe:bar" />
         </span>
@@ -82,31 +84,34 @@
     <transition name="fade">
       <div
         v-if="isOpen"
-        class="space-y-6 fixed inset-0 z-50 p-6 bg-white text-black lg:hidden overflow-y-auto">
-      <button
-        @click="showSelect = true"
-        class=" cursor-pointer flex text-start items-center gap-3 bg-white">
-        <NuxtImg
-          v-if="selectedBranch?.image"
-          :src="selectedBranch.image"
-          alt="branch"
-          class="size-14 rounded-full object-cover"
-        />
-        <div class="flex flex-col justify-between">
-          <p class="font-semibold text-base">
-            {{ selectedBranch?.name  }}
-          </p>
-          <p class="text-sm text-placeholder">
-            {{ selectedBranch?.location_description }}
-           <!--  <Icon name="mdi-chevron-down" class="size-4" /> -->
-          </p>
-        </div>
-      </button>
+        class="space-y-6 fixed inset-0 z-50 p-6 bg-white text-black lg:hidden overflow-y-auto"
+      >
+        <button
+          @click="showSelect = true"
+          class="cursor-pointer flex text-start items-center gap-3 bg-white"
+        >
+          <NuxtImg
+            v-if="selectedBranch?.image"
+            :src="selectedBranch.image"
+            alt="branch"
+            class="size-14 rounded-full object-cover"
+          />
+          <div class="flex flex-col justify-between">
+            <p class="font-semibold text-base">
+              {{ selectedBranch?.name }}
+            </p>
+            <p class="text-sm text-placeholder">
+              {{ selectedBranch?.location_description }}
+              <!--  <Icon name="mdi-chevron-down" class="size-4" /> -->
+            </p>
+          </div>
+        </button>
 
         <NuxtLink
-        v-if="!isLoggedIn" 
+          v-if="!isLoggedIn"
           :to="localePath('/auth/login')"
-          class="base-btn flex items-center gap-2">
+          class="base-btn flex items-center gap-2"
+        >
           <Icon name="flowbite:arrow-left-to-bracket-outline" class="text-2xl" />
           <span>{{ t("TITLES.log in") }}</span>
         </NuxtLink>
@@ -117,12 +122,11 @@
             </NuxtLink>
           </li>
         </ul>
-  
-     <NuxtLink :to="switchPath" class="flex items-center text-btn">
-      <Icon name="fluent:globe-48-filled" class="size-5 "/>
-      <span> {{ t(`locale.${locale}`) }}</span>
-      </NuxtLink>
 
+        <NuxtLink :to="switchPath" class="flex items-center text-btn">
+          <Icon name="fluent:globe-48-filled" class="size-5" />
+          <span> {{ t(`locale.${locale}`) }}</span>
+        </NuxtLink>
       </div>
     </transition>
 
@@ -136,12 +140,12 @@
 </template>
 
 <script setup lang="ts">
-import { useAppAuth } from "~/store/auth"
-const { t, locale } = useI18n();
-
+import { useAppAuth } from "~/store/auth";
+const { locale, t, setLocale } = useI18n();
 const switchLocalePath = useSwitchLocalePath();
 const targetLocale = computed(() => (locale.value === "ar" ? "en" : "ar"));
 const switchPath = computed(() => switchLocalePath(targetLocale.value));
+
 const appAuth = useAppAuth();
 const localePath = useLocalePath();
 const route = useRoute();
@@ -149,10 +153,10 @@ const isOpen = ref<boolean>(false);
 const cartOpen = ref<boolean>(false);
 const showSelect = ref<boolean>(false);
 
-const isLoggedIn= appAuth.isLoggedIn;
+const isLoggedIn = appAuth.isLoggedIn;
 
-const selectedBranch = useCookie<Branch | null>("selectedBranch")
-const allStoresCookie = useCookie<string | null>("all_stores")
+const selectedBranch = useCookie<Branch | null>("selectedBranch");
+const allStoresCookie = useCookie<string | null>("all_stores");
 const allStores = computed<Branch[]>(() => {
   try {
     return allStoresCookie.value ? JSON.parse(allStoresCookie.value) : [];
@@ -163,9 +167,8 @@ const allStores = computed<Branch[]>(() => {
 const toggle = () => (isOpen.value = !isOpen.value);
 
 const onBranchSelected = (branch: Branch) => {
-  selectedBranch.value = branch
+  selectedBranch.value = branch;
 };
-
 
 onMounted(() => {
   if (!selectedBranch.value) {

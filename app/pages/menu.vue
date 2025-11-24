@@ -14,20 +14,6 @@
           <UIFilterSection class="lg:col-span-1" @apply="handleApplyFilters" />
 
           <section class="space-y-8 lg:col-span-3">
-        
-            <!--
-            <UTabs
-              v-model="selectedTab"
-              :items="categories"
-              :ui="{
-                base: 'w-full',
-                list: 'flex gap-2 bg-transparent rounded-full p-1',
-                trigger: 'cursor-pointer bg-transparent rounded-full text-sm transition-colors duration-200 text-secondary aria-selected:text-white',
-                indicator: 'absolute rounded-full bg-btn shadow-sm',
-              }"
-            />
-            -->
-
             <div v-if="isFiltering" class="flex justify-center py-10">
               <span class="loader-small"></span>
             </div>
@@ -91,21 +77,12 @@ const itemsPerPage = 6;
 const currentPage = ref(1);
 const selectedTab = ref("all");
 
-const categories = [
-  { label: "All", value: "all" },
-  { label: "Breakfast", value: "breakfast" },
-  { label: "Lunch", value: "lunch" },
-  { label: "Dinner", value: "dinner" },
-  { label: "Desserts", value: "desserts" },
-  { label: "Drinks", value: "drinks" },
-];
-
 const fetchProducts = async (extraParams = {}, showSectionLoader = false) => {
   if (showSectionLoader) isFiltering.value = true;
   if (!showSectionLoader) status.value = "pending";
 
   try {
-    const params = { store_id: storeId.value, ...extraParams };
+    const params = { ...extraParams };
     const res = await $api.get("product");
     products.value = res.data.data || [];
     if (!showSectionLoader) status.value = "success";
@@ -133,7 +110,7 @@ const paginatedItems = computed(() => {
 });
 
 useDynamicMeta({
-  title: t("menuSection.title")
+  title: t("menuSection.title"),
 });
 </script>
 <style scoped>
