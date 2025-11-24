@@ -1,25 +1,28 @@
 <template>
-  <div v-if="products.length" class="container mx-auto space-y-10 px-6 md:px-0">
+  <div v-if="products.length" class="container mx-auto px-6 md:px-0">
     <div class="grid grid-cols-2 items-center">
-      <h2 class="text-2xl md:text-3xl lg:text-5xl font-semibold">
+      <h2 class="text-base md:text-3xl lg:text-5xl font-semibold">
         {{ $t("popularSection.title") }}
       </h2>
-      <NuxtLink :to='localePath("/menu")' class="text-btn justify-self-end hover:underline">
+      <NuxtLink
+        :to="localePath('/menu')"
+        class="text-btn justify-self-end hover:underline"
+      >
         {{ $t("popularSection.viewAll") }}
         <Icon
           :name="isRTL ? 'mdi:arrow-left' : 'mdi:arrow-right'"
-          class="w-5 h-5 sm:w-6 sm:h-6 inline-block align-middle"
+          class="size-5 sm:size-6 inline-block align-middle"
         />
       </NuxtLink>
     </div>
     <Swiper
       :modules="[Autoplay, FreeMode]"
-      :slides-per-view="1.2"
+      :slides-per-view="1"
       :space-between="20"
       :breakpoints="{
-        640: { slidesPerView: 2.2 },
-        1024: { slidesPerView: 3.2 },
-        1280: { slidesPerView: 4.2 },
+        640: { slidesPerView: 1 },
+        1024: { slidesPerView: 2 },
+        1280: { slidesPerView: 3 },
       }"
       :autoplay="{
         delay: 2500,
@@ -29,7 +32,7 @@
       free-mode
       grab-cursor
     >
-      <SwiperSlide v-for="item in products" :key="item.id">
+      <SwiperSlide v-for="item in products" :key="item.id" class="w-full my-10">
         <CardFoodCard
           :image="item.image"
           :title="item.name"
@@ -53,16 +56,10 @@ import { Autoplay, FreeMode } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
 
-const { t,locale } = useI18n();
+const { t, locale } = useI18n();
 const localePath = useLocalePath();
 const isRTL = computed(() => locale.value === "ar");
 defineProps({
   products: Array,
 });
 </script>
-
-<style scoped>
-.swiper {
-  transition-timing-function: linear !important;
-}
-</style>

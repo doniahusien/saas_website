@@ -1,15 +1,6 @@
 <script setup lang="ts">
-import IconStar from "@/components/IconStar.vue";
-
 defineProps<{
-  reviews: {
-    id: number;
-    author: string;
-    avatar: string;
-    rating: number;
-    text: string;
-    date: string;
-  }[];
+  reviews: Array;
   overallRating: number;
   total: number;
   distribution: { stars: number; percent: number }[];
@@ -60,23 +51,23 @@ defineProps<{
       >
         <div class="flex gap-3 pt-5">
           <img
-            :src="r.avatar"
+            :src="r.user.avatar"
             alt=""
             class="w-12 h-12 rounded-full object-cover bg-gray-200"
             loading="lazy"
           />
           <div class="flex-1">
             <div class="flex items-center justify-between mb-1">
-              <h4 class="font-medium text-gray-900">{{ r.author }}</h4>
-              <time class="text-sm text-gray-500">{{ r.date }}</time>
+              <h4 class="font-medium text-gray-900">{{ r.user.full_name }}</h4>
+              <time class="text-sm text-gray-500">{{ r.created_at }}</time>
             </div>
 
             <div class="flex mb-2">
-              <IconStar v-for="n in 5" :key="n" :filled="n <= r.rating" />
+              <IconStar v-for="n in 5" :key="n" :filled="n <= r.rate" />
             </div>
           </div>
         </div>
-        <p class="text-gray-500 text-sm leading-relaxed">{{ r.text }}</p>
+        <p class="text-gray-500 text-sm leading-relaxed">{{ r.review }}</p>
       </article>
 
       <p v-if="reviews.length === 0" class="text-gray-400 text-sm text-center">

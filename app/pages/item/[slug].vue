@@ -9,25 +9,25 @@
         <h2 class="text-2xl md:text-3xl font-bold">{{ $t("itemDetail") }}</h2>
 
         <ItemDetails
-          :title="item?.data?.name"
-          :image="item?.data?.image"
-          :rating="item?.data?.rating"
-          :id="item?.data?.id"
+          :title="item?.name"
+          :image="item?.image"
+          :rating="item?.rating"
+          :id="item?.id"
           :description="
-            item?.data?.desc ||
+            item?.desc ||
             'Cooked with vegetables in a rich curry coconut sauce served with coconut rice...'
           "
-          :isfav="item?.data?.is_favourite"
-          :favourite_id="item?.data?.favourite_id"
-          :slug="item?.data.slug"
+          :isfav="item?.is_favourite"
+          :favourite_id="item?.favourite_id"
+          :slug="item?.slug"
         />
 
-        <ItemOptions :productId="item?.data?.id" :subModifiers="subModifiers" />
+        <ItemOptions :productId="item?.id" :subModifiers="subModifiers" />
 
         <ItemReviewSection
-          :reviews="reviews"
-          :overall-rating="overallRating"
-          :total="total"
+          :reviews="reviews.data"
+          :overall-rating="reviews.rate"
+          :total="reviews.review_count"
           :distribution="distribution"
         />
 
@@ -39,71 +39,49 @@
     </div>
   </template>
 </template>
-
 <script setup lang="ts">
+import { ref, computed, onMounted } from "vue";
+import { useRoute, useNuxtApp, useCookie } from "#imports";
+
 const { t } = useI18n();
 const route = useRoute();
-const slug = route.params.slug;
+const slug = route.params.slug as string;
 const { $api } = useNuxtApp();
 const branchCookie = useCookie<Branch | null>("selectedBranch");
 const storeId = computed(() => branchCookie.value?.id || 13);
 
-const { data: item, status, error } = await useAsyncData<ApiResponse<Product>>(
-  `itemData-${slug}`,
-  () => $api.get(`product/${slug}`)
-);
+const item = ref<Product | null>(null);
+const popularProducts = ref<Product[]>([]);
+const reviews = ref<any[]>({});
+const overallRating = ref(0);
+const total = ref(0);
+const distribution = ref<{ stars: number; percent: number }[]>([]);
+const status = ref<"pending" | "success" | "error">("pending");
+const error = ref<any>(null);
 
-const subModifiers = computed(() => {
-  return item.value?.data?.sub_modifiers || [];
-});
+const subModifiers = computed(() => item.value?.sub_modifiers || []);
 
-const sizeModifiers = computed(() => {
-  return subModifiers.value.filter((mod) => mod.selections_type == "exact");
-});
+onMounted(async () => {
+  try {
+    const itemRes = await $api.get<ApiResponse<Product>>(`product/${slug}`);
+    item.value = itemRes.data.data;
 
-const optionModifiers = computed(() => {
-  return subModifiers.value.filter((mod) => mod.selections_type == "min_max");
-});
+    const homeRes = await $api.get<ApiResponse<HomeData>>("home");
+    popularProducts.value = homeRes.data.data.popular_products || [];
 
-const { data } = await useAsyncData<ApiResponse<HomeData>>("homeData", () =>
-  useGlobalFetch<ApiResponse<HomeData>>("home", {
-    headers: { os: "web" },
-    params: { store_id: storeId.value },
-  })
-);
-const popularProducts = computed(() => data.value?.data?.popular_products || []);
-const id = computed(() => item.value?.data?.id);
+    const reviewRes = await $api.get<ApiResponse<ReviewsResponse>>(`products/1/reviews`);
+    reviews.value = reviewRes.data;
 
-const { data: reviewResponse } = await useAsyncData<ApiResponse<ReviewsResponse>>(
-  "reviewsData",
-  () =>
-    useGlobalFetch<ApiResponse<ReviewsResponse>>(`products/${id.value}/reviews`, {
-      headers: { os: "web" },
-      params: { store_id: storeId.value },
-    })
-);
+    distribution.value = (reviewRes.data.star_rate || []).map((s: any) => ({
+      stars: parseInt(s.key.replace("star_", "")),
+      percent: s.value,
+    }));
 
-const reviews = computed(() => {
-  return (
-    reviewResponse.value?.data?.map((r: any) => ({
-      id: r.id,
-      author: r.user?.full_name || "Anonymous",
-      avatar: r.user?.avatar || "https://i.pravatar.cc/150?u=default",
-      rating: r.rate,
-      text: r.review || "",
-      date: r.created_at,
-    })) || []
-  );
-});
-
-const overallRating = computed(() => reviewResponse.value?.rate || 0);
-const total = computed(() => reviewResponse.value?.review_count || 0);
-
-const distribution = computed(() => {
-  const stars = reviewResponse.value?.star_rate || [];
-  return stars.map((s: any) => ({
-    stars: parseInt(s.key.replace("star_", "")),
-    percent: s.value,
-  }));
+    status.value = "success";
+  } catch (err) {
+    console.error(err);
+    error.value = err;
+    status.value = "error";
+  }
 });
 </script>

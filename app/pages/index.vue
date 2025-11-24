@@ -23,12 +23,23 @@ const branchCookie = useCookie<Branch | null>("selectedBranch");
 const storeId = computed(() => branchCookie.value?.id || null);
 const { $api } = useNuxtApp();
 
-const { data, refresh, status, error } = await useAsyncData<ApiResponse<HomeData>>(
-  "HomeData",
-  () => $api.get("home"),
-  {
-    watch: [locale],
+const res = ref<HomeData | null>(null);
+const status = ref<"pending" | "success" | "error">("pending");
+const error = ref<any>(null);
+
+const fetchHomeData = async () => {
+  try {
+    status.value = "pending";
+    const response = await $api.get<ApiResponse<HomeData>>("home");
+    res.value = response.data.data;
+    status.value = "success";
+  } catch (err: any) {
+    console.error(err);
+    error.value = err;
+    status.value = "error";
   }
-);
-const res = computed(() => data.value?.data.data);
+};
+
+onMounted(() => fetchHomeData());
+watch(locale, () => fetchHomeData());
 </script>

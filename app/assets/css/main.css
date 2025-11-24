@@ -87,3 +87,6 @@
   scrollbar-width: thin;
   scrollbar-color: #3b82f6 transparent;
 }
+.swiper {
+  transition-timing-function: linear !important;
+}
