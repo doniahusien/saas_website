@@ -73,7 +73,8 @@ export default defineNuxtPlugin((nuxtApp) => {
           req.params.lng = req.params.lng ?? userLocation.lng
         }
       } else if (userLocation?.lat != null && userLocation?.lng != null) {
-        req.params.lat = req.params.lat ?? userLocation.lat
+        
+        req.params.lat = req.params.lat ?? userLocation.lat 
         req.params.lng = req.params.lng ?? userLocation.lng
       }
 
