@@ -10,11 +10,15 @@ export const useAppStore = defineStore("app", {
     favLoading: false,
     cartLoading: false,
     cart: [] as any[],
+    price:0,
+    currency:'LE',
     cartCount: 0
   }),
   getters: {
     getCartCount: (state) => state.cartCount,
     getCartData: (state) => state.cart,
+    getCartPrice: (state) => state.price,
+    getCartCurrency: (state) => state.currency,
   },
   actions: {
     /*    async getFavourites() {
@@ -83,15 +87,13 @@ export const useAppStore = defineStore("app", {
     async getCarts() {
       this.cartLoading = true;
       const { $api } = useNuxtApp();
-      const branchCookie = useCookie<Branch | null>("selectedBranch");
-      const storeId = branchCookie.value?.id || null;
 
       try {
-        const res = await $api.get("carts", {
-          params: { store_id: storeId },
-        });
-
-        const products = res.data ?? [];
+        const res = await $api.get("carts");
+        console.log("Cart response:", res.data);
+        const products = res.data.data ?? [];
+        this.price = res.data.price;
+        this.currency = res.data.currency;
         this.cart = products;
 
         /*   this.cartCount = products.reduce(

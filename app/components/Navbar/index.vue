@@ -70,7 +70,7 @@
 
       <button
         @click="toggle"
-        class="cursor-pointer text-btn lg:hidden flex items-center justify-center size-10 rounded focus:outline-none z-80"
+        class="cursor-pointer text-btn lg:hidden flex items-center justify-center size-10 rounded focus:outline-none z-60"
       >
         <span v-if="!isOpen" class="text-3xl">
           <Icon name="fe:bar" />

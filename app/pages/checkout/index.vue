@@ -148,29 +148,29 @@
 
       <div class="lg:col-span-2 space-y-5 p-5 rounded-3xl bg-white">
         <div class="flex justify-between items-center">
-          <h3 class="text-2xl font-bold">Items</h3>
-          <button 
+          <h3 class="text-2xl font-bold">{{$t('TITLES.items')}}</h3>
+         <!--  <button 
             @click="openCancelOrderModal = true"
             class="cursor-pointer text-red-500 text-sm font-medium"
           >
             Cancel Order
-          </button>
+          </button> -->
         </div>
 
-        <CartItems
-          :localProducts="localProducts"
-          :removeFromCart="removeFromCart"
-          :updateQty="updateQty"
+       
+      <CartItems
+        :localProducts="carts.products"
+        :removeFromCart="removeFromCart"
+        :updateQty="updateQty"
           :isCheckout="true"
         />
 
-        <h4 class="text-xl font-bold">Promo Code</h4>
+        <h4 class="text-xl font-bold">{{$t('TITLES.Promo Code')}}</h4>
         <PromoInput placeholder="Enter Promo Code" icon="bxs:offer" />
         <PromoInput placeholder="Add Loyalty Amount" icon="lucide-lab:coins-stack" />
 
         <p class="text-base text-gold mt-2">Total Amount : 500 Points / 100 EGP</p>
-<!-- 
-        <Summary /> -->
+   <CartOrderSummary :price="price" :currency="currency" />
       </div>
     </div>
   </div>
@@ -188,7 +188,8 @@ const appStore = useAppStore();
 const { t } = useI18n();
 const cartsCount = computed(() => appStore.getCartCount);
 const carts = computed(() => appStore.getCartData);
-const { localProducts, price, currency } = useCartMapper(carts);
+const price= computed(() => appStore.getCartPrice);
+const currency = computed(() => appStore.getCartCurrency);
 
 const orderType = ref("delivery");
 const paymentType = ref("cash");

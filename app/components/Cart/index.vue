@@ -2,7 +2,7 @@
   <transition name="fade">
     <div
       v-if="modelValue"
-      class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+      class="fixed inset-0 z-60 bg-black/50 backdrop-blur-sm"
       @click.self="close"
     ></div>
   </transition>
@@ -10,11 +10,11 @@
   <transition name="slide">
     <div
       v-if="modelValue"
-      class="fixed top-0 right-0 w-96 md:w-1/3 h-full bg-white z-60 p-4 flex flex-col"
+      class="fixed top-0 end-0 w-full md:w-1/3 h-full bg-white z-80 px-5 py-10 flex flex-col"
     >
       <div class="flex justify-between mb-5">
         <h2 class="text-xl font-bold">
-          {{ t("cart.title") }} <span>{{ cartsCount }} {{ t("cart.items") }}</span>
+          {{ t("cart.title") }} <span>{{ carts.item_count }} {{ t("cart.items") }}</span>
         </h2>
 
         <button
@@ -26,7 +26,7 @@
       </div>
 
       <CartItems
-        :localProducts="localProducts"
+        :localProducts="carts.products"
         :removeFromCart="removeFromCart"
         :updateQty="updateQty"
       />
@@ -55,11 +55,12 @@ const props = defineProps<{ modelValue: boolean }>();
 const emit = defineEmits(["update:modelValue"]);
 const { t } = useI18n();
 const close = () => emit("update:modelValue", false);
-const cartsCount = computed(() => appStore.getCartCount);
 const carts = computed(() => appStore.getCartData);
+const price= computed(() => appStore.getCartPrice);
+const currency = computed(() => appStore.getCartCurrency);
+/* const { localProducts, price, currency } = useCartMapper(carts); */
 
-const { localProducts, price, currency } = useCartMapper(carts);
-
+  
 async function removeFromCart(id) {
   await appStore.removeFromCart(id);
 }

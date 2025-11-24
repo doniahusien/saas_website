@@ -196,6 +196,8 @@
     "title":"My Cart"
   },
   "TITLES":{
+    "Promo Code":"كود الخصم",
+    "items":"المنتجات",
     "log in":"تسجيل الدخول",
     "select_store":"اختار متجر",
     "loading_branches":"جاري تحميل المتاجر",

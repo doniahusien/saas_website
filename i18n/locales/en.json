@@ -209,6 +209,8 @@
     "title": "Orders"
   },
   "TITLES": {
+    "Promo Code":"Promo Code",
+    "items": "Items",
     "Completed": "Completed",
     "In Progress": "In Progress",
     "Cancelled": "Cancelled",

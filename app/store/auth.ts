@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useAppAuth = defineStore('authStore', {
   state: () => ({
+    guest_token: useCookie<string | null>('user_guest_token').value || null,
     token: useCookie<string | null>('jwt_token_saas').value || null,
     userData: useCookie<any | null>('saas_user_data').value || null,
     tempVerifyData: useCookie<any | null>('saas_temp_verify').value || null, 
@@ -24,6 +25,7 @@ export const useAppAuth = defineStore('authStore', {
 
     setAuthData(user) {
       this.token = user.token
+      this.guest_token = null
       this.userData = user
       useCookie('jwt_token_saas').value = user.token
       useCookie('saas_user_data').value = user

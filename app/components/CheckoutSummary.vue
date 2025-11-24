@@ -4,7 +4,7 @@
 
     <div class="space-y-4">
       <div v-for="item in items" :key="item.id" class="flex gap-3">
-        <img :src="item.image" class="w-14 h-14 rounded-lg" />
+        <img :src="item.product.image" class="w-14 h-14 rounded-lg" />
         <div>
           <p class="font-semibold text-sm">{{ item.name }}</p>
           <p class="text-xs text-gray-500">{{ item.price }} EGP</p>
