@@ -7,10 +7,10 @@
         <NuxtImg
           :src="image"
           alt="Food image"
-          class="w-full rounded-lg h-56 sm:h-64 md:h-72 lg:h-80 object-cover"
+          class="w-full rounded-lg h-56 sm:h-64 md:h-72 lg:h-78 object-cover"
         />
         <div
-          class="absolute top-3 start-3 flex items-center bg-white/80 backdrop-blur-sm px-2 py-1 rounded-full shadow-md"
+          class="absolute top-3 left-3 flex items-center bg-white/80 backdrop-blur-sm px-2 py-1 rounded-full shadow-md"
         >
           <Icon name="mdi:star" class="text-yellow-400 text-lg" />
           <span class="ml-1 text-sm font-semibold">{{ rating }}</span>
@@ -18,7 +18,7 @@
       </div>
     </NuxtLink>
 
-    <div class="space-y-2 my-4">
+    <div class="space-y-2 py-4">
       <h3 class="font-semibold text-lg sm:text-xl md:text-2xl">{{ title }}</h3>
       <p class="text-xs sm:text-sm text-secondary line-clamp-2">
         {{ description }}
@@ -36,7 +36,7 @@
 
         <div
           v-if="offer"
-          class="bg-btn text-sm size-12 rounded-full text-center flex items-center justify-center text-white p-3"
+          class="bg-btn text-sm w-12 h-12 rounded-full text-center flex items-center justify-center text-white p-3"
         >
           <span>Off {{ percentage }}%</span>
         </div>
@@ -48,7 +48,7 @@
         >
           <Icon
             :name="localFav ? 'noto:heart-suit' : 'mdi:heart-outline'"
-            class="size-6 transition-colors duration-200"
+            class="w-6 h-6 transition-colors duration-200"
             :class="{ 'text-red-500': localFav }"
           />
         </button>

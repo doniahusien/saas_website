@@ -78,7 +78,7 @@
             </div>
 
             <div>
-              <inputsDatePicker name="date" placeholder="date" />
+              <inputsDatePicker name="date" :placeholder="$t('reservation.date')" />
             </div>
             <div class="flex justify-center md:justify-end">
               <button

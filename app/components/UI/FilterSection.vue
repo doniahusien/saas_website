@@ -16,10 +16,7 @@ const storeId = ref(branchCookie.value?.id);
 
 const getMainCategories = async () => {
   try {
-    const res = await $api.get<ApiResponse<CategoriesResponse>>("categories", {
-      headers: { os: "web" },
-      params: { store_id: storeId.value },
-    });
+    const res = await $api.get<ApiResponse<CategoriesResponse>>("categories");
     mainCategories.value = res.data.data || [];
   } catch (err) {
     console.error("Error fetching main categories", err);
@@ -29,8 +26,7 @@ const getMainCategories = async () => {
 const getSubCategories = async (mainCatId) => {
   try {
     const res = await $api.get<ApiResponse<SubCategoriesResponse>>("sub-categories", {
-      headers: { os: "web" },
-      params: { store_id: storeId.value, category_id: mainCatId },
+      params: { category_id: mainCatId },
     });
     subCategories.value = res.data.data || [];
   } catch (err) {
@@ -93,8 +89,11 @@ onMounted(() => {
   <aside class="w-full bg-white rounded-2xl p-5 shadow-md flex flex-col">
     <div>
       <div class="flex items-center justify-between mb-4">
-        <h2 class="font-bold text-lg">{{ t("filter.title") }}</h2>
-        <button @click="clearAll" class="text-red-500 text-sm hover:underline">
+        <h2 class="font-medium text-lg">{{ t("filter.title") }}</h2>
+        <button
+          @click="clearAll"
+          class="text-red-500 cursor-pointer text-sm hover:underline"
+        >
           {{ t("filter.clearAll") }}
         </button>
       </div>
@@ -104,11 +103,12 @@ onMounted(() => {
         icon="i-heroicons-magnifying-glass-20-solid"
         :placeholder="t('filter.search')"
         :ui="{
-          base: 'w-full border text-black border-light-gray bg-white',
+          base: 'w-full border text-black border-placeholder bg-white',
           wrapper: 'rounded-xl',
           icon: 'text-gray-400',
           input: 'text-sm placeholder:text-gray-400',
         }"
+        class="w-full ring-0 focus:ring-0 focus:outline-none focus-visible:ring-0"
       />
 
       <div v-if="selectedFilters.length" class="flex flex-wrap gap-2 my-6">
@@ -123,7 +123,7 @@ onMounted(() => {
         >
           {{ filter }}
           <button @click="removeFilter(filter)" class="ml-1 text-xs cursor-pointer">
-            <UIcon name="i-lucide-x" class="w-2 h-2" />
+            <UIcon name="i-lucide-x" class="size-2" />
           </button>
         </UBadge>
       </div>

@@ -4,23 +4,21 @@
   <UIBackError v-else-if="error?.statusCode === 500" />
 
   <template v-else-if="status === 'success'">
-    <div class="space-y-20 pb-10">
+    <div class="space-y-10 mb-20">
       <Banner
         :bannerData="{ image: '/images/food1.png', title: t('menuSection.title') }"
       />
-
-      <div class="container mx-auto px-2">
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-16">
+      <div class="w-11/12 m-auto" h-full>
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-5">
           <UIFilterSection class="lg:col-span-1" @apply="handleApplyFilters" />
-
-          <section class="space-y-8 lg:col-span-3">
-            <div v-if="isFiltering" class="flex justify-center py-10">
+          <section class="space-y-5 h-full lg:col-span-3">
+            <div v-if="isFiltering" class="flex h-full items-center justify-center">
               <span class="loader-small"></span>
             </div>
 
             <div
               v-else-if="paginatedItems.length"
-              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-items-center gap-5"
+              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 h-full items-center justify-items-center gap-5"
             >
               <CardFoodCard
                 v-for="item in paginatedItems"
@@ -37,8 +35,15 @@
               />
             </div>
 
-            <div v-else class="text-center py-10 text-gray-500">
-              {{ t("menu.noProducts") }}
+            <div
+              v-else
+              class="flex flex-col justify-center items-center flex-1 w-full h-full text-gray-500"
+            >
+              <Icon name="iconoir:file-not-found" class="size-24 mb-4 text-gray-300" />
+
+              <p class="text-xl font-medium mb-2">
+                {{ t("menu.noProducts") }}
+              </p>
             </div>
             <UIPagination
               v-if="filteredItems.length"
@@ -68,6 +73,7 @@ const { $api } = useNuxtApp();
 
 const branchCookie = useCookie<Branch | null>("selectedBranch");
 const storeId = computed(() => branchCookie.value?.id || 13);
+
 const status = ref<"pending" | "success" | "error">("pending");
 const error = ref<{ statusCode?: number } | null>(null);
 const products = ref<Product[]>([]);
@@ -83,11 +89,11 @@ const fetchProducts = async (extraParams = {}, showSectionLoader = false) => {
 
   try {
     const params = { ...extraParams };
-    const res = await $api.get("product");
+    const res = await $api.get("product", { params });
     products.value = res.data.data || [];
     if (!showSectionLoader) status.value = "success";
   } catch (err: any) {
-    error.value = { statusCode: err?.response?.status || 500 };
+    error.value = { statusCode: err?.status || 500 };
     status.value = "error";
   } finally {
     if (showSectionLoader) isFiltering.value = false;
@@ -118,7 +124,7 @@ useDynamicMeta({
   width: 32px;
   height: 32px;
   border: 4px solid rgba(0, 0, 0, 0.1);
-  border-top-color: #96c650;
+  border-top-color: blue;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }

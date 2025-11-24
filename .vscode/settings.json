@@ -9,6 +9,6 @@
   "typescript.tsdk": "node_modules/typescript/lib",
 
   // --- Optional: enable snippet re-compile ---
-  "vue3snippets.enable-compile-vue-file-on-did-save-code": true,
+  "vue3snippets.enable-compile-vue-file-on-did-save-code": false,
   "github.copilot.nextEditSuggestions.enabled": true
 }
