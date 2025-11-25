@@ -4,7 +4,7 @@
       <NuxtImg
         :src="image"
         alt="food image"
-        class="w-full h-64 md:h-80 object-cover rounded-xl"
+        class="w-full h-64 md:h-100 object-cover rounded-xl"
       />
     </div>
 
@@ -17,13 +17,13 @@
         >
           <Icon
             :name="localFav ? 'noto:heart-suit' : 'mdi:heart-outline'"
-            class="w-6 h-6 transition-colors duration-200"
+            class="size-6 transition-colors duration-200"
             :class="{ 'text-red-500': localFav }"
           />
         </button>
         <Icon
           name="lucide:share-2"
-          class="w-6 h-6 hover:text-blue-500 cursor-pointer"
+          class="size-6 hover:text-blue-500 cursor-pointer"
           @click="showShare = true"
         />
       </div>
@@ -31,11 +31,11 @@
 
     <div class="flex items-center gap-2">
       <div class="flex text-yellow-400">
-        <Icon name="lucide:star" class="fill-yellow-500 w-5 h-5" />
-        <Icon name="lucide:star" class="w-5 h-5" />
-        <Icon name="lucide:star" class="w-5 h-5" />
-        <Icon name="lucide:star" class="w-5 h-5" />
-        <Icon name="lucide:star-half" class="w-5 h-5" />
+        <Icon name="lucide:star" class="fill-yellow-500 size-5" />
+        <Icon name="lucide:star" class="size-5" />
+        <Icon name="lucide:star" class="size-5" />
+        <Icon name="lucide:star" class="size-5" />
+        <Icon name="lucide:star-half" class="size-5" />
       </div>
       <p class="text-gray-700 font-medium">{{ rating }}</p>
     </div>

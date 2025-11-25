@@ -92,8 +92,8 @@
     "paragraph2": "We see our customers as invited guests to a party, and we are the hosts. It's our job every day to make every important aspect of the customer experience a little bit better. Donec quam felis, ultricies nec, pellentesque eu.",
     "cta": "Discover More"
   },
-  "reservation": {    
-    "persons":"No of persons",
+  "reservation": {
+    "persons": "No of persons",
     "eyebrow": "MAKE A RESERV",
     "title": "Online Reservation",
     "subtitle": "reservations",
@@ -192,7 +192,7 @@
     "hours_required": "Hours are required",
     "minutes_required": "Minutes are required",
     "seconds_required": "Seconds are required",
-     "branch_required": "Branch selection is required",
+    "branch_required": "Branch selection is required",
     "persons_required": "Please enter the number of persons"
   },
   "cart": {
@@ -205,25 +205,46 @@
     "shipping": "Shipping Fee",
     "discount": "Discount",
     "totalAmount": "Total Amount",
-    "empty":"Your cart is empty",
-    "addItems":"Add items to get started",
-    "VAT":"VAT"
+    "empty": "Your cart is empty",
+    "addItems": "Add items to get started",
+    "VAT": "VAT"
   },
   "orders": {
     "title": "Orders"
   },
   "TITLES": {
-    "Promo Code":"Promo Code",
+    "Promo Code": "Promo Code",
     "items": "Items",
     "Completed": "Completed",
     "In Progress": "In Progress",
     "Cancelled": "Cancelled",
-    "log in":"Log In",
-    "select_store":"Select store",
-    "loading_branches":"Loading stores",
-    "confirm":"Confirm",
-    "instagram":"Instagram",
-    "follow":"Follow on",
-    "no_stores_available":"No stores available"
+    "log in": "Log In",
+    "select_store": "Select store",
+    "loading_branches": "Loading stores",
+    "confirm": "Confirm",
+    "instagram": "Instagram",
+    "follow": "Follow on",
+    "no_stores_available": "No stores available",
+    "typesOfOrder": "Types of Order",
+    "yourShippingAddress": "Your Shipping Address",
+    "shippingAddressPlaceholder": "Shipping Address",
+    "defaultAddress": "Abu Al Feda, Zamalek, Cairo Governorate 4271110",
+    "branch": "Branch",
+    "selectBranch": "Select Branch",
+    "scheduleOrder": "Schedule Order",
+    "orderNow": "Order Now",
+    "datePlaceholder": "date",
+    "timePlaceholder": "time",
+    "paymentMethods": "Payment methods",
+    "card": "Card",
+    "cash": "Cash",
+    "placing": "Placing...",
+     "order": "Order",
+    "Table reservation": "Table Reservation",
+    "persons": "persons",
+    "person": "person",
+    "item": "item",
+    "delivery": "Delivery",
+    "take_away": "Take Away"
   }
 }

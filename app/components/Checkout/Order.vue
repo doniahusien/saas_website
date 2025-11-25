@@ -1,11 +1,10 @@
 <template>
-  <div class="lg:col-span-3 px-10 space-y-5">
-    <h2 class="text-xl font-bold">Types of Order</h2>
-
+  <div class="lg:col-span-3 px-10 space-y-10">
+    <h2 class="text-xl font-bold">{{ $t("TITLES.typesOfOrder") }}</h2>
     <div class="flex gap-6 w-full">
       <RadioBox
         label="Delivery"
-        icon="mage:delivery-truck"
+        icon="hugeicons:delivery-truck-02"
         name="orderType"
         value="delivery"
         v-model="orderTypeLocal"
@@ -21,20 +20,20 @@
     </div>
 
     <div v-if="orderTypeLocal === 'delivery'" class="space-y-4">
-      <h5 class="text-xl font-bold">Your Shipping Address</h5>
+      <h5 class="text-xl font-bold">{{ $t("TITLES.yourShippingAddress") }}</h5>
 
       <div class="flex items-center gap-4 p-2 bg-white">
         <img src="/images/download.webp" class="w-16 h-14 rounded-lg" />
 
         <div class="flex flex-col gap-4 p-2 justify-between">
           <p class="text-base font-semibold">
-            {{ selectedAddress?.title ?? selectedAddress?.name ?? "Shipping Address" }}
+            {{ selectedAddress?.title ?? selectedAddress?.name ?? $t("TITLES.shippingAddressPlaceholder") }}
           </p>
           <p class="text-sm text-placeholder">
             {{
               selectedAddress?.location_description ??
               selectedAddress?.desc ??
-              "Abu Al Feda, Zamalek, Cairo Governorate 4271110"
+              $t("TITLES.defaultAddress")
             }}
           </p>
         </div>
@@ -43,26 +42,26 @@
           @click="$emit('open-delivery-modal')"
           class="ml-auto cursor-pointer text-subtitle hover:text-black"
         >
-          <Icon name="mynaui:edit-one" class="w-6 h-6" />
+          <Icon name="mynaui:edit-one" class="size-6" />
         </button>
       </div>
     </div>
 
     <div v-else>
-      <h5 class="text-xl font-bold">Branch</h5>
+      <h5 class="text-xl font-bold">{{ $t("TITLES.branch") }}</h5>
 
       <div class="flex items-center gap-4 p-2 bg-white">
         <img src="/images/download.webp" class="w-16 h-14 rounded-lg" />
 
         <div class="flex flex-col gap-4 p-2 justify-between">
           <p class="text-base font-semibold">
-            {{ selectedBranch?.name ?? "Select Branch" }}
+            {{ selectedBranch?.name ?? $t("TITLES.selectBranch") }}
           </p>
           <p class="text-sm text-placeholder">
             {{
               selectedBranch?.location_description ??
               selectedBranch?.address ??
-              "Abu Al Feda, Zamalek, Cairo Governorate 4271110"
+              $t(".TITLES.defaultAddress")
             }}
           </p>
         </div>
@@ -71,20 +70,24 @@
           @click="$emit('open-branch-modal')"
           class="ml-auto cursor-pointer text-placeholder hover:text-black"
         >
-          <Icon name="fe:arrow-down" class="w-6 h-6" />
+          <Icon name="fe:arrow-down" class="size-6" />
         </button>
       </div>
     </div>
 
     <div>
-      <div class="flex items-center gap-6">
+      <div class="flex gap-5 w-full">
         <RadioBox
+        :orderTime="true"
           label="Schedule Order"
+          icon=""
           name="schedule"
           value="schedule"
           v-model="scheduleLocal"
         />
         <RadioBox
+          icon=""
+           :orderTime="true"
           label="Order Now"
           name="schedule"
           value="now"
@@ -101,22 +104,18 @@
       </div>
     </div>
 
-    <h6 class="text-xl font-bold">Payment methods</h6>
+    <h6 class="text-xl font-bold">{{ $t("TITLES.paymentMethods") }}</h6>
 
     <div class="flex gap-6">
       <RadioBox
+        icon="famicons:card"
         label="Card"
         name="paymentType"
         value="card"
         v-model="paymentLocal"
       />
 
-      <RadioBox
-        label="Cash"
-        name="paymentType"
-        value="cash"
-        v-model="paymentLocal"
-      />
+      <RadioBox label="Cash" name="paymentType" icon="icon-park-outline:wallet" value="cash" v-model="paymentLocal" />
     </div>
 
     <div class="flex">
@@ -125,21 +124,21 @@
         :disabled="submitting"
         class="w-1/2 h-14 bg-btn text-white text-lg font-semibold rounded-full mt-4 shadow-md hover:opacity-90 ml-auto disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        <span v-if="!submitting">Confirm</span>
-        <span v-else>Placing...</span>
+        <span v-if="!submitting">{{ $t("TITLES.confirm") }}</span>
+        <span v-else>{{ $t("TITLES.processing") }}</span>
       </button>
     </div>
   </div>
 </template>
-
 <script setup>
+const {t}= useI18n();
 const props = defineProps({
-  submitting: Boolean,
   orderType: String,
-  selectedBranch: Object,
-  selectedAddress: Object,
   schedule: String,
   paymentType: String,
+  selectedBranch: Object,
+  selectedAddress: Object,
+  submitting: Boolean,
 });
 
 const emits = defineEmits([

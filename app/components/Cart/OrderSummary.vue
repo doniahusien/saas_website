@@ -2,16 +2,13 @@
   <div>
     <div
       v-if="price"
-      class="bg-white rounded-2xl pt-5 mt-auto space-y-6"
+      class="bg-white rounded-2xl py-3 px-3 mt-auto space-y-5"
     >
-      <h2 class="text-xl font-bold">
-        {{ t("cart.orderSum") }}
-      </h2>
 
       <div
         v-for="(row, index) in summaryRows"
         :key="index"
-        class="flex justify-between text-black"
+        class="flex justify-between text-xl text-black"
       >
         <span>
           {{ t(row.title) }}
@@ -26,7 +23,7 @@
         </span>
       </div>
 
-      <div class="flex justify-between text-black text-lg font-bold">
+      <div class="flex justify-between text-black text-xl ">
         <span>{{ t("cart.totalAmount") }}</span>
         <span>
           {{ formatNumber(price.total) }}

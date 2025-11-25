@@ -12,13 +12,17 @@ export const useAppStore = defineStore("app", {
     cart: [] as any[],
     price:0,
     currency:'LE',
-    cartCount: 0
+    cartCount: 0,
+    availablePoints: 0,
+    availableWallet: 0,
   }),
   getters: {
     getCartCount: (state) => state.cartCount,
     getCartData: (state) => state.cart,
     getCartPrice: (state) => state.price,
     getCartCurrency: (state) => state.currency,
+    getAvailablePoints: (state) => state.availablePoints,
+    getAvailableWallet: (state) => state.availableWallet,
   },
   actions: {
     /*    async getFavourites() {
@@ -95,6 +99,8 @@ export const useAppStore = defineStore("app", {
         this.price = res.data.price;
         this.currency = res.data.currency;
         this.cart = products;
+        this.availablePoints = res.data.data?.points ?? 0;
+        this.availableWallet = res.data.data?.wallet ?? 0;
 
         /*   this.cartCount = products.reduce(
             (sum: number, product: any) => sum + product.quantity,

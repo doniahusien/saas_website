@@ -4,12 +4,12 @@
       v-if="modelValue"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
     >
-      <div class="bg-white rounded-2xl flex flex-col overflow-hidden shadow-lg p-6 relative w-full md:w-1/3 h-120 mx-4">
+      <div class="bg-white rounded-2xl flex flex-col overflow-hidden shadow-lg p-6 relative w-full md:w-160 h-120 mx-4">
         <button
-          class="absolute top-8 right-6 text-black"
+          class="absolute top-8 end-6 text-black"
           @click="$emit('update:modelValue', false)"
         >
-          <Icon name="mdi:close" class="cursor-pointer w-6 h-6" />
+          <Icon name="mdi:close" class="cursor-pointer size-6" />
         </button>
         <h2 class="text-2xl font-bold mb-2">
           {{ t("reservation.branchesTitle") }}
@@ -18,7 +18,7 @@
           {{ t("reservation.branchesSubtitle") }}
         </p>
 
-        <div class="space-y-4">
+        <div class="space-y-4 branch-list overflow-y-auto max-h-60 py-6 pe-2">
           <div
             v-for="branch in branches"
             :key="branch.id"

@@ -1,7 +1,6 @@
 <template>
   <VeeField :name="name" v-slot="{ field, meta }">
     <div
-      class=""
       :class="[
         { error: !meta.valid && meta.touched, prepend: prepend },
         classes

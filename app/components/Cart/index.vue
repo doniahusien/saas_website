@@ -10,7 +10,7 @@
   <transition name="slide">
     <div
       v-if="modelValue"
-      class="fixed top-0 end-0 w-full md:w-1/3 h-full bg-white z-80 px-5 py-10 flex flex-col rounded-s-3xl"
+      class="fixed top-0 end-0 w-full md:w-1/3 h-full bg-white z-80 px-4 py-10 flex flex-col rounded-s-3xl"
     >
       <div class="flex justify-between mb-5">
         <h2 class="text-4xl font-bold">
@@ -31,11 +31,14 @@
         :updateQty="updateQty"
       />
 
-      <div class="mt-auto space-y-5" v-if="carts.products">
+      <div class="mt-auto space-y-4" v-if="carts.products">
+       <h2 class="text-2xl font-bold">
+        {{ t("cart.orderSum") }}
+      </h2>
         <CartOrderSummary :price="price" :currency="currency" />
         <NuxtLink
           :to="localePath('/checkout')"
-          class="w-full cursor-pointer bg-btn text-white gap-2 py-3 rounded-full font-semibold flex items-center justify-center"
+          class="w-full cursor-pointer bg-btn text-white gap-2 py-4 rounded-full font-semibold flex items-center justify-center"
         >
           {{ t("cart.checkout") }}
           <span class="size-4 flex justify-center items-center bg-white rounded-full"

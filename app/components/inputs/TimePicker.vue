@@ -2,18 +2,27 @@
   <div class="relative">
     <VueDatePicker
       v-model="internalValue"
-      time-picker
       :locale="dateFnsLocale"
+      time-picker
       auto-apply
       :placeholder="placeholder"
       class="w-full datepicker-wrapper"
-      :class="[{ 'datepicker-checkout': props.checkout }]"
+      :class="{ 'datepicker-checkout': props.checkout }"
       input-class="datepicker-input"
     >
       <template #input-icon>
-        <Icon name="mdi:clock-outline" class="text-white text-xl" />
+        <Icon
+          :name="props.checkout ? 'uil:clock' : 'mdi:clock-outline'"
+          :class="[
+            'pointer-events-none transition-all',
+            props.checkout
+              ? 'size-6 text-white absolute start-3 top-1/2 -translate-y-1/2 z-10'
+              : 'size-5 text-white'
+          ]"
+        />
       </template>
     </VueDatePicker>
+
     <VeeErrorMessage :name="name" class="text-red-500 text-xs mt-1" />
   </div>
 </template>
@@ -30,52 +39,66 @@ const props = defineProps({
   placeholder: { type: String, default: "Select time" },
   checkout: { type: Boolean, default: false },
 });
-const checkout = props.checkout;
 
 const { locale } = useI18n();
 const dateFnsLocale = computed(() => (locale.value === "ar" ? ar : en));
 const { value: internalValue } = useField(props.name);
 </script>
+
 <style scoped>
 .datepicker-wrapper :deep(.dp__input) {
   width: 100%;
-  font-weight: 600;
   padding-left: 0;
+  padding-right: 2.5rem;
+  font-weight: 600;
   background: transparent;
   border: 0;
   border-bottom: 1px solid white;
   outline: none;
   color: rgb(17 24 39);
+  padding-block: 0.5rem;
   transition: border-color 0.2s ease-in-out;
 }
 
-/* .datepicker-wrapper :deep(.dp__input:focus) {
-  border-color: var(--color-btn, #c49a6c);
-}
- */
 .datepicker-wrapper :deep(.dp__input::placeholder) {
   color: black !important;
   opacity: 1;
 }
 
 .datepicker-wrapper :deep(.dp__input_icon) {
-  right: 0 !important;
+  right: 0.5rem !important;
   left: auto !important;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
 }
+
 .datepicker-checkout :deep(.dp__input) {
-  background: white;
-  border: 0;
+  width: 100%;
+  background: #EFF0F1;
+  border-radius: 0.5rem;
   outline: none;
   color: rgb(17 24 39);
-  padding-block: 0.75rem;
+  padding: 1.2rem 1rem 1.2rem 3rem !important; 
   font-weight: 600;
+  transition: all 0.2s;
+}
+
+.datepicker-checkout :deep(.dp__input:focus) {
+  border: 2px solid var(--color-btn, #a9743f);
+  box-shadow: 0 0 0 4px rgba(169, 116, 63, 0.15);
 }
 
 .datepicker-checkout :deep(.dp__input::placeholder) {
   color: rgb(107 114 128) !important;
+  opacity: 1;
+}
+
+.datepicker-checkout :deep(.dp__input_icon) {
+  left: 0.75rem !important;
+  right: auto !important;
+  top: 50%;
+  transform: translateY(-50%);
 }
 </style>

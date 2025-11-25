@@ -4,7 +4,7 @@
     <p class="text-secondary text-base mb-5">
       {{ t("auth.enterCredentials") }}
     </p>
-      <VeeForm class="space-y-5"  :validation-schema="schema" @submit="onSubmit">
+      <VeeForm class="space-y-7"  :validation-schema="schema" @submit="onSubmit">
           <inputsPhoneInput
             codeName="phone_code"
             phoneName="phone"

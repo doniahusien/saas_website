@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen bg-semi-white flex justify-center py-8">
-    <div class="container mx-auto p-8 grid grid-cols-1 lg:grid-cols-5 gap-10">
+  <div class="min-h-screen bg-semi-white w-full flex justify-center py-8">
+    <div class="w-full mx-auto p-8 grid grid-cols-1 lg:grid-cols-5 gap-10">
       <CheckoutOrder
         :orderType="orderType"
         :schedule="selectedSchedule"
@@ -36,11 +36,48 @@
 
         <h4 class="text-xl font-bold">{{ $t("TITLES.Promo Code") }}</h4>
         <PromoInput placeholder="Enter Promo Code" icon="bxs:offer" />
+        <div v-if="availablePoints > 0" class="mt-4 flex items-center gap-3">
+          <input
+            type="checkbox"
+            id="use-points"
+            v-model="useLoyaltyPoints"
+            class="size-5 text-green-600 rounded focus:ring-green-500"
+          />
+          <label
+            for="use-points"
+            class="flex items-center gap-2 cursor-pointer select-none"
+          >
+            <span class="text-base font-medium">Use your loyalty points</span>
+            <span
+              class="px-3 py-1 text-sm font-bold text-white bg-linear-to-r from-green-500 to-emerald-600 rounded-full"
+            >
+              {{ availablePoints }} Points
+            </span>
+          </label>
+        </div>
         <!--    <PromoInput placeholder="Add Loyalty Amount" icon="lucide-lab:coins-stack" /> -->
 
         <!--  <p class="text-base text-gold mt-2">Total Amount : 500 Points / 100 EGP</p> -->
         <CartOrderSummary :price="price" :currency="currency" />
       </div>
+      <ModalAddressModal v-model="openAddressModal" @select="handleBranchSelect" />
+      <ModalDeliveryAddressModal
+        v-model="openDeliveryAddressModal"
+        @selectAddress="handleAddressSelect"
+      />
+
+      <ModalCreditModal v-model="openCreditModal" />
+
+      <ModalOrderSuccessModal
+        :show="showSuccessModal"
+        :orderId="newOrderId"
+        @update:show="showSuccessModal = $event"
+      />
+
+      <ModalCancelOrderModal
+        v-model="openCancelOrderModal"
+        @confirmed="handleCancelOrder"
+      />
     </div>
   </div>
 </template>
@@ -72,6 +109,11 @@ const openDeliveryAddressModal = ref<boolean>(false);
 
 const selectedBranch = ref<Branch | null>(null);
 const selectedAddress = ref<any | null>(null);
+
+const availablePoints = computed(() => appStore.getAvailablePoints);
+const availableWallet = computed(() => appStore.getAvailableWallet);
+const totalPrice = computed(() => appStore.getCartPrice?.total || 0);
+const useLoyaltyPoints = ref(false);
 
 const submitting = ref(false);
 
@@ -111,16 +153,16 @@ onMounted(() => {
   loadAddresses();
 });
 
-const confirmOrder = async () => {
+const confirmOrder = async (values) => {
   submitting.value = true;
   try {
     const form = new FormData();
+
     form.append(
       "order_type",
       orderType.value === "takeaway" ? "take_away" : orderType.value
     );
-    form.append("has_loyal", String(0));
-    form.append("has_wallet", String(0));
+
     form.append("is_schedule", String(selectedSchedule.value === "schedule" ? 1 : 0));
 
     if (selectedSchedule.value === "schedule") {
@@ -187,17 +229,43 @@ const confirmOrder = async () => {
         ? selectedAddress.value?.id ?? ""
         : selectedBranch.value?.id ?? "";
     if (addressId) form.append("address_id", String(addressId));
-    form.append("note", "");
+
     if (orderType.value === "take_away")
       form.append("store_id", String(selectedBranch.value.id));
     form.append("code", "");
+    form.append("note", "");
 
-    form.append("pay_type", JSON.stringify([{ wallet: 96 }]));
+    const total = totalPrice.value;
+    const points = availablePoints.value;
+    const wallet = availableWallet.value;
+    const mainMethod = paymentType.value;
+
+    const payType: any[] = [];
+    let remaining = total;
+
+    if (useLoyaltyPoints.value && points > 0 && remaining > 0) {
+      const usedPoints = Math.min(points, remaining);
+      payType.push({ points: usedPoints });
+      remaining -= usedPoints;
+    }
+    /*   if (wallet > 0 && remaining > 0) {
+      const used = Math.min(wallet, remaining);
+      payType.push({ wallet: used });
+      remaining -= used;
+    }
+
+    if (remaining > 0) {
+      payType.push({ [mainMethod]: Number(remaining.toFixed(2)) });
+    } */
+
+    form.append("pay_type", JSON.stringify(payType));
+    form.append("has_loyal", useLoyaltyPoints.value && points > 0 ? "1" : "0");
+    form.append("has_loyal", useLoyaltyPoints.value && points > 0 ? "1" : "0");
     const response = await api.post("/orders", form);
+
     newOrderId.value = response.data.data.id;
-    console.log("Order Response:", response.data);
     showSuccessModal.value = true;
-    toast.success(t("Order placed successfully") || "Order placed successfully");
+    toast.success("Order placed successfully");
   } catch (err: any) {
     const message = err?.message || err?.response?.data?.message || "Order failed";
     toast.error(message);

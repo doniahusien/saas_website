@@ -214,6 +214,26 @@
     "confirm":"تأكيد",
     "instagram":"انستجرام",
     "follow":"تابعنا على",
-    "no_stores_available":"لا توجد متاجر متاحة"
+    "no_stores_available":"لا توجد متاجر متاحة",
+    "typesOfOrder": "أنواع الطلب",
+  "yourShippingAddress": "عنوان الشحن الخاص بك",
+  "shippingAddressPlaceholder": "عنوان الشحن",
+  "defaultAddress": "أبو الفداء، الزمالك، محافظة القاهرة 4271110",
+  "branch": "الفرع",
+  "selectBranch": "اختر الفرع",
+  "scheduleOrder": "جدولة الطلب",
+  "orderNow": "اطلب الآن",
+  "datePlaceholder": "التاريخ",
+  "timePlaceholder": "الوقت",
+  "paymentMethods": "طرق الدفع",
+  "card": "بطاقة",
+  "cash": "نقدًا",
+  "order": "طلب",
+    "Table reservation": "حجز طاولة",
+    "persons": "أشخاص",
+    "person": "شخص",
+    "item": "عنصر",
+    "delivery": "توصيل",
+    "take_away": "استلام"
   }
 }
