@@ -3,8 +3,8 @@
     class="relative flex items-center justify-between px-8 md:px-16 py-5 bg-white shadow-sm"
   >
     <div class="flex items-center gap-8">
-      <NuxtImg src="/logo.png" alt="logo" class="size-16 object-contain" />
-      <ul class="hidden lg:flex gap-3 text-base">
+      <NuxtImg src="/logo.png" alt="logo" class="size-18 object-contain" />
+      <ul class="hidden lg:flex flex-wrap gap-3 text-lg">
         <li v-for="item in items" :key="item.to">
           <NuxtLink
             :to="item.to"
@@ -14,23 +14,36 @@
             {{ item.label }}
           </NuxtLink>
         </li>
+        <li v-for="page in cmsPage" :key="page.id">
+          <NuxtLink :to="localePath(`/cms/${page.slug}`)">
+            {{ page.title }}
+          </NuxtLink>
+        </li>
       </ul>
     </div>
 
     <div class="flex items-center gap-5">
       <ul class="text-btn flex justify-center items-center gap-3">
-        <li class="icon">
+        <button class="icon" @click.stop="openWishlist">
           <Icon name="solar:heart-linear" class="size-6" />
-        </li>
+        </button>
         <li @click="cartOpen = true" class="icon">
           <Icon name="solar:bag-5-outline" class="size-6" />
         </li>
         <li class="icon" v-if="isLoggedIn">
           <Icon name="solar:bell-outline" class="size-6" />
         </li>
-        <li class="icon" v-if="isLoggedIn">
+        <button
+          class="icon"
+          v-if="isLoggedIn"
+          @click.stop="
+            profileMenu = true;
+            getWallet();
+            getLoyalty();
+          "
+        >
           <Icon name="mage:user" class="size-6" />
-        </li>
+        </button>
       </ul>
 
       <button
@@ -130,23 +143,56 @@
       </div>
     </transition>
 
+ 
+    <teleport to="body">
+      <favourite-modal v-if="wishlistMenu" @close="wishlistMenu = false" />
+    </teleport>
     <ModalBranchModal
       v-model="showSelect"
       @select="onBranchSelected"
       :stores="allStores"
     />
+
+
     <Cart v-model="cartOpen" />
+
+    <teleport to="body">
+      <profile-menu-modal
+        v-if="profileMenu"
+        :user-data="userData"
+        :deleteBtn="deleteBtn"
+        :profile-list="profileList"
+        :loyalty="loyalty"
+        :loyaltyLoading="loyaltyLoading"
+        :walletLoading="walletLoading"
+        :wallet="wallet"
+        :cms-page="cmsPage"
+        @close="profileMenu = false"
+        @openAddress="openAddress"
+        @openWishlist="openWishlist"
+        @openNotifications="notificationToggle = true"
+        @openLoyaltyMenu="openLoyaltyMenu"
+        @openWalletMenu="openWalletMenu"
+        @logout="logoutModal = true"
+        @deleteAccount="deleteModal = true"
+      />
+    </teleport>
   </nav>
 </template>
 
 <script setup lang="ts">
 import { useAppAuth } from "~/store/auth";
+import { useAppStore } from "~/store/app";
+
+const showTest = ref(true);
+
 const { locale, t, setLocale } = useI18n();
 const switchLocalePath = useSwitchLocalePath();
 const targetLocale = computed(() => (locale.value === "ar" ? "en" : "ar"));
 const switchPath = computed(() => switchLocalePath(targetLocale.value));
-
+const { $api } = useNuxtApp();
 const appAuth = useAppAuth();
+const appStore = useAppStore();
 const localePath = useLocalePath();
 const route = useRoute();
 const isOpen = ref<boolean>(false);
@@ -157,6 +203,42 @@ const isLoggedIn = appAuth.isLoggedIn;
 
 const selectedBranch = useCookie<Branch | null>("selectedBranch");
 const allStoresCookie = useCookie<string | null>("all_stores");
+
+const smallNav = ref(false);
+const profileMenu = ref(false);
+const addressMenu = ref(false);
+const notificationsMenu = ref(false);
+const cartMenu = ref(false);
+const wishlistMenu = ref(false);
+const branchesMenu = ref(false);
+const walletMenu = ref(false);
+const loyaltyMenu = ref(false);
+const deleteModal = ref(false);
+const deleteBtn = ref(false);
+const logoutModal = ref(false);
+const allLoyaltyTransactions = ref(false);
+const allWalletTransactions = ref(false);
+const notificationToggle = ref(false);
+const showReservation = ref(false);
+const walletTransactionsLoading = ref(true);
+const loyaltyTransactionsLoading = ref(true);
+const loyaltyLoading = ref(true);
+const walletLoading = ref(true);
+const addLoading = ref(false);
+const walletTransactions = ref([]);
+const loyaltyTransactions = ref([]);
+const loyalty = ref([]);
+const wallet = ref([]);
+const addresses = ref([]);
+
+const cmsPage = computed(() => {
+  return appStore.getCmsData?.filter((item) => item.in_menu);
+});
+
+async function openWishlist() {
+  await appStore.getFavourites(); 
+  wishlistMenu.value = true; 
+}
 const allStores = computed<Branch[]>(() => {
   try {
     return allStoresCookie.value ? JSON.parse(allStoresCookie.value) : [];
@@ -170,6 +252,158 @@ const onBranchSelected = (branch: Branch) => {
   selectedBranch.value = branch;
 };
 
+function getAddress() {
+  addLoading.value = true;
+  $api
+    .get("/address")
+    .then((res) => {
+      addresses.value = res.data.data;
+      addLoading.value = false;
+    })
+    .catch(() => (addLoading.value = false));
+}
+
+function getWallet() {
+  walletLoading.value = true;
+  $api
+    .get("/wallet")
+    .then((res) => {
+      wallet.value = res.data.data;
+      walletLoading.value = false;
+    })
+    .catch(() => (walletLoading.value = false));
+}
+
+function getLoyalty() {
+  loyaltyLoading.value = true;
+  $api
+    .get("/loyal_card")
+    .then((res) => {
+      loyalty.value = res.data.data;
+      loyaltyLoading.value = false;
+    })
+    .catch(() => (loyaltyLoading.value = false));
+}
+
+function getLoyaltyTransactions() {
+  loyaltyLoading.value = true;
+  $api
+    .get("/loyal_card/transactions")
+    .then((res) => {
+      loyaltyTransactions.value = res.data.data;
+      loyaltyTransactionsLoading.value = false;
+    })
+    .catch(() => (loyaltyTransactionsLoading.value = false));
+}
+
+function getWalletTransactions() {
+  walletLoading.value = true;
+  $api
+    .get("/wallet/transactions")
+    .then((res) => {
+      walletTransactions.value = res.data.data;
+      walletTransactionsLoading.value = false;
+    })
+    .catch(() => (walletTransactionsLoading.value = false));
+}
+
+function notificationClick(id, item_id) {
+  notificationsMenu.value = false;
+  $api
+    .patch(`/notifications/${id}/read`)
+    .then((res) => {
+      router.push(`/orders/${item_id}`);
+    })
+    .catch((e) => console.log(e));
+}
+function changeNotificationStatus() {
+  $api
+    .post("/setting/change_notification_status")
+    .then((res) => {
+      notificationToggle.value = false;
+      appAuth.userData.notifiable = res.data.data.notifiable;
+    })
+    .catch((e) => {
+      toast.error(e.response.data.message);
+    });
+}
+
+function setData(values) {
+  useCookie("store").value = values.branch;
+  useCookie("selected-store").value = values.branch;
+  selectedStore.value = values.branch;
+  appStore.stores = values.branch;
+  branchesMenu.value = false;
+}
+
+const profileList = [
+  {
+    name: t("LABELS.My Account"),
+    icon: "iconoir:user",
+    path: "/profile",
+  },
+  {
+    icon: "fluent:location-16-regular",
+    name: t("LABELS.address"),
+  },
+  {
+    name: t("LABELS.order"),
+    icon: "lets-icons:bag",
+    path: "/orders",
+  },
+  {
+    name: t("LABELS.wishlist"),
+    icon: "solar:heart-linear",
+  },
+  {
+    name: t("LABELS.notifications"),
+    icon: "solar:bell-linear",
+  },
+  {
+    name: t("LABELS.loyalty Card"),
+    icon: "streamline:coins-stack",
+  },
+  {
+    name: t("LABELS.wallet"),
+    icon: "stash:wallet",
+  },
+  {
+    name: t("LABELS.faqs"),
+    icon: "streamline-ultimate:contact-us-faq",
+  },
+];
+
+function deleteAccount() {
+  deleteBtn.value = true;
+  $api
+    .post("/setting/delete_account")
+    .then(() => {
+      useCookie("jwt_token_saas").value = null;
+      useCookie("saas_user_data").value = null;
+      useCookie("user_guest_token").value = null;
+      appAuth.token = null;
+      appAuth.userData = null;
+      setTimeout(() => {
+        deleteModal.value = false;
+        deleteBtn.value = false;
+        reloadNuxtApp();
+      }, 300);
+    })
+    .catch((e) => {
+      deleteBtn.value = false;
+
+      toast.error(e.response.data.message);
+    });
+}
+
+function confirmLogout() {
+  appAuth.logout();
+
+  setTimeout(() => {
+    logoutModal.value = false;
+    profileMenu.value = false;
+  }, 300);
+}
 onMounted(() => {
   if (!selectedBranch.value) {
     showSelect.value = true;
@@ -180,7 +414,6 @@ const isActive = (to: string) => route.path === to;
 
 const items = computed(() => [
   { label: t("nav.home"), to: localePath("/") },
-  { label: t("nav.about"), to: localePath("/about") },
   { label: t("nav.reservation"), to: localePath("/reservation") },
   { label: t("nav.menu"), to: localePath("/menu") },
   { label: t("nav.contact"), to: localePath("/contact") },

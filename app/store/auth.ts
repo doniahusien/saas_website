@@ -5,7 +5,7 @@ export const useAppAuth = defineStore('authStore', {
     guest_token: useCookie<string | null>('user_guest_token').value || null,
     token: useCookie<string | null>('jwt_token_saas').value || null,
     userData: useCookie<any | null>('saas_user_data').value || null,
-    tempVerifyData: useCookie<any | null>('saas_temp_verify').value || null, 
+    tempVerifyData: useCookie<any | null>('saas_temp_verify').value || null,
   }),
 
   getters: {
@@ -14,9 +14,17 @@ export const useAppAuth = defineStore('authStore', {
   },
 
   actions: {
+    async getProfile() {
+      const { $api } = useNuxtApp();
+      await $api.get("/profile").then((res) => {
+        this.userData = res.data.data;
+        useCookie("saas_user_data").value = res.data.data;
+      });
+
+    },
     setTempVerifyData(data) {
       this.tempVerifyData = data;
-      useCookie("saas_temp_verify").value = data; 
+      useCookie("saas_temp_verify").value = data;
     },
     clearTempVerifyData() {
       this.tempVerifyData = null;

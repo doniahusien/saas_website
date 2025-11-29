@@ -33,7 +33,7 @@
   height: 100%;
   border-radius: 50%;
   animation: pulse 1.6s ease-in-out infinite;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  box-shadow: 0 0 20px rgba(63, 124, 255, 0.5);
 }
 
 @keyframes pulse {

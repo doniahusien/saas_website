@@ -7,7 +7,7 @@
       <div class="bg-white rounded-2xl shadow-lg p-6 relative animate-fadeIn">
         <button
           @click="emit('update:modelValue', false)"
-          class="absolute top-4 right-4 text-gray-500 hover:text-black text-2xl"
+          class="absolute top-4 end-4 text-gray-500 hover:text-black text-2xl"
         >
           &times;
         </button>

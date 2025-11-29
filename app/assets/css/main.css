@@ -6,7 +6,7 @@
   --color-secondary: rgba(130, 138, 186, 1);
   --color-btn: rgba(90, 106, 232, 1);
   --color-btn-bg: rgba(90, 106, 232, 0.05);
-
+  --color-light-red:#EA241F0D;
   --color-subtitle: rgba(151, 158, 197, 1);
   --color-light-gray: rgba(245, 246, 255, 1);
   --color-line: rgba(218, 214, 255, 1);
@@ -57,11 +57,13 @@
   .icon {
     @apply cursor-pointer flex items-center justify-center bg-light-gray/50 rounded-full size-12;
   }
-  .order-time{
-    @apply bg-transparent  flex  items-center flex-row-reverse;
+
+  .order-time {
+    @apply bg-transparent flex items-center flex-row-reverse;
   }
-  .default{
-     @apply w-1/2 h-12 border border-light-gray rounded-md flex justify-between items-center gap-3 px-4 cursor-pointer bg-white;
+
+  .default {
+    @apply w-1/2 h-12 border border-light-gray rounded-md flex justify-between items-center gap-3 px-4 cursor-pointer bg-white;
   }
 }
 
@@ -91,10 +93,26 @@
   background: #2563eb;
 }
 
-.branch-list {
-  scrollbar-width: thin;
-  scrollbar-color: #3b82f6 transparent;
-}
 .swiper {
   transition-timing-function: linear !important;
+}
+
+
+
+
+body::-webkit-scrollbar {
+  width: 3px;
+}
+
+body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 9999px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
 }

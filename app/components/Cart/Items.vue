@@ -2,18 +2,19 @@
   <div>
     <div
       v-if="localProducts && localProducts.length > 0"
-      class="overflow-y-auto branch-list"
-      :class="[isCheckout ? 'h-40' : 'h-72']"
+      class="overflow-y-auto space-y-5 branch-list"
+      :class="[isCheckout ? 'h-85' : 'h-72']"
     >
       <div
         v-for="item in localProducts"
         :key="item.id"
-        class="px-2 py-4 grid justify-between grid-cols-4 gap-5"
+        :class="isCheckout? 'border border-gray-50 rounded-xl':''"
+        class="px-5 py-3 grid justify-between grid-cols-4 gap-5"
       >
         <NuxtImg
           :src="item.product.image"
           class="rounded-xl object-cover"
-          :class="[isCheckout == true ? 'w-24 h-18 rounded-lg' : 'w-46 h-26']"
+          :class="[isCheckout == true ? 'w-26 h-22 rounded-lg' : 'w-46 h-26']"
         />
         <div
           class="flex flex-col"

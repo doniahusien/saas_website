@@ -17,7 +17,9 @@
 
 <script setup>
 import { useAppStore } from "~/store/app";
+import {useAppAuth} from "~/store/auth";
 const appStore = useAppStore();
+const appAuth = useAppAuth();
 const i18n = useI18n();
 const locale = computed(() => i18n.locale.value);
 const isOnline = ref(true);
@@ -40,6 +42,8 @@ async function getStores() {
 }
 
 onMounted(async () => {
+  await appAuth.getProfile();
+  await appStore.getCmsPages();
   await appStore.getCarts();
   isOnline.value = window.navigator.onLine;
   window.addEventListener("online", () => {

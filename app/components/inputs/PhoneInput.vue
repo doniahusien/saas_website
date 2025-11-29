@@ -1,121 +1,145 @@
 <template>
   <div class="w-full flex flex-row items-center gap-3">
-  <VeeField
-    :name="codeName"
-    v-model="selectedCode"
-    v-slot="{ field: codeField, meta: codeMeta, errors: codeErrors }"
-  >
-    <div class="relative w-24">
-      <select
-        v-bind="codeField"
-        v-model="selectedCode"
-        @change="onSelectCountry($event, codeField)"
-        @focus="isOpen = true"
-        @blur="isOpen = false"
-        class="appearance-none pr-6 cursor-pointer"
-        :class="[
-          isRes
-            ? 'w-full placeholder:text-black border-b font-medium pb-2 bg-transparent focus:outline-none'
-            : 'input',
-          (!codeMeta.valid && codeMeta.touched) || codeErrors.length
-            ? 'border-red-500'
-            : 'border-placeholder',
-        ]"
-      >
-        <option
-          v-for="(country, i) in countries"
-          :key="country.id"
-          :value="country.phone_code"
+    <VeeField :name="codeName" v-model="selectedCode">
+      <div class="relative w-24">
+        <select
+          v-model="selectedCode"
+          @change="onCodeChange"
+          @focus="isOpen = true"
+          @blur="isOpen = false"
+          :disabled="disabled"
+          class="appearance-none w-full bg-transparent border-b-2 pb-2 pr-8 font-medium focus:outline-none transition-all disabled:cursor-not-allowed disabled:opacity-60"
+          :class="[
+            isRes ? 'placeholder:text-black' : 'input',
+            errorCode ? 'border-red-500' : 'border-placeholder',
+            disabled ? 'text-gray-700' : 'text-black'
+          ]"
         >
-          +{{ country.phone_code }}
-        </option>
-      </select>
+          <option
+            v-for="country in countries"
+            :key="country.id"
+            :value="country.phone_code"
+          >
+            +{{ country.phone_code }}
+          </option>
+        </select>
 
-      <span
-        class="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 transition-transform duration-200"
-      >
-        <Icon :name="isOpen ? 'fe:arrow-up' : 'fe:arrow-down'" />
-      </span>
+        <span
+          class="pointer-events-none absolute right-1 top-1/2 -translate-y-1/2 text-gray-500"
+          :class="{ 'opacity-50': disabled }"
+        >
+          <Icon :name="isOpen && !disabled ? 'fe:arrow-up' : 'fe:arrow-down'" />
+        </span>
 
-      <div class="h-1">
-        <VeeErrorMessage :name="codeName" as="div" class="text-red-500 text-sm" />
+        <div class="h-5 mt-1">
+          <VeeErrorMessage :name="codeName" class="text-red-500 text-xs" />
+        </div>
       </div>
-    </div>
-  </VeeField>
-    <VeeField
-      :name="phoneName"
-      v-slot="{ field: phoneField, meta: phoneMeta, errors: phoneErrors }"
-    >
+    </VeeField>
+    <VeeField :name="phoneName" v-model="phoneValue">
       <div class="flex-1">
         <input
-          v-bind="phoneField"
+          :value="phoneValue"
+          @input="phoneValue = $event.target.value"
           type="text"
           :placeholder="placeholder"
-          @input="emit('update:phone', $event.target.value)"
+          :disabled="disabled"
+          :readonly="disabled"
+          class="w-full bg-transparent border-b-2 pb-2 font-medium focus:outline-none transition-all disabled:cursor-not-allowed disabled:opacity-60"
           :class="[
-            isRes
-              ? 'w-full font-medium placeholder:text-black border-b pb-2 bg-transparent focus:outline-none'
-              : 'input',
-            ((!phoneMeta.valid && phoneMeta.touched) || phoneErrors.length) && isRes
-              ? 'border-red-500'
-              : 'border-placeholder',
+            isRes ? 'placeholder:text-black' : 'input',
+            errorPhone ? 'border-red-500' : 'border-placeholder',
+            disabled ? 'text-gray-700' : 'text-black'
           ]"
         />
-        <div class="h-1">
-          <VeeErrorMessage :name="phoneName" as="div" class="text-red-500 text-sm mt-1" />
+
+        <div class="h-5 mt-1">
+          <VeeErrorMessage :name="phoneName" class="text-red-500 text-xs" />
         </div>
       </div>
     </VeeField>
   </div>
 </template>
+
 <script setup>
+import { ref, watch, onMounted, computed } from "vue";
 import { Field as VeeField, ErrorMessage as VeeErrorMessage } from "vee-validate";
-import { ref, onMounted, watch } from "vue";
 
 const props = defineProps({
   codeName: { type: String, required: true },
   phoneName: { type: String, required: true },
-  code: { type: String, default: null },
-  modelValueCode: { type: String, default: null },
-  phone: { type: String, default: null },
-  modelValuePhone: { type: String, default: null },
+  code: { type: String, default: "" },
+  phone: { type: String, default: "" },
   placeholder: { type: String, default: "Phone" },
   isRes: { type: Boolean, default: false },
+  disabled: { type: Boolean, default: false },
 });
 
-const emit = defineEmits(["update:code", "update:phone", "country-selected"]);
-const isOpen = ref(false)
-const selectedCode = ref(props.code ?? props.modelValueCode ?? "");
+const emit = defineEmits([
+  "update:code",
+  "update:phone",
+  "country-selected",
+]);
 
-function onSelectCountry(e, codeField = null) {
-  const code = e.target.value;
-  selectedCode.value = code;
-  if (codeField && typeof codeField.value !== "undefined") {
-    codeField.value = code;
-  }
-}
-
-watch(selectedCode, (code) => {
-  if (!code) return;
-  emit("update:code", code);
-  const selected = countries.value.find((c) => c.phone_code == code);
-  if (selected) emit("country-selected", selected);
-});
-const { $api } = useNuxtApp();
+const isOpen = ref(false);
+const selectedCode = ref("");
+const phoneValue = ref("");          
 const countries = ref([]);
 
+const errorCode = computed(() => {
+  const errors = useFieldError(props.codeName);
+  return errors.value;
+});
+const errorPhone = computed(() => {
+  const errors = useFieldError(props.phoneName);
+  return errors.value;
+});
+
+
+watch(() => props.code, (val) => {
+  if (val && selectedCode.value !== val) selectedCode.value = val;
+}, { immediate: true });
+
+
+watch(() => props.phone, (val) => {
+  if (val !== undefined && phoneValue.value !== val) {
+    phoneValue.value = val || "";
+  }
+}, { immediate: true });
+
+
+function onCodeChange() {
+  emit("update:code", selectedCode.value);
+  const country = countries.value.find(c => c.phone_code === selectedCode.value);
+  if (country) emit("country-selected", country);
+}
+
+watch(phoneValue, (newVal) => {
+  if (!props.disabled) {
+    emit("update:phone", newVal);
+  }
+});
+
+
+const { $api } = useNuxtApp();
 onMounted(async () => {
   try {
-    const res = await $api.get("/brand_country");
-    countries.value = res.data?.data || [];
+    const { data } = await $api.get("/brand_country");
+    countries.value = data?.data || [];
 
-    if (countries.value.length) {
-      if (!selectedCode.value) selectedCode.value = countries.value[0].phone_code;
+    if (!selectedCode.value && countries.value.length) {
+      selectedCode.value = props.code || countries.value[0].phone_code;
     }
-  } catch (e) {
-    console.error(e);
+  } catch (err) {
+    console.error("Failed to load countries", err);
   }
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+input:disabled,
+select:disabled {
+  -webkit-text-fill-color: currentColor;
+  background: transparent;
+}
+</style>

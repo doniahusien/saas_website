@@ -140,7 +140,8 @@
     "menu": "Menu",
     "about": "About Us",
     "contact": "Contact",
-    "orders": "Orders"
+    "orders": "Orders",
+    "faq":"faqs"
   },
   "filter": {
     "title": "Selected filters",
@@ -210,9 +211,10 @@
     "VAT": "VAT"
   },
   "orders": {
-    "title": "Orders"
+    "title": "My Orders"
   },
   "TITLES": {
+    "points":"points",
     "Promo Code": "Promo Code",
     "items": "Items",
     "Completed": "Completed",
@@ -239,12 +241,62 @@
     "card": "Card",
     "cash": "Cash",
     "placing": "Placing...",
-     "order": "Order",
+    "order": "Order",
     "Table reservation": "Table Reservation",
     "persons": "persons",
     "person": "person",
     "item": "item",
     "delivery": "Delivery",
-    "take_away": "Take Away"
+    "take_away": "Take Away",
+    "order type": "Order Type",
+    "Order ID ": "Order ID ",
+    "Cancle Order": "Cancel Order",
+    "Ordered Items": "Ordered Items",
+    "Payment Type": "Payment Type",
+    "Date Of Order": "Date Of Order",
+    "Time Of Order": "Time Of Order",
+    "Order ID": "Order ID",
+    "CancleOrder": "Cancel Order",
+    "Call center": "Call center",
+  "Order Type": "Order Type",
+  "Delivery": "Delivery",
+  "Wallet": "Wallet",
+  "Cash":"Cash",
+  "Card":"Card",
+  "Profile": "Profile",
+  "My profile": "My Account",
+  "Change Password":"Change Password",
+  "changePhone":"Change Phone",
+    "No favourites": "No favourites",
+    "You dont have any items in your wishlist yet": "You don’t have any items in your wishlist yet",
+    "deleteFavDesc": "Are you sure you want to remove this item from your favourites?"
+  },
+
+   "LABELS": {
+    "My Account": "My Account",
+    "order": "Order",
+    "wishlist": "Wishlist",
+    "notifications": "Notifications",
+    "loyalty Card": "Loyalty Card",
+    "wallet": "Wallet",
+    "faqs": "FAQs",
+    "address": "Address"  ,
+    "no orders": "No Orders",
+    "name":"Name",
+    "email":"Email",
+    
+    "uploadingFile": "Uploading File"
+  },
+  "faq":{
+    "title":"FAQs"
+  },
+  "BUTTONS":{
+    "deleteAccount":"Delete Account",
+    "logout":"Logout",
+    "save":"Save",
+    "noKeepMe": "No, keep it",
+    "removeFav": "Remove favourite",
+    "yesRemove": "Yes, remove"
   }
+
 }

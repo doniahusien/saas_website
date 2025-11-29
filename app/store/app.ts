@@ -3,6 +3,7 @@ import { useNuxtApp } from "#app";
 import { useToast } from "vue-toastification";
 export const useAppStore = defineStore("app", {
   state: () => ({
+    cmsPages:null,
     settings: null,
     notifications: [] as any[],
     notificationsLoading: false,
@@ -15,8 +16,12 @@ export const useAppStore = defineStore("app", {
     cartCount: 0,
     availablePoints: 0,
     availableWallet: 0,
+    
+    product_fav: null,
+    product_fav_status: null,
   }),
   getters: {
+    getCmsData: (state) => state.cmsPages,
     getCartCount: (state) => state.cartCount,
     getCartData: (state) => state.cart,
     getCartPrice: (state) => state.price,
@@ -25,20 +30,21 @@ export const useAppStore = defineStore("app", {
     getAvailableWallet: (state) => state.availableWallet,
   },
   actions: {
-    /*    async getFavourites() {
-         this.favLoading = true;
-         const { $axios } = useNuxtApp();
-   
-         try {
-           const res = await $axios.get("favourites");
-           this.favourites = res.data.data;
-         } catch (error) {
-           console.error("Error fetching favourites:", error);
-         } finally {
-           this.favLoading = false;
-         }
-       }, */
+    async getFavourites() {
+      this.favLoading = true;
+      const {$api} = useNuxtApp();
+      await $api.get("favourite").then((res) => {
+        this.favourites = res.data.data;
+        this.favLoading = false;
+      });
+    },
 
+    async getCmsPages() {
+      const { $api } = useNuxtApp();
+      await $api
+        .get("/cms-pages")
+        .then((res) => (this.cmsPages = res.data.data));
+    },
     async addToFavourites(product_id: any) {
       const toast = useToast();
       const { $api } = useNuxtApp();

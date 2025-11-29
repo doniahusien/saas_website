@@ -26,7 +26,7 @@
       <div class="flex justify-between text-black text-xl ">
         <span>{{ t("cart.totalAmount") }}</span>
         <span>
-          {{ formatNumber(price.total) }}
+          {{ formatNumber(price.total|| price.total_price) }}
           <span class="text-xs">{{ currency }}</span>
         </span>
       </div>
@@ -51,16 +51,16 @@ function formatNumber(num) {
 const summaryRows = computed(() => [
   {
     title: "cart.subtotal",
-    value: props.price?.sun_total || 0,
+    value: props.price?.sun_total ||props.price.total_item_price_before_discount|| 0,
     showCount: true
   },
-/*   {
+  {
     title: "cart.shipping",
-    value: props.price?.delivery_price || 0
-  }, */
+    value: props.price?.delivery_price 
+  }, 
   {
     title: "cart.surcharge",
-    value: props.price?.surcharge || 0
+    value: props.price?.surcharge ||props.price.surcharge_value||  0
   },
 /*   {
     title: "cart.discount",

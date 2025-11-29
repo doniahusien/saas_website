@@ -4,15 +4,17 @@
       :modules="[Navigation, Autoplay]"
       :slides-per-view="1"
       :loop="true"
-      :autoplay="{ delay: 5000 }"
-      :navigation="{ prevEl: prevEl, nextEl: nextEl }"
+      :autoplay="{ delay: 8000 }"
+      :navigation="navigationOptions"
+      @swiper="onSwiperInit"
       class="h-screen"
     >
       <SwiperSlide
-       v-for="item in sliders" :key="item.id"
-       class="bg-cover bg-no-repeat"
-      :style="{ backgroundImage: `url('${item.image}')` }">
-        <!-- <NuxtImg :src="item.image" alt="slider" class="size-full object-cover" /> -->
+        v-for="item in sliders"
+        :key="item.id"
+        class="bg-cover bg-no-repeat"
+        :style="{ backgroundImage: `url('${item.image}')` }"
+      >
         <div class="overlay"></div>
         <div
           class="absolute inset-0 flex flex-col items-center justify-center text-center text-white z-10 px-6"
@@ -75,6 +77,18 @@ import "swiper/css/navigation";
 const prevEl = ref(null);
 const nextEl = ref(null);
 
+const navigationOptions = ref({
+  prevEl: null,
+  nextEl: null,
+});
+
+const onSwiperInit = (swiper) => {
+  swiper.params.navigation.prevEl = prevEl.value;
+  swiper.params.navigation.nextEl = nextEl.value;
+
+  swiper.navigation.init();
+  swiper.navigation.update();
+};
 defineProps({
   sliders: {
     type: Array,
@@ -120,3 +134,38 @@ const contactItems = computed(() => {
   return items;
 });
 </script>
+
+<style scoped>
+/* BUTTERY SMOOTH HARDWARE ACCELERATION */
+.swiper,
+.swiper-wrapper,
+.swiper-slide,
+.swiper-slide img {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+}
+
+.swiper-slide img {
+  pointer-events: none;
+}
+
+/* Subtle fade-in animation */
+.animate-fade-in {
+  animation: fadeIn 1.2s ease-out forwards;
+}
+.animate-fade-in-delay {
+  animation: fadeIn 1.4s ease-out forwards;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>

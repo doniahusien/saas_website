@@ -10,7 +10,7 @@
   <transition name="slide">
     <div
       v-if="modelValue"
-      class="fixed top-0 end-0 w-full md:w-1/3 h-full bg-white z-80 px-4 py-10 flex flex-col rounded-s-3xl"
+      class="fixed top-0 end-0 w-full md:w-1/2 lg:w-1/3 h-full bg-white z-80 px-4 py-10 flex flex-col rounded-s-0 md:rounded-s-3xl"
     >
       <div class="flex justify-between mb-5">
         <h2 class="text-4xl font-bold">
