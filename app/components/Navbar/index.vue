@@ -27,10 +27,10 @@
         <button class="icon" @click.stop="openWishlist">
           <Icon name="solar:heart-linear" class="size-6" />
         </button>
-        <li @click="cartOpen = true" class="icon">
+        <li @click.stop="openCart" class="icon">
           <Icon name="solar:bag-5-outline" class="size-6" />
         </li>
-        <li class="icon" v-if="isLoggedIn">
+        <li class="icon" v-if="isLoggedIn" @click.stop="openNotifications">
           <Icon name="solar:bell-outline" class="size-6" />
         </li>
         <button
@@ -134,6 +134,11 @@
               {{ item.label }}
             </NuxtLink>
           </li>
+          <li v-for="page in cmsPage" :key="page.id">
+            <NuxtLink :to="localePath(`/cms/${page.slug}`)">
+              {{ page.title }}
+            </NuxtLink>
+          </li>
         </ul>
 
         <NuxtLink :to="switchPath" class="flex items-center text-btn">
@@ -143,7 +148,6 @@
       </div>
     </transition>
 
- 
     <teleport to="body">
       <favourite-modal v-if="wishlistMenu" @close="wishlistMenu = false" />
     </teleport>
@@ -153,10 +157,47 @@
       :stores="allStores"
     />
 
-
-    <Cart v-model="cartOpen" />
+    <teleport to="body">
+      <Cart v-if="cartMenu" @close="cartMenu = false" />
+    </teleport>
 
     <teleport to="body">
+      <menus-side-menu
+        v-if="notificationsMenu"
+        @close="notificationsMenu = false"
+        :title="$t('TITLES.notifications')"
+      >
+        <div class="flex flex-col h-screen">
+          <div class="overflow-y-auto pb-20">
+            <ul v-if="appStore.notifications.length">
+              <li
+                class="mb-3 last:mb-0"
+                v-for="item in appStore.notifications"
+                :key="item.id"
+              >
+                <notifications-card :item="item" />
+              </li>
+            </ul>
+            <div v-else class="flex h-full flex-col items-center justify-center">
+              <div class="my-auto space-y-4">
+                <h3 class="text-center text-2xl font-bold">
+                  {{ $t("TITLES.No notifications") }}
+                </h3>
+                <p class="mx-auto text-center text-gray-light">
+                  {{ $t("TITLES.You dont have any notifications yet") }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </menus-side-menu>
+    </teleport>
+
+    <teleport to="body">
+    <menus-side-menu
+    v-if="profileMenu"
+         @close="profileMenu = false">
+         
       <profile-menu-modal
         v-if="profileMenu"
         :user-data="userData"
@@ -176,6 +217,7 @@
         @logout="logoutModal = true"
         @deleteAccount="deleteModal = true"
       />
+          </menus-side-menu>
     </teleport>
   </nav>
 </template>
@@ -184,7 +226,7 @@
 import { useAppAuth } from "~/store/auth";
 import { useAppStore } from "~/store/app";
 
-const showTest = ref(true);
+const showTest = ref(false);
 
 const { locale, t, setLocale } = useI18n();
 const switchLocalePath = useSwitchLocalePath();
@@ -196,7 +238,6 @@ const appStore = useAppStore();
 const localePath = useLocalePath();
 const route = useRoute();
 const isOpen = ref<boolean>(false);
-const cartOpen = ref<boolean>(false);
 const showSelect = ref<boolean>(false);
 
 const isLoggedIn = appAuth.isLoggedIn;
@@ -234,10 +275,37 @@ const addresses = ref([]);
 const cmsPage = computed(() => {
   return appStore.getCmsData?.filter((item) => item.in_menu);
 });
+function notificationClick(id, item_id) {
+  notificationsMenu.value = false;
+  $api
+    .patch(`notifications/${id}/read`)
+    .then((res) => {
+      router.push(`/order/${item_id}`);
+    })
+    .catch((e) => console.log(e));
+}
 
+function changeNotificationStatus() {
+  $api
+    .post("setting/change_notification_status")
+    .then((res) => {
+      notificationToggle.value = false;
+      appAuth.userData.notifiable = res.data.data.notifiable;
+    })
+    .catch((e) => {
+      toast.error(e.response.data.message);
+    });
+}
+
+function openNotifications() {
+  notificationsMenu.value = true;
+}
 async function openWishlist() {
-  await appStore.getFavourites(); 
-  wishlistMenu.value = true; 
+  await appStore.getFavourites();
+  wishlistMenu.value = true;
+}
+function openCart() {
+  cartMenu.value = true;
 }
 const allStores = computed<Branch[]>(() => {
   try {
@@ -305,27 +373,6 @@ function getWalletTransactions() {
       walletTransactionsLoading.value = false;
     })
     .catch(() => (walletTransactionsLoading.value = false));
-}
-
-function notificationClick(id, item_id) {
-  notificationsMenu.value = false;
-  $api
-    .patch(`/notifications/${id}/read`)
-    .then((res) => {
-      router.push(`/orders/${item_id}`);
-    })
-    .catch((e) => console.log(e));
-}
-function changeNotificationStatus() {
-  $api
-    .post("/setting/change_notification_status")
-    .then((res) => {
-      notificationToggle.value = false;
-      appAuth.userData.notifiable = res.data.data.notifiable;
-    })
-    .catch((e) => {
-      toast.error(e.response.data.message);
-    });
 }
 
 function setData(values) {
