@@ -1,41 +1,40 @@
 <template>
-  <div class="pagination-container flex justify-center items-center gap-3 mt-10 flex-wrap">
+  <div class="flex justify-center items-center gap-3 mt-10 flex-wrap">
     <button
       :disabled="currentPage <= 1"
       @click="changePage(currentPage - 1)"
-      class="pagination-arrow"
-      :class="{ disabled: currentPage <= 1 }"
+      class="size-9 flex justify-center items-center rounded-full border-2 border-btn bg-white text-btn font-semibold cursor-pointer hover:bg-btn hover:text-white transition-colors disabled:bg-white disabled:border-btn disabled:text-btn disabled:cursor-not-allowed"
     >
-      ←
-    </button>
+     <Icon name="mdi:chevron-left" class="size-6" />
     <button
       v-if="currentPage > 3"
       @click="changePage(1)"
-      class="pagination-number"
-      :class="{ active: currentPage === 1 }"
+      class="size-9 flex justify-center items-center rounded-full border-2 border-btn font-semibold cursor-pointer hover:bg-btn hover:text-white transition-colors"
+      :class="currentPage === 1 ? 'bg-btn text-white' : 'bg-white text-btn'"
     >
       1
     </button>
+    </button>
 
-    <span v-if="currentPage > 4" class="ellipsis">...</span>
+    <span v-if="currentPage > 4" class="text-btn font-semibold mx-2">...</span>
 
     <button
       v-for="page in visiblePages"
       :key="page"
       @click="changePage(page)"
-      class="pagination-number"
-      :class="{ active: currentPage === page }"
+      class="size-9 flex justify-center items-center rounded-full border-2 border-btn font-semibold cursor-pointer hover:bg-btn hover:text-white transition-colors"
+      :class="currentPage === page ? 'bg-btn text-white' : 'bg-white text-btn'"
     >
       {{ page }}
     </button>
 
-    <span v-if="currentPage < totalPages - 3" class="ellipsis">...</span>
+    <span v-if="currentPage < totalPages - 3" class="text-btn font-semibold mx-2">...</span>
 
     <button
       v-if="currentPage < totalPages - 2"
       @click="changePage(totalPages)"
-      class="pagination-number"
-      :class="{ active: currentPage === totalPages }"
+      class="size-9 flex justify-center items-center rounded-full border-2 border-btn font-semibold cursor-pointer hover:bg-btn hover:text-white transition-colors"
+      :class="currentPage === totalPages ? 'bg-btn text-white' : 'bg-white text-btn'"
     >
       {{ totalPages }}
     </button>
@@ -43,10 +42,9 @@
     <button
       :disabled="currentPage >= totalPages"
       @click="changePage(currentPage + 1)"
-      class="pagination-arrow"
-      :class="{ disabled: currentPage >= totalPages }"
+      class="size-9 flex justify-center items-center rounded-full border-2 border-btn bg-white text-btn font-semibold cursor-pointer hover:bg-btn hover:text-white transition-colors disabled:cursor-not-allowed"
     >
-      →
+      <Icon name="mdi:chevron-right" class="size-6" />
     </button>
   </div>
 </template>
@@ -77,76 +75,3 @@ function changePage(page: number) {
   }
 }
 </script>
-
-<style scoped>
-.pagination-container {
-  display: flex;
-  align-items: center;
-}
-
-.pagination-arrow {
-  background-color: white;
-  border: 2px solid rgba(90, 106, 232, 1);  
-  border-radius: 50%;  
-  padding: 5px; 
-  width: 30px;  
-  height: 30px;
-  cursor: pointer;
-  color: rgba(90, 106, 232, 1);  
-  font-weight: 600;
-  transition: background-color 0.3s, color 0.3s;
-  font-size: 18px; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.pagination-arrow:hover {
-  background-color: rgba(90, 106, 232, 1);  
-  color: white; 
-}
-
-.pagination-number {
-  background-color: white;
-  border: 2px solid rgba(90, 106, 232, 1); 
-  border-radius: 50%;  
-  padding: 8px;  
-  margin: 0 8px;
-  cursor: pointer;
-  color: rgba(90, 106, 232, 1);  
-  font-weight: 600;
-  transition: background-color 0.3s, color 0.3s;
-  font-size: 16px;
-  width: 30px; 
-  height: 30px;  
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.pagination-number.active {
-  background-color: rgba(90, 106, 232, 1);  
-  color: white;  
-}
-
-.pagination-number:hover {
-  background-color: rgba(90, 106, 232, 1);  
-  color: white;  
-}
-
-.ellipsis {
-  font-size: 16px;
-  color: rgba(90, 106, 232, 1);
-  margin: 0 8px;
-  font-weight: 600;
-}
-
-.pagination-arrow:disabled {
-  background-color: #e0e0e0;
-  cursor: not-allowed;
-}
-
-.pagination-container button:disabled {
-  color: #e0e0e0;
-}
-</style>

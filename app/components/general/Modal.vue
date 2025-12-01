@@ -5,11 +5,11 @@
     @click="close"
   >
     <div
-      class="base-modal-content max-h-[650px] min-h-[300px] overflow-y-auto rounded-3xl bg-[#fbfafc] relative"
+      class="base-modal-content max-h-163 min-h-75 overflow-y-auto rounded-3xl bg-white] relative"
       :class="classes"
       @click.stop
     >
-    <div class="bg-website_white p-5 " v-if="!hideHeader">
+    <div class="bg-white p-5 " v-if="!hideHeader">
       <div class="flex items-center justify-between gap-5" :class="closeBtnClass">
         <h3 v-if="title" class="text-lg font-semibold" :class="titleClasses">
           {{ title }}
@@ -22,7 +22,7 @@
       <p v-if="description" class="text-black">{{description}}</p>
     </div>
 
-      <div class="my-auto h-full p-5 overflow-x-hidden relative" :class="contentClass">
+      <div class="my-auto h-full p-4 bg-white overflow-x-hidden relative" :class="contentClass">
         <slot />
         
       </div>
