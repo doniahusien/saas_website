@@ -324,5 +324,8 @@
     "yesCancel": "نعم، إلغاء",
     "Confirm": "تأكيد",
     "send message": "إرسال الرسالة"
+  },
+  "contact": {
+    "title": "تواصل معنا"
   }
 }

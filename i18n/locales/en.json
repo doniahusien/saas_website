@@ -213,6 +213,9 @@
   "orders": {
     "title": "My Orders"
   },
+  "contact":{
+    "title":"Contact Us"
+  },
   "TITLES": {
     "contact us":"Contact Us",
     "cancellationReason": "Cancellation Reason",

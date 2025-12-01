@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex flex-row items-center gap-3">
+  <div class="w-full flex flex-row items-center gap-2">
     <VeeField :name="codeName" v-model="selectedCode">
       <div class="relative w-24">
         <select
@@ -25,19 +25,16 @@
         </select>
 
         <span
-          class="pointer-events-none absolute right-1 top-1/2 -translate-y-1/2 text-gray-500"
+          class="pointer-events-none absolute right-2 top-5 text-gray-500"
           :class="{ 'opacity-50': disabled }"
         >
           <Icon :name="isOpen && !disabled ? 'fe:arrow-up' : 'fe:arrow-down'" />
         </span>
-
-        <div class="h-5 mt-1">
-          <VeeErrorMessage :name="codeName" class="text-red-500 text-xs" />
-        </div>
+        <VeeErrorMessage :name="codeName" class="absolute top-full left-0 text-red-500 text-xs mt-0.5 whitespace-nowrap" />
       </div>
     </VeeField>
     <VeeField :name="phoneName" v-model="phoneValue">
-      <div class="flex-1">
+      <div class="flex-1 relative">
         <input
           :value="phoneValue"
           @input="phoneValue = $event.target.value"
@@ -45,17 +42,14 @@
           :placeholder="placeholder"
           :disabled="disabled"
           :readonly="disabled"
-          class="w-full bg-transparent border-b-2 pb-2 font-medium focus:outline-none transition-all disabled:cursor-not-allowed disabled:opacity-60"
+          class="w-full bg-transparent border-b-2 font-medium focus:outline-none transition-all disabled:cursor-not-allowed disabled:opacity-60"
           :class="[
             isRes ? 'placeholder:text-black' : 'input',
             errorPhone ? 'border-red-500' : 'border-placeholder',
             disabled ? 'text-gray-700' : 'text-black'
           ]"
         />
-
-        <div class="h-5 mt-1">
-          <VeeErrorMessage :name="phoneName" class="text-red-500 text-xs" />
-        </div>
+        <VeeErrorMessage :name="phoneName" class="absolute top-full left-0 text-red-500 text-xs mt-0.5 whitespace-nowrap" />
       </div>
     </VeeField>
   </div>

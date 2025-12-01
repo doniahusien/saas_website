@@ -22,7 +22,10 @@
 </template>
 
 <script setup>
-defineProps({
+import { onMounted } from 'vue'
+import { useField } from 'vee-validate'
+
+const props = defineProps({
   id: {
     type: String,
     required: true,
@@ -39,5 +42,13 @@ defineProps({
     type: String,
     default: 'Select an option',
   },
+})
+
+const { setValue } = useField(props.name)
+
+onMounted(() => {
+  if (props.options.length > 0) {
+    setValue(props.options[0].id)
+  }
 })
 </script>
