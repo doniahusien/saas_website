@@ -210,6 +210,12 @@
     "addItems": "اضف منتجات لسلة"
   },
   "TITLES": {
+    "Cancel Order": "إلغاء الطلب",
+    "cancellationReason": "سبب الإلغاء",
+    "deleteNotificationsDesc": "هل أنت متأكد أنك تريد حذف هذا الإشعار؟",
+    "notifications": "الإشعارات",
+    "No notifications": "لا توجد إشعارات",
+    "You dont have any notifications yet": "ليس لديك أي إشعارات بعد",
     "Promo Code": "كود الخصم",
     "items": "العناصر",
     "log in": "تسجيل الدخول",
@@ -259,13 +265,31 @@
     "Wallet": "محفظة",
     "Cash": "نقدا",
     "Card": "فيزا",
-    "Profile":"الملف الشخصي",
-    "My profile":"ملفي الشخصي",
+    "Profile": "الملف الشخصي",
+    "My profile": "ملفي الشخصي",
     "No favourites": "لا توجد مفضلات",
     "You dont have any items in your wishlist yet": "لا يوجد لديك أي منتجات في قائمة المفضلة حتى الآن",
-    "deleteFavDesc": "هل أنت متأكد أنك تريد إزالة هذا المنتج من المفضلة؟"
+    "deleteFavDesc": "هل أنت متأكد أنك تريد إزالة هذا المنتج من المفضلة؟",
+    "Shipping Address": "عنوان الشحن",
+    "Cancel Booking": "إلغاء الحجز",
+    "Call Center": "مركز الاتصال",
+    "Number of Persons": "عدد الأشخاص",
+    "Date of booking": "تاريخ الحجز",
+    "Time of booking": "وقت الحجز",
+    "Select Your Reason": "اختر سبب الإلغاء",
+    "Credit Card": "بطاقة الائتمان",
+    "cancelOrdersDesc": "هل أنت متأكد أنك تريد إلغاء هذا الحجز؟",
+    "credit": "بطاقة",
+    "points": "نقاط"
   },
   "LABELS": {
+    "other": "أخرى",
+     "Booking ID": "رقم الحجز",
+    "Booking Summary": "ملخص الحجز",
+    "Booking Confirmation Amount": "مبلغ تأكيد الحجز",
+    "name": "الاسم",
+    "from": "من",
+    "to": "إلى",
     "My Account": "حسابي",
     "account": "الحساب",
     "order": "الطلبات",
@@ -275,14 +299,22 @@
     "wallet": "المحفظة",
     "faqs": "الأسئلة الشائعة",
     "address": "العناوين",
-    "no orders": "لا يوجد طلبات"
+    "no orders": "لا يوجد طلبات",
+    "successful": "تم بنجاح",
+    "The amount has been paid successfully": "تم دفع المبلغ بنجاح"
   },
-  "BUTTONS":{
-    "deleteAccount":"حذف الحساب",
-    "logout":"تسجيل الخروج",
-    "save":"حفظ",
-        "noKeepMe": "لا، احتفاظ",
+  "BUTTONS": {
+    "deleteAccount": "حذف الحساب",
+    "logout": "تسجيل الخروج",
+    "save": "حفظ",
+    "noKeepMe": "لا، احتفاظ",
     "removeFav": "إزالة من المفضلة",
-    "yesRemove": "نعم، إزالة"
+    "yesRemove": "نعم، إزالة",
+    "deleteNotification": "حذف الإشعار",
+    "yesDelete": "نعم، احذف",
+    "pay now": "ادفع الآن",
+    "cancelReservation": "إلغاء الحجز",
+    "yesCancel": "نعم، إلغاء",
+    "Confirm": "تأكيد"
   }
 }

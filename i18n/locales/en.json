@@ -141,7 +141,7 @@
     "about": "About Us",
     "contact": "Contact",
     "orders": "Orders",
-    "faq":"faqs"
+    "faq": "faqs"
   },
   "filter": {
     "title": "Selected filters",
@@ -214,7 +214,12 @@
     "title": "My Orders"
   },
   "TITLES": {
-    "points":"points",
+    "cancellationReason": "Cancellation Reason",
+    "deleteNotificationsDesc": "Are you sure you want to delete this notification?",
+    "notifications": "Notifications",
+    "No notifications": "No Notifications",
+    "You dont have any notifications yet": "You don't have any notifications yet",
+    "points": "points",
     "Promo Code": "Promo Code",
     "items": "Items",
     "Completed": "Completed",
@@ -258,21 +263,37 @@
     "Order ID": "Order ID",
     "CancleOrder": "Cancel Order",
     "Call center": "Call center",
-  "Order Type": "Order Type",
-  "Delivery": "Delivery",
-  "Wallet": "Wallet",
-  "Cash":"Cash",
-  "Card":"Card",
-  "Profile": "Profile",
-  "My profile": "My Account",
-  "Change Password":"Change Password",
-  "changePhone":"Change Phone",
+    "Order Type": "Order Type",
+    "Delivery": "Delivery",
+    "Wallet": "Wallet",
+    "Cash": "Cash",
+    "Card": "Card",
+    "Profile": "Profile",
+    "My profile": "My Account",
+    "Change Password": "Change Password",
+    "changePhone": "Change Phone",
     "No favourites": "No favourites",
     "You dont have any items in your wishlist yet": "You don’t have any items in your wishlist yet",
-    "deleteFavDesc": "Are you sure you want to remove this item from your favourites?"
+    "deleteFavDesc": "Are you sure you want to remove this item from your favourites?",
+      "Shipping Address": "Shipping Address",
+    "Cancel Booking": "Cancel Booking",
+    "Call Center": "Call Center",
+    "Number of Persons": "Number of Persons",
+    "Date of booking": "Date of booking",
+    "Time of booking": "Time of booking",
+    "Select Your Reason": "Select Your Reason",
+    "Credit Card": "Credit Card",
+    "cancelOrdersDesc": "Are you sure you want to cancel this booking?",
+"Cancel Order": "Cancel Order",
+    "credit": "Credit"
   },
-
-   "LABELS": {
+  "LABELS": {
+    "other":" Other",
+    "Booking ID": "Booking ID",
+    "Booking Summary": "Booking Summary",
+    "Booking Confirmation Amount": "Booking Confirmation Amount",
+    "from": "From",
+    "to": "To",
     "My Account": "My Account",
     "order": "Order",
     "wishlist": "Wishlist",
@@ -280,23 +301,32 @@
     "loyalty Card": "Loyalty Card",
     "wallet": "Wallet",
     "faqs": "FAQs",
-    "address": "Address"  ,
+    "address": "Address",
     "no orders": "No Orders",
-    "name":"Name",
-    "email":"Email",
-    
-    "uploadingFile": "Uploading File"
+    "name": "Name",
+    "email": "Email",
+    "Completed": "Completed",
+    "In Progress": "In Progress",
+    "canceled": "Cancelled",
+    "uploadingFile": "Uploading File",
+    "successful": "Successful",
+    "The amount has been paid successfully": "The amount has been paid successfully"
   },
-  "faq":{
-    "title":"FAQs"
+  "faq": {
+    "title": "FAQs"
   },
-  "BUTTONS":{
-    "deleteAccount":"Delete Account",
-    "logout":"Logout",
-    "save":"Save",
+  "BUTTONS": {
+    "deleteAccount": "Delete Account",
+    "logout": "Logout",
+    "save": "Save",
     "noKeepMe": "No, keep it",
     "removeFav": "Remove favourite",
-    "yesRemove": "Yes, remove"
+    "yesRemove": "Yes, remove",
+    "deleteNotification": "Delete notification",
+    "yesDelete": "Yes, delete",
+       "pay now": "Pay Now",
+    "cancelReservation": "Cancel Reservation",
+    "yesCancel": "Yes, Cancel",
+    "Confirm": "Confirm"
   }
-
 }
