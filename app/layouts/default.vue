@@ -45,6 +45,9 @@ onMounted(async () => {
   await appAuth.getProfile();
   await appStore.getCmsPages();
   await appStore.getCarts();
+    if (appAuth.userData) {
+    await appStore.getNotifications();
+  }
   isOnline.value = window.navigator.onLine;
   window.addEventListener("online", () => {
     isOnline.value = true;
