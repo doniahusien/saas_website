@@ -9,6 +9,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
+      googleMapsApiKey: "AIzaSyA8qi0TK3EDod0LlTXbQFf_DyEptiGgPFU",
       baseURL: "https://saas.khlod.aait-d.com/front_brand/api/app/",
       general: "https://saas.khlod.aait-d.com/front_brand/api/",
     },

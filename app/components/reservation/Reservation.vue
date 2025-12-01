@@ -195,7 +195,7 @@
   <teleport to="body">
     <general-modal
       :persist="true"
-      classes="!w-full md:!max-w-[700px]"
+      classes="!w-full md:!max-w-200"
       titleClasses="!text-2xl"
       @close="cancelReasonModal = false"
       v-if="cancelReasonModal"

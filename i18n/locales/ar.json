@@ -210,6 +210,7 @@
     "addItems": "اضف منتجات لسلة"
   },
   "TITLES": {
+    "contact us": "تواصل معنا",
     "Cancel Order": "إلغاء الطلب",
     "cancellationReason": "سبب الإلغاء",
     "deleteNotificationsDesc": "هل أنت متأكد أنك تريد حذف هذا الإشعار؟",
@@ -283,6 +284,12 @@
     "points": "نقاط"
   },
   "LABELS": {
+   "complaint": "شكوى",
+    "suggestion": "اقتراح",
+    "inquiry": "استفسار",
+    "contatDesc":"يرجى ادخال رسالتك",
+    "enterYourMessage": "ادخل رسالتك",
+    "fullname":"الاسم الكامل",
     "other": "أخرى",
      "Booking ID": "رقم الحجز",
     "Booking Summary": "ملخص الحجز",
@@ -315,6 +322,7 @@
     "pay now": "ادفع الآن",
     "cancelReservation": "إلغاء الحجز",
     "yesCancel": "نعم، إلغاء",
-    "Confirm": "تأكيد"
+    "Confirm": "تأكيد",
+    "send message": "إرسال الرسالة"
   }
 }

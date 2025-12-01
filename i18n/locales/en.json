@@ -214,6 +214,7 @@
     "title": "My Orders"
   },
   "TITLES": {
+    "contact us":"Contact Us",
     "cancellationReason": "Cancellation Reason",
     "deleteNotificationsDesc": "Are you sure you want to delete this notification?",
     "notifications": "Notifications",
@@ -288,6 +289,13 @@
     "credit": "Credit"
   },
   "LABELS": {
+     "complaint": "Complaint",
+    "suggestion": "Suggestion",
+    "inquiry": "Inquiry",
+    "contatDesc":"Contact us through the following steps",
+    "enterYourMessage": "Enter your message",
+    "fullname": "Full Name",
+    "phone": "Phone",
     "other":" Other",
     "Booking ID": "Booking ID",
     "Booking Summary": "Booking Summary",
@@ -327,6 +335,7 @@
        "pay now": "Pay Now",
     "cancelReservation": "Cancel Reservation",
     "yesCancel": "Yes, Cancel",
-    "Confirm": "Confirm"
+    "Confirm": "Confirm",
+    "send message": "Send Message"
   }
 }

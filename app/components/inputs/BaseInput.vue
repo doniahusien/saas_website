@@ -25,7 +25,7 @@
           v-bind="field"
           :placeholder="placeholder"
           @input="$emit('update:value', $event.target.value)"
-          class="resize-none"
+          class="resize-none input h-40!"
           :rows="rows"
         ></textarea>
 

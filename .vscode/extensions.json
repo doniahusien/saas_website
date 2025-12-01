@@ -6,6 +6,7 @@
     "ms-vscode.vscode-typescript-next",
     "visualstudioexptteam.vscodeintellicode",
     "nuxtr.nuxtr-vscode",
-    "github.copilot-chat"
+    "github.copilot-chat",
+    "sdras.vue-vscode-snippets"
   ]
 }
