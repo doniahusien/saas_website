@@ -1,14 +1,17 @@
 <template>
-  <div class="space-y-14 py-20 bg-semi-white">
-    <Banner :bannerData="{ image: '/images/bg/order_bg.jpg', title: t('orders.title') }" />
+  <div class="space-y-14  bg-semi-white">
+    <Banner
+      :bannerData="{ image: '/images/bg/order_bg.jpg', title: t('orders.title') }"
+    />
 
-    <div class="container  mx-auto px-2 space-y-10">
-
-      <div class=" flex mx-auto w-full md:w-1/2 justify-center rounded-full bg-white p-2 text-sm md:gap-5 md:text-base">
+    <div class="container pb-10 mx-auto px-2 space-y-10">
+      <div
+        class="flex mx-auto w-full md:w-1/2 justify-center rounded-full bg-white p-2 text-sm md:gap-5 md:text-base"
+      >
         <NuxtLink
           v-for="item in items"
           :key="item.id"
-          :to="{ query: { status: item.status }}"
+          :to="{ query: { status: item.status } }"
           class="flex w-1/3 flex-wrap items-center justify-center gap-2 rounded-full border-semi-white text-placeholder px-2 py-3"
           :class="[$route.query.status == item.status ? 'bg-btn text-white' : '']"
         >
@@ -17,10 +20,10 @@
       </div>
 
       <div v-if="status === 'pending'" class="flex justify-center py-20">
-        <UISmallLoader/>
+        <UISmallLoader />
       </div>
 
-      <div v-else-if="orders.length" class="grid grid-cols-1 gap-6 md:grid-cols-2 ">
+      <div v-else-if="orders.length" class="grid grid-cols-1 gap-6 md:grid-cols-2">
         <OrderCard v-for="order in orders" :key="order.id" :item="order" />
       </div>
 
@@ -28,7 +31,7 @@
         {{ t("LABELS.no orders") }}
       </div>
 
- <UIPagination
+      <UIPagination
         v-if="meta.last_page > 1"
         :current-page="meta.current_page"
         :total-pages="meta.last_page"
@@ -41,6 +44,7 @@
 const { t } = useI18n();
 const route = useRoute();
 const { $api } = useNuxtApp();
+const pagination = ref(null);
 
 const orders = ref([]);
 const status = ref<"pending" | "success" | "error">("pending");
@@ -58,7 +62,7 @@ const items = [
 ];
 
 const fetchOrders = async (page = 1) => {
-  status.value = page === 1 ? "pending" : status.value; 
+  status.value = page === 1 ? "pending" : status.value;
   try {
     const res = await $api.get("orders-and-reservations", {
       params: {
@@ -67,11 +71,7 @@ const fetchOrders = async (page = 1) => {
       },
     });
 
-    if (page === 1) {
-      orders.value = res.data.data || [];
-    } else {
-      orders.value = [...orders.value, ...res.data.data];
-    }
+    orders.value = res.data.data || [];
 
     meta.value = res.data.meta;
     status.value = "success";
@@ -89,7 +89,7 @@ const changePage = (page: number) => {
 watch(
   () => route.query.status,
   () => {
-    changePage(1); 
+    changePage(1);
   }
 );
 

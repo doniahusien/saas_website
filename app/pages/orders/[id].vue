@@ -1,7 +1,9 @@
 <template>
   <div v-if="orderData" class="bg-semi-white">
-    <div class="px-18 w-full mx-auto bg-red-500 grid py-16 grid-cols-1 lg:grid-cols-2 grid-flow-col justify-between">
-      <div class="space-y-9">
+    <div
+      class="px-10 md:px-16 w-full grid py-18 grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-18 mx-auto"
+    >
+      <div class="space-y-9 lg:col-span-3">
         <UIStepper
           v-if="
             orderData.status != 'customer_cancel' && orderData.status != 'employee_cancel'
@@ -101,6 +103,24 @@
               </div>
             </div>
           </div>
+      <div
+      class="grid gap-x-4"
+      v-if="
+        orderData.cancel_reason?.desc &&
+        (orderData.status == 'customer_cancel' || orderData.status == 'employee_cancel')
+      "
+    >
+      <div class="space-y-2">
+        <h2 class="text-xl font-semibold capitalize">
+          {{ $t("TITLES.Cancellation reason") }}
+        </h2>
+        <div
+          class="flex h-20 flex-wrap items-center justify-between rounded-lg bg-website_white px-2 md:px-6"
+        >
+          <p class="font-medium">{{ orderData?.cancel_reason.desc }}</p>
+        </div>
+      </div>
+    </div>
         </div>
 
         <!--     <button
@@ -110,21 +130,54 @@
           </button> -->
       </div>
 
-      <div class="bg-white w-full md:w-140 rounded-2xl p-4 md:p-6 shadow-md border border-gray-100">
+      <div
+        class="w-full md:w-140 lg:col-span-2 rounded-2xl p-4 md:p-6 shadow-md border border-gray-100 mx-auto"
+      >
         <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
-          <h2 class="text-3xl font-bold text-gray-800">
+          <h2 class="text-xl lg:text-3xl font-bold text-gray-800">
             {{ $t("TITLES.Order ID") }}- {{ orderData.order_num }}
           </h2>
-          <button
+
+          <div
+            v-if="
+              orderData.status == 'customer_cancel' ||
+              orderData.status == 'employee_cancel' ||
+              orderData.status == 'cancel'
+            "
+            class="flex items-center gap-2 text-lg text-red-500 font-extrabold capitalize"
+          >
+            <Icon name="fluent:box-dismiss-20-regular" class="size-6" />
+
+            <p>{{ $t("LABELS.canceled") }}</p>
+          </div>
+          <div
+            class="flex items-center gap-2 text-lg font-semibold text-[#52B788]"
+            v-else-if="orderData.status == 'finished'"
+          >
+            <Icon name="fluent:box-checkmark-28-regular" />
+            {{ $t("TITLES.Completed") }}
+          </div>
+          <template v-else>
+            <button
+              @click="openCancelOrderModal = true"
+              class="text-lg text-error disabled:text-error disabled:opacity-20"
+              v-if="orderData.order_status[2]"
+              :disabled="!orderData.can_cancel"
+            >
+              {{ $t("TITLES.Cancel Order") }}
+            </button>
+          </template>
+
+          <!--    <button
             v-if="orderData.can_cancel"
-            @click="openCancelOrderModal = true"
+           
             class="text-red-500 hover:text-red-600 font-medium cursor-pointer transition"
           >
             {{ $t("TITLES.CancleOrder") }}
-          </button>
-          <p v-else class="text-red-300 font-medium">
+          </button> -->
+          <!--   <p v-else class="text-red-300 font-medium">
             {{ $t("TITLES.CancleOrder") }}
-          </p>
+          </p> -->
         </div>
 
         <div class="mb-6">
