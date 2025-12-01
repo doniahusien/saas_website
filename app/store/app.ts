@@ -16,7 +16,7 @@ export const useAppStore = defineStore("app", {
     cartCount: 0,
     availablePoints: 0,
     availableWallet: 0,
-    
+     unreadNotification: 0,
     product_fav: null,
     product_fav_status: null,
   }),
@@ -30,6 +30,18 @@ export const useAppStore = defineStore("app", {
     getAvailableWallet: (state) => state.availableWallet,
   },
   actions: {
+
+    async getNotifications() {
+      this.notificationsLoading = true;
+      const { $api } = useNuxtApp();
+      await $api.get("notifications").then((res) => {
+        this.notifications = res.data.data;
+        this.notifications.status = res.data.data.status || '';
+        this.unreadNotification = 0;
+        this.notificationsLoading = false;
+      });
+    },
+
     async getFavourites() {
       this.favLoading = true;
       const {$api} = useNuxtApp();

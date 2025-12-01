@@ -10,7 +10,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   const appStore = useAppStore()
   const branchCookie = useCookie<Branch | null>('selectedBranch')
   const storeId = computed(() => branchCookie.value?.id || null)
- /*  const sessionToken = computed(() => appAuth.isLoggedIn) */
+  //const sessionToken = computed(() => appAuth.isLoggedIn)
 
   const router = useRouter()
   const sessionToken = useCookie<string | null>('jwt_token_saas')
@@ -81,7 +81,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         useCookie('session_user_token').value = null
         useCookie('session_user_data').value = null
         useCookie('user_guest_token').value = null
-        router.push(localePath('/auth/login'))
+      /*   router.push(localePath('/auth/login')) */
         return Promise.reject({ statusCode: 401, message: 'Unauthorized' })
       }
 
