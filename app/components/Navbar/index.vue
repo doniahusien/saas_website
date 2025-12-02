@@ -160,21 +160,6 @@
       </div>
     </transition>
 
-    <!--    <teleport to="body">
-      <general-modal
-        @close="showReservation = false"
-        v-if="showReservation"
-        :persist="true"
-        classes=" !w-full md:!max-w-[950px] !pb-0 !min-h-[600px]"
-        titleClasses="!text-2xl !font-bold"
-        contentClass="!p-0 "
-        class="reserve-modal"
-      >
-        <Home  @close="showReservation = false" />
-      </general-modal>
-    </teleport>
- -->
-
     <teleport to="body">
       <general-modal
         @close="showReservation = false"
@@ -233,6 +218,45 @@
       </menus-side-menu>
     </teleport>
 
+<teleport to="body">
+      <profile-wallet-modal
+        :wallet="wallet"
+        :user-data="userData"
+        v-if="walletMenu"
+        @close="walletMenu = false"
+        @seeAllWalletTransactions="seeAllWalletTransactions"
+        :walletLoading="walletLoading"
+      />
+    </teleport>
+    
+    <teleport to="body">
+      <profile-loyalty-modal
+        v-if="loyaltyMenu"
+        @close="loyaltyMenu = false"
+        :loyalty="loyalty"
+        :user-data="userData"
+        @seeAllLoyaltyTransactions="seeAllLoyaltyTransactions"
+        :loyaltyLoading="loyaltyLoading"
+      />
+    </teleport>
+     <teleport to="body">
+      <profile-all-loyalty-transactions-modal
+        v-if="allLoyaltyTransactions"
+        @close="allLoyaltyTransactions = false"
+        :loyaltyTransactions="loyaltyTransactions"
+        :loyaltyTransactionsLoading="loyaltyTransactionsLoading"
+      />
+    </teleport>
+
+    <teleport to="body">
+      <profile-all-wallet-transactions-modal
+        v-if="allWalletTransactions"
+        @close="allWalletTransactions = false"
+        :walletTransactions="walletTransactions"
+        :walletTransactionsLoading="walletTransactionsLoading"
+      />
+    </teleport>
+
     <teleport to="body">
       <menus-side-menu v-if="profileMenu" @close="profileMenu = false">
         <profile-menu-modal
@@ -277,6 +301,8 @@ const route = useRoute();
 const isOpen = ref<boolean>(false);
 const showSelect = ref<boolean>(false);
 
+const userData = computed(() => appAuth.getUserData);
+
 const isLoggedIn = appAuth.isLoggedIn;
 
 const selectedBranch = useCookie<Branch | null>("selectedBranch");
@@ -312,6 +338,19 @@ const addresses = ref([]);
 const cmsPage = computed(() => {
   return appStore.getCmsData?.filter((item) => item.in_menu);
 });
+
+function closeAllMenus() {
+  addressMenu.value = false;
+  cartMenu.value = false;
+  wishlistMenu.value = false;
+  walletMenu.value = false;
+  loyaltyMenu.value = false;
+  profileMenu.value = false;
+  allLoyaltyTransactions.value = false;
+  allWalletTransactions.value = false;
+  notificationsMenu.value = false;
+}
+
 function notificationClick(id, item_id) {
   notificationsMenu.value = false;
   $api
@@ -419,6 +458,28 @@ function setData(values) {
   appStore.stores = values.branch;
   branchesMenu.value = false;
 }
+function openWalletMenu() {
+  closeAllMenus();
+  walletMenu.value = true;
+}
+
+function openLoyaltyMenu() {
+  closeAllMenus();
+  loyaltyMenu.value = true;
+}
+
+function seeAllLoyaltyTransactions() {
+  closeAllMenus();
+  getLoyaltyTransactions();
+  allLoyaltyTransactions.value = true;
+}
+
+function seeAllWalletTransactions() {
+  closeAllMenus();
+  getWalletTransactions();
+  allWalletTransactions.value = true;
+}
+
 
 const profileList = [
   {

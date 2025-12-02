@@ -3,16 +3,14 @@
     @close="emit('close')"
     :title="$t('TITLES.Cancelled Orders')"
     :persist="true"
-    classes=" !w-full md:!max-w-[650px] !pb-5 !min-h-[600px]"
+    classes=" !w-full bg-white md:!max-w-163 !pb-5 !min-h-160"
     titleClasses="!text-2xl !font-bold"
   >
     <loader v-if="walletTransactionsLoading" />
     <template v-else>
       <div
         v-if="walletTransactions.length > 0"
-        class="animated wow zoomIn space-y-4"
-        data-wow-duration="1.3s"
-        data-wow-delay="0s"
+        class=" zoomIn space-y-4"
       >
         <div v-for="item in walletTransactions" :key="item.id">
           <div class="flex justify-between">
@@ -21,14 +19,14 @@
                 <img
                   :src="item.image"
                   :alt="item.title"
-                  class="max-h-[82px] w-[82px] rounded-full object-cover"
+                  class="max-h-20 w-20 rounded-full object-cover"
                 />
               </div>
               <div class="flex flex-col justify-center">
-                <h3 class="text-[22px] font-medium">
+                <h3 class="text-2xl font-medium">
                   {{ $t("TITLES.Order ID") }} - {{ item.id }}
                 </h3>
-                <p class="text-third">
+                <p class="text-placeholder">
                   {{
                     new Date(item.created_at)
                       .toLocaleDateString("en-us", {
@@ -49,7 +47,7 @@
             <div class="flex flex-col justify-center">
               <p class="text-end text-2xl font-semibold">
                 {{ item.amount }}
-                <span class="mx-1 text-sm">{{ wallet.currency }}</span>
+                <span class="mx-1 text-sm">{{ wallet?.currency ||'LE' }}</span>
               </p>
             </div>
           </div>
@@ -65,6 +63,8 @@
 </template>
 
 <script setup>
+const {t}= useI18n()
+
 defineProps({
   walletTransactions: {
     required: true,

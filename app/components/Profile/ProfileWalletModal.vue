@@ -3,41 +3,37 @@
     @close="emit('close')"
     :hideHeader="true"
     :persist="true"
-    classes=" !w-full md:!max-w-[650px] !pb-5"
+    classes=" !w-full md:!max-w-163 !pb-5 bg-white"
     closeBtnClass="!justify-end"
   >
     <div
-      class="relative mx-auto h-[317px] w-full rounded-3xl bg-[url('@/assets/media/images/Card_Content.png')] object-cover text-website_white"
+      class="relative mx-auto h-80 w-full rounded-3xl bg-[url('/images/Card_Content.png')] object-cover text-white"
     >
       <h2
-        class="animated wow fadeInLeft p-8 text-3xl font-semibold capitalize"
-        data-wow-duration="1.3s"
-        data-wow-delay="0s"
+        class="fadeInLeft p-8 text-3xl font-semibold capitalize"
+
       >
         {{ userData.full_name }}
       </h2>
       <div
-        class="animated wow fadeInLeft absolute bottom-0 p-8"
-        data-wow-duration="1.3s"
-        data-wow-delay="0s"
+        class="fadeInLeft absolute bottom-0 p-8"
       >
-        <p class="text-secondary">{{ $t("TITLES.balance") }}</p>
+        <p class="text-placeholder">{{ $t("TITLES.balance") }}</p>
         <p>
-          <span class="text-[48px] font-bold">{{ wallet.balance }} </span>
-          <span class="mx-1 text-secondary">{{ wallet.currency }}</span>
+          <span class="text-lg font-bold">{{ wallet.balance }} </span>
+          <span class="mx-1 text-placeholder">{{ wallet.currency }}</span>
         </p>
       </div>
     </div>
     <div
-      class="animated wow fadeInLeft my-5 flex flex-wrap justify-between"
-      data-wow-duration="1.3s"
-      data-wow-delay="0s"
+      class=" zoomIn my-5 flex flex-wrap justify-between"
+     
     >
       <h3 class="text-2xl font-bold">
         {{ $t("TITLES.Cancelled Orders") }}
       </h3>
       <button
-        class="text-lg text-third"
+        class="text-lg text-placeholder cursor-pointer"
         type="button"
         @click="emit('seeAllWalletTransactions')"
       >
@@ -48,9 +44,7 @@
     <template v-else>
       <div
         v-if="wallet.transactions?.length > 0"
-        class="animated wow fadeInLeft space-y-4"
-        data-wow-duration="1.3s"
-        data-wow-delay="0s"
+        class=" zoomIn space-y-4"
       >
         <div v-for="item in wallet.transactions" :key="item.id">
           <div class="flex justify-between">
@@ -59,14 +53,14 @@
                 <img
                   :src="item.image"
                   :alt="item.title"
-                  class="max-h-[82px] w-[82px] rounded-full object-cover"
+                  class="max-h-20 w-20 rounded-full object-cover"
                 />
               </div>
               <div class="flex flex-col justify-center">
-                <h3 class="text-[22px] font-medium">
+                <h3 class="text-2xl font-medium">
                   {{ $t("TITLES.Order ID") }} - {{ item.id }}
                 </h3>
-                <p class="text-third">
+                <p class="text-placeholder">
                   {{
                     new Date(item.created_at)
                       .toLocaleDateString("en-us", {
@@ -103,6 +97,7 @@
 </template>
 
 <script setup>
+const {t}= useI18n()
 defineProps({
   wallet: {
     required: true,
