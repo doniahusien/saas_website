@@ -217,6 +217,10 @@
     "title":"Contact Us"
   },
   "TITLES": {
+    "Transaction History": "Transaction History",
+    "see all": "See All",
+    "Transaction ID": "Transaction ID",
+    "No transactions": "No Transactions",
     "contact us":"Contact Us",
     "cancellationReason": "Cancellation Reason",
     "deleteNotificationsDesc": "Are you sure you want to delete this notification?",
@@ -279,7 +283,7 @@
     "No favourites": "No favourites",
     "You dont have any items in your wishlist yet": "You don’t have any items in your wishlist yet",
     "deleteFavDesc": "Are you sure you want to remove this item from your favourites?",
-      "Shipping Address": "Shipping Address",
+    "Shipping Address": "Shipping Address",
     "Cancel Booking": "Cancel Booking",
     "Call Center": "Call Center",
     "Number of Persons": "Number of Persons",
@@ -288,10 +292,16 @@
     "Select Your Reason": "Select Your Reason",
     "Credit Card": "Credit Card",
     "cancelOrdersDesc": "Are you sure you want to cancel this booking?",
-"Cancel Order": "Cancel Order",
-    "credit": "Credit"
+    "Cancel Order": "Cancel Order",
+    "credit": "Credit",
+    "balance":"balance",
+    "Cancelled Orders":"Cancelled Orders",
+    "Transactions History":"Transactions History"
   },
   "LABELS": {
+     "Loyalty Card": "Loyalty Card",
+    "come_in": "Come In",
+    "come_out": "Come Out",
      "complaint": "Complaint",
     "suggestion": "Suggestion",
     "inquiry": "Inquiry",

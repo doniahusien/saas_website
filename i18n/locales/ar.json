@@ -210,6 +210,9 @@
     "addItems": "اضف منتجات لسلة"
   },
   "TITLES": {
+    "balance":"الرصيد",
+    "Cancelled Orders":"الطلبات الملغاة",
+    "Transactions History":"تاريخ المعاملات",
     "contact us": "تواصل معنا",
     "Cancel Order": "إلغاء الطلب",
     "cancellationReason": "سبب الإلغاء",
@@ -281,9 +284,16 @@
     "Credit Card": "بطاقة الائتمان",
     "cancelOrdersDesc": "هل أنت متأكد أنك تريد إلغاء هذا الحجز؟",
     "credit": "بطاقة",
-    "points": "نقاط"
+    "points": "نقاط",
+    "Transaction History": "سجل المعاملات",
+    "see all": "عرض الكل",
+    "Transaction ID": "رقم المعاملة",
+    "No transactions": "لا توجد معاملات"
   },
   "LABELS": {
+     "Loyalty Card": "بطاقة الولاء",
+    "come_in": "تمت إضافة النقاط",
+    "come_out": "تم خصم النقاط",
    "complaint": "شكوى",
     "suggestion": "اقتراح",
     "inquiry": "استفسار",
