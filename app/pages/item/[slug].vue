@@ -6,13 +6,14 @@
   <template v-else-if="status === 'success'">
     <div class="min-h-screen py-10 bg-gray-50">
       <div class="container mx-auto space-y-10 p-4 md:p-6">
-        <h2 class="text-2xl md:text-3xl font-bold">{{ $t("itemDetail") }}</h2>
+        <h2 class="text-2xl md:text-5xl font-bold">{{ $t("itemDetail") }}</h2>
 
         <ItemDetails
           :title="item?.name"
           :image="item?.image"
           :rating="item?.rating"
           :id="item?.id"
+          :price="item?.price"
           :description="
             item?.desc ||
             'Cooked with vegetables in a rich curry coconut sauce served with coconut rice...'
@@ -40,9 +41,6 @@
   </template>
 </template>
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
-import { useRoute, useNuxtApp, useCookie } from "#imports";
-
 const { t } = useI18n();
 const route = useRoute();
 const slug = route.params.slug as string;
@@ -69,7 +67,7 @@ onMounted(async () => {
     const homeRes = await $api.get<ApiResponse<HomeData>>("home");
     popularProducts.value = homeRes.data.data.popular_products || [];
 
-    const reviewRes = await $api.get<ApiResponse<ReviewsResponse>>(`products/1/reviews`);
+    const reviewRes = await $api.get<ApiResponse<ReviewsResponse>>(`products/${item.value?.id}/reviews`);
     reviews.value = reviewRes.data;
 
     distribution.value = (reviewRes.data.star_rate || []).map((s: any) => ({

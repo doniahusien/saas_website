@@ -3,7 +3,9 @@
     class="relative flex items-center justify-between px-8 md:px-16 py-5 bg-white shadow-sm"
   >
     <div class="flex items-center gap-8">
+    <NuxtLink :to="localePath('/')" class="flex items-center gap-3">  
       <NuxtImg src="/logo.png" alt="logo" class="size-18 object-contain" />
+      </NuxtLink>
       <ul class="hidden lg:flex flex-wrap gap-3 text-lg">
         <li v-for="item in items" :key="item.to">
           <NuxtLink
@@ -139,6 +141,11 @@
               {{ item.label }}
             </NuxtLink>
           </li>
+           <li>
+          <button class="cursor-pointer" @click="showReservation = true">
+            {{ $t("nav.reservation") }}
+          </button>
+        </li>
           <li v-for="page in cmsPage" :key="page.id">
             <NuxtLink :to="localePath(`/cms/${page.slug}`)">
               {{ page.title }}

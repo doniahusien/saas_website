@@ -1,16 +1,21 @@
 <template>
-  <div class="space-y-4">
+  <div class="space-y-8">
     <div class="relative">
       <NuxtImg
         :src="image"
         alt="food image"
-        class="w-full h-64 md:h-100 object-cover rounded-xl"
+        class="w-full h-64 md:h-140 object-cover rounded-2xl"
       />
     </div>
 
     <div class="flex items-center justify-between">
-      <h3 class="text-xl md:text-2xl font-semibold">{{ title }}</h3>
+      <h3 class="text-2xl md:text-5xl font-semibold">{{ title }}</h3>
       <div class="flex items-center gap-3 text-gray-500">
+       <Icon
+          name="lucide:share-2"
+          class="size-6 hover:text-blue-500 cursor-pointer"
+          @click="showShare = true"
+        />
         <button
           @click.stop="handleFav"
           class="cursor-pointer rounded-full flex items-center justify-center p-2 bg-gray-100 hover:bg-gray-200 transition"
@@ -21,37 +26,44 @@
             :class="{ 'text-red-500': localFav }"
           />
         </button>
-        <Icon
-          name="lucide:share-2"
-          class="size-6 hover:text-blue-500 cursor-pointer"
-          @click="showShare = true"
-        />
+       
       </div>
     </div>
 
-    <div class="flex items-center gap-2">
-      <div class="flex text-yellow-400">
-        <Icon name="lucide:star" class="fill-yellow-500 size-5" />
-        <Icon name="lucide:star" class="size-5" />
-        <Icon name="lucide:star" class="size-5" />
-        <Icon name="lucide:star" class="size-5" />
-        <Icon name="lucide:star-half" class="size-5" />
+      <div class="flex flex-wrap justify-between">
+      <div v-if="price?.offer">
+        <p class="font-medium text-black">
+          <span class="text-lg line-through">{{
+          price?.price || 0
+          }}</span
+          ><span class="mx-1 text-sm line-through">{{
+          price?.currency
+          }}</span>
+        </p>
+        <span class="text-3xl font-extrabold"
+          >{{ price?.price_after || 0 }}
+        </span>
+        <span class="mx-1 text-sm font-extrabold">
+          {{ price?.currency }}</span
+        >
       </div>
-      <p class="text-gray-700 font-medium">{{ rating }}</p>
+      <div v-else>
+        <h5 class="mb-1 text-lg font-semibold">
+          <span class="text-2xl font-semibold">{{
+            price?.price || 0
+          }}</span>
+          <span class="mx-1 text-sm font-semibold">{{
+            price?.currency
+          }}</span>
+        </h5>
+      </div>
     </div>
 
-    <p class="text-sm text-gray-500 leading-relaxed">
+    <p class="text-base text-gray-500 leading-relaxed">
       {{ description }}
     </p>
 
-    <div>
-      <label class="block text-gray-800 font-medium mb-2">{{ $t("Note") }}</label>
-      <textarea
-        :placeholder="$t('notePlaceholder')"
-        class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-        rows="3"
-      ></textarea>
-    </div>
+   
     <ModalShareModal v-model="showShare" />
   </div>
 </template>
@@ -70,7 +82,8 @@ const props=defineProps({
   },
   id: Number,
   isfav: Boolean,
-  favourite_id:Number
+  favourite_id:Number,
+  price: Object
 });
 
 

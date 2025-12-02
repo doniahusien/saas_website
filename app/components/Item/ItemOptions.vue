@@ -1,86 +1,89 @@
 <template>
-  <div class="p-6 space-y-8">
-    <div v-for="group in subModifiers" :key="group.id">
-      <h2 class="text-lg font-semibold text-gray-800 mb-4">
-        {{ group.name }}
-        <span class="text-sm text-amber-500 font-medium ml-2">
-          ({{ group.min_num_of_selection }} - {{ group.max_num_of_selection }})
-        </span>
-      </h2>
- 
-      <div v-if="group.selections_type === 'exact'" class="flex flex-wrap gap-4">
-        <button
-          v-for="item in group.item_modifiers"
-          :key="item.id"
-          @click="toggleExact(group, item.id)"
-          class='px-5 py-3 cursor-pointer rounded-xl text-sm font-medium border transition w-fit'
-           
-            :class="[ isSelected(group.id, item.id)
-              ? 'border-blue-500 text-blue-600 bg-blue-50'
-              : 'border-gray-200 text-gray-700 hover:border-blue-400',
-          ]"
-        >
-          {{ item.name }}
-          (+{{ item.price.price }} {{ item.price.currency }})
-        </button>
-      </div>
+  <div class=" space-y-8">
+    <div>
+      <label class="block text-gray-800 font-medium mb-2">{{ $t("Note") }}</label>
+      <textarea
+        :placeholder="$t('notePlaceholder')"
+        class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+        rows="3"
+         v-model="notes"
+      ></textarea>
+    </div>
 
-      <div
-        v-else-if="group.selections_type === 'min_max'"
-        class="grid grid-cols-1 md:grid-cols-2 gap-4"
-      >
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <div v-for="group in subModifiers" :key="group.id">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">
+          {{ group.name }}
+          <span class="text-sm text-amber-500 font-medium ml-2">
+            select {{ group.max_num_of_selection }} Topping
+          </span>
+        </h2>
+        <div v-if="group.selections_type === 'exact'" class="grid grid-cols-1 gap-4">
+          <button
+            v-for="item in group.item_modifiers"
+            :key="item.id"
+            @click="toggleExact(group, item.id)"
+            class="p-4 cursor-pointer rounded-xl text-sm text-start font-medium border transition w-full"
+            :class="[
+              isSelected(group.id, item.id)
+                ? 'border-blue-500 text-blue-600 bg-blue-50'
+                : 'border-gray-200 text-gray-700 hover:border-blue-400',
+            ]"
+          >
+            {{ item.name }}
+            (+{{ item.price.price }} {{ item.price.currency }})
+          </button>
+        </div>
+
         <div
-          v-for="item in group.item_modifiers"
-          :key="item.id"
-          class="flex items-center  justify-between border border-gray-200 rounded-xl p-4"
+          v-else-if="group.selections_type === 'min_max'"
+          class="grid grid-cols-1 gap-4"
         >
-          <div>
-            <p class="font-medium text-gray-800">
-              {{ item.name }} (+{{ item.price.price }} {{ item.price.currency }})
-            </p>
-          </div>
+          <div
+            v-for="item in group.item_modifiers"
+            :key="item.id"
+            class="flex items-center justify-between border border-gray-200 rounded-xl p-4"
+          >
+            <div>
+              <p class="font-bold text-gray-800">
+                {{ item.name }} (+{{ item.price.price }} {{ item.price.currency }})
+              </p>
+            </div>
 
-          <div class="flex items-center gap-2">
-            <button
-              class="cursor-pointer w-6 h-6 rounded-sm bg-gray-100 text-gray-600 text-sm"
-              @click="decreaseCount(group.id, item.id)"
-            >
-              −
-            </button>
-            <span class="text-gray-700 text-sm font-medium">
-              {{ getCount(group.id, item.id) }}
-            </span>
-            <button
-              class="cursor-pointer w-6 h-6 rounded-sm bg-btn text-white text-sm"
-              @click="increaseCount(group, item.id)"
-            >
-              +
-            </button>
+            <div class="flex items-center gap-2 font-bold">
+              <button
+                class="cursor-pointer size-8 rounded-sm bg-gray-100 text-gray-600 text-sm"
+                @click="decreaseCount(group.id, item.id)"
+              >
+                −
+              </button>
+              <span class="text-gray-700 font-extrabold text-sm ">
+                {{ getCount(group.id, item.id) }}
+              </span>
+              <button
+              :disabled="getCount(group.id, item.id) >= item.max_num_of_selection"
+                class="cursor-pointer size-8 rounded-sm bg-btn text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                @click="increaseCount(group, item.id)"
+              >
+                +
+              </button>
+            </div>
           </div>
         </div>
       </div>
-<!-- 
-      <p v-if="!isGroupValid(group)" class="text-red-500 text-sm mt-2">
-        {{
-          $t("productOptions.selectionWarning", {
-            min: group.min_num_of_selection,
-            max: group.max_num_of_selection,
-          })
-        }}
-      </p> -->
     </div>
 
     <div class="flex justify-end items-center gap-4 pt-4 border-t border-gray-100">
       <div class="flex items-center gap-2">
         <button
-          class="cursor-pointer w-7 h-7 rounded-sm bg-gray-100 text-gray-600 text-sm"
+          class="cursor-pointer size-10 rounded-sm bg-gray-100 text-gray-600 text-sm"
           @click="quantity = Math.max(1, quantity - 1)"
         >
           −
         </button>
-        <span class="text-gray-700 text-sm font-medium">{{ quantity }}</span>
+        <span class="text-gray-700 text-sm font-extrabold">{{ quantity }}</span>
         <button
-          class="cursor-pointer w-7 h-7 rounded-sm bg-btn text-white text-sm"
+          class="cursor-pointer size-10 rounded-sm bg-btn text-white text-sm"
           @click="quantity++"
         >
           +
@@ -88,13 +91,13 @@
       </div>
 
       <button
-        class="flex items-center justify-center gap-2 cursor-pointer bg-btn text-white font-semibold rounded-xl px-8 py-3 hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        class="flex items-center justify-center gap-2 cursor-pointer bg-btn text-white font-semibold rounded-xl px-10 md:px-26 py-4 hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
         :disabled="!allValid || addingToCart"
         @click="handleAddToCart"
       >
-        <Icon name="mdi:cart-outline" class="text-lg" />
+        <Icon name="lets-icons:bag-light" class="size-6" />
         {{ $t("productOptions.addToCart") }}
-        <span class="text-sm font-medium opacity-80">
+        <span class="text-sm font-bold opacity-80">
           {{ $t("productOptions.totalPrice", { price: totalPrice }) }}
         </span>
       </button>
@@ -112,11 +115,12 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-  productId:{
-    type:Number
-  }
+  productId: {
+    type: Number,
+  },
 });
-const {t} = useI18n();
+const notes = ref("");
+const { t } = useI18n();
 const appStore = useAppStore();
 const toast = useToast();
 const addingToCart = ref<boolean>(false);
@@ -199,7 +203,7 @@ const handleAddToCart = async () => {
 
   addingToCart.value = true;
 
-  const branchCookie = useCookie<Branch| null>("selectedBranch");
+  const branchCookie = useCookie<Branch | null>("selectedBranch");
   const storeId = branchCookie.value?.id;
 
   const userLocation = useCookie("userLocation").value;
@@ -218,12 +222,16 @@ const handleAddToCart = async () => {
 
   const payload: any = {
     store_id: storeId,
-    product_id:props.productId,
+    product_id: props.productId,
     quantity: quantity.value,
     sub_modifiers: sub_modifiers_payload,
     lat: userLocation?.lat,
     lng: userLocation?.lng,
   };
+  
+  if (notes.value.trim() !== "") {
+  payload.notes = notes.value.trim();
+}
 
   try {
     await appStore.addToCart(payload);
