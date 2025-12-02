@@ -26,22 +26,19 @@
 
 
 ::-webkit-scrollbar {
-  width: 2px; /* Set the width of the scrollbar */
+  width: 2px; 
 }
 
-/* Style the scrollbar track */
 ::-webkit-scrollbar-track {
   background-color: #f1f1f1;
   border-radius: 10px;
 }
 
-/* Style the scrollbar thumb (the draggable part) */
 ::-webkit-scrollbar-thumb {
   background-color: blue;
   border-radius: 10px;
 }
 
-/* Make the scrollbar appear on the left */
 .scrollable-left {
   direction: ltr; /* Scrollbar on the left */
   overflow-y: scroll; /* Enable scrolling */
@@ -94,6 +91,13 @@
   .default {
     @apply w-1/2 h-12 border border-light-gray rounded-md flex justify-between items-center gap-3 px-4 cursor-pointer bg-white;
   }
+  .reserve-modal .base-modal-content {
+  @apply bg-[url('/images/bg/reservation.png')] bg-cover bg-no-repeat;
+}
+
+.reserve-modal .top_header {
+  background-color: transparent !important;
+}
 }
 
 .input_wrapper.error select,

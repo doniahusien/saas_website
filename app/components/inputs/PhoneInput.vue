@@ -8,10 +8,10 @@
           @focus="isOpen = true"
           @blur="isOpen = false"
           :disabled="disabled"
-          class="appearance-none w-full bg-transparent border-b-2 pb-2 pr-8 font-medium focus:outline-none transition-all disabled:cursor-not-allowed disabled:opacity-60"
+          class="appearance-none w-full bg-transparent border-b-2 h-14 pb-2 pr-8 font-medium focus:outline-none transition-all disabled:cursor-not-allowed disabled:opacity-60"
           :class="[
             isRes ? 'placeholder:text-black' : 'input',
-            errorCode ? 'border-red-500' : 'border-placeholder',
+            errorCode ? 'border-red-500' : 'border-white',
             disabled ? 'text-gray-700' : 'text-black'
           ]"
         >
@@ -25,7 +25,7 @@
         </select>
 
         <span
-          class="pointer-events-none absolute right-2 top-5 text-gray-500"
+          class="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
           :class="{ 'opacity-50': disabled }"
         >
           <Icon :name="isOpen && !disabled ? 'fe:arrow-up' : 'fe:arrow-down'" />
@@ -42,10 +42,10 @@
           :placeholder="placeholder"
           :disabled="disabled"
           :readonly="disabled"
-          class="w-full bg-transparent border-b-2 font-medium focus:outline-none transition-all disabled:cursor-not-allowed disabled:opacity-60"
+          class="w-full bg-transparent border-b-2 h-14  font-medium focus:outline-none transition-all disabled:cursor-not-allowed disabled:opacity-60"
           :class="[
             isRes ? 'placeholder:text-black' : 'input',
-            errorPhone ? 'border-red-500' : 'border-placeholder',
+            errorPhone ? 'border-red-500' : 'border-white',
             disabled ? 'text-gray-700' : 'text-black'
           ]"
         />
@@ -56,7 +56,6 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, computed } from "vue";
 import { Field as VeeField, ErrorMessage as VeeErrorMessage } from "vee-validate";
 
 const props = defineProps({

@@ -14,6 +14,11 @@
             {{ item.label }}
           </NuxtLink>
         </li>
+        <li>
+          <button class="cursor-pointer" @click="showReservation = true">
+            {{ $t("nav.reservation") }}
+          </button>
+        </li>
         <li v-for="page in cmsPage" :key="page.id">
           <NuxtLink :to="localePath(`/cms/${page.slug}`)">
             {{ page.title }}
@@ -148,6 +153,34 @@
       </div>
     </transition>
 
+    <!--    <teleport to="body">
+      <general-modal
+        @close="showReservation = false"
+        v-if="showReservation"
+        :persist="true"
+        classes=" !w-full md:!max-w-[950px] !pb-0 !min-h-[600px]"
+        titleClasses="!text-2xl !font-bold"
+        contentClass="!p-0 "
+        class="reserve-modal"
+      >
+        <Home  @close="showReservation = false" />
+      </general-modal>
+    </teleport>
+ -->
+
+    <teleport to="body">
+      <general-modal
+        @close="showReservation = false"
+        v-if="showReservation"
+        :persist="true"
+        classes=" !w-full md:!max-w-250 !pb-0 !min-h-150"
+        titleClasses="!text-2xl !font-bold"
+        contentClass="!p-0 "
+        class="reserve-modal"
+      >
+        <GeneralBookForm @close="showReservation = false" />
+      </general-modal>
+    </teleport>
     <teleport to="body">
       <favourite-modal v-if="wishlistMenu" @close="wishlistMenu = false" />
     </teleport>
@@ -194,30 +227,27 @@
     </teleport>
 
     <teleport to="body">
-    <menus-side-menu
-    v-if="profileMenu"
-         @close="profileMenu = false">
-         
-      <profile-menu-modal
-        v-if="profileMenu"
-        :user-data="userData"
-        :deleteBtn="deleteBtn"
-        :profile-list="profileList"
-        :loyalty="loyalty"
-        :loyaltyLoading="loyaltyLoading"
-        :walletLoading="walletLoading"
-        :wallet="wallet"
-        :cms-page="cmsPage"
-        @close="profileMenu = false"
-        @openAddress="openAddress"
-        @openWishlist="openWishlist"
-        @openNotifications="notificationToggle = true"
-        @openLoyaltyMenu="openLoyaltyMenu"
-        @openWalletMenu="openWalletMenu"
-        @logout="logoutModal = true"
-        @deleteAccount="deleteModal = true"
-      />
-          </menus-side-menu>
+      <menus-side-menu v-if="profileMenu" @close="profileMenu = false">
+        <profile-menu-modal
+          v-if="profileMenu"
+          :user-data="userData"
+          :deleteBtn="deleteBtn"
+          :profile-list="profileList"
+          :loyalty="loyalty"
+          :loyaltyLoading="loyaltyLoading"
+          :walletLoading="walletLoading"
+          :wallet="wallet"
+          :cms-page="cmsPage"
+          @close="profileMenu = false"
+          @openAddress="openAddress"
+          @openWishlist="openWishlist"
+          @openNotifications="notificationToggle = true"
+          @openLoyaltyMenu="openLoyaltyMenu"
+          @openWalletMenu="openWalletMenu"
+          @logout="logoutModal = true"
+          @deleteAccount="deleteModal = true"
+        />
+      </menus-side-menu>
     </teleport>
   </nav>
 </template>
@@ -244,6 +274,7 @@ const isLoggedIn = appAuth.isLoggedIn;
 
 const selectedBranch = useCookie<Branch | null>("selectedBranch");
 const allStoresCookie = useCookie<string | null>("all_stores");
+const showReservation = ref(false);
 
 const smallNav = ref(false);
 const profileMenu = ref(false);
@@ -260,7 +291,6 @@ const logoutModal = ref(false);
 const allLoyaltyTransactions = ref(false);
 const allWalletTransactions = ref(false);
 const notificationToggle = ref(false);
-const showReservation = ref(false);
 const walletTransactionsLoading = ref(true);
 const loyaltyTransactionsLoading = ref(true);
 const loyaltyLoading = ref(true);
@@ -461,7 +491,6 @@ const isActive = (to: string) => route.path === to;
 
 const items = computed(() => [
   { label: t("nav.home"), to: localePath("/") },
-  { label: t("nav.reservation"), to: localePath("/reservation") },
   { label: t("nav.menu"), to: localePath("/menu") },
   { label: t("nav.contact"), to: localePath("/contact") },
 ]);
