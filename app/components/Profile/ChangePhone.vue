@@ -1,14 +1,14 @@
 <template>
-  <div class="text-end">
+  <div class="text-end ">
     <div class="mb-3 flex flex-wrap justify-end gap-2 text-lg font-semibold">
-      <button type="button" class="text-primary" @click="openPhone = true">
+      <button type="button" class="text-btn" @click="openPhone = true">
         {{ t("TITLES.change phone") }}
       </button>
     </div>
     <teleport to="body">
       <div class="relative">
         <general-modal
-          classes=" !w-full md:!max-w-[600px]"
+          classes=" !w-full md:!max-w-150 bg-white "
           :persist="true"
           v-if="openPhone"
           :title="t('TITLES.change phone')"
@@ -16,20 +16,19 @@
         >
           <VeeForm as="div" @submit="handleSubmit" :validation-schema="schema">
             {{ $t("LABELS.Entry new phone number") }}
-            <form class="w-100 mt-7" aria-autocomplete="none">
-              <base-phone
-                id="phone"
-                name="phone"
-                phone-code-name="phone_code"
-                :placeholder="
-                  $t('LABELS.enterYour', { name: $t('LABELS.phone') })
-                "
+            <form class="w-full mt-5" aria-autocomplete="none">
+              <inputsPhoneInput
+                codeName="phone_code"
+                phoneName="phone"
+                v-model:code="formValues.phone_code"
+                v-model:phone="formValues.phone"
+                :placeholder="$t('LABELS.enterYour', { name: $t('LABELS.phone') })"
               />
 
               <button
                 :disabled="loading"
                 type="submit"
-                class="base-btn ms-auto mt-7 w-fit py-3 2xl:mt-11"
+                class="base-btn ms-auto  w-fit py-3 mt-10"
               >
                 {{ $t("BUTTONS.confirm") }}
               </button>
@@ -43,6 +42,8 @@
         <general-modal
           :persist="true"
           v-if="openVerify"
+          classes=" !w-full md:!max-w-150 bg-white"
+
           :title="t('TITLES.verifyCode')"
           @close="resetData"
         >
@@ -63,20 +64,19 @@
 
           <VeeForm @submit="onSubmit">
             <div
-              class="input_wrapper otp_inputs mx-auto justify-between"
+              class="flex flex-col space-y-4 py-5"
               :class="!validation.valid && validation.touched ? 'error' : ''"
             >
-              <v-otp-input
-                ref="otpInput"
-                input-classes="otp-input"
-                separator=" "
-                v-model="verify_code"
-                :value="verify_code"
-                :num-inputs="4"
-                :should-auto-focus="true"
-                input-type="letter-numeric"
-                @on-change="handleOnChange"
-                @on-complete="handleOnComplete"
+              <UPinInput
+                v-model="code"
+                :length="4"
+                size="xl"
+                :ui="{
+                  base:
+                    'text-btn border border-placeholder bg-transparent md:m-1 w-full h-16 md:h-28',
+                  input:
+                    'text-center text-6xl rounded-lg h-full w-full bg-transparent focus:outline-none',
+                }"
               />
               <p class="mb-0 mt-2 text-sm text-error" v-if="errorMessage">
                 {{ errorMessage }}
@@ -98,14 +98,14 @@
                 </p>
                 <button
                   :disabled="seconds != 0 || minutes != 0"
-                  class="font-medium text-primary disabled:cursor-default disabled:!text-third"
+                  class="font-medium text-primary disabled:cursor-default disabled:text-placeholder"
                   type="button"
                   @click="resendCode"
                 >
                   {{ $t("BUTTONS.resend") }}
                 </button>
               </div>
-              <span class="font-medium text-primary">
+              <span class="font-medium text-placeholder">
                 <bdi>00:{{ seconds < 10 ? "0" : "" }}{{ seconds }}</bdi>
               </span>
             </div>
@@ -128,7 +128,6 @@
 import * as yup from "yup";
 import { configure } from "vee-validate";
 import { useToast } from "vue-toastification";
-import VOtpInput from "vue3-otp-input";
 import { useAppStore } from "~/store/app";
 const appStore = useAppStore();
 
@@ -151,6 +150,20 @@ const validation = reactive({
   touched: false,
 });
 
+const code = computed({
+  get: () => verify_code.value.split(""),
+  set: (val) => {
+    const v = Array.isArray(val) ? val.join("") : val || "";
+    verify_code.value = v;
+    handleOnChange(v);
+  },
+});
+
+const formValues = reactive({
+  phone: "",
+  phone_code: "",
+});
+
 configure({
   validateOnBlur: true,
   validateOnChange: true,
@@ -163,20 +176,9 @@ const { t } = useI18n();
 const schema = yup.object().shape({
   phone: yup
     .string()
-    .required(t("ERRORS.isRequired", { name: t("LABELS.phone") }))
-    .test((value, context) => {
-      let parent = context.parent.phone_code?.phone_limit;
-      if (value.length > parent || value.length < parent) {
-        return context.createError({
-          message: t("ERRORS.phoneLength", { value: parent }),
-          path: "phoneNumber",
-        });
-      } else {
-        return true;
-      }
-    }),
+    .required(t("ERRORS.isRequired", { name: t("LABELS.phone") })),
   phone_code: yup
-    .object()
+    .string()
     .required(t("ERRORS.isRequired", { name: t("LABELS.phoneCode") })),
 });
 
@@ -185,9 +187,8 @@ const emit = defineEmits(["reload"]);
 function handleSubmit(values) {
   loading.value = true;
 
-  values.phone_code = values.phone_code.phone_code;
-  axios
-    .post("profile/send_verification_code", values)
+  $api
+    .post("/profile/send_verification_code", values)
     .then((res) => {
       setTimeout(() => toast.success(res.data.message), 300);
       dataToVerify.value = values;
@@ -244,8 +245,8 @@ function onSubmit() {
   frmData.append("phone", dataToVerify.value.phone);
   frmData.append("verification_code", verify_code.value);
 
-  axios
-    .post("profile/update_phone", frmData)
+  $api
+    .post("/profile/update_phone", frmData)
     .then(() => {
       validation.touched = false;
       validation.valid = false;
@@ -269,8 +270,8 @@ function onSubmit() {
   validation.valid = true;
 }
 function resendCode() {
-  axios
-    .post("profile/send_verification_code", dataToVerify.value)
+  $api
+    .post("/profile/send_verification_code", dataToVerify.value)
     .then((res) => {
       setTimeout(() => toast.success(res.data.message), 300);
 

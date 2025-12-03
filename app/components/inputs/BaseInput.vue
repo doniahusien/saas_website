@@ -10,7 +10,7 @@
         :for="id"
         v-if="label"
         :class="labelClass"
-        class="label flex! gap-2 capitalize items-center"
+        class="label flex! gap-2 mb-1 capitalize items-center"
       >
         {{ label }}
         <span v-if="optional" class="text-sub">

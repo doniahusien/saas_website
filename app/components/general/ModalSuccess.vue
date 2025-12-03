@@ -4,15 +4,15 @@
     @click="close"
   >
     <div
-      class="success-modal-content w-full max-h-[650px] min-h-[250px] absolute -bottom-full overflow-y-auto rounded-2xl bg-[#fbfafc]"
+      class="success-modal-content w-full max-h-163 min-h-62 absolute -bottom-full overflow-y-auto rounded-2xl bg-[#fbfafc]"
     >
       <div
-        class="modalStyle p-5 overflow-x-hidden bg-website_white w-full text-center rounded-2xl"
+        class="modalStyle p-5 overflow-x-hidden bg-white w-full text-center rounded-2xl"
       >
         <img
-          src=""
+          src="/images/success.gif"
           alt="success"
-          class="w-[150px] h-[150px] m-auto"
+          class="size-37 m-auto"
         />
         <h3 class="font-semibold text-2xl">{{ $t("TITLES.Con-grates") }}</h3>
         <p class="text-black">{{ message }}</p>

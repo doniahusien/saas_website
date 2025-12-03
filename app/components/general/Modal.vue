@@ -9,7 +9,7 @@
       :class="classes"
       @click.stop
     >
-    <div class=" top_header! px-5 py-8" v-if="!hideHeader">
+    <div class=" top_header! px-5 py-5" v-if="!hideHeader">
       <div class="flex items-center justify-between gap-5" :class="closeBtnClass">
         <h3 v-if="title" class="text-lg font-semibold" :class="titleClasses">
           {{ title }}

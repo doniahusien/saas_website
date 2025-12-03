@@ -8,11 +8,11 @@
           @focus="isOpen = true"
           @blur="isOpen = false"
           :disabled="disabled"
-          class="appearance-none w-full bg-transparent border-b-2 h-14 pb-2 pr-8 font-medium focus:outline-none transition-all disabled:cursor-not-allowed disabled:opacity-60"
+          class="appearance-none w-full bg-transparent  h-14 pb-2 pr-8 font-medium focus:outline-none transition-all disabled:cursor-not-allowed "
           :class="[
-            isRes ? 'placeholder:text-black' : 'input',
-            errorCode ? 'border-red-500' : 'border-white',
-            disabled ? 'text-gray-700' : 'text-black'
+            isRes ? 'border-white placeholder:text-black' : 'input',
+            errorCode ? 'border-b-2 border-red-500' : ' border-placeholder',
+            disabled ? 'text-gray-700 border-b-2 border-placeholder' : 'text-black input'
           ]"
         >
           <option
@@ -42,11 +42,11 @@
           :placeholder="placeholder"
           :disabled="disabled"
           :readonly="disabled"
-          class="w-full bg-transparent border-b-2 h-14  font-medium focus:outline-none transition-all disabled:cursor-not-allowed disabled:opacity-60"
+          class="appearance-none w-full bg-transparent  h-14 pb-2 pr-8 font-medium focus:outline-none transition-all disabled:cursor-not-allowed "
           :class="[
-            isRes ? 'placeholder:text-black' : 'input',
-            errorPhone ? 'border-red-500' : 'border-white',
-            disabled ? 'text-gray-700' : 'text-black'
+            isRes ? 'border-b-2 border-white placeholder:text-black' : 'input',
+            errorCode ? 'border-b-2 border-red-500' : ' border-placeholder',
+            disabled ? 'text-gray-700 border-b-2 border-placeholder' : 'text-black input'
           ]"
         />
         <VeeErrorMessage :name="phoneName" class="absolute top-full left-0 text-red-500 text-xs mt-0.5 whitespace-nowrap" />
@@ -132,7 +132,8 @@ onMounted(async () => {
 <style scoped>
 input:disabled,
 select:disabled {
-  -webkit-text-fill-color: currentColor;
   background: transparent;
+  border-width:1px;
+  border-color: var(--color-placeholder);
 }
 </style>

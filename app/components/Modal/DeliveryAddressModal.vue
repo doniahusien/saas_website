@@ -4,135 +4,116 @@
       v-if="modelValue"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
     >
-      <div
-        v-if="showModal1 == true"
-        class="bg-light-white rounded-2xl flex flex-col overflow-hidden shadow-lg p-6 relative w-full md:w-1/3 h-120 mx-4"
-      >
+      <div class="relative bg-light-white flex h-120 w-full max-w-190 flex-col gap-4 overflow-hidden rounded-2xl p-5 shadow-lg">
         <button
           class="absolute top-8 right-6 text-black"
           @click="$emit('update:modelValue', false)"
         >
-          <Icon name="mdi:close" class="cursor-pointer w-6 h-6" />
+          <Icon name="mdi:close" class="size-6 cursor-pointer" />
         </button>
-        <h2 class="text-2xl font-bold mb-4">Delivery Address</h2>
-        <div class="space-y-4 bg-white">
-          <template v-if="loading">
-            <div class="p-4 text-center text-placeholder">Loading addresses...</div>
-          </template>
 
-          <template v-else-if="branches.length === 0">
-            <div class="p-4 text-center text-placeholder">No saved addresses.</div>
-          </template>
+          <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <h2 class="text-2xl font-bold">{{ t("TITLES.deliveryAddress") }}</h2>
+           
+          </div>
 
-          <template v-else>
-            <div
-              v-for="addr in branches"
-              :key="addr.id"
-              @click="selectAddress(addr)"
-              class="flex items-center gap-4 p-3 rounded-xl shadow-xs shadow-line cursor-pointer transition hover:bg-gray-50"
-              :class="
-                selected?.id === addr.id ? 'border-btn bg-btn/5' : 'border-gray-200'
-              "
-            >
-              <div
-                class="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center text-placeholder"
-              >
-                <Icon name="mdi:map-marker" class="w-6 h-6" />
-              </div>
-              <div class="flex-1">
-                <p class="font-semibold">
-                  {{ addr.title ?? addr.name ?? addr.type ?? "Address" }}
-                </p>
-                <p class="text-sm text-placeholder">
-                  {{ addr.location_description ?? addr.desc ?? addr.address ?? "" }}
-                </p>
-                <p
-                  v-if="addr.building || addr.floor || addr.apartment"
-                  class="text-xs text-placeholder mt-1"
-                >
-                  <span v-if="addr.building">Bld: {{ addr.building }}</span>
-                  <span v-if="addr.floor"> • Flr: {{ addr.floor }}</span>
-                  <span v-if="addr.apartment"> • Apt: {{ addr.apartment }}</span>
-                </p>
-              </div>
-              <div class="text-sm text-placeholder">
-                <Icon name="mynaui:edit-one" class="text-placeholder w-5 h-5" />
-                <Icon name="ei:trash" class="text-red-400 w-6 h-6 cursor-pointer" />
+     <div class="flex-1 flex flex-col overflow-hidden">
 
-                <input class="hidden" type="radio" :checked="selected?.id === addr.id" />
-              </div>
-            </div>
-          </template>
-        </div>
-
-        <div class="mt-auto">
-          <button
-            @click="switchToModal2"
-            class="w-full cursor-pointer bg-btn text-white gap-2 py-3 rounded-full font-semibold flex items-center justify-center"
-          >
-            Add New Address
-            <span class="w-4 h-4 flex justify-center items-center bg-white rounded-full"
-              ><Icon name="entypo:plus" class="w-3 h-3 text-btn"
-            /></span>
-          </button>
-        </div>
+  <div class="flex-1 overflow-y-auto pr-1">
+    <template v-if="loading">
+      <div class="rounded-xl border border-dashed border-line bg-white p-6 text-center text-placeholder">
+        {{ t("TITLES.loadingAddresses") }}
       </div>
+    </template>
 
-      <ModalAddAddresModal v-else @switch-back="switchToModal1" />
+    <template v-else-if="branches.length === 0">
+      <div class="rounded-xl border border-dashed border-line bg-white p-8 text-center text-placeholder">
+        {{ t("TITLES.noSavedAddresses") }}
+        <p class="mt-2 text-sm text-black">{{ t("TITLES.addAddressHint") }}</p>
+      </div>
+    </template>
+
+    <template v-else>
+      <div class="space-y-2">
+        <address-card
+          v-for="addr in branches"
+          :key="addr.id"
+          :item="addr"
+          :selected="selected?.id === addr.id"
+          :is-clickable="true"
+          @select="selectAddress"
+          @reload="handleReload"
+        />
+      </div>
+    </template>
+  </div>
+
+  <div class="pt-4 w-full">
+    <address-add-new :has-add-icon="true" @reload="handleReload" />
+  </div>
+</div>
+
+      </div>
     </div>
   </transition>
 </template>
 
 <script setup lang="ts">
 import { useToast } from "vue-toastification";
-const { t, locale } = useI18n();
-const showModal1 = ref(true);
-const showModal2 = ref(false);
-const branches = ref<any[]>([]);
-const loading = ref(false);
-const nuxtApp = useNuxtApp();
-const api = nuxtApp.$api;
-const toast = useToast();
-
-const switchToModal2 = () => {
-  showModal1.value = false;
-  showModal2.value = true;
-};
-const switchToModal1 = () => {
-  showModal2.value = false;
-  showModal1.value = true;
-};
 
 const props = defineProps({ modelValue: Boolean });
 const emit = defineEmits(["update:modelValue", "selectAddress"]);
 
+const { t } = useI18n();
+const toast = useToast();
+const nuxtApp = useNuxtApp();
+const api = nuxtApp.$api;
+
+const branches = ref<any[]>([]);
+const loading = ref(false);
 const selected = ref<any | null>(null);
+
+const syncSelected = () => {
+  if (!branches.value.length) {
+    selected.value = null;
+    return;
+  }
+  if (selected.value) {
+    const matched = branches.value.find((addr) => addr.id === selected.value?.id);
+    if (matched) {
+      selected.value = matched;
+      return;
+    }
+  }
+  selected.value = branches.value[0];
+};
 
 const loadAddresses = async () => {
   loading.value = true;
   try {
     const res = await api.get("/address");
     branches.value = res.data?.data ?? [];
-    // default-select the first address (do not emit/close modal)
-    if (branches.value.length > 0 && !selected.value) {
-      selected.value = branches.value[0];
-    }
+    syncSelected();
   } catch (e: any) {
-    toast.error(e?.message || "Failed to load addresses");
+    toast.error(e?.message || t("ERRORS.somethingWrong"));
   } finally {
     loading.value = false;
   }
 };
 
-onMounted(() => {
+const handleReload = () => {
   loadAddresses();
-});
+};
 
 const selectAddress = (address: any) => {
   selected.value = address;
   emit("selectAddress", address);
   emit("update:modelValue", false);
 };
+
+onMounted(() => {
+  loadAddresses();
+});
 </script>
 
 <style scoped>

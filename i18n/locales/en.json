@@ -217,6 +217,7 @@
     "title":"Contact Us"
   },
   "TITLES": {
+    "success": "Success",
     "Transaction History": "Transaction History",
     "see all": "See All",
     "Transaction ID": "Transaction ID",
@@ -242,6 +243,11 @@
     "no_stores_available": "No stores available",
     "typesOfOrder": "Types of Order",
     "yourShippingAddress": "Your Shipping Address",
+    "deliveryAddress": "Delivery Address",
+    "selectAddressDesc": "Choose your preferred delivery address",
+    "loadingAddresses": "Loading addresses...",
+    "noSavedAddresses": "No saved addresses.",
+    "addAddressHint": "Add a new address to continue.",
     "shippingAddressPlaceholder": "Shipping Address",
     "defaultAddress": "Abu Al Feda, Zamalek, Cairo Governorate 4271110",
     "branch": "Branch",
@@ -280,6 +286,9 @@
     "My profile": "My Account",
     "Change Password": "Change Password",
     "changePhone": "Change Phone",
+    "verificationMessage": "We have sent a verification code to your new phone number. Please enter it below to confirm the change.",
+    "editTheNumber": "Edit the number",
+    "ifYouDontReceiveCode": "If you don’t receive the code",
     "No favourites": "No favourites",
     "You dont have any items in your wishlist yet": "You don’t have any items in your wishlist yet",
     "deleteFavDesc": "Are you sure you want to remove this item from your favourites?",
@@ -296,20 +305,31 @@
     "credit": "Credit",
     "balance":"balance",
     "Cancelled Orders":"Cancelled Orders",
-    "Transactions History":"Transactions History"
+    "Transactions History":"Transactions History",
+    "Takeaway": "Takeaway",
+    "Points": "Points",
+    "change phone": "Change Phone",
+    "verifyCode": "Verify code",
+    "The phone has been successfully changed": "The phone has been successfully changed"
   },
   "LABELS": {
-     "Loyalty Card": "Loyalty Card",
+    "Default address": "Default address",
+    "title": "Title",
+    "buildingNo": "Building Number",
+    "floorNo": "Floor Number",
+    "apartment": "Apartment",
+    "enterYour": "Enter your {name}",
+    "Loyalty Card": "Loyalty Card",
     "come_in": "Come In",
     "come_out": "Come Out",
-     "complaint": "Complaint",
+    "complaint": "Complaint",
     "suggestion": "Suggestion",
     "inquiry": "Inquiry",
-    "contatDesc":"Contact us through the following steps",
+    "contatDesc": "Contact us through the following steps",
     "enterYourMessage": "Enter your message",
     "fullname": "Full Name",
     "phone": "Phone",
-    "other":" Other",
+    "other": " Other",
     "Booking ID": "Booking ID",
     "Booking Summary": "Booking Summary",
     "Booking Confirmation Amount": "Booking Confirmation Amount",
@@ -331,7 +351,14 @@
     "canceled": "Cancelled",
     "uploadingFile": "Uploading File",
     "successful": "Successful",
-    "The amount has been paid successfully": "The amount has been paid successfully"
+    "The amount has been paid successfully": "The amount has been paid successfully",
+    "Use your loyalty points": "Use your loyalty points",
+    "Use wallet balance": "Use wallet balance",
+    "Entry new phone number": "Enter new phone number",
+    "current password": "Current Password",
+    "new password": "New Password",
+    "confirmPassword": "Confirm Password",
+    "phoneCode": "Country code"
   },
   "faq": {
     "title": "FAQs"
@@ -349,6 +376,17 @@
     "cancelReservation": "Cancel Reservation",
     "yesCancel": "Yes, Cancel",
     "Confirm": "Confirm",
-    "send message": "Send Message"
+    "send message": "Send Message",
+     "addNewAddress": "Add New Address",
+    "editAddress": "Edit Address",
+    "confirm": "Confirm",
+    "resend": "Resend"
+  },
+    "ERRORS": {
+    "isRequired": "{name} is required",
+    "moreThan0": "{name} must be more than 0",
+    "somethingWrong": "Something went wrong. Please try again.",
+    "verificationCode": "Verification code must be 4 digits"
   }
+
 }

@@ -365,6 +365,7 @@ export const useAppStore = defineStore("app", {
 
       try {
         const res = await $api.post("carts", payload);
+        await this.getCarts(); // Refresh cart to update count
       } catch (error: any) {
         console.error("Error adding to cart:", error);
         toast.error(error?.response?.data?.message || "Failed to add to cart");
@@ -386,10 +387,12 @@ export const useAppStore = defineStore("app", {
         this.availablePoints = res.data.data?.points ?? 0;
         this.availableWallet = res.data.data?.wallet ?? 0;
 
-        /*   this.cartCount = products.reduce(
-            (sum: number, product: any) => sum + product.quantity,
-            0
-          ); */
+        // Calculate cart count from products array
+        const productsArray = Array.isArray(products) ? products : (products?.products ?? []);
+        this.cartCount = productsArray.reduce(
+          (sum: number, product: any) => sum + (product.quantity || 0),
+          0
+        );
 
       } catch (error) {
         console.error("Error fetching carts:", error);
