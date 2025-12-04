@@ -387,6 +387,9 @@
     "moreThan0": "{name} must be more than 0",
     "somethingWrong": "Something went wrong. Please try again.",
     "verificationCode": "Verification code must be 4 digits"
+  },
+  "FOOTER":{
+    "call center":"call center"
   }
 
 }

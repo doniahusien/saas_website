@@ -6,10 +6,10 @@
         :id="id"
         :placeholder="placeholder"
         :class="[
-          'w-full px-3 py-5 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary transition',
+          'input',
           meta.touched && meta.invalid
             ? 'border-red-500 focus:ring-red-500'
-            : 'border-gray-300 focus:ring-blue-500'
+            : 'input text-text-light'
         ]"
       >
         <option v-for="(opt, index) in options" :key="opt.id" :value="opt.id" :selected="index === 0">
@@ -22,7 +22,6 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
 import { useField } from 'vee-validate'
 
 const props = defineProps({
