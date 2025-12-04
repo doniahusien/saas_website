@@ -1,93 +1,90 @@
 <template>
-      <div class="text-center">
-        <p class="font-allura text-3xl md:text-5xl">
-          {{ $t("reservation.subtitle") }}
-        </p>
-        <h3 class="text-3xl md:text-5xl font-bold">
-          {{ $t("reservation.heading") }}
-        </h3>
+  <div class="text-center">
+    <p class="font-allura text-3xl md:text-5xl">
+      {{ $t("reservation.subtitle") }}
+    </p>
+    <h3 class="text-3xl md:text-5xl font-bold">
+      {{ $t("reservation.heading") }}
+    </h3>
+  </div>
+
+  <VeeForm
+    @submit="handleSubmit"
+    :validation-schema="schema"
+    class="space-y-16 mx-auto w-full md:w-2/3"
+  >
+    <template v-slot="{ errors }">
+      <div>
+        <VeeField
+          name="name"
+          type="text"
+          class="w-full font-medium placeholder:text-black pb-2.5 bg-transparent focus:outline-none border-b"
+          :class="errors.name ? 'border-red-500' : 'border-white'"
+          :placeholder="$t('reservation.namePlaceholder')"
+        />
+        <VeeErrorMessage name="name" class="text-red-500 text-sm mt-1" />
       </div>
 
-      <VeeForm @submit="handleSubmit" :validation-schema="schema" class="space-y-16 mx-auto w-full md:w-2/3 ">
-        <template v-slot="{ errors }">
-
-          <div>
-            <VeeField
-              name="name"
-              type="text"
-              class="w-full font-medium placeholder:text-black pb-2.5 bg-transparent focus:outline-none border-b"
-              :class="errors.name ? 'border-red-500' : 'border-white'"
-              :placeholder="$t('reservation.namePlaceholder')"
-            />
-            <VeeErrorMessage name="name" class="text-red-500 text-sm mt-1" />
-          </div>
-
-          <inputsPhoneInput
-            :isRes="true"
-            codeName="phone_code"
-            phoneName="phone"
-            :placeholder="t('auth.phone')"
-            v-model:code="phone_code"
-            v-model:phone="phone"
-            @country-selected="onCountrySelected"
-          />
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div>
-              <VeeField
-                name="persons"
-                type="text"
-                class="w-full font-medium placeholder:text-black pb-2.5 bg-transparent focus:outline-none border-b"
-                :class="errors.persons ? 'border-red-500' : 'border-white'"
-                :placeholder="$t('reservation.persons')"
-              />
-              <VeeErrorMessage name="persons" class="text-red-500 text-sm mt-1" />
-            </div>
-
-            <div>
-              <div
-                @click="openAddressModal = true"
-                :class="[
-                  'w-full font-medium placeholder:text-black pb-2.5 bg-transparent focus:outline-none border-b',
-                  errors.branch ? 'border-red-500' : 'border-white'
-                ]"
-              >
-                {{ selectedBranch?.name || $t("reservation.selectBranch") }}
-              </div>
-              <VeeErrorMessage name="branch" class="text-red-500 text-sm mt-1" />
-            </div>
-          </div>
-
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <inputsTimePicker name="timeTo" :placeholder="$t('reservation.timeTo')" />
-            <inputsTimePicker name="timeFrom" :placeholder="$t('reservation.timeFrom')" />
-          </div>
-
-          <div>
-            <inputsDatePicker name="date" :placeholder="$t('reservation.date')" />
-          </div>
-
-          <div class="flex justify-center md:justify-end">
-            <button
-              :disabled="btnLoading"
-              type="submit"
-              class="px-6 py-3 cursor-pointer bg-btn text-white rounded-full hover:bg-btn/80 transition disabled:opacity-60"
-            >
-              <span v-if="!btnLoading">{{ $t("reservation.submit") }}</span>
-              <span v-else>{{ $t("BUTTONS.loading") || "Loading..." }}</span>
-            </button>
-          </div>
-
-        </template>
-      </VeeForm>
-
-      <ModalAddressModal
-        v-model="openAddressModal"
-        @select="handleBranchSelect"
+      <inputsPhoneInput
+        :isRes="true"
+        codeName="phone_code"
+        phoneName="phone"
+        :placeholder="t('auth.phone')"
+        v-model:code="phone_code"
+        v-model:phone="phone"
+        @country-selected="onCountrySelected"
       />
-</template>
 
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div>
+          <VeeField
+            name="persons"
+            type="text"
+            class="w-full font-medium placeholder:text-black pb-2.5 bg-transparent focus:outline-none border-b"
+            :class="errors.persons ? 'border-red-500' : 'border-white'"
+            :placeholder="$t('reservation.persons')"
+          />
+          <VeeErrorMessage name="persons" class="text-red-500 text-sm mt-1" />
+        </div>
+
+        <div>
+          <div
+            @click="openAddressModal = true"
+            :class="[
+              'w-full font-medium placeholder:text-black pb-2.5 bg-transparent focus:outline-none border-b',
+              errors.branch ? 'border-red-500' : 'border-white',
+            ]"
+          >
+            {{ selectedBranch?.name || $t("reservation.selectBranch") }}
+          </div>
+          <VeeErrorMessage name="branch" class="text-red-500 text-sm mt-1" />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <inputsTimePicker name="timeFrom" :placeholder="$t('reservation.timeFrom')" />
+        <inputsTimePicker name="timeTo" :placeholder="$t('reservation.timeTo')" />
+      </div>
+
+      <div>
+        <inputsDatePicker name="date" :placeholder="$t('reservation.date')" />
+      </div>
+
+      <div class="flex justify-center md:justify-end">
+        <button
+          :disabled="primaryLoading"
+          type="submit"
+          class="px-7 py-4 text-lg cursor-pointer bg-primary text-white rounded-full hover:bg-white hover:text-primary hover:border hover:border-primary transition disabled:opacity-60"
+        >
+          <span v-if="!primaryLoading">{{ $t("reservation.submit") }}</span>
+          <span v-else>{{ $t("BUTTONS.loading") || "Loading..." }}</span>
+        </button>
+      </div>
+    </template>
+  </VeeForm>
+
+  <ModalAddressModal v-model="openAddressModal" @select="handleBranchSelect" />
+</template>
 
 <script setup lang="ts">
 import { object, string, date } from "yup";
@@ -102,7 +99,7 @@ const { $api } = useNuxtApp();
 const toast = useToast();
 const appAuth = useAppAuth();
 const userData = computed(() => appAuth.getUserData);
-const btnLoading = ref(false);
+const primaryLoading = ref(false);
 const phone_code = ref("");
 const phone = ref("");
 
@@ -202,7 +199,7 @@ const handleSubmit = async (values: any, actions: any) => {
     return;
   }
 
-  btnLoading.value = true;
+  primaryLoading.value = true;
   const SUBMITDATA = new FormData();
   SUBMITDATA.append("name", values.name);
   SUBMITDATA.append("phone", values.phone);
@@ -224,7 +221,7 @@ const handleSubmit = async (values: any, actions: any) => {
     const res = await createReservation(SUBMITDATA);
     console.log("Raw timeFrom:", values.timeFrom);
     console.log("Raw timeTo:", values.timeTo);
-    btnLoading.value = false;
+    primaryLoading.value = false;
     reservationId.value = res.data?.data?.id;
     actions.resetForm();
     selectedBranch.value = null;
@@ -232,7 +229,7 @@ const handleSubmit = async (values: any, actions: any) => {
     toast.success(res.data?.message || "Reservation created");
     openSuccessModal.value = true;
   } catch (err: any) {
-    btnLoading.value = false;
+    primaryLoading.value = false;
     actions.resetForm();
     selectedBranch.value = null;
     toast.error(err.message || "Request failed", {

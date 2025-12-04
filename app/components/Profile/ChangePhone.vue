@@ -1,7 +1,7 @@
 <template>
   <div class="text-end ">
     <div class="mb-3 flex flex-wrap justify-end gap-2 text-lg font-semibold">
-      <button type="button" class="text-btn" @click="openPhone = true">
+      <button type="button" class="text-primary" @click="openPhone = true">
         {{ t("TITLES.change phone") }}
       </button>
     </div>
@@ -73,7 +73,7 @@
                 size="xl"
                 :ui="{
                   base:
-                    'text-btn border border-placeholder bg-transparent md:m-1 w-full h-16 md:h-28',
+                    'text-primary border border-placeholder bg-transparent md:m-1 w-full h-16 md:h-28',
                   input:
                     'text-center text-6xl rounded-lg h-full w-full bg-transparent focus:outline-none',
                 }"

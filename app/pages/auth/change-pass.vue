@@ -24,7 +24,7 @@
     <button
       :disabled="loading"
       type="submit"
-      class="bg-btn cursor-pointer text-white text-base md:text-lg w-full  rounded-full p-4 disabled:opacity-50"
+      class="bg-primary cursor-pointer text-white text-base md:text-lg w-full  rounded-full p-4 disabled:opacity-50"
     >
       <span v-if="!loading">{{ t("auth.confirm") }}</span>
       <span v-else>...</span>

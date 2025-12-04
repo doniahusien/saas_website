@@ -69,7 +69,7 @@
         <div class="mt-4">
           <button
             @click="saveAddress"
-            class="w-full cursor-pointer bg-btn text-white gap-2 py-3 rounded-full font-semibold flex items-center justify-center"
+            class="w-full cursor-pointer bg-primary text-white gap-2 py-3 rounded-full font-semibold flex items-center justify-center"
           >
             Save
           </button>

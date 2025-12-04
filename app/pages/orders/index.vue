@@ -13,7 +13,7 @@
           :key="item.id"
           :to="{ query: { status: item.status } }"
           class="flex w-1/3 flex-wrap items-center justify-center gap-2 rounded-full border-semi-white text-placeholder px-2 py-3"
-          :class="[currentStatus == item.status ? 'bg-btn text-white' : '']"
+          :class="[currentStatus == item.status ? 'bg-primary text-white' : '']"
         >
           <h3 class="font-semibold">{{ item.name }}</h3>
         </NuxtLink>

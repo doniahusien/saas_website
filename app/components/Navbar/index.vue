@@ -10,8 +10,8 @@
         <li v-for="item in items" :key="item.to">
           <NuxtLink
             :to="item.to"
-            class="hover:text-btn transition-colors"
-            :class="[isActive(item.to) ? 'text-btn' : '']"
+            class="hover:text-primary transition-colors"
+            :class="[isActive(item.to) ? 'text-primary' : '']"
           >
             {{ item.label }}
           </NuxtLink>
@@ -30,7 +30,7 @@
     </div>
 
     <div class="flex items-center gap-4">
-      <ul class="text-btn flex justify-center items-center gap-3">
+      <ul class="text-primary flex justify-center items-center gap-3">
         <button class="icon" @click.stop="openWishlist">
           <Icon name="solar:heart-linear" class="size-7" />
         </button>
@@ -39,7 +39,7 @@
     <Icon name="solar:bag-5-outline" class="size-7" />
     <span
       v-if="cartCount > 0"
-      class="absolute -top-1 -right-1 bg-btn text-white text-xs font-bold rounded-full size-4 flex items-center justify-center px-1"
+      class="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full size-4 flex items-center justify-center px-1"
     >
       {{ cartCount > 99 ? '99+' : cartCount }}
     </span>
@@ -63,7 +63,7 @@
 
       <button
         @click="showSelect = true"
-        class="hidden cursor-pointer me-5 lg:flex text-left items-center gap-3 bg-white"
+        class="hidden cursor-pointer lg:flex text-left items-center gap-3 bg-white"
       >
         <NuxtImg
           v-if="selectedBranch?.image"
@@ -91,14 +91,14 @@
         <span>{{ t("TITLES.log in") }}</span>
       </NuxtLink>
 
-      <NuxtLink :to="switchPath" class="hidden lg:flex items-center text-btn">
+      <NuxtLink :to="switchPath" class="hidden lg:flex items-center text-primary">
         <Icon name="fluent:globe-48-filled" class="size-5" />
         <span> {{ t(`locale.${locale}`) }}</span>
       </NuxtLink>
 
       <button
         @click="toggle"
-        class="cursor-pointer text-btn lg:hidden flex items-center justify-center size-10 rounded focus:outline-none z-60"
+        class="cursor-pointer text-primary lg:hidden flex items-center justify-center size-10 rounded focus:outline-none z-60"
       >
         <span v-if="!isOpen" class="text-3xl">
           <Icon name="fe:bar" />
@@ -138,13 +138,13 @@
         <NuxtLink
           v-if="!isLoggedIn"
           :to="localePath('/auth/login')"
-          class="base-btn flex items-center gap-2"
+          class="base-primary flex items-center gap-2"
         >
           <Icon name="flowbite:arrow-left-to-bracket-outline" class="text-2xl" />
           <span>{{ t("TITLES.log in") }}</span>
         </NuxtLink>
         <ul class="flex flex-col text-base gap-4">
-          <li v-for="item in items" :key="item.to" class="hover:text-btn transition">
+          <li v-for="item in items" :key="item.to" class="hover:text-primary transition">
             <NuxtLink :to="item.to" @click="isOpen = false">
               {{ item.label }}
             </NuxtLink>
@@ -161,7 +161,7 @@
           </li>
         </ul>
 
-        <NuxtLink :to="switchPath" class="flex items-center text-btn">
+        <NuxtLink :to="switchPath" class="flex items-center text-primary">
           <Icon name="fluent:globe-48-filled" class="size-5" />
           <span> {{ t(`locale.${locale}`) }}</span>
         </NuxtLink>
@@ -270,7 +270,7 @@
         <profile-menu-modal
           v-if="profileMenu"
           :user-data="userData"
-          :deleteBtn="deleteBtn"
+          :deleteprimary="deleteprimary"
           :profile-list="profileList"
           :loyalty="loyalty"
           :loyaltyLoading="loyaltyLoading"
@@ -331,7 +331,7 @@ const branchesMenu = ref(false);
 const walletMenu = ref(false);
 const loyaltyMenu = ref(false);
 const deleteModal = ref(false);
-const deleteBtn = ref(false);
+const deleteprimary = ref(false);
 const logoutModal = ref(false);
 const allLoyaltyTransactions = ref(false);
 const allWalletTransactions = ref(false);
@@ -537,7 +537,7 @@ const profileList = [
 ];
 
 function deleteAccount() {
-  deleteBtn.value = true;
+  deleteprimary.value = true;
   $api
     .post("/setting/delete_account")
     .then(() => {
@@ -548,12 +548,12 @@ function deleteAccount() {
       appAuth.userData = null;
       setTimeout(() => {
         deleteModal.value = false;
-        deleteBtn.value = false;
+        deleteprimary.value = false;
         reloadNuxtApp();
       }, 300);
     })
     .catch((e) => {
-      deleteBtn.value = false;
+      deleteprimary.value = false;
 
       toast.error(e.response.data.message);
     });

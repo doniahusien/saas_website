@@ -16,8 +16,8 @@
         :value="value"
         v-model="model"
       />
-      <div class="size-5 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center transition-colors peer-checked:border-btn peer-checked:bg-btn/10 peer-focus:ring-2 peer-focus:ring-btn">
-        <span class="size-2 rounded-full bg-btn transform scale-0 transition-transform peer-checked:scale-100"></span>
+      <div class="size-5 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center transition-colors peer-checked:border-primary peer-checked:bg-primary/10 peer-focus:ring-2 peer-focus:ring-primary">
+        <span class="size-2 rounded-full bg-primary transform scale-0 transition-transform peer-checked:scale-100"></span>
       </div>
     </div>
   </label>

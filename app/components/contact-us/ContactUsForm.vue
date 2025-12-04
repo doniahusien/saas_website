@@ -55,7 +55,7 @@
           v-if="appStore.settingsData"
         >
           <div
-            class="phoneContainer flex min-h-17.5 rounded-2xl bg-btn p-3 transition-all duration-500 ease-in hover:ps-8">
+            class="phoneContainer flex min-h-17.5 rounded-2xl bg-primary p-3 transition-all duration-500 ease-in hover:ps-8">
             <div
               class="hidden w-50 ps-2 text-white transition-all duration-500 ease-in"
             >
@@ -85,7 +85,7 @@
               class="flex size-12 items-center justify-center rounded-full bg-white"
             >
               <div class="strokeColor">
-                <Icon name="mdi:phone" class="size-7 text-btn" />
+                <Icon name="mdi:phone" class="size-7 text-primary" />
               </div>
             </div>
           </div>

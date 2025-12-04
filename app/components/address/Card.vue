@@ -4,7 +4,7 @@
       class="flex flex-wrap items-start gap-2 rounded-xl border p-7 transition"
       :class="[
         isClickable ? 'cursor-pointer' : '',
-        selected ? 'border-btn bg-btn/5' : 'border-gray-200'
+        selected ? 'border-primary bg-primary/5' : 'border-gray-200'
       ]"
       @click="handleSelection"
     >

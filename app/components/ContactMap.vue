@@ -29,7 +29,7 @@
           <button
             @click="getCurrentLocation"
             :disabled="loadingLocation"
-            class="mt-2 inline-flex items-center px-3 py-1.5 bg-btn text-white rounded-md text-sm disabled:opacity-60"
+            class="mt-2 inline-flex items-center px-3 py-1.5 bg-primary text-white rounded-md text-sm disabled:opacity-60"
           >
             <span v-if="!loadingLocation">Use my location</span>
             <span v-else>Locating...</span>

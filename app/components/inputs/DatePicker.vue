@@ -88,7 +88,7 @@ const { value: internalValue } = useField(props.name);
 }
 
 .datepicker-checkout :deep(.dp__input:focus) {
-  border-color: var(--color-btn, #a9743f);
+  border-color: var(--color-primary, #a9743f);
   box-shadow: 0 0 0 3px rgba(169, 116, 63, 0.15);
 }
 

@@ -12,8 +12,8 @@
           <div
             class="size-4 md:size-6 rounded-full flex items-center justify-center transition-all z-20 shrink-0"
             :class="{
-              'bg-btn text-white scale-110': status.status === 'done' ,
-              'bg-btn text-white': status.status === 'in_progress',
+              'bg-primary text-white scale-110': status.status === 'done' ,
+              'bg-primary text-white': status.status === 'in_progress',
               'bg-gray-200 ': status.status == 'waiting'
             }"
           >
@@ -23,7 +23,7 @@
             v-if="index < orderData.order_status.length - 1"
             class="absolute top-1/2 start-1/2 w-full -translate-y-1/2 z-10 h-0.5 px-2 rounded-full"
             :class="{
-              'bg-btn': status.status === 'done' || status.status === 'in_progress',
+              'bg-primary': status.status === 'done' || status.status === 'in_progress',
               'bg-gray-200': status.status == 'waiting'
             }"
           ></div>
@@ -35,7 +35,7 @@
           <span
             class="text-lg font-medium whitespace-nowrap"
             :class="{
-              'text-btn ': status.status === 'in_progress' || status.status === 'done',
+              'text-primary ': status.status === 'in_progress' || status.status === 'done',
               'text-gray-200': status.status == 'waiting'
             }"
           >

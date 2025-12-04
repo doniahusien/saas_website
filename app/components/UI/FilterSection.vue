@@ -118,7 +118,7 @@ onMounted(() => {
           variant="solid"
           :ui="{
             base:
-              'bg-light-gray text-btn flex items-center justify-center text-center gap-1 rounded-full text-base font-medium px-3 py-2',
+              'bg-light-gray text-primary flex items-center justify-center text-center gap-1 rounded-full text-base font-medium px-3 py-2',
           }"
         >
           {{ filter }}
@@ -136,7 +136,7 @@ onMounted(() => {
             :key="cat.id"
             :variant="selectedMain === cat.id ? 'solid' : 'outline'"
             class="cursor-pointer justify-center ring-0 focus:ring-0 border border-placeholder text-placeholder"
-            :class="selectedMain === cat.id ? 'bg-btn text-white' : ''"
+            :class="selectedMain === cat.id ? 'bg-primary text-white' : ''"
             @click="selectMain(cat)"
           >
             {{ cat.name }}
@@ -152,7 +152,7 @@ onMounted(() => {
             :key="sub.id"
             :variant="selectedSub === sub.id ? 'solid' : 'outline'"
             class="cursor-pointer justify-center ring-0 focus:ring-0 border border-placeholder text-placeholder"
-            :class="selectedSub === sub.id ? 'bg-btn text-white' : ' bg-white'"
+            :class="selectedSub === sub.id ? 'bg-primary text-white' : ' bg-white'"
             @click="selectSub(sub)"
           >
             {{ sub.name }}
@@ -164,7 +164,7 @@ onMounted(() => {
     <div class="mt-32">
       <button
         @click="applyFilters"
-        class="cursor-pointer w-full py-3 bg-btn text-white rounded-full font-semibold text-sm"
+        class="cursor-pointer w-full py-3 bg-primary text-white rounded-full font-semibold text-sm"
       >
         {{ t("filter.apply") }}
       </button>

@@ -6,7 +6,7 @@
         :id="id"
         :placeholder="placeholder"
         :class="[
-          'w-full px-3 py-5 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn transition',
+          'w-full px-3 py-5 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary transition',
           meta.touched && meta.invalid
             ? 'border-red-500 focus:ring-red-500'
             : 'border-gray-300 focus:ring-blue-500'

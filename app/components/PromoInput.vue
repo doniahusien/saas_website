@@ -12,7 +12,7 @@
       class="text-sm text-subtitle w-full outline-none pl-10 pr-20"
     />
 
-    <button class="absolute right-4 text-btn text-sm font-semibold">
+    <button class="absolute right-4 text-primary text-sm font-semibold">
       Apply
     </button>
 

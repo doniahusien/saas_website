@@ -18,7 +18,7 @@
       </div>
       <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div
-          class="bg-btn text-white text-center rounded-full size-32 flex flex-col items-center justify-center font-medium text-sm md:text-base shadow-lg pointer-events-auto cursor-pointer hover:bg-blue-700 transition"
+          class="bg-primary text-white text-center rounded-full size-32 flex flex-col items-center justify-center font-medium text-sm md:text-base shadow-lg pointer-events-auto cursor-pointer hover:bg-blue-700 transition"
         >
           <NuxtLink
             to="https://www.instagram.com"

@@ -25,7 +25,7 @@
             @click="selectBranch(branch)"
             class="flex items-center gap-4 p-3 rounded-xl border cursor-pointer transition hover:bg-gray-50"
             :class="
-              selected?.id === branch.id ? 'border-btn bg-btn/5' : 'border-gray-200'
+              selected?.id === branch.id ? 'border-primary bg-primary/5' : 'border-gray-200'
             "
           >
             <NuxtImg
@@ -41,7 +41,7 @@
               type="radio"
               name="branch"
               :checked="selected?.id === branch.id"
-              class="accent-btn"
+              class="accent-primary"
             />
           </div>
         </div>
@@ -49,7 +49,7 @@
         <div class="flex mt-auto">
           <button
             @click="confirm"
-            class="w-full py-3 cursor-pointer  bg-btn text-white font-semibold rounded-full hover:bg-btn/80 transition flex items-center justify-center gap-2"
+            class="w-full py-3 cursor-pointer  bg-primary text-white font-semibold rounded-full hover:bg-primary/80 transition flex items-center justify-center gap-2"
           >
             {{ t("reservation.confirmBranch") }}
           </button>

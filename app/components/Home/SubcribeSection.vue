@@ -1,37 +1,36 @@
 <template>
   <section class="container mx-auto px-6 md:px-0">
     <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
-      <div class="flex justify-center">
-        <div class="w-full md:w-4/5 lg:w-3/4 aspect-4/5">
-          <NuxtImg
-            :src="subscriptionContent.image"
-            alt="subscription image"
-            class="object-cover w-full h-full rounded-full shadow-md"
-          />
-        </div>
+      <div class="w-140 me-auto">
+        <NuxtImg
+          :src="subscriptionContent.image"
+          alt="subscription image"
+          class="object-cover w-full h-full shadow-md"
+        />
       </div>
       <div class="space-y-8 mt-10 md:mt-0">
-        <div
+        <!--   <div
           v-html="subscriptionContent.title"
           class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
-        ></div>
+        ></div> -->
 
+        <h3 class="max-w-100 text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">Subcribe To Our Newsletter</h3>
         <div
           v-html="subscriptionContent.desc"
-          class="text-base md:text-lg text-subtitle"
+          class="text-base md:text-lg text-text-ligh"
         ></div>
 
         <VeeForm
           @submit="handleSubmit"
           :validation-schema="schema"
-          class="grid grid-cols-1 md:grid-cols-3 gap-4"
+          class="grid grid-cols-1 md:grid-cols-3 gap-4 rounded-full bg-website-white"
         >
           <div class="col-span-2">
             <VeeField
               name="email"
               type="email"
               :placeholder="$t('subscription.placeholder')"
-              class="w-full px-5 py-3 rounded-full border border-secondary bg-white/80 text-subtitle focus:ring-2 focus:ring-btn focus:outline-none"
+              class="rounded-full border border-line bg-website-white text-text focus:outline-none px-3 py-6 w-full"
             />
             <VeeErrorMessage
               name="email"
@@ -41,7 +40,7 @@
 
           <button
             type="submit"
-            class="w-full cursor-pointer rounded-full px-3 md:px-8 py-3 font-medium text-white bg-btn hover:opacity-90 transition"
+            class="w-40 cursor-pointer rounded-full p-4 font-medium text-website-white bg-primary hover:opacity-90 transition ms-auto"
           >
             {{ $t("subscription.cta") }}
           </button>

@@ -62,7 +62,7 @@
               </span>
               <button
               :disabled="getCount(group.id, item.id) >= item.max_num_of_selection"
-                class="cursor-pointer size-8 rounded-sm bg-btn text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                class="cursor-pointer size-8 rounded-sm bg-primary text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 @click="increaseCount(group, item.id)"
               >
                 +
@@ -83,7 +83,7 @@
         </button>
         <span class="text-gray-700 text-sm font-extrabold">{{ quantity }}</span>
         <button
-          class="cursor-pointer size-10 rounded-sm bg-btn text-white text-sm"
+          class="cursor-pointer size-10 rounded-sm bg-primary text-white text-sm"
           @click="quantity++"
         >
           +
@@ -91,7 +91,7 @@
       </div>
 
       <button
-        class="flex items-center justify-center gap-2 cursor-pointer bg-btn text-white font-semibold rounded-xl px-10 md:px-26 py-4 hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        class="flex items-center justify-center gap-2 cursor-pointer bg-primary text-white font-semibold rounded-xl px-10 md:px-26 py-4 hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
         :disabled="!allValid || addingToCart"
         @click="handleAddToCart"
       >

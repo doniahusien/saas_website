@@ -114,7 +114,7 @@
         </div>
 
         <!--     <button
-            class="w-fit px-16 bg-btn hover:bg-blue-700 text-white font-semibold py-3.5 rounded-full transition shadow-md hover:shadow-lg"
+            class="w-fit px-16 bg-primary hover:bg-blue-700 text-white font-semibold py-3.5 rounded-full transition shadow-md hover:shadow-lg"
           >
             Track Order
           </button> -->

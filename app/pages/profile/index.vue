@@ -30,7 +30,7 @@
             />
           </div>
 
-          <div class="flex items-center text-btn gap-2">
+          <div class="flex items-center text-primary gap-2">
             <Icon name="charm:key" class="text-2xl" />
             <button type="button" class="underline" @click="openModal = true">
               {{ $t("TITLES.Change Password") }}
@@ -65,7 +65,7 @@
 
           <button
             type="submit"
-            class="bg-btn rounded-full ms-auto px-16 text-white py-2"
+            class="bg-primary rounded-full ms-auto px-16 text-white py-2"
             :disabled="btnLoading"
           >
             {{ $t("BUTTONS.save") }}

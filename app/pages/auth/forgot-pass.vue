@@ -19,7 +19,7 @@
     <button
       :disabled="loading"
       type="submit"
-      class="bg-btn cursor-pointer mt-5 text-white text-base md:text-lg w-full  rounded-full p-4"
+      class="bg-primary cursor-pointer mt-5 text-white text-base md:text-lg w-full  rounded-full p-4"
     >
       <span v-if="!loading">{{ t("auth.send") }}</span>
       <span v-else>...</span>

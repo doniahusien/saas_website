@@ -24,7 +24,7 @@
     <button
       :disabled="loading"
       type="submit"
-      class="bg-btn text-white w-full rounded-full p-4"
+      class="bg-primary text-white w-full rounded-full p-4"
     >
       <span v-if="!loading">{{ t("auth.register") }}</span>
       <span v-else>...</span>
@@ -32,7 +32,7 @@
   </VeeForm>
   <p class="text-center mt-5">
     {{ t("auth.haveAccount") }}
-    <NuxtLink :to="localePath('/auth/login')" class="text-btn font-semibold">
+    <NuxtLink :to="localePath('/auth/login')" class="text-primary font-semibold">
       {{ t("auth.login") }}
     </NuxtLink>
   </p>

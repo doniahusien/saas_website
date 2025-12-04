@@ -9,7 +9,7 @@
           item.type == "reservation" ? item.id : item.order_num
         }}
       </p>
-      <p class="ms-auto h-fit w-fit rounded-full bg-btn-bg px-4 py-2 capitalize text-btn">
+      <p class="ms-auto h-fit w-fit rounded-full bg-primary-bg px-4 py-2 capitalize text-primary">
         <span v-if="item.type == 'reservation'">{{
           $t("TITLES.Table reservation")
         }}</span>
@@ -89,7 +89,7 @@
               : `/orders/${item.id}`
           )
         "
-        class="ms-auto cursor-pointer mt-auto flex size-13 items-center justify-center rounded-full bg-btn text-white"
+        class="ms-auto cursor-pointer mt-auto flex size-13 items-center justify-center rounded-full bg-primary text-white"
       >
     
         <Icon

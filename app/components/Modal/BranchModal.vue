@@ -47,18 +47,18 @@
             </div>
             <div
               class="size-5 rounded-full border flex items-center justify-center"
-              :class="selectedBranchId === branch.id ? 'border-btn' : ''"
+              :class="selectedBranchId === branch.id ? 'border-primary' : ''"
             >
               <div
                 v-if="selectedBranchId === branch.id"
-                class="size-3 rounded-full bg-btn"
+                class="size-3 rounded-full bg-primary"
               ></div>
             </div>
           </div>
         </div>
         <button
           @click="confirmSelection"
-          class="w-full text-lg rounded-full bg-btn px-2 py-4 text-white"
+          class="w-full text-lg rounded-full bg-primary px-2 py-4 text-white"
           :disabled="!selectedBranchId || storesList.length === 0"
         >
           {{ $t("TITLES.confirm") }}

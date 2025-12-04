@@ -13,8 +13,8 @@
 
       <div class="space-y-8 mt-10 md:mt-0">
         <div class="flex items-center gap-4">
-          <span class="text-btn font-medium">{{ $t("ourStory.eyebrow") }}</span>
-          <div class="flex-1 h-px bg-btn"></div>
+          <span class="text-primary font-medium">{{ $t("ourStory.eyebrow") }}</span>
+          <div class="flex-1 h-px bg-primary"></div>
         </div>
 
         <div
@@ -22,12 +22,12 @@
           v-html="about.title"
         ></div>
 
-        <div v-html="about.desc" class="space-y-4 text-base md:text-lg text-subtitle">
+        <div v-html="about.desc" class="space-y-4 text-base md:text-lg text-third">
          
         </div>
         <NuxtLink
           to="/about"
-          class="rounded-full font-medium px-8 py-3 border border-btn text-btn hover:bg-btn hover:text-white transition"
+          class="rounded-full font-medium px-8 py-3 border border-primary text-primary hover:bg-primary hover:text-white transition"
         >
           {{ $t("ourStory.cta") }}
         </NuxtLink>

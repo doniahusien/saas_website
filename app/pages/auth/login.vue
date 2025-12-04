@@ -1,7 +1,7 @@
 <template>
   <div class="w-full space-y-3">
-    <h2 class="font-bold text-2xl md:text-5xl">{{ t("auth.welcomeBack") }}</h2>
-    <p class="text-secondary text-base mb-5">
+    <h2 class="font-bold text-text text-2xl md:text-5xl">{{ t("auth.welcomeBack") }}</h2>
+    <p class="text-text-light text-base mb-5">
       {{ t("auth.enterCredentials") }}
     </p>
       <VeeForm class="space-y-7"  :validation-schema="schema" @submit="onSubmit">
@@ -20,15 +20,15 @@
           />
 
         <div class="flex justify-between">
-          <UCheckbox :label="t('auth.rememberMe')" :ui="{ label: 'text-secondary' }" />
-          <NuxtLink :to="localePath('/auth/forgot-pass')" class="underline text-sm md:text-base">
+          <UCheckbox :label="t('auth.rememberMe')" :ui="{ label: 'text-text-light' }" />
+          <NuxtLink :to="localePath('/auth/forgot-pass')" class="underline text-primary sm md:text-base">
             {{ t("auth.forgotPassword") }}
           </NuxtLink>
         </div>
 
         <button
           type="submit"
-          class="bg-btn cursor-pointer text-white text-medium md:text-lg w-full rounded-full p-4 transition-transform hover:scale-[1.02] disabled:opacity-50"
+          class="bg-primary cursor-pointer text-white text-medium md:text-lg w-full rounded-full p-4 transition-transform hover:scale-[1.02] disabled:opacity-50"
           :disabled="loading"
         >
           <span v-if="!loading">{{ t("auth.login") }}</span>
@@ -37,7 +37,7 @@
 
         <p class="text-center">
           {{ t("auth.dontHaveAccount") }}
-          <NuxtLink :to="localePath('/auth/signup')" class="text-btn text-base font-semibold">
+          <NuxtLink :to="localePath('/auth/signup')" class="text-primary text-base font-semibold">
             {{ t("auth.signUpNow") }}
           </NuxtLink>
         </p>

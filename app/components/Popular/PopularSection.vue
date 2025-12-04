@@ -6,7 +6,7 @@
       </h2>
       <NuxtLink
         :to="localePath('/menu')"
-        class="text-btn justify-self-end hover:underline"
+        class="text-primary justify-self-end hover:underline"
       >
         {{ $t("popularSection.viewAll") }}
         <Icon

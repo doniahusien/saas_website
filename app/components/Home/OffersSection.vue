@@ -6,7 +6,7 @@
       </h2>
       <NuxtLink
         :to="localePath('/offers')"
-        class="text-btn justify-self-end hover:underline"
+        class="text-primary justify-self-end hover:underline"
       >
         {{ $t("offers.viewAll") }}
         <Icon

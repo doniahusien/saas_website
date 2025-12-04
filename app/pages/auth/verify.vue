@@ -12,7 +12,7 @@
       <VeeField name="verification_code" v-model="form.verification_code" type="hidden" />
       <button
         type="button"
-        class="text-btn underline cursor-pointer"
+        class="text-primary underline cursor-pointer"
         @click="showEditPhone = true"
       >
         {{ t("auth.editPhoneNumber") }}
@@ -25,7 +25,7 @@
           size="xl"
           :ui="{
             base:
-              'text-btn border border-placeholder bg-transparent md:m-1 w-full h-16 md:h-28',
+              'text-primary border border-placeholder bg-transparent md:m-1 w-full h-16 md:h-28',
             input:
               'text-center text-6xl rounded-lg h-full w-full bg-transparent focus:outline-none',
           }"
@@ -37,7 +37,7 @@
       <button
         type="submit"
         :disabled="loading"
-        class="bg-btn cursor-pointer text-white text-base md:text-lg w-full  rounded-full p-4 disabled:opacity-50"
+        class="bg-primary cursor-pointer text-white text-base md:text-lg w-full  rounded-full p-4 disabled:opacity-50"
       >
         <span v-if="!loading">{{ t("auth.next") }}</span>
         <span v-else>...</span>
@@ -47,7 +47,7 @@
         {{ t("auth.didNotReceive") }}
         <button
           type="button"
-          class="text-btn underline cursor-pointer"
+          class="text-primary underline cursor-pointer"
           @click="handleResend"
           :disabled="resendLoading || cooldown > 0"
         >

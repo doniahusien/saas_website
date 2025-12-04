@@ -20,7 +20,7 @@
             <div
               class="bg-gray-100 hover:bg-gray-200 flex justify-center p-3 rounded-full transition cursor-pointer"
             >
-              <Icon name="lucide:book-copy" class="w-6 h-6 text-btn" />
+              <Icon name="lucide:book-copy" class="w-6 h-6 text-primary" />
             </div>
             <p class="text-xs text-gray-700 mt-1">Copy Link</p>
           </div>

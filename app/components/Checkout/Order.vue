@@ -122,7 +122,7 @@
       <button
         @click="$emit('confirm')"
         :disabled="submitting"
-        class="w-1/2 h-14 bg-btn text-white text-lg font-semibold rounded-full mt-4 shadow-md hover:opacity-90 ml-auto disabled:opacity-60 disabled:cursor-not-allowed"
+        class="w-1/2 h-14 bg-primary text-white text-lg font-semibold rounded-full mt-4 shadow-md hover:opacity-90 ml-auto disabled:opacity-60 disabled:cursor-not-allowed"
       >
         <span v-if="!submitting">{{ $t("TITLES.confirm") }}</span>
         <span v-else>{{ $t("TITLES.processing") }}</span>

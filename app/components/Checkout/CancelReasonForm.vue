@@ -73,7 +73,7 @@
       </div>
       <button
         type="submit"
-        class="mt-auto h-14 w-full rounded-full bg-btn text-white disabled:cursor-not-allowed disabled:opacity-60"
+        class="mt-auto h-14 w-full rounded-full bg-primary text-white disabled:cursor-not-allowed disabled:opacity-60"
       >
         {{ $t("BUTTONS.Confirm") }}
       </button>

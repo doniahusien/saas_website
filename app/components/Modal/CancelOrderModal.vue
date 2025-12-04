@@ -43,7 +43,7 @@
 
             <label
               class="flex items-center gap-3 p-3 rounded-lg cursor-pointer hover:bg-gray-50 transition"
-              :class="selectedReasonId === 'other' ? 'bg-btn' : ''"
+              :class="selectedReasonId === 'other' ? 'bg-primary' : ''"
             >
               <input
                 type="radio"

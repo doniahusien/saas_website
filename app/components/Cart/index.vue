@@ -17,11 +17,11 @@
         <CartOrderSummary :price="price" :currency="currency" />
         <NuxtLink
           :to="localePath('/checkout')"
-          class="w-full cursor-pointer bg-btn text-white gap-2 py-4 rounded-full font-semibold flex items-center justify-center"
+          class="w-full cursor-pointer bg-primary text-white gap-2 py-4 rounded-full font-semibold flex items-center justify-center"
         >
           {{ t("cart.checkout") }}
           <span class="size-4 flex justify-center items-center bg-white rounded-full"
-            ><Icon  :name="isRTL ? 'mdi:arrow-left' : 'mdi:arrow-right'" class="size-3 text-btn"
+            ><Icon  :name="isRTL ? 'mdi:arrow-left' : 'mdi:arrow-right'" class="size-3 text-primary"
           /></span>
         </NuxtLink>
       </div>
