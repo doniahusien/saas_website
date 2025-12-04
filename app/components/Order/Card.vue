@@ -1,15 +1,15 @@
 <template>
-  <div class="rounded-3xl bg-white p-5">
+  <div class="rounded-3xl bg-website-white p-5">
     <div class="grid grid-cols-2 items-center justify-between">
-      <p class="text-secondary" v-if="item.type == 'reservation'">
+      <p class="text-third" v-if="item.type == 'reservation'">
         {{ item.name }}
       </p>
-      <p class="text-secondary" v-else>
+      <p class="text-third" v-else>
         {{ $t("TITLES.order") }} #{{
           item.type == "reservation" ? item.id : item.order_num
         }}
       </p>
-      <p class="ms-auto h-fit w-fit rounded-full bg-primary-bg px-4 py-2 capitalize text-primary">
+      <p class="ms-auto h-fit w-fit rounded-full bg-secondary px-4 py-2 capitalize text-primary">
         <span v-if="item.type == 'reservation'">{{
           $t("TITLES.Table reservation")
         }}</span>
@@ -45,16 +45,16 @@
               v-if="item.item.length > 3"
               class="-ml-9 size-16 rounded-full border-4 border-white bg-black opacity-90"
             >
-              <span class="flex h-full items-center justify-center text-secondary">
+              <span class="flex h-full items-center justify-center text-website-white">
                 + {{ item.item.length - 3 }}
               </span>
             </div>
           </div>
-          <p class="text-center text-secondary" v-if="item.type == 'reservation'">
+          <p class="text-center text-third" v-if="item.type == 'reservation'">
             ({{ item.guests_number }}
             {{ item.guests_number > 1 ? $t("TITLES.persons") : $t("TITLES.person") }})
           </p>
-          <p v-else class="text-center text-secondary">
+          <p v-else class="text-center text-third">
             ({{ item.item_count }}
             {{ item.item_count > 1 ? $t("TITLES.items") : $t("TITLES.item") }})
           </p>
@@ -72,13 +72,13 @@
             {{ item.address.title }}
           </p>
           <p
-            class="text-secondary"
+            class="text-third"
             v-for="(product, index) in item.item.slice(0, 3)"
             :key="index"
           >
             {{ product.product.name }}
           </p>
-          <span class="text-secondary" v-if="item.item.length > 3">...</span>
+          <span class="text-third" v-if="item.item.length > 3">...</span>
         </div>
       </div>
       <NuxtLink
@@ -89,7 +89,7 @@
               : `/orders/${item.id}`
           )
         "
-        class="ms-auto cursor-pointer mt-auto flex size-13 items-center justify-center rounded-full bg-primary text-white"
+        class="ms-auto cursor-pointer mt-auto flex size-13 items-center justify-center rounded-full bg-primary text-website-white transition-colors"
       >
     
         <Icon

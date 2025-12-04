@@ -1,10 +1,22 @@
 <template>
   <nav
+    v-if="appStore.settingsData.website_customization?.top_bar_availability"
     class="relative flex items-center justify-between px-8 md:px-16 py-5 bg-white shadow-sm"
   >
     <div class="flex items-center gap-8">
-    <NuxtLink :to="localePath('/')" class="flex items-center gap-3">  
-      <NuxtImg src="/logo.png" alt="logo" class="size-18 object-contain" />
+      <NuxtLink
+        :to="localePath('/')"
+        :class="
+          appStore.settingsData.website_customization?.top_bar_logo_position == 'right'
+            ? 'order-1'
+            : ''
+        "
+      >
+        <NuxtImg
+          :src="appStore.settingsData.website_setting?.website_logo"
+          alt="logo"
+          class="size-18 object-contain"
+        />
       </NuxtLink>
       <ul class="hidden lg:flex flex-wrap gap-3 text-lg">
         <li v-for="item in items" :key="item.to">
@@ -35,17 +47,21 @@
           <Icon name="solar:heart-linear" class="size-7" />
         </button>
         <li @click.stop="openCart" class="icon">
-  <div class="relative inline-block">
-    <Icon name="solar:bag-5-outline" class="size-7" />
-    <span
-      v-if="cartCount > 0"
-      class="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full size-4 flex items-center justify-center px-1"
-    >
-      {{ cartCount > 99 ? '99+' : cartCount }}
-    </span>
-  </div>
-</li>
-        <li class="icon" v-if="isLoggedIn && userData?.notifiable" @click.stop="openNotifications">
+          <div class="relative inline-block">
+            <Icon name="solar:bag-5-outline" class="size-7" />
+            <span
+              v-if="cartCount > 0"
+              class="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full size-4 flex items-center justify-center px-1"
+            >
+              {{ cartCount > 99 ? "99+" : cartCount }}
+            </span>
+          </div>
+        </li>
+        <li
+          class="icon"
+          v-if="isLoggedIn && userData?.notifiable"
+          @click.stop="openNotifications"
+        >
           <Icon name="solar:bell-outline" class="size-7" />
         </li>
         <button
@@ -149,11 +165,11 @@
               {{ item.label }}
             </NuxtLink>
           </li>
-           <li>
-          <button class="cursor-pointer" @click="showReservation = true">
-            {{ $t("nav.reservation") }}
-          </button>
-        </li>
+          <li>
+            <button class="cursor-pointer" @click="showReservation = true">
+              {{ $t("nav.reservation") }}
+            </button>
+          </li>
           <li v-for="page in cmsPage" :key="page.id">
             <NuxtLink :to="localePath(`/cms/${page.slug}`)">
               {{ page.title }}
@@ -226,7 +242,7 @@
       </menus-side-menu>
     </teleport>
 
-<teleport to="body">
+    <teleport to="body">
       <profile-wallet-modal
         :wallet="wallet"
         :user-data="userData"
@@ -236,7 +252,7 @@
         :walletLoading="walletLoading"
       />
     </teleport>
-    
+
     <teleport to="body">
       <profile-loyalty-modal
         v-if="loyaltyMenu"
@@ -247,7 +263,7 @@
         :loyaltyLoading="loyaltyLoading"
       />
     </teleport>
-     <teleport to="body">
+    <teleport to="body">
       <profile-all-loyalty-transactions-modal
         v-if="allLoyaltyTransactions"
         @close="allLoyaltyTransactions = false"
@@ -351,7 +367,6 @@ const cmsPage = computed(() => {
   return appStore.getCmsData?.filter((item) => item.in_menu);
 });
 
-
 function closeAllMenus() {
   addressMenu.value = false;
   cartMenu.value = false;
@@ -384,16 +399,15 @@ function changeNotificationStatus() {
     })
     .catch((e) => {
       toast.error(e.response?.data?.message || "Failed");
-     
     });
 }
 
 function openNotifications() {
-    closeAllMenus();
+  closeAllMenus();
   notificationsMenu.value = true;
 }
 async function openWishlist() {
-    closeAllMenus();
+  closeAllMenus();
   await appStore.getFavourites();
   wishlistMenu.value = true;
 }
@@ -498,7 +512,6 @@ function seeAllWalletTransactions() {
   allWalletTransactions.value = true;
 }
 
-
 const profileList = [
   {
     name: t("LABELS.My Account"),
@@ -558,7 +571,6 @@ function deleteAccount() {
       toast.error(e.response.data.message);
     });
 }
-
 
 function confirmLogout() {
   appAuth.logout();

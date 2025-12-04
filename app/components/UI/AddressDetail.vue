@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex items-center gap-3 mb-3">
-      <Icon name="bx:map" class="size-6 text-black" />
+      <Icon name="bx:map" class="size-6 text-third" />
       <h3 class="text-xl font-semibold text-gray-800">
         {{
           orderData.order_type == "delivery"
@@ -11,7 +11,7 @@
       </h3>
     </div>
 
-    <div class="flex items-start bg-white p-4 rounded-xl gap-3">
+    <div class="flex items-start bg-website-white p-4 rounded-xl gap-3">
       <div class="w-16 h-12 overflow-hiddenshrink-0">
         <img
           v-if="orderData.store.image"

@@ -1,19 +1,19 @@
 <template>
-  <div class="space-y-14  bg-semi-white">
+  <div class="space-y-14">
     <Banner
       :bannerData="{ image: '/images/bg/order_bg.jpg', title: t('orders.title') }"
     />
 
     <div class="container pb-10 mx-auto px-2 space-y-10">
       <div
-        class="flex mx-auto w-full md:w-1/2 justify-center rounded-full bg-white p-2 text-sm md:gap-5 md:text-base"
+        class="flex mx-auto w-full md:w-1/2 justify-center rounded-full bg-website-white p-2 text-sm md:gap-5 md:text-base"
       >
         <NuxtLink
           v-for="item in items"
           :key="item.id"
           :to="{ query: { status: item.status } }"
-          class="flex w-1/3 flex-wrap items-center justify-center gap-2 rounded-full border-semi-white text-placeholder px-2 py-3"
-          :class="[currentStatus == item.status ? 'bg-primary text-white' : '']"
+          class="flex w-1/3 flex-wrap items-center justify-center gap-2 rounded-full border-semi-white text-third px-2 py-3"
+          :class="[currentStatus == item.status ? ' bg-primary text-website-white' : '']"
         >
           <h3 class="font-semibold">{{ item.name }}</h3>
         </NuxtLink>

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="orderData" class="bg-semi-white">
+  <div v-if="orderData" class="">
     <div
       class="px-10 md:px-16 w-full grid py-18 grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-18 mx-auto"
     >
@@ -15,11 +15,11 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div class="space-y-3">
-            <p class="text-lg md:text-xl font-semibold text-black">
+            <p class="text-lg md:text-xl font-semibold text-third">
               {{ $t("TITLES.order type") }}
             </p>
             <div
-              class="flex items-center gap-3 rounded-lg p-7 bg-white border border-gray-100"
+              class="flex items-center gap-3 rounded-lg p-7 bg-website-white"
             >
               <Icon
                 :name="
@@ -27,10 +27,10 @@
                     ? 'icon-park-outline:express-delivery'
                     : 'mage:delivery-truck'
                 "
-                class="size-5 text-placeholder"
+                class="size-5 text-third"
               />
               <div>
-                <p class="text-gray-800">
+                <p class="">
                   {{
                     orderData.order_type === "take_away"
                       ? $t("TITLES.Takeaway")
@@ -42,16 +42,16 @@
           </div>
 
           <div class="space-y-3">
-            <p class="text-base md:text-xl font-semibold text-black">
+            <p class="text-base md:text-xl font-semibold text-third">
               {{ $t("TITLES.Payment Type") }}
             </p>
 
             <div
-              class="flex items-center gap-3 rounded-lg p-7 bg-white border border-gray-100"
+              class="flex items-center gap-3 rounded-lg p-7 bg-website-white "
             >
               <Icon
                 :name="paymentIcon"
-                class="size-5 text-placeholder"
+                class="size-5 text-third"
               />
               <div>
                 <div class="text-gray-800 font-medium">
@@ -62,14 +62,14 @@
           </div>
 
           <div class="space-y-3">
-            <p class="text-base md:text-xl font-semibold text-black">
+            <p class="text-base md:text-xl font-semibold text-third">
               {{ $t("TITLES.Date Of Order") }}
             </p>
 
             <div
-              class="flex items-center gap-3 rounded-lg p-7 bg-white border border-gray-100"
+              class="flex items-center gap-3 rounded-lg p-7 bg-website-white "
             >
-              <Icon name="mdi:calendar" class="size-6 text-placeholder" />
+              <Icon name="mdi:calendar" class="size-6 text-third" />
               <div>
                 <div class="text-gray-800">
                   {{ formatDate(orderData.order_date) }}
@@ -79,13 +79,13 @@
           </div>
 
           <div class="space-y-3">
-            <p class="text-base md:text-xl font-semibold text-black">
+            <p class="text-base md:text-xl font-semibold text-third">
               {{ $t("TITLES.Time Of Order") }}
             </p>
             <div
-              class="flex items-center gap-3 rounded-lg p-7 bg-white border border-gray-100"
+              class="flex items-center gap-3 rounded-lg p-7 bg-website-white "
             >
-              <Icon name="mdi:clock-outline" class="size-5 text-placeholder" />
+              <Icon name="mdi:clock-outline" class="size-5  text-third" />
               <div>
                 <div class="text-gray-800">
                   {{ orderData.order_time }}
@@ -105,7 +105,7 @@
           {{ $t("TITLES.Cancellation reason") }}
         </h2>
         <div
-          class="flex h-20 flex-wrap items-center justify-between rounded-lg bg-website_white px-2 md:px-6"
+          class="flex h-20 flex-wrap items-center justify-between rounded-lg bg-website-white px-2 md:px-6"
         >
           <p class="font-medium">{{ orderData?.cancel_reason.desc }}</p>
         </div>
@@ -121,7 +121,7 @@
       </div>
 
       <div
-        class="w-full md:w-140 lg:col-span-2 rounded-2xl p-4 md:p-6 shadow-md border border-gray-100 mx-auto"
+        class="w-full md:w-140 lg:col-span-2 rounded-2xl p-4 md:p-6 shadow-md  mx-auto"
       >
         <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
           <h2 class="text-xl lg:text-3xl font-bold text-gray-800">

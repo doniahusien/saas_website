@@ -49,7 +49,7 @@ export const useAppAuth = defineStore('authStore', {
       async logout() {
 
         const {$api} = useNuxtApp()
-        $api.post('auth/logout').then(() => {
+        $api.post('/auth/logout').then(() => {
           this.token = null
           this.userData = null
           useCookie('jwt_token_saas').value = null
