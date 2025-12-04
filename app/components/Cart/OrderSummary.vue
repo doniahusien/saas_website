@@ -2,7 +2,7 @@
   <div>
     <div
       v-if="price"
-      class="bg-white rounded-2xl py-3 px-3 mt-auto space-y-5"
+      class="bg-website-white border border-line rounded-2xl py-3 px-3 mt-auto space-y-5"
     >
 
       <div

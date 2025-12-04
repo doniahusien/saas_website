@@ -15,7 +15,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div class="space-y-3">
-            <p class="text-lg md:text-xl font-semibold text-third">
+            <p class="text-lg md:text-2xl font-semibold ">
               {{ $t("TITLES.order type") }}
             </p>
             <div
@@ -30,7 +30,7 @@
                 class="size-5 text-third"
               />
               <div>
-                <p class="">
+                <p class="font-semibold">
                   {{
                     orderData.order_type === "take_away"
                       ? $t("TITLES.Takeaway")
@@ -42,7 +42,7 @@
           </div>
 
           <div class="space-y-3">
-            <p class="text-base md:text-xl font-semibold text-third">
+            <p class="text-base md:text-2xl font-semibold">
               {{ $t("TITLES.Payment Type") }}
             </p>
 
@@ -54,7 +54,7 @@
                 class="size-5 text-third"
               />
               <div>
-                <div class="text-gray-800 font-medium">
+                <div class=" font-semibold">
                   {{ paymentLabelText }}
                 </div>
               </div>
@@ -62,7 +62,7 @@
           </div>
 
           <div class="space-y-3">
-            <p class="text-base md:text-xl font-semibold text-third">
+            <p class="text-base md:text-2xl font-bold">
               {{ $t("TITLES.Date Of Order") }}
             </p>
 
@@ -71,7 +71,7 @@
             >
               <Icon name="mdi:calendar" class="size-6 text-third" />
               <div>
-                <div class="text-gray-800">
+                <div class="font-semibold">
                   {{ formatDate(orderData.order_date) }}
                 </div>
               </div>
@@ -79,7 +79,7 @@
           </div>
 
           <div class="space-y-3">
-            <p class="text-base md:text-xl font-semibold text-third">
+            <p class="text-base md:text-2xl font-semibold ">
               {{ $t("TITLES.Time Of Order") }}
             </p>
             <div
@@ -87,7 +87,7 @@
             >
               <Icon name="mdi:clock-outline" class="size-5  text-third" />
               <div>
-                <div class="text-gray-800">
+                <div class="font-semibold">
                   {{ orderData.order_time }}
                 </div>
               </div>
@@ -150,24 +150,13 @@
           <template v-else>
             <button
               @click="openCancelOrderModal = true"
-              class="text-lg text-error disabled:text-error disabled:opacity-20"
+              class="text-lg text-warning disabled:text-light-red disabled:opacity-20"
               v-if="orderData.order_status[2]"
               :disabled="!orderData.can_cancel"
             >
               {{ $t("TITLES.Cancel Order") }}
             </button>
           </template>
-
-          <!--    <button
-            v-if="orderData.can_cancel"
-           
-            class="text-red-500 hover:text-red-600 font-medium cursor-pointer transition"
-          >
-            {{ $t("TITLES.CancleOrder") }}
-          </button> -->
-          <!--   <p v-else class="text-red-300 font-medium">
-            {{ $t("TITLES.CancleOrder") }}
-          </p> -->
         </div>
 
         <div class="mb-6">
@@ -250,7 +239,7 @@ const paymentLabels = computed(() => {
   return paymentList.value.map((entry) => methodToLabel(resolvePaymentMethod(entry)));
 });
 
-const paymentLabelText = computed(() => paymentLabels.value.join(", "));
+const paymentLabelText = computed(() => paymentLabels.value.join("  "));
 
 const paymentIcon = computed(() => {
   if (paymentList.value.length === 0) return "icon-park-outline:wallet";

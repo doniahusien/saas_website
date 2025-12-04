@@ -21,10 +21,10 @@
           </div>
           <div
             v-if="index < orderData.order_status.length - 1"
-            class="absolute top-1/2 start-1/2 w-full -translate-y-1/2 z-10 h-0.5 px-2 rounded-full"
+            class="absolute  top-1/3 start-1/2 w-full -translate-y-1/2 z-10 h-0.5 px-2 rounded-full"
             :class="{
-              'bg-primary': status.status === 'done' || status.status === 'in_progress',
-              'bg-gray-200': status.status == 'waiting'
+              'bg-primary': status.status === 'done' ,
+              'bg-gray-200': status.status == 'waiting'|| status.status === 'in_progress'
             }"
           ></div>
         </div>

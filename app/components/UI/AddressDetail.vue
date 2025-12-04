@@ -2,7 +2,7 @@
   <div>
     <div class="flex items-center gap-3 mb-3">
       <Icon name="bx:map" class="size-6 text-third" />
-      <h3 class="text-xl font-semibold text-gray-800">
+      <h3 class="text-2xl font-semibold">
         {{
           orderData.order_type == "delivery"
             ? $t("TITLES.shippingAddressPlaceholder")
@@ -28,10 +28,10 @@
       </div>
 
       <div>
-        <div class="font-semibold text-lg text-black">
+        <div class="font-semibold text-lg ">
           {{ orderData.order_type == "delivery"? orderData.address?.title: orderData.store?.complete_name }}
         </div>
-        <div class="text-base mt-1 text-placeholder">
+        <div class="text-base mt-1 text-third">
           {{
              orderData.order_type == "delivery"?
             orderData.address?.desc :

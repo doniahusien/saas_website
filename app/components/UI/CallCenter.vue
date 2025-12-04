@@ -1,13 +1,13 @@
 <template>
          <div class="flex items-center gap-3 mb-3">
             <div class="size10 rounded-lg flex items-center justify-center">
-              <Icon name="mdi:phone" class="size-5" />
+              <Icon name="mdi:phone" class="size-5 text-third" />
             </div>
-            <h3 class="text-xl font-bold text-gray-800">{{$t('TITLES.Call center')}}</h3>
+            <h3 class="text-2xl font-bold">{{$t('TITLES.Call center')}}</h3>
           </div>
         
-          <div class="flex flex-col gap-5 p-7 rounded-2xl bg-white border border-gray-100">
-            <p class="text-red-500 text-sm " v-if="orderData.call_center_message">
+          <div class="flex flex-col gap-5 p-7 rounded-2xl bg-website-white">
+            <p class="text-warning text-sm " v-if="orderData.call_center_message">
               *{{ orderData.call_center_message }}
             </p>
             <div
@@ -15,7 +15,7 @@
             >
               <div class="flex items-center gap-3 flex-1">
                 <div>
-                  <div class="text-sm text-placeholder font-medium">
+                  <div class="text-sm text-third font-medium">
                     {{ orderData.call_center }}
                   </div>
                 </div>
@@ -23,7 +23,7 @@
 
               <a
                 :href="`tel:${orderData.call_center}`"
-                class="size-7 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-sm hover:bg-blue-700 transition"
+                class="size-7 rounded-full bg-primary text-white flex items-center justify-center shadow-sm hover:bg-blue-700 transition"
               >
                 <Icon name="mdi:phone" class="size-5" />
               </a>
