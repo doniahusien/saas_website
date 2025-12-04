@@ -28,47 +28,50 @@ export default defineNuxtPlugin((nuxtApp) => {
     },
   })
 
- api.interceptors.request.use(
-  (req: AxiosRequestConfig & { headers?: any; params?: any; skipLocation?: boolean } = {}) => {
-    req.headers = req.headers || {}
-    req.params = req.params || {}
+  api.interceptors.request.use(
+    (req: AxiosRequestConfig & { headers?: any; params?: any; skipLocation?: boolean } = {}) => {
+      req.headers = req.headers || {}
+      req.params = req.params || {}
 
-    req.headers['Accept-Language'] = i18n?.locale?.value || 'en'
+      req.headers['Accept-Language'] = i18n?.locale?.value || 'en'
 
-    if (sessionToken.value) {
-      req.headers.Authorization = `Bearer ${sessionToken.value}`
-    } else if (guest_token?.value) {
-      req.params.guest_token = req.params.guest_token ?? guest_token.value
-    }
+      if (sessionToken.value) {
+        req.headers.Authorization = `Bearer ${sessionToken.value}`
+      } else if (guest_token?.value) {
+        req.params.guest_token = req.params.guest_token ?? guest_token.value
+      }
 
-    if (req.skipLocation) {
+      if (req.skipLocation) {
+        return req
+      }
+      if (storeId.value) {
+        req.params.store_id = req.params.store_id ?? storeId.value
+      }
+      const userDataLocal = appAuth.getUserData || appAuth.userData
+      const rawUserLocation = useCookie('userLocation').value
+
+      let userLocation: { lat?: number; lng?: number } | null = null
+      if (rawUserLocation) {
+        try {
+          userLocation =
+            typeof rawUserLocation === 'string'
+              ? JSON.parse(rawUserLocation)
+              : rawUserLocation
+        } catch {
+          userLocation = null
+        }
+      }
+
+      if (userDataLocal?.default_address?.id) {
+        req.params.address_id = req.params.address_id ?? userDataLocal.default_address.id
+      } else if (userLocation?.lat && userLocation?.lng) {
+        req.params.lat = req.params.lat ?? userLocation.lat
+        req.params.lng = req.params.lng ?? userLocation.lng
+      }
+
       return req
     }
-    const userDataLocal = appAuth.getUserData || appAuth.userData
-    const rawUserLocation = useCookie('userLocation').value
-
-    let userLocation: { lat?: number; lng?: number } | null = null
-    if (rawUserLocation) {
-      try {
-        userLocation =
-          typeof rawUserLocation === 'string'
-            ? JSON.parse(rawUserLocation)
-            : rawUserLocation
-      } catch {
-        userLocation = null
-      }
-    }
-
-    if (userDataLocal?.default_address?.id) {
-      req.params.address_id = req.params.address_id ?? userDataLocal.default_address.id
-    } else if (userLocation?.lat && userLocation?.lng) {
-      req.params.lat = req.params.lat ?? userLocation.lat
-      req.params.lng = req.params.lng ?? userLocation.lng
-    }
-
-    return req
-  }
-)
+  )
 
 
   api.interceptors.response.use(
@@ -81,12 +84,11 @@ export default defineNuxtPlugin((nuxtApp) => {
         useCookie('session_user_token').value = null
         useCookie('session_user_data').value = null
         useCookie('user_guest_token').value = null
-      /*   router.push(localePath('/auth/login')) */
         return Promise.reject({ statusCode: 401, message: 'Unauthorized' })
       }
 
       const message = error?.message ?? 'Something went wrong'
-     /*  return Promise.reject({ statusCode: status ?? 500, message }) */
+      /*  return Promise.reject({ statusCode: status ?? 500, message }) */
     }
   )
 

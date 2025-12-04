@@ -97,11 +97,11 @@
   }
 
   .input {
-    @apply w-full h-14  border px-2 focus:outline-none disabled:bg-[#ebebeb] placeholder:text-text-light rounded-lg focus:shadow-none focus:border-primary border-border-light  bg-website-white;
+    @apply w-full h-16  border p-5 focus:outline-none disabled:bg-[#ebebeb] placeholder:text-text-light rounded-lg focus:shadow-none focus:border-primary border-border-light  bg-website-white;
   }
 
   .base-btn {
-    @apply flex items-center border border-primary justify-center gap-4 w-full lg:w-fit flex-wrap py-3.5 px-2 lg:px-8 rounded-full bg-primary text-white;
+    @apply flex items-center border border-primary justify-center gap-4 w-full lg:w-fit flex-wrap py-4 px-2 lg:px-8 rounded-full bg-primary text-white;
   }
 
   .base-btn:hover {

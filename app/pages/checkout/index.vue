@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-semi-white w-full flex justify-center py-8">
+  <div class="min-h-screen bg-website-white w-full flex justify-center py-8">
     <div class="w-full mx-auto p-8 grid grid-cols-1 lg:grid-cols-5 gap-10">
       <CheckoutOrder
         :orderType="orderType"
@@ -263,26 +263,22 @@ const confirmOrder = async (values) => {
     const payType: any[] = [];
     let remaining = total;
 
-    // Add loyalty points if used
     if (useLoyaltyPoints.value && points > 0 && remaining > 0) {
       const usedPoints = Math.min(points, remaining);
       payType.push({ points: usedPoints });
       remaining -= usedPoints;
     }
 
-    // Add wallet if opted in and there's remaining balance
     if (useWallet.value && wallet > 0 && remaining > 0) {
       const used = Math.min(wallet, remaining);
       payType.push({ wallet: used });
       remaining -= used;
     }
 
-    // Add main payment method (cash/card) for remaining balance
     if (remaining > 0) {
       payType.push({ [mainMethod]: Number(remaining.toFixed(2)) });
     }
 
-    // If no payment method selected and no points/wallet, use main method for full amount
     if (payType.length === 0) {
       payType.push({ [mainMethod]: Number(total.toFixed(2)) });
     }
@@ -318,7 +314,7 @@ watch(availableWallet, (val) => {
 
 const router = useRouter();
 
-const handleCancelOrder = () => {
+/* const handleCancelOrder = () => {
   router.push("/");
-};
+}; */
 </script>

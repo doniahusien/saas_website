@@ -1,7 +1,7 @@
 <template>
-  <h2 class="font-bold mb-5 text-3xl md:text-5xl">{{ $t("auth.createAccount") }}</h2>
+  <h2 class="font-bold mb-7 text-3xl md:text-5xl">{{ $t("auth.createAccount") }}</h2>
 
-  <VeeForm class="space-y-5 " @submit="handleSubmit" :validation-schema="schema">
+  <VeeForm class="space-y-4 " @submit="handleSubmit" :validation-schema="schema">
       <inputsBaseInput id="name" name="name" :placeholder="t('auth.name')" />
       <inputsPhoneInput
         codeName="phone_code"
@@ -18,12 +18,12 @@
         :placeholder="t('auth.password')"
       />
 
-    <UCheckbox :label="t('auth.rememberMe')" :ui="{ label: 'text-secondary' }" />
+    <UCheckbox :label="t('auth.rememberMe')" :ui="{ label: 'text-text-light' }" />
 
     <button
       :disabled="loading"
       type="submit"
-      class="bg-primary text-white w-full rounded-full p-4"
+      class="bg-primary text-white w-full rounded-full p-5"
     >
       <span v-if="!loading">{{ t("auth.register") }}</span>
       <span v-else>...</span>

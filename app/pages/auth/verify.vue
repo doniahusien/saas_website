@@ -4,7 +4,7 @@
     <h2 class="font-bold text-3xl md:text-5xl">
       {{ t("auth.verifyCode") }}
     </h2>
-    <p class="text-secondary text-base md:text-lg ">
+    <p class="text-text-light text-base md:text-lg ">
       {{ t("auth.verifyInstruction") }}
     </p>
 
@@ -37,7 +37,7 @@
       <button
         type="submit"
         :disabled="loading"
-        class="bg-primary cursor-pointer text-white text-base md:text-lg w-full  rounded-full p-4 disabled:opacity-50"
+        class="bg-primary cursor-pointer text-white text-base md:text-lg w-full rounded-full p-5 disabled:opacity-50"
       >
         <span v-if="!loading">{{ t("auth.next") }}</span>
         <span v-else>...</span>

@@ -3,7 +3,7 @@
     {{ t("auth.changePasswordTitle") }}
   </h2>
 
-  <p class="text-secondary my-4 text-base md:text-lg">
+  <p class="text-text-light my-4 text-base md:text-lg">
     {{ t("auth.changePasswordInstruction") }}
   </p>
 
@@ -24,7 +24,7 @@
     <button
       :disabled="loading"
       type="submit"
-      class="bg-primary cursor-pointer text-white text-base md:text-lg w-full  rounded-full p-4 disabled:opacity-50"
+      class="bg-primary cursor-pointer text-white text-base md:text-lg w-full  rounded-full p-5 disabled:opacity-50"
     >
       <span v-if="!loading">{{ t("auth.confirm") }}</span>
       <span v-else>...</span>

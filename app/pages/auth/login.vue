@@ -21,23 +21,23 @@
 
         <div class="flex justify-between">
           <UCheckbox :label="t('auth.rememberMe')" :ui="{ label: 'text-text-light' }" />
-          <NuxtLink :to="localePath('/auth/forgot-pass')" class="underline text-primary sm md:text-base">
+          <NuxtLink :to="localePath('/auth/forgot-pass')" class=" text-primary  md:text-lg">
             {{ t("auth.forgotPassword") }}
           </NuxtLink>
         </div>
 
         <button
           type="submit"
-          class="bg-primary cursor-pointer text-white text-medium md:text-lg w-full rounded-full p-4 transition-transform hover:scale-[1.02] disabled:opacity-50"
+          class="bg-primary cursor-pointer text-white text-medium md:text-lg w-full rounded-full p-5 transition-transform hover:scale-[1.02] disabled:opacity-50"
           :disabled="loading"
         >
           <span v-if="!loading">{{ t("auth.login") }}</span>
           <span v-else>{{ t("auth.loggingIn") }}...</span>
         </button>
 
-        <p class="text-center">
+        <p class="text-center font-bold">
           {{ t("auth.dontHaveAccount") }}
-          <NuxtLink :to="localePath('/auth/signup')" class="text-primary text-base font-semibold">
+          <NuxtLink :to="localePath('/auth/signup')" class="text-primary text-base">
             {{ t("auth.signUpNow") }}
           </NuxtLink>
         </p>

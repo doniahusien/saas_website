@@ -8,7 +8,7 @@
           @focus="isOpen = true"
           @blur="isOpen = false"
           :disabled="disabled"
-          class="appearance-none w-full bg-transparent  h-14 pr-8 font-medium focus:outline-none transition-all disabled:cursor-not-allowed "
+          class="appearance-none w-full bg-transparent  h-16  font-medium focus:outline-none transition-all disabled:cursor-not-allowed text-text-light"
           :class="[
             isRes ? 'border-white placeholder:text-black' : 'input',
             errorCode ? 'border-b-2 border-red-500' : 'border border-border-light',
@@ -42,11 +42,11 @@
           :placeholder="placeholder"
           :disabled="disabled"
           :readonly="disabled"
-          class="appearance-none w-full bg-transparent  h-14 pb-2 pr-8 font-medium focus:outline-none transition-all disabled:cursor-not-allowed "
+          class="appearance-none w-full bg-transparent  h-16  pr-8 font-medium focus:outline-none transition-all disabled:cursor-not-allowed "
           :class="[
             isRes ? 'border-b-2 border-white placeholder:text-black' : 'input',
-            errorCode ? 'border-b-2 border-red-500' : ' border-placeholder',
-            disabled ? 'text-gray-700 border-b-2 border-placeholder' : 'text-black input'
+            errorCode ? 'border-b-2 border-red-500' : ' border-border-light',
+            disabled ? 'text-gray-700 border-b-2 border-border-light' : 'text-black input'
           ]"
         />
         <VeeErrorMessage :name="phoneName" class="absolute top-full left-0 text-red-500 text-xs mt-0.5 whitespace-nowrap" />
@@ -122,6 +122,9 @@ onMounted(async () => {
 
     if (!selectedCode.value && countries.value.length) {
       selectedCode.value = props.code || countries.value[0].phone_code;
+      onCodeChange();
+    } else if (selectedCode.value) {
+      onCodeChange();
     }
   } catch (err) {
     console.error("Failed to load countries", err);
