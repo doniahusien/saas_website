@@ -2,7 +2,6 @@
   <h2 class="font-bold mb-5 text-3xl md:text-5xl">{{ $t("auth.createAccount") }}</h2>
 
   <VeeForm class="space-y-5 " @submit="handleSubmit" :validation-schema="schema">
- 
       <inputsBaseInput id="name" name="name" :placeholder="t('auth.name')" />
       <inputsPhoneInput
         codeName="phone_code"

@@ -8,7 +8,7 @@
         <h2 class="font-bold text-4xl" >
           {{ items.heading }}
         </h2>
-        <div v-html="items.desc" class="text-black font-thin">
+        <div v-html="items.desc" class="text-third font-thin">
         </div>
       </div>
     </div>

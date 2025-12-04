@@ -1,5 +1,5 @@
 <template>
-  <div class="w-fit space-y-3 rounded-2xl bg-semi-white p-3" v-if="items">
+  <div class="w-fit space-y-3 rounded-2xl bg-website-white p-3" v-if="items">
     <img
       :src="items.image"
       :alt="items.title"
@@ -17,8 +17,8 @@
       class="fadeInUp flex flex-wrap gap-x-8"
     >
       <div class="flex flex-wrap items-center gap-1">
-        <nuxt-icon name="call" class="text-xl text-black" />
-        <p class="min-w-15 capitalize text-black">
+        <nuxt-icon name="call" class="text-xl text-third" />
+        <p class="min-w-15 capitalize text-third">
           {{ $t("LABELS.phone") }}:
         </p>
       </div>
@@ -32,8 +32,8 @@
    
     >
       <div class="flex flex-wrap items-center gap-1">
-        <nuxt-icon name="sms" class="text-xl text-black" />
-        <p class="capitalize text-black">{{ $t("LABELS.email") }}:</p>
+        <nuxt-icon name="sms" class="text-xl text-third" />
+        <p class="capitalize text-third">{{ $t("LABELS.email") }}:</p>
       </div>
       <p>{{ items.email }}</p>
     </div>
@@ -42,8 +42,8 @@
  
     >
       <div class="flex flex-wrap gap-1">
-        <nuxt-icon name="location" class="text-xl text-black" />
-        <p class="capitalize text-black">{{ $t("LABELS.address") }}:</p>
+        <nuxt-icon name="location" class="text-xl text-third" />
+        <p class="capitalize text-third">{{ $t("LABELS.address") }}:</p>
       </div>
       <p>{{ items.location_description }}</p>
     </div>

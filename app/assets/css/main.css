@@ -59,9 +59,9 @@
 }
 
 .scrollable-left {
-  direction: ltr; /* Scrollbar on the left */
-  overflow-y: scroll; /* Enable scrolling */
-  height: 100vh; /* Adjust the height */
+  direction: ltr; 
+  overflow-y: scroll; 
+  height: 100vh; 
 }
 
 
@@ -97,7 +97,7 @@
   }
 
   .input {
-    @apply w-full h-14  border py-4 px-5 focus:outline-none disabled:bg-[#ebebeb] placeholder:text-text-light rounded-lg focus:shadow-none focus:border-primary border-border-light  bg-website-white;
+    @apply w-full h-14  border px-2 focus:outline-none disabled:bg-[#ebebeb] placeholder:text-text-light rounded-lg focus:shadow-none focus:border-primary border-border-light  bg-website-white;
   }
 
   .base-btn {

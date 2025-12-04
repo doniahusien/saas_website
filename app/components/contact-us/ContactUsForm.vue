@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="container mx-auto mt-5 rounded-lg bg-semi-white pe-0">
+  <div class="container mx-auto mt-5 rounded-lg bg-website-white pe-0">
     <div class="grid grid-cols-1 gap-10 lg:grid-cols-2">
       <div class="flex flex-col p-5 items-start justify-center space-y-8">
         <h2
@@ -8,7 +8,7 @@
           {{ $t("TITLES.contact us") }}
         </h2>
         <p
-          class=" capitalize text-black"
+          class=" capitalize text-third"
         >
           {{ $t("LABELS.contatDesc") }}
         </p>
@@ -57,7 +57,7 @@
           <div
             class="phoneContainer flex min-h-17.5 rounded-2xl bg-primary p-3 transition-all duration-500 ease-in hover:ps-8">
             <div
-              class="hidden w-50 ps-2 text-white transition-all duration-500 ease-in"
+              class="hidden w-50 ps-2 text-website_white  transition-all duration-500 ease-in"
             >
               <p class="font-bold">{{ $t("FOOTER.call center") }}</p>
               <div v-if="appStore.settingsData" class="space-y-1">
@@ -82,10 +82,10 @@
               </div>
             </div>
             <div
-              class="flex size-12 items-center justify-center rounded-full bg-white"
+              class="flex size-12 items-center justify-center rounded-full bg-website_white"
             >
               <div class="strokeColor">
-                <Icon name="mdi:phone" class="size-7 text-primary" />
+                <Icon name="mdi:phone" class="size-7 text-white" />
               </div>
             </div>
           </div>

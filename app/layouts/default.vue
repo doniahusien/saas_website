@@ -62,13 +62,14 @@ watch(
 
 onMounted(async () => {
   await appStore.getCountries();
-  await appAuth.getProfile();
+  
   await appStore.getWebSettings();
   await appStore.getCmsPages();
   await appStore.getCarts();
   if (appAuth.userData) {
     await appStore.getNotifications();
   }
+  await appAuth.getProfile();
   isOnline.value = window.navigator.onLine;
   window.addEventListener("online", () => (isOnline.value = true));
   window.addEventListener("offline", () => (isOnline.value = false));

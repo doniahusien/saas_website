@@ -8,10 +8,10 @@
           @focus="isOpen = true"
           @blur="isOpen = false"
           :disabled="disabled"
-          class="appearance-none w-full bg-transparent  h-14 pb-2 pr-8 font-medium focus:outline-none transition-all disabled:cursor-not-allowed "
+          class="appearance-none w-full bg-transparent  h-14 pr-8 font-medium focus:outline-none transition-all disabled:cursor-not-allowed "
           :class="[
             isRes ? 'border-white placeholder:text-black' : 'input',
-            errorCode ? 'border-b-2 border-red-500' : ' border-border-light',
+            errorCode ? 'border-b-2 border-red-500' : 'border border-border-light',
             disabled ? 'text-gray-700 border-b-2 border-border-light' : 'text-black input'
           ]"
         >

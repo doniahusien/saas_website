@@ -27,7 +27,7 @@
             v-html="items.title || items.heading"
           ></h3>
           <div
-            class=" font-thin text-black"
+            class=" font-thin text-third"
             v-html="items.desc ?? items.description"
           ></div>
 
