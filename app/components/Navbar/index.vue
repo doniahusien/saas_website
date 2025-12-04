@@ -559,6 +559,7 @@ function deleteAccount() {
     });
 }
 
+
 function confirmLogout() {
   appAuth.logout();
 
@@ -567,6 +568,7 @@ function confirmLogout() {
     profileMenu.value = false;
   }, 300);
 }
+
 onMounted(() => {
   if (!selectedBranch.value) {
     showSelect.value = true;

@@ -46,5 +46,27 @@ export const useAppAuth = defineStore('authStore', {
       useCookie('saas_user_data').value = null
       setTimeout(() => reloadNuxtApp(), 300)
     },
+      async logout() {
+
+        const {$api} = useNuxtApp()
+        $api.post('auth/logout').then(() => {
+          this.token = null
+          this.userData = null
+          useCookie('jwt_token_saas').value = null
+          useCookie('saas_user_data').value = null
+          useCookie('user_guest_token').value = null
+          setTimeout(() => reloadNuxtApp(), 200)
+
+
+        }).catch(() => {
+          this.token = null
+          this.userData = null
+          useCookie('jwt_token_saas').value = null
+          useCookie('saas_user_data').value = null
+          useCookie('user_guest_token').value = null
+          setTimeout(() => reloadNuxtApp(), 400)
+        })
+      
+    },
   },
 });

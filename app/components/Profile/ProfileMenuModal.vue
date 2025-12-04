@@ -97,14 +97,12 @@
     :class="userData.notifiable ? 'bg-blue-600' : 'bg-gray-300'"
     class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer"
   >
-    <!-- LTR (English) -->
     <span
       v-if="$i18n.locale == 'en'"
       :class="userData.notifiable ? 'translate-x-6' : 'translate-x-0.5'"
       class="pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out"
     />
 
-    <!-- RTL (Arabic) -->
     <span
       v-else
       :class="userData.notifiable ? '-translate-x-6' : '-translate-x-0.5'"
@@ -245,6 +243,6 @@ const emit = defineEmits([
 
 <style lang="scss">
 .walletLoader {
-  @apply box-border inline-block size-[12px] animate-spin rounded-full border-[2px] border-success border-b-transparent;
+  @apply box-border inline-block size-3 animate-spin rounded-full border-[2px] border-success border-b-transparent;
 }
 </style>

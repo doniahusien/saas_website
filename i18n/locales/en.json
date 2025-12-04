@@ -313,6 +313,7 @@
     "The phone has been successfully changed": "The phone has been successfully changed"
   },
   "LABELS": {
+    "message is required":"message is required",
     "Default address": "Default address",
     "title": "Title",
     "buildingNo": "Building Number",
