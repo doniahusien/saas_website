@@ -85,8 +85,8 @@
         @selectAddress="handleAddressSelect"
       />
 
-      <ModalCreditModal v-model="openCreditModal" />
-
+<!--       <ModalCreditModal v-model="openCreditModal" />
+ -->
       <ModalOrderSuccessModal
         :show="showSuccessModal"
         :orderId="newOrderId"
@@ -148,6 +148,7 @@ const authStore = useAppAuth();
 const userWallet = computed(() => authStore.userData?.wallet ?? 0);
 const showSuccessModal = ref(false);
 const newOrderId = ref(null);
+const isLoading = ref(false);
 
 const handleBranchSelect = (branch: Branch) => {
   selectedBranch.value = branch;
@@ -171,9 +172,115 @@ const loadAddresses = async () => {
 
 onMounted(() => {
   loadAddresses();
+  
+  if (route.query.session_id) {
+    handleSubmitCredit();
+  }
 });
 
 const confirmOrder = async (values) => {
+  if (paymentType.value === "card" || paymentType.value === "credit") {
+    const total = totalPrice.value;
+    const points = availablePoints.value;
+    const wallet = availableWallet.value;
+
+    const payType: any[] = [];
+    let remaining = total;
+
+    if (useLoyaltyPoints.value && points > 0 && remaining > 0) {
+      const usedPoints = Math.min(points, remaining);
+      payType.push({ points: usedPoints });
+      remaining -= usedPoints;
+    }
+
+    if (useWallet.value && wallet > 0 && remaining > 0) {
+      const used = Math.min(wallet, remaining);
+      payType.push({ wallet: used });
+      remaining -= used;
+    }
+
+    if (remaining > 0) {
+      payType.push({ credit: Number(remaining.toFixed(2)) });
+    }
+
+    if (payType.length === 0) {
+      payType.push({ credit: Number(total.toFixed(2)) });
+    }
+
+    const addressId =
+      orderType.value === "delivery"
+        ? selectedAddress.value?.id ?? ""
+        : undefined;
+
+    const storeId =
+      orderType.value === "take_away" ? selectedBranch.value?.id : undefined;
+
+    let orderDate: string | undefined;
+    let orderTime: string | undefined;
+
+    if (selectedSchedule.value === "schedule") {
+      if (dateValue.value) {
+        try {
+          let dateObj;
+          if (dateValue.value instanceof Date) {
+            dateObj = dateValue.value;
+          } else if (typeof dateValue.value === "string") {
+            dateObj = new Date(dateValue.value);
+          } else if (Array.isArray(dateValue.value)) {
+            dateObj = dateValue.value[0];
+          }
+
+          if (dateObj && dateObj instanceof Date && !isNaN(dateObj.getTime())) {
+            const day = String(dateObj.getDate()).padStart(2, "0");
+            const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+            const year = dateObj.getFullYear();
+            orderDate = `${year}-${month}-${day}`;
+          }
+        } catch (e) {
+          console.error("Date formatting error:", dateValue.value, e);
+        }
+      }
+
+      if (timeValue.value) {
+        try {
+          let timeObj = timeValue.value;
+          if (typeof timeObj === "object" && "hours" in timeObj) {
+            const hours24 = timeObj.hours;
+            const minutes = timeObj.minutes;
+            const period = hours24 >= 12 ? "PM" : "AM";
+            const hours12 = hours24 % 12 || 12;
+            const formattedHours = String(hours12).padStart(2, "0");
+            const formattedMinutes = String(minutes).padStart(2, "0");
+            orderTime = `${formattedHours}:${formattedMinutes} ${period}`;
+          } else if (timeObj instanceof Date && !isNaN(timeObj.getTime())) {
+            const hours24 = timeObj.getHours();
+            const minutes = timeObj.getMinutes();
+            const period = hours24 >= 12 ? "PM" : "AM";
+            const hours12 = hours24 % 12 || 12;
+            const formattedHours = String(hours12).padStart(2, "0");
+            const formattedMinutes = String(minutes).padStart(2, "0");
+            orderTime = `${formattedHours}:${formattedMinutes} ${period}`;
+          }
+        } catch (e) {
+          console.error("Time formatting error:", timeValue.value, e);
+        }
+      }
+    }
+
+    const body = {
+      order_type: orderType.value === "takeaway" ? "take_away" : orderType.value,
+      is_schedule: selectedSchedule.value === "schedule",
+      pay_type: payType,
+      order_date: orderDate,
+      order_time: orderTime,
+      address_id: addressId,
+      store_id: storeId,
+    };
+
+    await payWithStripe(body);
+    return;
+  }
+
   submitting.value = true;
   try {
     const form = new FormData();
@@ -300,11 +407,6 @@ const confirmOrder = async (values) => {
   }
 };
 
-watch(paymentType, (val) => {
-  if (val === "card") {
-    openCreditModal.value = true;
-  }
-});
 
 watch(availableWallet, (val) => {
   if (!val || Number(val) <= 0) {
@@ -313,8 +415,97 @@ watch(availableWallet, (val) => {
 });
 
 const router = useRouter();
+const route = useRoute();
+const pending = ref(false);
+const token = computed(() => authStore.token || useCookie("session_user_token").value);
 
-/* const handleCancelOrder = () => {
-  router.push("/");
-}; */
+const payWithStripe = async (body: any) => {
+  pending.value = true;
+  submitting.value = true;
+
+  try {
+    const response = await $fetch("/api/create-order", {
+      method: "POST",
+      body: body,
+      headers: {
+        Authorization: token.value ? `Bearer ${token.value}` : "",
+      },
+    });
+
+    pending.value = false;
+    submitting.value = false;
+
+    if (response.url) {
+      window.location.href = response.url;
+    } else {
+      toast.error("Something went wrong with payment");
+    }
+  } catch (error: any) {
+    pending.value = false;
+    submitting.value = false;
+    toast.error(error.message || "Payment failed");
+  }
+};
+
+const handleSubmitCredit = async () => {
+  const query = route.query;
+
+  const orderType = query.order_type as string;
+  const pay_type = query.pay_type as string;
+  const schedule = query.is_schedule === "true";
+  const paymentMethods = query.paymentMethods as string;
+  const date = query.order_date as string;
+  const time = query.order_time as string;
+  const addressId = query.address_id as string || authStore.userData?.default_address?.id;
+  const storeId = query.store_id as string;
+  const session_id = query.session_id as string;
+
+  isLoading.value = true;
+  const frmData = new FormData();
+
+  if (paymentMethods === "points") {
+    frmData.append("has_loyal", "1");
+  } else {
+    frmData.append("has_loyal", "0");
+  }
+
+  if (paymentMethods === "wallet") {
+    frmData.append("has_wallet", "1");
+  } else {
+    frmData.append("has_wallet", "0");
+  }
+
+  frmData.append("order_type", orderType);
+  frmData.append("is_schedule", schedule ? "1" : "0");
+
+  if (pay_type) {
+    frmData.append("pay_type", pay_type);
+  }
+  if (session_id) {
+    frmData.append("stripe_transaction_id", session_id);
+  }
+
+  if (schedule) {
+    if (date) frmData.append("order_date", date);
+    if (time) frmData.append("order_time", time);
+  }
+
+  if (orderType === "delivery" && addressId) {
+    frmData.append("address_id", addressId);
+  } else if (storeId) {
+    frmData.append("store_id", storeId);
+  }
+
+  try {
+    const response = await api.post("/orders", frmData);
+    newOrderId.value = response.data.data.id;
+    showSuccessModal.value = true;
+  /*   router.push(`/orders/${newOrderId.value}`); */
+  } catch (e: any) {
+    isLoading.value = false;
+    toast.error(e.response?.data?.message || "Order creation failed");
+  }
+};
+
+
 </script>
