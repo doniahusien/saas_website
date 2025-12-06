@@ -86,7 +86,7 @@
             </div>
           </div>
         </div>
-        <contact-map :locations="locations" class="h-full wow fadeInRight" />
+        <contact-map :locations="locations" class="h-full " />
       </div>
     </div>
   </div>
@@ -124,9 +124,11 @@ const message_types = [
 
 defineProps({
   locations: {
-    required: true,
+    type: Array,
+    default: () => [],
   },
 });
+
 
 configure({
   validateOnBlur: true,
@@ -139,21 +141,27 @@ const schema = yup.object().shape({
   full_name: yup
     .string()
     .required(t("ERRORS.isRequired", { name: t("LABELS.fullname") })),
+
   phone: yup
     .string()
     .required(t("ERRORS.isRequired", { name: t("LABELS.phone") }))
-    .test((value, context) => {
-      let parent =
-        context.parent.phone_code?.phone_limit ||
-        context.parent.phone_code?.phone_code?.phone_limit;
-      if (value.toString().length > parent || value.toString().length < parent) {
-        return context.createError({
-          message: t("ERRORS.phoneLength", { value: parent }),
-          path: context.path,
-        });
-      } else {
-        return true;
+    .test('phone-length', function (value) {
+      const { parent, path, createError } = this;
+      const phoneLimit = parent?.phone_code?.phone_limit ?? parent?.phone_code?.phone_code?.phone_limit;
+
+      if (!phoneLimit) return true;
+      const digits = value ? String(value).replace(/\D/g, '') : '';
+
+      if (!digits) {
+        return createError({ message: t("ERRORS.isRequired", { name: t("LABELS.phone") }), path });
       }
+
+      if (digits.length !== Number(phoneLimit)) {
+        const msg = t("ERRORS.phoneLength", { value: phoneLimit }) || t("invalidPhoneLength", { value: phoneLimit }) || `${t("LABELS.phone")} length must be ${phoneLimit}`;
+        return createError({ message: msg, path });
+      }
+
+      return true;
     })
     .nullable(),
   phone_code: yup

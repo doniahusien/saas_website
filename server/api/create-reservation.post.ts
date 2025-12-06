@@ -5,10 +5,10 @@ export default defineEventHandler(async event => {
   try {
     const origin = event.req.headers.origin || `http://${event.req.headers.host}`;
 
-    const successUrl = new URL(`${origin}/reservation/${body}`);
+    const successUrl = `${origin}/reservations/${body}?session_id={CHECKOUT_SESSION_ID}`;
 
     const session = await stripe.checkout.sessions.create({
-      success_url: `${successUrl}&session_id={CHECKOUT_SESSION_ID}`,
+      success_url: successUrl,
       cancel_url: `${runtimeConfig.public.baseURL}/error`,
       line_items: [
         {

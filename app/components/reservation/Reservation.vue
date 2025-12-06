@@ -2,7 +2,7 @@
   <div class="fadeInLeft px-8 md:px-6 lg:px-0 space-y-5" v-if="items">
     <div class="flex flex-wrap justify-between">
       <h2 class="flex items-center gap-2 text-xl font-semibold">
-        <Icon name="bx:map" class="size-6 text-black" />
+        <Icon name="bx:map" class="size-6 " />
         {{
           items.order_type == "delivery"
             ? $t("TITLES.Shipping Address")
@@ -54,18 +54,44 @@
       </div>
     </div>
     <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
-      <div class="space-y-2">
+      
+        <div class="space-y-2">
         <h2 class="flex items-center gap-2 text-xl font-semibold">
-          <Icon name="mdi:phone" class="size-5" />
+           <Icon name="mdi:phone" class="size-5 text-third" />
           {{ $t("TITLES.Call Center") }}
         </h2>
-        <div
-          class="flex h-20 flex-wrap items-center justify-between rounded-lg bg-white px-2 md:px-6"
-        >
-          <div>
-            <div class="text-sm text-placeholder font-medium">
-              {{ items.store.phone }}
-            </div>
+        <div class="rounded-lg bg-white px-2 py-4 md:px-6">
+          <div
+            class="flex min-h-12.5 flex-wrap items-center justify-between text-third"
+          >
+            <ul class="w-full space-y-3" v-if="appStore.settingsData">
+              <li
+                class="flex flex-wrap items-center justify-between"
+                v-for="phone in appStore.settingsData.contact_us?.phone_number"
+                :key="phone.id"
+              >
+                <div class="flex items-center gap-2 text-third">
+                  <img
+                    :src="phone.flag"
+                    alt="flag"
+                    class="h-4.5 w-5 rounded-sm object-cover"
+                  />
+                  <a :href="`tel:${phone.phone}`" class="text-sub">
+                    +{{ phone.phone_code }} - {{ phone.phone }}
+                  </a>
+                </div>
+                <div>
+                  <a :href="`tel:${phone.phone_code + phone.phone}`">
+                    <div
+                      class="flex size-8 items-center justify-center rounded-full bg-primary"
+                    >
+                                    <Icon name="mdi:phone" class="size-4" />
+
+                    </div>
+                  </a>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -208,18 +234,7 @@
   </teleport>
 
   <teleport to="body">
-    <general-modal
-      :persist="true"
-      classes="!w-full md:!max-w-[650px] !min-h-[600px]"
-      titleClasses="!text-2xl"
-      @close="showCardModal = false"
-      v-if="showCardModal"
-      :title="t('TITLES.Credit Card')"
-    >
-      <div>
-        <checkout-payment-method-form @submit="showSuccessModal" />
-      </div>
-    </general-modal>
+    <CreditModal v-model="showCardModal" @select="showSuccessModal" />
   </teleport>
 </template>
 

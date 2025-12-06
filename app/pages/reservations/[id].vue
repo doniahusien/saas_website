@@ -18,7 +18,7 @@
     >
       <div class="space-y-2">
         <img
-          src=""
+          src="/images/success.gif"
           alt="success"
           class="m-auto size-36"
         />
@@ -42,7 +42,7 @@ const orderLoading = ref(false);
 const loading = ref(false);
 const item = ref(null);
 const i18n = useI18n();
-const token = useCookie("session_user_token");
+const token = useCookie("jwt_token_saas");
 const successModal = ref(false);
 
 
@@ -53,46 +53,46 @@ function updateReservationDetails(values) {
 function getOrderDetails() {
   orderLoading.value = true;
   $api
-    .get(`reservations/${route.params.id}`)
+    .get(`/reservations/${route.params.id}`)
     .then((res) => {
       item.value = res.data.data;
       orderLoading.value = false;
-      if (route.query.session_id) {
-        successModal.value = true;
-        setTimeout(() => {
-          successModal.value = false;
-        }, 3000);
-      }
     })
     .catch(() => (orderLoading.value = false));
 }
 
 const pending = ref(false);
-/* const creditPay = async (body) => {
+
+const creditPay = async (body) => {
   pending.value = true;
-  const response = await $fetch("/api/create-reservation", {
-    method: "POST",
-    body: body,
-    headers: {
-      Authorization: `Bearer ${token.value}`,
-    },
-  });
+  try {
+    const response = await $fetch("/api/create-reservation", {
+      method: "POST",
+      body: body,
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+    });
 
-  pending.value = false;
+    pending.value = false;
 
-  if (response.url) {
-    window.location.href = response.url;
-  } else {
-    alert("Something went wrong");
+    if (response.url) {
+      window.location.href = response.url;
+    } else {
+      toast.error("Something went wrong");
+    }
+  } catch (error) {
+    pending.value = false;
+    toast.error(error.message || "Payment failed");
   }
-}; */
+};
 
-/* function completePayment(id, session_id) {
+function completePayment(id, session_id) {
   const frmData = new FormData();
   frmData.append("transactionId", session_id);
   loading.value = true;
-  axios
-    .put(`reservations/${id}/is-payment`, frmData)
+  $api
+    .put(`/reservations/${id}/is-payment`, frmData)
     .then((res) => {
       successModal.value = true;
       setTimeout(() => {
@@ -104,18 +104,16 @@ const pending = ref(false);
     })
     .catch((e) => {
       loading.value = false;
-      toast.error(e.response.data.message);
+      toast.error(e.response.data.message || "Payment completion failed");
     });
-} */
+}
 
 onMounted(() => {
   getOrderDetails();
-  if (route.params.id) {
-    const paramId = route.params.id;
-    const [id, session_id] = paramId.split("&session_id=");
-    if (session_id) {
-      completePayment(id, session_id);
-    }
+  if (route.query.session_id) {
+    setTimeout(() => {
+      completePayment(route.params.id, route.query.session_id);
+    }, 500);
   }
 });
 </script>

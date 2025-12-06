@@ -62,7 +62,7 @@
           </div>
 
           <div class="space-y-3">
-            <p class="text-base md:text-2xl font-bold">
+            <p class="text-base md:text-2xl font-semibold">
               {{ $t("TITLES.Date Of Order") }}
             </p>
 

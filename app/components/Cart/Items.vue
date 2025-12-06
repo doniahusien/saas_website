@@ -68,7 +68,7 @@
 
     <div
       v-else
-      class="flex flex-col h-80 justify-center gap-5 items-center text-center text-secondary"
+      class="flex h-screen flex-col items-center justify-center px-4 "
     >
       <p class="font-semibold text-2xl">{{ $t("cart.empty") }}</p>
       <p class="text-lg">{{ $t("cart.addItems") }}</p>

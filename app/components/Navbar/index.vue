@@ -32,7 +32,8 @@
               {{ $t("nav.reservation") }}
             </button>
           </li>
-          <li v-for="page in cmsPage" :key="page.id">
+           <li v-for="page in cmsPage" :key="page.id"
+            :class="[isActive(localePath(`/cms/${page.slug}`)) ? 'text-primary' : '']">
             <NuxtLink :to="localePath(`/cms/${page.slug}`)">
               {{ page.title }}
             </NuxtLink>
@@ -76,7 +77,7 @@
 
           <button
             @click="showSelect = true"
-            class="hidden cursor-pointer lg:flex text-left items-center gap-3 bg-white"
+            class="hidden cursor-pointer lg:flex text-left items-center gap-3 "
           >
             <NuxtImg
               v-if="selectedBranch?.image"

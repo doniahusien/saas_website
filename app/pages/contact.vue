@@ -8,7 +8,6 @@
         v-if="appStore.branchLoading"
         class="grid gap-2 md:grid-cols-2 2xl:grid-cols-3"
       >
-       <!--  <skelton-card v-for="n in 3" :key="n" /> -->
       </div>
 
       <div
