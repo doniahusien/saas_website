@@ -393,7 +393,16 @@
     "verificationCode": "Verification code must be 4 digits"
   },
   "FOOTER":{
-    "call center":"call center"
+    "call center":"call center",
+    "sections": "Sections",
+    "menu": "Menu",
+    "offers": "Offers",
+    "reservation": "Reservation",
+    "favorites": "Favorites",
+    "Links": "Links",
+    "FAQs": "FAQs",
+    "contact": "Contact",
+    "rights": "All rights reserved"
   }
 
 }

@@ -1,6 +1,10 @@
 <template>
-  <div v-if="sliders?.length" class="relative">
+  <div
+    v-if="sliders?.length && appStore.settingsData.website_customization?.slider_availability"
+    class="relative"
+  >
     <Swiper
+      v-if="appStore.settingsData.website_customization?.slider_multi_image"
       :modules="[Navigation, Autoplay]"
       :slides-per-view="1"
       :loop="true"
@@ -40,14 +44,45 @@
         </div>
       </SwiperSlide>
     </Swiper>
-    <div v-if="contactItems.length" class="absolute bottom-8 start-12 flex gap-3 z-20">
-      <template v-for="(item, index) in contactItems" :key="index">
-        <NuxtLink
-          :to="item.link"
+    <template v-else>
+      <div
+        class="relative bg-cover bg-no-repeat"
+        :style="{ backgroundImage: `url('${sliders[0]?.image}')` }"
+      >
+        <div class="overlay"></div>
+        <div
+          class="absolute inset-0 flex flex-col items-center justify-center text-center text-white z-10 px-6 h-screen"
+        >
+          <div
+            v-html="sliders[0]?.title"
+            class="font-allura text-4xl md:text-6xl lg:text-7xl"
+          ></div>
+
+          <div
+            v-html="sliders[0]?.desc"
+            class="text-sm md:text-base lg:text-lg mb-6 opacity-90"
+          ></div>
+
+          <NuxtLink
+            v-if="sliders[0]?.link"
+            :href="sliders[0].link"
+            class="text-sm md:text-base cursor-pointer flex items-center gap-2"
+          >
+            <span class="border-b-2">{{ $t("Discover More") }}</span>
+            <Icon name="lucide:arrow-up-right" class="size-4" />
+          </NuxtLink>
+        </div>
+      </div>
+    </template>
+    <div v-if="socialItems.length && appStore.settingsData?.social_media_links" class="absolute bottom-8 start-12 flex gap-3 z-20">
+      <template v-for="(item, index) in socialItems" :key="index">
+        <a
+          :href="item.link"
+          target="_blank"
           class="size-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/30 transition"
         >
           <Icon :name="item.icon" class="text-xl text-white" />
-        </NuxtLink>
+        </a>
       </template>
     </div>
     <div class="hidden absolute bottom-8 end-12 md:flex gap-3 z-30">
@@ -71,8 +106,11 @@
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Autoplay } from "swiper/modules";
+import { useAppStore } from "~/store/app";
 import "swiper/css";
 import "swiper/css/navigation";
+
+const appStore = useAppStore();
 
 const prevEl = ref(null);
 const nextEl = ref(null);
@@ -89,54 +127,36 @@ const onSwiperInit = (swiper) => {
   swiper.navigation.init();
   swiper.navigation.update();
 };
+
 defineProps({
   sliders: {
     type: Array,
     required: true,
   },
 });
-const { data } = await useAsyncData<ApiResponse<ContactData>>("contact_data", () =>
-  useGlobalFetch<ApiResponse<ContactData>>("contact_data/web")
-);
 
-const contact = computed(() => data.value?.data || []);
-
-const contactItems = computed(() => {
+const socialItems = computed(() => {
   const items = [];
+  const links = appStore.settingsData?.social_media_links;
 
-  contact.value.forEach((entry) => {
-    const key = entry.key;
-    const value = entry.value;
-
-    if (key === "facebook" && value) {
-      items.push({ icon: "mdi:facebook", link: value });
-    }
-    if (key === "instagram" && value) {
-      items.push({ icon: "mdi:instagram", link: value });
-    }
-    if (key === "x" && value) {
-      items.push({ icon: "mdi:twitter", link: value });
-    }
-
-    if (key === "email" && Array.isArray(value) && value[0]) {
-      items.push({ icon: "mdi:email-outline", link: `mailto:${value[0]}` });
-    }
-
-    if (key === "phone_number" && Array.isArray(value) && value[0]) {
-      const phone = value[0];
-      items.push({
-        icon: "mdi:phone",
-        link: `tel:+${phone.phone_code}${phone.phone}`,
-      });
-    }
-  });
+  if (links?.facebook) {
+    items.push({ icon: "mdi:facebook", link: links.facebook });
+  }
+  if (links?.instagram) {
+    items.push({ icon: "mdi:instagram", link: links.instagram });
+  }
+  if (links?.twitter) {
+    items.push({ icon: "mdi:twitter", link: links.twitter });
+  }
+  if (links?.linkedin) {
+    items.push({ icon: "mdi:linkedin", link: links.linkedin });
+  }
 
   return items;
 });
 </script>
 
 <style scoped>
-/* BUTTERY SMOOTH HARDWARE ACCELERATION */
 .swiper,
 .swiper-wrapper,
 .swiper-slide,
@@ -151,7 +171,6 @@ const contactItems = computed(() => {
   pointer-events: none;
 }
 
-/* Subtle fade-in animation */
 .animate-fade-in {
   animation: fadeIn 1.2s ease-out forwards;
 }
