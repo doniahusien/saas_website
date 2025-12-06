@@ -2,7 +2,7 @@
   <section class="container mx-auto px-6 md:px-0">
     <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
   
-        <div class="w-140 ms-auto order-1 md:order-2">
+        <div class="w-full md:w-140 ms-auto order-1 md:order-2">
           <NuxtImg
             :src="appData.image"
             alt="bg-story"

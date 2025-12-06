@@ -65,18 +65,99 @@
 }
 
 
-
 @font-face {
-  font-family: "Allura";
-  src: url("/fonts/Allura-Regular.ttf") format("truetype");
   font-display: swap;
+  font-family: 'Allura';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/Allura-Regular.ttf') format('woff2');
+}
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 300;
+  src: url('/fonts/switzer/Switzer-Light.otf') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/switzer/Switzer-Regular.otf') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/fonts/switzer/Switzer-Medium.otf') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
+
+/* Switzer-600 - latin */
 @font-face {
-  font-family: "Switzer";
-  src: url("/fonts/Switzer-Regular.otf") format("opentype");
-  font-display: swap;
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 600;
+  src: url('/fonts/switzer/Switzer-Semibold.otf') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
+/* Switzer-700 - latin */
+
+/* Switzer-900 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/switzer/Switzer-Bold.otf') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+  @font-face {
+    font-family: "Din";
+    font-weight: 200;
+    src: url('/fonts/din/ultra-light.ttf');
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Din";
+    font-weight: 400;
+    src: url('/fonts/din/regular.ttf');
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Din";
+    font-weight: 500;
+    src: url('/fonts/din/medium.ttf');
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Din";
+    font-weight: 600;
+
+    src: url('/fonts/din/medium.ttf');
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Din";
+    font-weight: 700;
+
+    src: url('/fonts/din/bold.ttf');
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Din";
+    font-weight: 900;
+    src: url('/fonts/din/heavy.ttf');
+    font-display: swap;
+  }
+
 
 @layer base {
   body {
@@ -109,7 +190,7 @@
   }
 
   .icon {
-    @apply cursor-pointer flex items-center justify-center bg-secondary rounded-full size-12 md:size-16;
+    @apply cursor-pointer flex items-center justify-center bg-secondary rounded-full size-12 md:size-14;
   }
 
   .order-time {

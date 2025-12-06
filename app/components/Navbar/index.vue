@@ -1,9 +1,6 @@
 <template>
-  <nav
-    v-if="appStore.settingsData.website_customization?.top_bar_availability"
-    class="relative flex items-center justify-between px-8 md:px-16 py-5 bg-white shadow-sm"
-  >
-    <div class="flex items-center gap-8">
+  <nav v-if="appStore.settingsData.website_customization?.top_bar_availability" class="">
+    <div class="container mx-auto mt-2 flex items-center gap-3 py-5">
       <NuxtLink
         :to="localePath('/')"
         :class="
@@ -18,117 +15,115 @@
           class="size-18 object-contain"
         />
       </NuxtLink>
-      <ul class="hidden lg:flex flex-wrap gap-3 text-lg">
-        <li v-for="item in items" :key="item.to">
-          <NuxtLink
-            :to="item.to"
-            class="hover:text-primary transition-colors"
-            :class="[isActive(item.to) ? 'text-primary' : '']"
-          >
-            {{ item.label }}
-          </NuxtLink>
-        </li>
-        <li>
-          <button class="cursor-pointer" @click="showReservation = true">
-            {{ $t("nav.reservation") }}
-          </button>
-        </li>
-        <li v-for="page in cmsPage" :key="page.id">
-          <NuxtLink :to="localePath(`/cms/${page.slug}`)">
-            {{ page.title }}
-          </NuxtLink>
-        </li>
-      </ul>
-    </div>
 
-    <div class="flex items-center gap-4">
-      <ul class="text-primary flex justify-center items-center gap-3">
-        <button class="icon" @click.stop="openWishlist">
-          <Icon name="solar:heart-linear" class="size-7" />
-        </button>
-        <li @click.stop="openCart" class="icon">
-          <div class="relative inline-block">
-            <Icon name="solar:bag-5-outline" class="size-7" />
-            <span
-              v-if="cartCount > 0"
-              class="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full size-4 flex items-center justify-center px-1"
+      <div class="flex flex-1 items-center justify-between">
+        <ul class="hidden lg:flex flex-wrap gap-3 text-lg">
+          <li v-for="item in items" :key="item.to">
+            <NuxtLink
+              :to="item.to"
+              class="hover:text-primary transition-colors"
+              :class="[isActive(item.to) ? 'text-primary' : '']"
             >
-              {{ cartCount > 99 ? "99+" : cartCount }}
-            </span>
-          </div>
-        </li>
-        <li
-          class="icon"
-          v-if="isLoggedIn && userData?.notifiable"
-          @click.stop="openNotifications"
-        >
-          <Icon name="solar:bell-outline" class="size-7" />
-        </li>
-        <button
-          class="icon"
-          v-if="isLoggedIn"
-          @click.stop="
-            profileMenu = true;
-            getWallet();
-            getLoyalty();
-          "
-        >
-          <Icon name="mage:user" class="size-7" />
-        </button>
-      </ul>
+              {{ item.label }}
+            </NuxtLink>
+          </li>
+          <li>
+            <button class="cursor-pointer" @click="showReservation = true">
+              {{ $t("nav.reservation") }}
+            </button>
+          </li>
+          <li v-for="page in cmsPage" :key="page.id">
+            <NuxtLink :to="localePath(`/cms/${page.slug}`)">
+              {{ page.title }}
+            </NuxtLink>
+          </li>
+        </ul>
 
-      <button
-        @click="showSelect = true"
-        class="hidden cursor-pointer lg:flex text-left items-center gap-3 bg-white"
-      >
-        <NuxtImg
-          v-if="selectedBranch?.image"
-          :src="selectedBranch.image"
-          alt="branch"
-          class="size-16 rounded-full object-cover"
-        />
-        <div class="flex flex-col justify-between">
-          <p class="font-semibold text-base">
-            {{ selectedBranch?.name }}
-          </p>
-          <p class="text-sm text-placeholder">
-            {{ selectedBranch?.location_description }}
-            <!--  <Icon name="mdi-chevron-down" class="size-4" /> -->
-          </p>
+        <div class="flex ms-auto items-center gap-4">
+          <ul class="text-primary flex gap-3">
+            <button class="icon" @click.stop="openWishlist">
+              <Icon name="solar:heart-linear" class="size-6" />
+            </button>
+            <li @click.stop="openCart" class="icon">
+              <div class="relative inline-block">
+                <Icon name="solar:bag-5-outline" class="size-6" />
+                <span
+                  class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full size-4 flex items-center justify-center px-1"
+                >
+                  {{ cartCount > 99 ? "99+" : cartCount }}
+                </span>
+              </div>
+            </li>
+            <li
+              class="icon"
+              v-if="isLoggedIn && userData?.notifiable"
+              @click.stop="openNotifications"
+            >
+              <Icon name="solar:bell-outline" class="size-6" />
+            </li>
+            <button
+              class="icon"
+              v-if="isLoggedIn"
+              @click.stop="
+                profileMenu = true;
+                getWallet();
+                getLoyalty();
+              "
+            >
+              <Icon name="mage:user" class="size-6" />
+            </button>
+          </ul>
+
+          <button
+            @click="showSelect = true"
+            class="hidden cursor-pointer lg:flex text-left items-center gap-3 bg-white"
+          >
+            <NuxtImg
+              v-if="selectedBranch?.image"
+              :src="selectedBranch.image"
+              alt="branch"
+              class="size-16 rounded-full object-cover"
+            />
+            <div class="flex flex-col justify-between">
+              <p class="font-semibold text-base">
+                {{ selectedBranch?.name }}
+              </p>
+              <p class="text-sm text-placeholder">
+                {{ selectedBranch?.location_description }}
+                <!--  <Icon name="mdi-chevron-down" class="size-4" /> -->
+              </p>
+            </div>
+          </button>
+
+          <NuxtLink
+            v-if="!isLoggedIn"
+            :to="localePath('/auth/login')"
+            class="base-btn hidden lg:flex"
+          >
+            <Icon name="flowbite:arrow-left-to-bracket-outline" class="text-2xl" />
+            <span>{{ t("TITLES.log in") }}</span>
+          </NuxtLink>
+
+          <NuxtLink :to="switchPath" class="hidden lg:flex items-center text-primary">
+            <Icon name="fluent:globe-48-filled" class="size-5" />
+            <span> {{ t(`locale.${locale}`) }}</span>
+          </NuxtLink>
+
+          <button
+            @click="toggle"
+            class="cursor-pointer text-primary lg:hidden flex items-center justify-center size-10 rounded focus:outline-none z-999"
+          >
+            <Icon name="fe:bar" v-if="!isOpen" class="text-3xl" />
+            <Icon name="fe:close" v-else class="text-3xl" />
+          </button>
         </div>
-      </button>
-
-      <NuxtLink
-        v-if="!isLoggedIn"
-        :to="localePath('/auth/login')"
-        class="base-btn hidden lg:flex"
-      >
-        <Icon name="flowbite:arrow-left-to-bracket-outline" class="text-2xl" />
-        <span>{{ t("TITLES.log in") }}</span>
-      </NuxtLink>
-
-      <NuxtLink :to="switchPath" class="hidden lg:flex items-center text-primary">
-        <Icon name="fluent:globe-48-filled" class="size-5" />
-        <span> {{ t(`locale.${locale}`) }}</span>
-      </NuxtLink>
-
-      <button
-        @click="toggle"
-        class="cursor-pointer text-primary lg:hidden flex items-center justify-center size-10 rounded focus:outline-none z-60"
-      >
-        <span v-if="!isOpen" class="text-3xl">
-          <Icon name="fe:bar" />
-        </span>
-        <span v-else class="text-3xl">
-          <Icon name="fe:close" />
-        </span>
-      </button>
+      </div>
     </div>
 
     <transition name="fade">
       <div
         v-if="isOpen"
-        class="space-y-6 fixed inset-0 z-50 p-6 bg-white text-black lg:hidden overflow-y-auto"
+        class="space-y-6 inset-0 z-50 py-10 px-6 bg-white text-black lg:hidden overflow-y-auto relative"
       >
         <button
           @click="showSelect = true"
@@ -154,7 +149,7 @@
         <NuxtLink
           v-if="!isLoggedIn"
           :to="localePath('/auth/login')"
-          class="base-primary flex items-center gap-2"
+          class="base-btn flex items-center gap-2"
         >
           <Icon name="flowbite:arrow-left-to-bracket-outline" class="text-2xl" />
           <span>{{ t("TITLES.log in") }}</span>
