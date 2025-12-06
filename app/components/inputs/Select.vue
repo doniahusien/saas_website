@@ -11,6 +11,7 @@
             ? 'border-red-500 focus:ring-red-500'
             : 'input text-text-light'
         ]"
+        :style="meta.touched && meta.invalid ? { borderColor: '#ef4444' } : {}"
       >
         <option v-for="(opt, index) in options" :key="opt.id" :value="opt.id" :selected="index === 0">
           {{ opt.name }}

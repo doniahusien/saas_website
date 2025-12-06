@@ -299,6 +299,30 @@
         />
       </menus-side-menu>
     </teleport>
+    <teleport to="body">
+      <general-confirm
+        v-if="logoutModal"
+        :title="t('TITLES.Logout')"
+        :desc="t('TITLES.Are you sure you want to logout?')"
+        :confirm-btn="t('BUTTONS.logout')"
+        @close="logoutModal = false"
+        @confirm="confirmLogout"
+        :hideHeader="true"
+        classes="pt-4"
+      />
+    </teleport>
+    <teleport to="body">
+      <general-confirm
+        v-if="deleteModal"
+        :title="t('BUTTONS.deleteAccount')"
+        :desc="t('TITLES.Are you sure you want to delete your account?')"
+        :confirm-btn="t('BUTTONS.deleteAccount')"
+        @close="deleteModal = false"
+        @confirm="deleteAccount"
+        :hideHeader="true"
+        classes="pt-4"
+      />
+    </teleport>
   </nav>
 </template>
 

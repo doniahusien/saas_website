@@ -19,14 +19,16 @@
             class="input"
             :placeholder="placeholder || $t('LABELS.password')"
             :type="showPassword ? 'text' : 'password'"
+            :style="!meta.valid && meta.touched ? { borderColor: '#ef4444' } : {}"
           />
 
           <button
             type="button"
-            class="far absolute top-1/2 right-3 -translate-y-1/2"
-            :class="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+            class="absolute top-1/2 right-3 -translate-y-1/2"
             @click="togglePassword"
-          ></button>
+          >
+            <Icon :name="showPassword ? 'eye-slash' : 'eye'" />
+          </button>
 
           <button
             v-if="showCopy"

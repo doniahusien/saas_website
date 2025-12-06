@@ -8,12 +8,13 @@
           @focus="isOpen = true"
           @blur="isOpen = false"
           :disabled="disabled"
-          class="appearance-none w-full bg-transparent  h-16  font-medium focus:outline-none transition-all disabled:cursor-not-allowed text-text-light"
+          class="appearance-none w-full bg-transparent h-16 font-medium focus:outline-none transition-all disabled:cursor-not-allowed input"
           :class="[
-            isRes ? 'border-white placeholder:text-black' : 'input',
-            errorCode ? 'border-b-2 border-red-500' : 'border border-border-light',
-            disabled ? 'text-gray-700 border-b-2 border-border-light' : 'text-black input'
+            isRes ? 'border-0 border-b border-white placeholder:text-black' : '',
+            'border',
+            disabled ? 'text-gray-700 border-border-light' : 'text-text-light',
           ]"
+          :style="errorCode ? { borderColor: '#ef4444' } : {}"
         >
           <option
             v-for="country in countries"
@@ -42,11 +43,12 @@
           :placeholder="placeholder"
           :disabled="disabled"
           :readonly="disabled"
-          class="appearance-none w-full bg-transparent  h-16  pr-8 font-medium focus:outline-none transition-all disabled:cursor-not-allowed "
+          class="appearance-none w-full bg-transparent h-16 pr-8 font-medium focus:outline-none transition-all disabled:cursor-not-allowed input"
           :class="[
-            isRes ? 'border-b-2 border-white placeholder:text-black' : 'input',
-            errorCode ? 'border-b-2 border-red-500' : ' border-border-light',
-            disabled ? 'text-gray-700 border-b-2 border-border-light' : 'text-black input'
+            isRes ? 'border-0 border-b border-white placeholder:text-black' : '',
+            'border',
+            errorPhone ? 'border-red-500' : 'border-border-light',
+            disabled ? 'text-gray-700 border-border-light' : 'text-black',
           ]"
         />
         <VeeErrorMessage :name="phoneName" class="absolute top-full left-0 text-red-500 text-xs mt-0.5 whitespace-nowrap" />
@@ -138,5 +140,14 @@ select:disabled {
   background: transparent;
   border-width:1px;
   border-color: var(--color-placeholder);
+}
+
+input:focus:not(:disabled), select:focus:not(:disabled) {
+  border-color: #2563eb !important; /* blue-600 for focus, override if needed */
+  outline: none;
+}
+
+input.border-red-500, select.border-red-500 {
+  border-color: #ef4444 !important; /* red-500 for error, override if needed */
 }
 </style>

@@ -178,7 +178,7 @@
   }
 
   .input {
-    @apply w-full h-16  border p-5 focus:outline-none disabled:bg-[#ebebeb] placeholder:text-text-light rounded-lg focus:shadow-none focus:border-primary border-border-light  bg-website-white;
+    @apply w-full h-16  border p-5 focus:outline-none disabled:bg-[#ebebeb] placeholder:text-text-light rounded-lg focus:shadow-none focus:border-primary border-border-light text-lg  bg-website-white;
   }
 
   .base-btn {

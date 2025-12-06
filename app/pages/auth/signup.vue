@@ -1,5 +1,5 @@
 <template>
-  <h2 class="font-bold mb-7 text-3xl md:text-5xl">{{ $t("auth.createAccount") }}</h2>
+  <h2 class="font-medium mb-2 text-3xl md:text-4xl">{{ $t("auth.createAccount") }}</h2>
 
   <VeeForm class="space-y-4 " @submit="handleSubmit" :validation-schema="schema">
       <inputsBaseInput id="name" name="name" :placeholder="t('auth.name')" />

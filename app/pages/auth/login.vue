@@ -1,7 +1,7 @@
 <template>
   <div class="w-full space-y-3">
-    <h2 class="font-bold text-text text-2xl md:text-5xl">{{ t("auth.welcomeBack") }}</h2>
-    <p class="text-text-light text-base mb-5">
+    <h2 class="font-medium text-text text-2xl md:text-4xl">{{ t("auth.welcomeBack") }}</h2>
+    <p class="text-text-light text-base mb-2">
       {{ t("auth.enterCredentials") }}
     </p>
       <VeeForm class="space-y-7"  :validation-schema="schema" @submit="onSubmit">

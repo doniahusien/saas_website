@@ -27,6 +27,7 @@
           @input="$emit('update:value', $event.target.value)"
           class="resize-none input h-40!"
           :rows="rows"
+          :style="!meta.valid && meta.touched ? { borderColor: '#ef4444' } : {}"
         ></textarea>
 
         <input
@@ -47,6 +48,7 @@
           :autocomplete="autocomplete"
           :readonly="lockInput"
           @focus="lockInput = false; $emit('focus')"
+          :style="!meta.valid && meta.touched ? { borderColor: '#ef4444' } : {}"
         />
         <div v-if="prepend" class="prepend">
           <slot name="prepend"></slot>

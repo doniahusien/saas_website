@@ -1,6 +1,6 @@
 <template>
   <div class="w-full space-y-5">
-     <h2 class="font-bold text-3xl md:text-5xl">
+     <h2 class="font-medium text-3xl md:text-4xl">
     {{ t("auth.forgotPasswordTitle") }}
   </h2>
 

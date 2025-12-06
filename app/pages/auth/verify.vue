@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-5 w-full">
 
-    <h2 class="font-bold text-3xl md:text-5xl">
+    <h2 class="font-medium text-3xl md:text-4xl">
       {{ t("auth.verifyCode") }}
     </h2>
     <p class="text-text-light text-base md:text-lg ">

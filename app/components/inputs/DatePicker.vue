@@ -9,7 +9,7 @@
       :min-date="minDate"
       :placeholder="placeholder"
       class="w-full datepicker-wrapper"
-      :class="{ 'datepicker-checkout': props.checkout }"
+      :class="[{ 'datepicker-checkout': props.checkout }, isError ? 'datepicker-error' : '']"
       input-class="datepicker-input"
     >
       <template #input-icon>
@@ -45,7 +45,9 @@ const props = defineProps({
 
 const { locale } = useI18n();
 const dateFnsLocale = computed(() => (locale.value === "ar" ? ar : en));
-const { value: internalValue } = useField(props.name);
+const { value: internalValue, meta } = useField(props.name);
+const isError = computed(() => meta.touched && !meta.valid);
+
 </script>
 
 <style scoped>
@@ -102,5 +104,9 @@ const { value: internalValue } = useField(props.name);
   right: auto !important;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.datepicker-error :deep(.dp__input) {
+  border-color: #ef4444 !important;
 }
 </style>
