@@ -1,6 +1,6 @@
 <template>
   <div v-if="offers.length" class="container mx-auto px-6 md:px-0">
-    <div class="grid grid-cols-2 items-center">
+    <div class="grid grid-cols-2 items-center"  v-if="appStore.settingsData.website_customization?.offers == 'show'">
       <h2 class="text-2xl md:text-3xl lg:text-5xl font-semibold">
         {{ $t("offers.title") }}
       </h2>
@@ -58,7 +58,8 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay, FreeMode } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
-
+import { useAppStore } from "~/store/app";
+const appStore = useAppStore();
 const { t, locale } = useI18n();
 const localePath = useLocalePath();
 const isRTL = computed(() => locale.value === "ar");

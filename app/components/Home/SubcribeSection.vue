@@ -1,6 +1,6 @@
 <template>
-  <section class="container mx-auto px-6 md:px-0">
-    <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
+  <section class="container mx-auto px-6 md:px-0 bg-[url('/images/bg/bg4.png')] bg-bottom-left bg-no-repeat">
+    <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-10 ">
       <div class="w-full md:w-140 me-auto">
         <NuxtImg
           :src="subscriptionContent.image"

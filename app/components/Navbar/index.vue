@@ -139,7 +139,7 @@
             <p class="font-semibold text-base">
               {{ selectedBranch?.name }}
             </p>
-            <p class="text-sm text-placeholder">
+            <p class="text-sm text-third">
               {{ selectedBranch?.location_description }}
               <!--  <Icon name="mdi-chevron-down" class="size-4" /> -->
             </p>
@@ -192,6 +192,7 @@
         <GeneralBookForm @close="showReservation = false" />
       </general-modal>
     </teleport>
+    
     <teleport to="body">
       <favourite-modal v-if="wishlistMenu" @close="wishlistMenu = false" />
     </teleport>

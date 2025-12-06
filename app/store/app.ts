@@ -248,7 +248,7 @@ export const useAppStore = defineStore("app", {
     cartCount: 0,
     availablePoints: 0,
     availableWallet: 0,
-     unreadNotification: 0,
+    unreadNotification: 0,
     product_fav: null,
     product_fav_status: null,
     branchLoading: false,

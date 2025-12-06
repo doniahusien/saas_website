@@ -25,12 +25,12 @@
         <div v-html="about.desc" class="space-y-4 text-base md:text-lg text-third">
          
         </div>
-        <NuxtLink
+       <!--  <NuxtLink
           to="/about"
           class="rounded-full font-medium px-8 py-3 border border-primary text-primary hover:bg-primary hover:text-white transition"
         >
           {{ $t("ourStory.cta") }}
-        </NuxtLink>
+        </NuxtLink> -->
       </div>
     </div>
   </section>

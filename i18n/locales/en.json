@@ -346,6 +346,7 @@
     "loyalty Card": "Loyalty Card",
     "wallet": "Wallet",
     "faqs": "FAQs",
+    "no data in faq": "No data in FAQs",
     "address": "Address",
     "no orders": "No Orders",
     "name": "Name",
@@ -365,6 +366,9 @@
     "phoneCode": "Country code"
   },
   "faq": {
+    "title": "FAQs"
+  },
+  "faqs": {
     "title": "FAQs"
   },
   "BUTTONS": {

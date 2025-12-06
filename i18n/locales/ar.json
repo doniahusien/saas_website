@@ -331,6 +331,7 @@
     "loyalty Card": "بطاقة الولاء",
     "wallet": "المحفظة",
     "faqs": "الأسئلة الشائعة",
+    "no data in faq": "لا توجد بيانات في الأسئلة الشائعة",
     "address": "العناوين",
     "no orders": "لا يوجد طلبات",
     "successful": "تم بنجاح",
@@ -349,6 +350,9 @@
     "Entry new phone number": "أدخل رقم هاتف جديد",
     "phone": "رقم الهاتف",
     "phoneCode": "رمز الدولة"
+  },
+  "faqs": {
+    "title": "الأسئلة الشائعة"
   },
    "ERRORS": {
     "isRequired": "حقل {name} مطلوب",

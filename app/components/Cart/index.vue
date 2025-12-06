@@ -3,6 +3,7 @@
     <menusSideMenu
     @close="emit('close')"
     :title="$t('cart.title')"
+       :number="appStore.cart.length"
   >   
       <CartItems
         :localProducts="carts.products"
@@ -17,7 +18,7 @@
         <CartOrderSummary :price="price" :currency="currency" />
         <NuxtLink
           :to="localePath('/checkout')"
-          class="w-full cursor-pointer bg-primary text-white gap-2 py-4 rounded-full font-semibold flex items-center justify-center"
+          class="w-full cursor-pointer bg-primary text-black gap-2 py-4 rounded-full font-semibold flex items-center justify-center"
         >
           {{ t("cart.checkout") }}
           <span class="size-4 flex justify-center items-center bg-white rounded-full"
