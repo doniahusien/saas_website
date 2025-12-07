@@ -243,6 +243,6 @@ const emit = defineEmits([
 
 <style lang="scss">
 .walletLoader {
-  @apply box-border inline-block size-3 animate-spin rounded-full border-[2px] border-success border-b-transparent;
+  @apply box-border inline-block size-3 animate-spin rounded-full border-2 border-success border-b-transparent;
 }
 </style>

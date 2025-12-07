@@ -56,7 +56,6 @@ function closingMenu() {
 }
 
 .side_menu {
-
   animation: show-menu 0.3s forwards ease-in;
 
   &.closing {
@@ -64,24 +63,25 @@ function closingMenu() {
   }
 }
 
+/* Logical direction instead of "right" */
 @keyframes show-menu {
   0% {
-    right: -500px;
+    inset-inline-end: -500px;
     opacity: 0;
   }
   100% {
-    right: 0;
+    inset-inline-end: 0;
     opacity: 1;
   }
 }
 
 @keyframes hide-menu {
   0% {
-    right: 0;
+    inset-inline-end: 0;
     opacity: 1;
   }
   100% {
-    right: -500px;
+    inset-inline-end: -500px;
     opacity: 0;
   }
 }
