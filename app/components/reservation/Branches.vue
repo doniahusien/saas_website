@@ -7,7 +7,7 @@
       }"
     >
       <div
-        class="title flex cursor-pointer flex-wrap items-center justify-between border-b-[1px] border-b-third pb-4 pt-4 font-light"
+        class="title flex cursor-pointer flex-wrap items-center justify-between border-b border-b-third pb-4 pt-4 font-light"
         @click.stop="openBranches()"
       >
         <p
