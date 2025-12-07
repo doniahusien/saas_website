@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-website-white w-full flex justify-center py-8">
-    <div class="w-full mx-auto p-8 grid grid-cols-1 lg:grid-cols-5 gap-10">
+    <div v-if="carts.products" class="w-full mx-auto p-8 grid grid-cols-1 lg:grid-cols-5 gap-10">
       <CheckoutOrder
         :orderType="orderType"
         :schedule="selectedSchedule"
@@ -98,6 +98,16 @@
         @confirmed="handleCancelOrder"
       />
     </div>
+     <div
+    v-else
+    class="flex min-h-[80vh] flex-col items-center justify-center space-y-4"
+  >
+    <img src="/images/no-items.png" alt="no items" />
+    <p class="text-lg font-medium">{{ $t("LABELS.no items in the cart") }}</p>
+    <NuxtLink :to="localePath('/')" class="base-btn py-4">
+      {{ $t("BUTTONS.continue shopping") }}
+    </NuxtLink>
+  </div>
   </div>
 </template>
 
@@ -110,6 +120,7 @@ import { useToast } from "vue-toastification";
 import { useAppAuth } from "~/store/auth";
 
 const appStore = useAppStore();
+const localePath = useLocalePath();
 const { t } = useI18n();
 const cartsCount = computed(() => appStore.getCartCount);
 const carts = computed(() => appStore.getCartData);

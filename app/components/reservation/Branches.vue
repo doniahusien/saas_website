@@ -22,7 +22,7 @@
       v-if="!meta.valid && meta.touched"
       :name="name"
       as="div"
-      class="text-[16px] text-error"
+      class="text-base  text-error"
     />
   </VeeField>
   <teleport to="body">
@@ -52,7 +52,7 @@
   </teleport>
 </template>
 <script setup>
-import { useAppStore } from "~/stores/app";
+import { useAppStore } from "~/store/app";
 const appStore = useAppStore();
 const selectedBranch = ref(null);
 const branchesMenu = ref(false);

@@ -284,7 +284,7 @@ function cancelOrder(id) {
   loading.value = true;
 
   $api
-    .patch(`reservations/${id}/cancel`)
+    .patch(`/reservations/${id}/cancel`)
     .then((res) => {
       confirmModal.value = false;
       loading.value = false;

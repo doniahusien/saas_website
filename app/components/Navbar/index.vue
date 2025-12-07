@@ -1,6 +1,6 @@
 <template>
-  <nav v-if="appStore.settingsData.website_customization?.top_bar_availability" class="">
-    <div class="container mx-auto mt-2 flex items-center gap-3 py-5">
+  <nav v-if="appStore.settingsData.website_customization?.top_bar_availability">
+    <div class="container mx-auto mt-2 flex items-center gap-5 py-5">
       <NuxtLink
         :to="localePath('/')"
         :class="

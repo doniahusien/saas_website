@@ -316,6 +316,7 @@
     "The phone has been successfully changed": "The phone has been successfully changed"
   },
   "LABELS": {
+      "no_items_in_the_cart": "No items in the cart",
     "message is required":"message is required",
     "Default address": "Default address",
     "title": "Title",
@@ -372,6 +373,7 @@
     "title": "FAQs"
   },
   "BUTTONS": {
+     "continue_shopping": "Continue shopping",
     "deleteAccount": "Delete Account",
     "logout": "Logout",
     "save": "Save",

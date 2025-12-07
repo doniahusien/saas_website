@@ -307,6 +307,7 @@
     "The phone has been successfully changed": "تم تغيير رقم الهاتف بنجاح"
   },
   "LABELS": {
+    "no_items_in_the_cart": "لا توجد عناصر في السلة",
     "Loyalty Card": "بطاقة الولاء",
     "come_in": "تمت إضافة النقاط",
     "come_out": "تم خصم النقاط",
@@ -361,6 +362,7 @@
     "verificationCode": "يجب أن يتكوّن رمز التحقق من 4 أرقام"
   },
   "BUTTONS": {
+    "continue_shopping": "متابعة التسوق",
     "deleteAccount": "حذف الحساب",
     "logout": "تسجيل الخروج",
     "save": "حفظ",
