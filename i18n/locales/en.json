@@ -92,6 +92,13 @@
     "paragraph2": "We see our customers as invited guests to a party, and we are the hosts. It's our job every day to make every important aspect of the customer experience a little bit better. Donec quam felis, ultricies nec, pellentesque eu.",
     "cta": "Discover More"
   },
+  "NAV":{
+    "home": "Home",
+    "about": "About Us",
+    "reservation": "Reservation",
+    "menu": "Menu",
+    "contact": "Contact Us"
+  },
   "reservation": {
     "persons": "No of persons",
     "eyebrow": "MAKE A RESERV",

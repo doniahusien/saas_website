@@ -96,6 +96,9 @@ watch(
     changePage(1);
   }
 );
+useHead({
+  title: t("orders.title"),
+});
 
 onMounted(async () => {
   if (!route.query.status) {

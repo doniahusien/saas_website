@@ -20,12 +20,16 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: "SaaS",
-      link: [{ rel: "icon", type: "image/png", href: "/logo.png" }],
-      meta: [
-        { charset: "utf-8" },
-        { name: "viewport", content: "width=device-width, initial-scale=1" },
-      ],
+            title: 'MEA TELECOM',
+            meta: [
+                { charset: 'utf-8' },
+                { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+
+                {
+                    name: 'robots',
+                    content: `index,follow`,
+                },
+            ],
     },
   },
 

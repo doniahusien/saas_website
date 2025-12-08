@@ -361,6 +361,13 @@
     "somethingWrong": "حدث خطأ ما. يرجى المحاولة مرة أخرى",
     "verificationCode": "يجب أن يتكوّن رمز التحقق من 4 أرقام"
   },
+  "NAV":{
+    "home": "الرئيسية",
+    "about": "من نحن",
+    "reservation": "الحجز",
+    "menu": "القائمة",
+    "contact": "تواصل معنا"
+  },
   "BUTTONS": {
     "continue_shopping": "متابعة التسوق",
     "deleteAccount": "حذف الحساب",

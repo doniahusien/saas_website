@@ -43,10 +43,37 @@ async function getStores() {
   }
 }
 
-function getSettings() {
+/* function getSettings() {
   if (settingsData.value?.website_colors) {
     appStore.setDefultColor();
   }
+} */
+
+let headSettings = {
+  titleTemplate: "",
+  link: [],
+  htmlAttrs: {
+    lang: "",
+  },
+  meta: [],
+  style: [],
+};
+
+function getSettings() {
+  headSettings.titleTemplate = `%s - ${
+    settingsData.value.website_setting?.website_title || ""
+  }`;
+  headSettings.link.push({
+    rel: "icon",
+    type: "image/png",
+    href: settingsData.value.website_setting?.website_fav_icon,
+  });
+  headSettings.meta.push({
+    name: "hostname",
+    content: settingsData.value.website_setting?.website_host_name,
+  });
+
+  useHead(headSettings);
 }
 
 onBeforeMount(() => {
@@ -86,8 +113,6 @@ useSeoMeta({
   twitterImage: "/logo.png",
 });
 
-useHead({
-  titleTemplate: () => "SaaS",
-});
+
 </script>
 
