@@ -26,7 +26,7 @@
         </select>
 
         <span
-          class="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+          class="pointer-events-none absolute end-2 top-6 text-gray-500"
           :class="{ 'opacity-50': disabled }"
         >
           <Icon :name="isOpen && !disabled ? 'fe:arrow-up' : 'fe:arrow-down'" />
@@ -43,7 +43,7 @@
           :placeholder="placeholder"
           :disabled="disabled"
           :readonly="disabled"
-          class="appearance-none w-full bg-transparent h-16 pr-8 font-medium focus:outline-none transition-all disabled:cursor-not-allowed input"
+          class="appearance-none w-full bg-transparent h-16 pe-8 font-medium focus:outline-none transition-all disabled:cursor-not-allowed input"
           :class="[
             isRes ? 'border-0 border-b border-white placeholder:text-black' : '',
             'border',
@@ -51,7 +51,7 @@
             disabled ? 'text-gray-700 border-border-light' : 'text-black',
           ]"
         />
-        <VeeErrorMessage :name="phoneName" class="absolute top-full left-0 text-red-500 text-xs mt-0.5 whitespace-nowrap" />
+        <VeeErrorMessage :name="phoneName" class="absolute top-full start-0 text-red-500 text-xs mt-0.5 whitespace-nowrap" />
       </div>
     </VeeField>
   </div>

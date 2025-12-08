@@ -14,7 +14,7 @@
           class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
         ></div> -->
 
-        <h3 class="max-w-100 text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">Subcribe To Our Newsletter</h3>
+        <h3 class="max-w-100 text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">{{$t('subscription.title')}}</h3>
         <div
           v-html="subscriptionContent.desc"
           class="text-base md:text-lg text-text-ligh"

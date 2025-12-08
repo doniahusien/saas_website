@@ -167,9 +167,9 @@ const schema = yup.object().shape({
   phone_code: yup
     .string()
     .required(t("ERRORS.isRequired", { name: t("LABELS.phoneCode") })),
-  message_type: yup
+/*   message_type: yup
     .string()
-    .required(t("ERRORS.isRequired", { name: t("LABELS.message_type") })),
+    .required(t("ERRORS.isRequired", { name: t("LABELS.message_type") })), */
   message: yup.string().required(t("ERRORS.isRequired", { name: t("LABELS.message") })),
 });
 
@@ -182,7 +182,7 @@ function handleSubmit(values, actions) {
   frmData.append("message", values.message);
   loading.value = true;
   $api
-    .post("contact_us", frmData)
+    .post("/contact_us", frmData)
     .then((res) => {
       actions.resetForm();
 

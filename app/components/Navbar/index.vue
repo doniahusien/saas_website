@@ -185,7 +185,7 @@
         @close="showReservation = false"
         v-if="showReservation"
         :persist="true"
-        classes=" !w-full md:!max-w-250 !pb-0 !min-h-150"
+        classes="  !w-full md:!max-w-250 !pb-0 !min-h-150"
         titleClasses="!text-2xl !font-bold"
         contentClass="!p-0 "
         class="reserve-modal"

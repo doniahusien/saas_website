@@ -11,7 +11,7 @@
   <VeeForm
     @submit="handleSubmit"
     :validation-schema="schema"
-    class="space-y-16 mx-auto w-full md:w-2/3"
+    class="space-y-16  mx-auto w-full md:w-2/3"
   >
     <template v-slot="{ errors }">
       <div>

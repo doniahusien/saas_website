@@ -210,6 +210,7 @@
     "addItems": "اضف منتجات لسلة"
   },
   "TITLES": {
+    
     "balance":"الرصيد",
     "Cancelled Orders":"الطلبات الملغاة",
     "Transactions History":"تاريخ المعاملات",
@@ -307,6 +308,7 @@
     "The phone has been successfully changed": "تم تغيير رقم الهاتف بنجاح"
   },
   "LABELS": {
+    "email":"البريد الإلكتروني",
     "no_items_in_the_cart": "لا توجد عناصر في السلة",
     "Loyalty Card": "بطاقة الولاء",
     "come_in": "تمت إضافة النقاط",
