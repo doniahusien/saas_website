@@ -57,7 +57,9 @@
         </button>
       </p>
     </VeeForm>
+    <teleport to="body">
     <EditPhoneModal v-model="showEditPhone" />
+    </teleport>
   </div>
 </template>
 

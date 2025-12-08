@@ -63,7 +63,6 @@ function closingMenu() {
   }
 }
 
-/* Logical direction instead of "right" */
 @keyframes show-menu {
   0% {
     inset-inline-end: -500px;

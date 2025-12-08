@@ -25,7 +25,7 @@
               accept="image/png, image/webp, image/jpeg"
               iconSrc="/images/food3.png"
               :attachment="'/store_attachment'"
-              :return-file="false"
+              :return-file="true"
               @uploading="btnLoading = $event"
             />
           </div>
@@ -82,11 +82,7 @@
           :title="t('TITLES.Change Password')"
           @close="openModal = false"
         >
-          <VeeForm
-            as="div"
-            :validation-schema="passwordSchema"
-            @submit="changePassword"
-          >
+          <VeeForm as="div" :validation-schema="passwordSchema" @submit="changePassword">
             <form class="space-y-4">
               <inputsBasePassword
                 id="old_password"
@@ -196,13 +192,11 @@ function handleSubmit(values) {
   formData.append("full_name", values.full_name);
   formData.append("email", values.email);
 
-  if (values.image) {
-    if (values.image instanceof File) formData.append("avatar", values.image);
-    else formData.append("avatar", values.image);
+  if (values.image && values.image instanceof File) {
+    formData.append("avatar", values.image);
   }
 
-  $api
-    .post("/profile", formData)
+  $api.post("/profile", formData)
     .then((res) => {
       appAuth.getProfile();
       toast.success(res.data?.message || t("STATUS.success"));
@@ -214,6 +208,7 @@ function handleSubmit(values) {
       btnLoading.value = false;
     });
 }
+
 
 async function reloadProfile() {
   await appAuth.getProfile();
