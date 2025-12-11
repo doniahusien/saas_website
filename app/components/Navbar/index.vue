@@ -1,6 +1,6 @@
 <template>
   <nav v-if="appStore.settingsData.website_customization?.top_bar_availability">
-    <div class="container mx-auto mt-2 flex items-center gap-7 py-4">
+    <div class="container mx-auto px-5 md:px-0 mt-2 flex items-center gap-7 py-4">
       <NuxtLink
         :to="localePath('/')"
         :class="
@@ -43,11 +43,11 @@
         <div class="flex ms-auto items-center gap-4">
           <ul class="text-primary flex gap-3">
             <button class="icon" @click.stop="openWishlist">
-              <Icon name="solar:heart-linear" class="size-6" />
+              <Icon name="solar:heart-linear" class="size-4 md:size-6" />
             </button>
             <li @click.stop="openCart" class="icon">
               <div class="relative inline-block">
-                <Icon name="solar:bag-5-outline" class="size-6" />
+                <Icon name="solar:bag-5-outline" class="size-4 md:size-6" />
                 <span
                   class="absolute top-0 -right-1 bg-primary text-white text-[10px] rounded-full size-3 flex items-center justify-center px-1"
                 >
@@ -60,7 +60,7 @@
               v-if="isLoggedIn && userData?.notifiable"
               @click.stop="openNotifications"
             >
-              <Icon name="solar:bell-outline" class="size-6" />
+              <Icon name="solar:bell-outline" class="size-4 md:size-6" />
             </li>
             <button
               class="icon"
@@ -71,13 +71,13 @@
                 getLoyalty();
               "
             >
-              <Icon name="mage:user" class="size-6" />
+              <Icon name="mage:user" class="size-4 md:size-6" />
             </button>
           </ul>
 
           <button
             @click="showSelect = true"
-            class="hidden cursor-pointer lg:flex px-7 text-left items-center gap-3 "
+            class="hidden cursor-pointer lg:flex pe-10 text-left items-center gap-3 "
           >
             <NuxtImg
               v-if="selectedBranch?.image"

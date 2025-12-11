@@ -11,7 +11,7 @@
       :autoplay="{ delay: 8000 }"
       :navigation="navigationOptions"
       @swiper="onSwiperInit"
-      class="h-250"
+      class="h-140"
     >
       <SwiperSlide
         v-for="item in sliders"
@@ -85,7 +85,7 @@
         </a>
       </template>
     </div>
-    <div class="hidden absolute bottom-8 end-12 md:flex gap-3 z-30">
+    <div class="absolute bottom-8 end-12 md:flex gap-3 z-30">
       <button
         ref="prevEl"
         class="size-10 cursor-pointer flex items-center justify-center bg-white/20 hover:bg-white/40 text-white rounded-full backdrop-blur-md transition"

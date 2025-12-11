@@ -188,7 +188,7 @@
   }
 
   .icon {
-    @apply cursor-pointer flex items-center justify-center bg-secondary rounded-full size-12 md:size-14;
+    @apply cursor-pointer flex items-center justify-center bg-secondary rounded-full size-10 md:size-14;
   }
 
   .order-time {
