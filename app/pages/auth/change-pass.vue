@@ -3,7 +3,7 @@
     {{ t("auth.changePasswordTitle") }}
   </h2>
 
-  <p class="text-text-light my-4 text-base md:text-lg">
+  <p class="text-text-light my-4 text-base">
     {{ t("auth.changePasswordInstruction") }}
   </p>
 

@@ -10,7 +10,7 @@
         <div
           class="w-full h-screen xl:w-1/2 mx-auto bg-website-white ps-4 md:ps-7 overflow-y-auto pe-4 md:pe-7 xl:pe-0 flex justify-center z-20 xl:-translate-x-8 flex-col rounded-3xl"
         >
-          <div class="w-full md:w-130 mx-auto">
+          <div class="w-full md:w-126 mx-auto">
             <NuxtLink :to="localePath('/')" class="relative w-fit">
               <img class="mb-7" width="154" src="/logo.png" alt="logo" />
               <img

@@ -4,7 +4,7 @@
     <h2 class="font-medium text-3xl md:text-4xl">
       {{ t("auth.verifyCode") }}
     </h2>
-    <p class="text-text-light text-base md:text-lg ">
+    <p class="text-text-light text-base ">
       {{ t("auth.verifyInstruction") }}
     </p>
 

@@ -4,7 +4,7 @@
     {{ t("auth.forgotPasswordTitle") }}
   </h2>
 
-  <p class="text-text-light  text-base md:text-lg">
+  <p class="text-text-light  text-base ">
     {{ t("auth.forgotPasswordInstruction") }}
   </p>
 
@@ -19,7 +19,7 @@
     <button
       :disabled="loading"
       type="submit"
-      class="bg-primary cursor-pointer mt-5 text-white text-base md:text-lg w-full  rounded-full p-5"
+      class="bg-primary cursor-pointer mt-5 text-white text-base  w-full  rounded-full p-5"
     >
       <span v-if="!loading">{{ t("auth.send") }}</span>
       <span v-else>...</span>

@@ -103,9 +103,7 @@
   font-weight: 600;
   src: url('/fonts/switzer/Switzer-Semibold.otf') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
-/* Switzer-700 - latin */
 
-/* Switzer-900 - latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Switzer';
@@ -178,11 +176,11 @@
   }
 
   .input {
-    @apply w-full h-16  border p-5 focus:outline-none disabled:bg-[#ebebeb] placeholder:text-text-light rounded-lg focus:shadow-none focus:border-primary border-border-light text-lg  bg-website-white;
+    @apply w-full h-16  border p-5 focus:outline-none disabled:bg-[#ebebeb] placeholder:text-text-light rounded-lg focus:shadow-none focus:border-primary border-border-light text-base  bg-website-white;
   }
 
   .base-btn {
-    @apply flex items-center border border-primary justify-center gap-4 w-full lg:w-fit flex-wrap py-4 px-2 lg:px-8 rounded-full bg-primary text-white;
+    @apply flex items-center border border-primary justify-center gap-4 w-full lg:w-fit flex-wrap py-3.5 px-2 lg:px-8 rounded-full bg-primary text-white;
   }
 
   .base-btn:hover {

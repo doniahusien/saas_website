@@ -17,7 +17,7 @@
       </NuxtLink>
 
       <div class="flex flex-1 items-center justify-between">
-        <ul class="hidden lg:flex flex-wrap gap-3 text-lg">
+        <ul class="hidden lg:flex flex-wrap gap-3 text-base">
           <li v-for="item in items" :key="item.to">
             <NuxtLink
               :to="item.to"
