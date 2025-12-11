@@ -90,14 +90,14 @@
         ref="prevEl"
         class="size-10 cursor-pointer flex items-center justify-center bg-white/20 hover:bg-white/40 text-white rounded-full backdrop-blur-md transition"
       >
-        <Icon name="lucide:chevron-left" class="size-5" />
+        <Icon name="lucide:chevron-left" class="size-7" />
       </button>
 
       <button
         ref="nextEl"
         class="size-10 cursor-pointer flex items-center justify-center bg-white/20 hover:bg-white/40 text-white rounded-full backdrop-blur-md transition"
       >
-        <Icon name="lucide:chevron-right" class="size-5" />
+        <Icon name="lucide:chevron-right" class="size-7" />
       </button>
     </div>
   </div>

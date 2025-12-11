@@ -12,7 +12,7 @@
         <NuxtImg
           :src="appStore.settingsData.website_setting?.website_logo"
           alt="logo"
-          class="size-18 object-contain"
+          class="size-16 object-contain"
         />
       </NuxtLink>
 
@@ -77,19 +77,19 @@
 
           <button
             @click="showSelect = true"
-            class="hidden cursor-pointer lg:flex pe-10 text-left items-center gap-3 "
+            class="cursor-pointer max-w-full flex items-center text-start gap-3 "
           >
             <NuxtImg
               v-if="selectedBranch?.image"
               :src="selectedBranch.image"
               alt="branch"
-              class="size-16 rounded-full object-cover"
+              class="size-14 rounded-full object-cover"
             />
-            <div class="flex flex-col justify-between">
+            <div class="flex flex-col text-start justify-between">
               <p class="font-semibold text-base">
                 {{ selectedBranch?.name }}
               </p>
-              <p class="text-sm text-placeholder">
+              <p class="text-sm text-third">
                 {{ selectedBranch?.location_description }}
                 <!--  <Icon name="mdi-chevron-down" class="size-4" /> -->
               </p>
