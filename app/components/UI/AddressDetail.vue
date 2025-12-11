@@ -2,7 +2,7 @@
   <div>
     <div class="flex items-center gap-3 mb-3">
       <Icon name="bx:map" class="size-6 text-third" />
-      <h3 class="text-2xl font-semibold">
+      <h3 class="text-lg font-semibold">
         {{
           orderData.order_type == "delivery"
             ? $t("TITLES.shippingAddressPlaceholder")

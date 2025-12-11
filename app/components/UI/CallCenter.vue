@@ -1,9 +1,9 @@
 <template>
          <div class="flex items-center gap-3 mb-3">
-            <div class="size10 rounded-lg flex items-center justify-center">
+            <div class="size-10 rounded-lg flex items-center justify-center">
               <Icon name="mdi:phone" class="size-5 text-third" />
             </div>
-            <h3 class="text-2xl font-bold">{{$t('TITLES.Call center')}}</h3>
+            <h3 class="text-lg font-semibold">{{$t('TITLES.Call center')}}</h3>
           </div>
         
           <div class="flex flex-col gap-5 p-7 rounded-2xl bg-website-white">

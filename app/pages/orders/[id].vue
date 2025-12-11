@@ -15,7 +15,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div class="space-y-3">
-            <p class="text-lg md:text-2xl font-semibold ">
+            <p class="text-lg font-semibold ">
               {{ $t("TITLES.order type") }}
             </p>
             <div
@@ -30,7 +30,7 @@
                 class="size-5 text-third"
               />
               <div>
-                <p class="font-semibold">
+                <p >
                   {{
                     orderData.order_type === "take_away"
                       ? $t("TITLES.Takeaway")
@@ -42,7 +42,7 @@
           </div>
 
           <div class="space-y-3">
-            <p class="text-base md:text-2xl font-semibold">
+            <p class="text-lg font-semibold">
               {{ $t("TITLES.Payment Type") }}
             </p>
 
@@ -54,7 +54,7 @@
                 class="size-5 text-third"
               />
               <div>
-                <div class=" font-semibold">
+                <div>
                   {{ paymentLabelText }}
                 </div>
               </div>
@@ -62,7 +62,7 @@
           </div>
 
           <div class="space-y-3">
-            <p class="text-base md:text-2xl font-semibold">
+            <p class="text-lg font-semibold">
               {{ $t("TITLES.Date Of Order") }}
             </p>
 
@@ -71,7 +71,7 @@
             >
               <Icon name="mdi:calendar" class="size-6 text-third" />
               <div>
-                <div class="font-semibold">
+                <div >
                   {{ formatDate(orderData.order_date) }}
                 </div>
               </div>
@@ -79,7 +79,7 @@
           </div>
 
           <div class="space-y-3">
-            <p class="text-base md:text-2xl font-semibold ">
+            <p class="text-lg font-semibold ">
               {{ $t("TITLES.Time Of Order") }}
             </p>
             <div
@@ -87,7 +87,7 @@
             >
               <Icon name="mdi:clock-outline" class="size-5  text-third" />
               <div>
-                <div class="font-semibold">
+                <div>
                   {{ orderData.order_time }}
                 </div>
               </div>
@@ -101,13 +101,13 @@
       "
     >
       <div class="space-y-2">
-        <h2 class="text-xl font-semibold capitalize">
+        <h2 class="text-lg capitalize">
           {{ $t("TITLES.Cancellation reason") }}
         </h2>
         <div
           class="flex h-20 flex-wrap items-center justify-between rounded-lg bg-website-white px-2 md:px-6"
         >
-          <p class="font-medium">{{ orderData?.cancel_reason.desc }}</p>
+          <p>{{ orderData?.cancel_reason.desc }}</p>
         </div>
       </div>
     </div>
@@ -124,7 +124,7 @@
         class="w-full md:w-140 lg:col-span-2 rounded-2xl p-4 md:p-6 shadow-md  mx-auto"
       >
         <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
-          <h2 class="text-xl lg:text-3xl font-bold text-gray-800">
+          <h2 class="text-xl lg:text-2xl font-bold text-gray-800">
             {{ $t("TITLES.Order ID") }}- {{ orderData.order_num }}
           </h2>
 
