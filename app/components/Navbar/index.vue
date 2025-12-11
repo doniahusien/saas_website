@@ -403,7 +403,7 @@ function closeAllMenus() {
 function notificationClick(id, item_id) {
   notificationsMenu.value = false;
   $api
-    .patch(`notifications/${id}/read`)
+    .patch(`/notifications/${id}/read`)
     .then((res) => {
       router.push(`/order/${item_id}`);
     })

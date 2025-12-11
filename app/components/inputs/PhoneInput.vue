@@ -8,7 +8,7 @@
           @focus="isOpen = true"
           @blur="isOpen = false"
           :disabled="disabled"
-          class="appearance-none w-full bg-transparent h-16 font-medium focus:outline-none transition-all disabled:cursor-not-allowed input"
+          class="appearance-none w-full bg-transparent h-16  focus:outline-none transition-all disabled:cursor-not-allowed input"
           :class="[
             isRes ? 'border-0 border-b border-white placeholder:text-black' : '',
             'border',
@@ -43,7 +43,7 @@
           :placeholder="placeholder"
           :disabled="disabled"
           :readonly="disabled"
-          class="appearance-none w-full bg-transparent h-16 pe-8 font-medium focus:outline-none transition-all disabled:cursor-not-allowed input"
+          class="appearance-none w-full bg-transparent h-16 pe-8  focus:outline-none transition-all disabled:cursor-not-allowed input"
           :class="[
             isRes ? 'border-0 border-b border-white placeholder:text-black' : '',
             'border',

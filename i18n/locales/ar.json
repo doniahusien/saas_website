@@ -210,7 +210,7 @@
     "addItems": "اضف منتجات لسلة"
   },
   "TITLES": {
-    
+    "Are you sure you want to logout?":"هل أنت متأكد أنك تريد تسجيل الخروج؟",
     "balance":"الرصيد",
     "Cancelled Orders":"الطلبات الملغاة",
     "Transactions History":"تاريخ المعاملات",

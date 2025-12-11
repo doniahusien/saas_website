@@ -3,7 +3,7 @@
     <div
       v-if="localProducts && localProducts.length > 0"
       class="overflow-y-auto space-y-5 branch-list"
-      :class="[isCheckout ? 'h-85' : 'h-72']"
+      :class="[isCheckout ? 'h-40' : 'h-72']"
     >
       <div
         v-for="item in localProducts"

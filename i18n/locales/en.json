@@ -224,6 +224,7 @@
     "title":"Contact Us"
   },
   "TITLES": {
+    "Are you sure you want to logout?":"Are you sure you want to logout?",
     "success": "Success",
     "Transaction History": "Transaction History",
     "see all": "See All",
