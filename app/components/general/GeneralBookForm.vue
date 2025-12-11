@@ -1,9 +1,9 @@
 <template>
   <div class="text-center">
-    <p class="font-allura text-3xl md:text-5xl">
+    <p class="font-allura text-xl md:text-4xl">
       {{ $t("reservation.subtitle") }}
     </p>
-    <h3 class="text-3xl md:text-5xl font-bold">
+    <h3 class="text-xl md:text-4xl font-bold">
       {{ $t("reservation.heading") }}
     </h3>
   </div>
@@ -11,14 +11,14 @@
   <VeeForm
     @submit="handleSubmit"
     :validation-schema="schema"
-    class="space-y-16  mx-auto w-full md:w-2/3"
+    class="space-y-16 mx-auto w-full md:w-2/3"
   >
     <template v-slot="{ errors }">
       <div>
         <VeeField
           name="name"
           type="text"
-          class="w-full font-medium placeholder:text-black pb-2.5 bg-transparent focus:outline-none border-b"
+          class="w-full placeholder:text-black pb-2.5 bg-transparent focus:outline-none border-b  font-medium"
           :class="errors.name ? 'border-red-500' : 'border-white'"
           :placeholder="$t('reservation.namePlaceholder')"
         />
@@ -33,6 +33,7 @@
         v-model:code="phone_code"
         v-model:phone="phone"
         @country-selected="onCountrySelected"
+        class=" font-medium"
       />
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -40,7 +41,7 @@
           <VeeField
             name="persons"
             type="text"
-            class="w-full font-medium placeholder:text-black pb-2.5 bg-transparent focus:outline-none border-b"
+            class="w-full font-medium  placeholder:text-black pb-2.5 bg-transparent focus:outline-none border-b"
             :class="errors.persons ? 'border-red-500' : 'border-white'"
             :placeholder="$t('reservation.persons')"
           />
@@ -51,7 +52,7 @@
           <div
             @click="openAddressModal = true"
             :class="[
-              'w-full font-medium placeholder:text-black pb-2.5 bg-transparent focus:outline-none border-b',
+              'w-full placeholder:text-black pb-2.5 bg-transparent focus:outline-none border-b  font-medium',
               errors.branch ? 'border-red-500' : 'border-white',
             ]"
           >
@@ -61,12 +62,12 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5  font-medium">
         <inputsTimePicker name="timeFrom" :placeholder="$t('reservation.timeFrom')" />
         <inputsTimePicker name="timeTo" :placeholder="$t('reservation.timeTo')" />
       </div>
 
-      <div>
+      <div class="font-medium">
         <inputsDatePicker name="date" :placeholder="$t('reservation.date')" />
       </div>
 
@@ -74,7 +75,7 @@
         <button
           :disabled="primaryLoading"
           type="submit"
-          class="px-7 py-4 text-lg cursor-pointer bg-primary text-white rounded-full hover:bg-white hover:text-primary hover:border hover:border-primary transition disabled:opacity-60"
+          class="px-7 py-3 text-base cursor-pointer bg-primary text-white rounded-full hover:bg-white hover:text-primary hover:border hover:border-primary transition disabled:opacity-60 font-bold"
         >
           <span v-if="!primaryLoading">{{ $t("reservation.submit") }}</span>
           <span v-else>{{ $t("BUTTONS.loading") || "Loading..." }}</span>

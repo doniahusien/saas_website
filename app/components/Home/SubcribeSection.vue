@@ -17,7 +17,7 @@
         <h3 class="max-w-100 text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">{{$t('subscription.title')}}</h3>
         <div
           v-html="subscriptionContent.desc"
-          class="text-base md:text-lg text-text-ligh"
+          class="text-base  text-text-ligh"
         ></div>
 
 <VeeForm
@@ -31,18 +31,14 @@
       name="email"
       type="email"
       :placeholder="$t('subscription.placeholder')"
-      class="rounded-full border border-line bg-website-white text-text focus:outline-none px-3 py-6 w-full"
-    />
-    <VeeErrorMessage
-      name="email"
-      class="text-red-500 text-xs mt-1 block text-start"
+      class="rounded-full border border-line bg-website-white text-text focus:outline-none px-3 py-4 placeholder:text-sub placeholder:text-lg w-full"
     />
   </div>
 
   <button
     type="submit"
     :disabled="!meta.valid"
-    class="w-40 rounded-full p-4 font-medium text-website-white bg-primary transition ms-auto"
+    class="w-fit rounded-full px-6 font-medium text-website-white bg-primary transition ms-auto"
     :class="{
       'opacity-40 cursor-not-allowed': !meta.valid,
       'hover:opacity-90 cursor-pointer': meta.valid
@@ -50,8 +46,12 @@
   >
     {{ $t("subscription.cta") }}
   </button>
+    <VeeErrorMessage
+      name="email"
+      class="text-red-500 text-base mt-2 block text-start"
+    />
 </VeeForm>
-
+ 
       </div>
     </div>
   </section>
@@ -69,8 +69,7 @@ defineProps({
 
 const schema = object({
   email: string()
-    .required(t("errors.emailRequired"))
-    .email(t("errors.emailRequired")),
+    .email(t("errors.emailInvalid")),
 });
 async function handleSubmit(values) {
   try {

@@ -12,10 +12,10 @@
       </div>
 
       <div class="space-y-8 mt-10 md:mt-0">
-        <div class="flex items-center gap-4">
+      <!--   <div class="flex items-center gap-4">
           <span class="text-primary font-medium">{{ $t("ourStory.eyebrow") }}</span>
           <div class="flex-1 h-px bg-primary"></div>
-        </div>
+        </div> -->
 
         <div
           class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"

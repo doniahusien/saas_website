@@ -11,7 +11,7 @@
       :autoplay="{ delay: 8000 }"
       :navigation="navigationOptions"
       @swiper="onSwiperInit"
-      class="h-screen"
+      class="h-250"
     >
       <SwiperSlide
         v-for="item in sliders"

@@ -12,11 +12,11 @@
 
       <div class="space-y-8 mt-10 md:mt-0 order-2 md:order-1">
         <div
-          class="text-3xl md:text-4xl lg:text-6xl font-bold"
+          class="text-3xl md:text-4xl lg:text-5xl font-bold"
           v-html="appData.title"
         ></div>
 
-        <div v-html="appData.desc" class="text-base md:text-lg text-subtitle"></div>
+        <div v-html="appData.desc" class="text-base text-subtitle"></div>
 
         <div class="flex gap-4">
           <NuxtLink :to="appData.google_play">

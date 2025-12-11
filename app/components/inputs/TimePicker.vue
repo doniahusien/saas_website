@@ -52,7 +52,6 @@ const isError = computed(() => meta.touched && !meta.valid);
   width: 100%;
   padding-left: 0;
   padding-right: 2.5rem;
-  font-weight: 600;
   background: transparent;
   border: 0;
   border-bottom: 1px solid white;

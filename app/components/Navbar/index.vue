@@ -1,6 +1,6 @@
 <template>
   <nav v-if="appStore.settingsData.website_customization?.top_bar_availability">
-    <div class="container mx-auto mt-2 flex items-center gap-5 py-5">
+    <div class="container mx-auto mt-2 flex items-center gap-7 py-4">
       <NuxtLink
         :to="localePath('/')"
         :class="
@@ -17,7 +17,7 @@
       </NuxtLink>
 
       <div class="flex flex-1 items-center justify-between">
-        <ul class="hidden lg:flex flex-wrap gap-3 text-base">
+        <ul class="hidden lg:flex flex-wrap gap-4 text-base">
           <li v-for="item in items" :key="item.to">
             <NuxtLink
               :to="item.to"
@@ -49,7 +49,7 @@
               <div class="relative inline-block">
                 <Icon name="solar:bag-5-outline" class="size-6" />
                 <span
-                  class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full size-4 flex items-center justify-center px-1"
+                  class="absolute top-0 -right-1 bg-primary text-white text-[10px] rounded-full size-3 flex items-center justify-center px-1"
                 >
                   {{ cartCount > 99 ? "99+" : cartCount }}
                 </span>
@@ -77,7 +77,7 @@
 
           <button
             @click="showSelect = true"
-            class="hidden cursor-pointer lg:flex text-left items-center gap-3 "
+            class="hidden cursor-pointer lg:flex px-7 text-left items-center gap-3 "
           >
             <NuxtImg
               v-if="selectedBranch?.image"
@@ -185,7 +185,7 @@
         @close="showReservation = false"
         v-if="showReservation"
         :persist="true"
-        classes="  !w-full md:!max-w-250 !pb-0 !min-h-150"
+        classes="  !w-full md:!max-w-250 pb-5 !min-h-150"
         titleClasses="!text-2xl !font-bold"
         contentClass="!p-0 "
         class="reserve-modal"
