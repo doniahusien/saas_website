@@ -10,7 +10,7 @@
           :disabled="disabled"
           class="appearance-none w-full bg-transparent h-16  focus:outline-none transition-all disabled:cursor-not-allowed input"
           :class="[
-            isRes ? 'border-0 border-b border-white placeholder:text-black' : '',
+            isRes ? 'border-0 border-b border-white placeholder:text-black! text-black!' : '',
             'border',
             disabled ? 'text-gray-700 border-border-light' : 'text-text-light',
           ]"

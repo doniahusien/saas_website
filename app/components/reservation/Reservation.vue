@@ -1,7 +1,7 @@
 <template>
   <div class="fadeInLeft px-8 md:px-6 lg:px-0 space-y-5" v-if="items">
     <div class="flex flex-wrap justify-between">
-      <h2 class="flex items-center gap-2 text-xl font-semibold">
+      <h2 class="flex items-center gap-2 text-lg font-semibold">
         <Icon name="bx:map" class="size-6 " />
         {{
           items.order_type == "delivery"
@@ -96,7 +96,7 @@
         </div>
       </div>
       <div class="space-y-2">
-        <h2 class="text-xl font-semibold capitalize">
+        <h2 class="text-lg font-semibold capitalize">
           {{ $t("LABELS.name") }}
         </h2>
         <div
@@ -112,7 +112,7 @@
     <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
       <div>
         <div class="space-y-2" v-if="items.pay_type">
-          <h2 class="flex items-center gap-2 text-xl font-semibold">
+          <h2 class="flex items-center gap-2 text-lg font-semibold">
             {{ $t("TITLES.Payment Type") }}
           </h2>
           <div
@@ -137,7 +137,7 @@
         </div>
       </div>
       <div class="space-y-2" :class="items.pay_type ? '' : 'col-span-2'">
-        <h2 class="flex items-center gap-2 text-xl font-semibold">
+        <h2 class="flex items-center gap-2 text-lg font-semibold">
           {{ $t("TITLES.Number of Persons") }}
         </h2>
         <div
@@ -152,7 +152,7 @@
       </div>
     </div>
     <div class="space-y-2">
-      <h2 class="text-xl font-semibold capitalize">
+      <h2 class="text-lg font-semibold capitalize">
         {{ $t("TITLES.Date of booking") }}
       </h2>
       <div
@@ -167,7 +167,7 @@
       </div>
     </div>
     <div class="space-y-2">
-      <h2 class="text-xl font-semibold capitalize">
+      <h2 class="text-lg font-semibold capitalize">
         {{ $t("TITLES.Time of booking") }}
       </h2>
       <div class="grid gap-x-4 gap-y-3 md:grid-cols-2">
