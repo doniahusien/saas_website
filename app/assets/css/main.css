@@ -205,7 +205,94 @@
 .reserve-modal .top_header {
   background-color: transparent !important;
 }
+.toast-container {
+    @apply  rounded-lg shadow-lg border border-gray-200  min-w-80 max-w-96 overflow-hidden;
+    animation: slideInRight 0.3s ease-out;
+    background: var(--color-white);
+  }
+
+  .toast-success {
+    @apply border-l-4 border-l-green-500;
+  }
+
+  .toast-error {
+    @apply border-l-4 border-l-red-500;
+  }
+
+  .toast-info {
+    @apply border-l-4 border-l-blue-500;
+  }
+
+  .toast-warning {
+    @apply border-l-4 border-l-yellow-500;
+  }
+
+  .toast-content {
+    @apply flex items-start p-4 gap-3;
+  }
+
+  .toast-icon {
+    @apply flex-shrink-0 mt-0.5;
+  }
+
+  .toast-success .toast-icon {
+    @apply text-green-500;
+  }
+
+  .toast-error .toast-icon {
+    @apply text-red-500;
+  }
+
+  .toast-info .toast-icon {
+    @apply text-blue-500;
+  }
+
+  .toast-warning .toast-icon {
+    @apply text-yellow-500;
+  }
+
+  .toast-body {
+    @apply flex-1 min-w-0;
+  }
+
+  .toast-title {
+    @apply text-sm font-semibold text-gray-900 mb-1;
+  }
+
+  .toast-description {
+    @apply text-sm text-gray-600  leading-relaxed;
+  }
+
+  .toast-close {
+    @apply flex-shrink-0 p-1 rounded-md text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors;
+  }
+
+  .toast-progress-container {
+    @apply h-1 bg-gray-200 dark:bg-gray-700;
+  }
+
+  .toast-progress-bar {
+    @apply h-full transition-all ease-linear;
+    animation: progressBar linear forwards;
+  }
+
+  .toast-progress-success {
+    @apply bg-green-500;
+  }
+
+  .toast-progress-error {
+    @apply bg-red-500;
+  }
+
+  .toast-progress-info {
+    @apply bg-blue-500;
+  }
+
+  .toast-progress-warning {
+    @apply bg-yellow-500;
+  }
 }
+
 
 .input_wrapper.error select,
 .input_wrapper.error input {
@@ -254,4 +341,73 @@ body::-webkit-scrollbar-thumb {
 
 body::-webkit-scrollbar-thumb:hover {
   background: #2563eb;
+}
+
+ 
+body::-webkit-scrollbar {
+  width: 3px;
+}
+
+body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #515207;
+  border-radius: 9999px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #515207;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgba(226, 178, 104, 1);
+  border-radius: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.Vue-Toastification__toast {
+  border-radius: 16px !important;
+  font-family: var(--font-ibm) !important;
+}
+
+.Vue-Toastification__toast--success {
+  background: white !important;
+  color: #000 !important;
+}
+
+.Vue-Toastification__toast--error {
+  background: #fef2f2 !important;
+  color: #991b1b !important;
+}
+
+.Vue-Toastification__toast--warning {
+  background: #fffbeb !important;
+  color: #92400e !important;
+}
+
+.Vue-Toastification__toast--info {
+  background: #eff6ff !important;
+  color: #1e40af !important;
+}
+
+.toast-success-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #e0ad5d, #d38d20);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: white;
 }

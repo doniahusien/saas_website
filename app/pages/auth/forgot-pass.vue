@@ -30,7 +30,7 @@
 </template>
 <script setup lang="ts">
 import * as yup from "yup";
-import { useToast } from "vue-toastification";
+ 
 import { useAppAuth } from "~/store/auth";
 
 definePageMeta({
@@ -40,7 +40,8 @@ definePageMeta({
 const { t } = useI18n();
 const { $api } = useNuxtApp();
 const router = useRouter();
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 const appAuth = useAppAuth();
 const loading = ref(false);
 const localePath = useLocalePath();

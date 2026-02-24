@@ -92,12 +92,13 @@ import { object, string, date } from "yup";
 
 import * as yup from "yup";
 
-import { useToast, POSITION } from "vue-toastification";
+ 
 import { useAppAuth } from "~/store/auth";
 
 const { t } = useI18n();
 const { $api } = useNuxtApp();
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 const appAuth = useAppAuth();
 const userData = computed(() => appAuth.getUserData);
 const primaryLoading = ref(false);
@@ -220,10 +221,10 @@ const handleSubmit = async (values: any, actions: any) => {
   SUBMITDATA.append("guests_number", String(values.persons));
   try {
     const res = await createReservation(SUBMITDATA);
-    console.log("Raw timeFrom:", values.timeFrom);
-    console.log("Raw timeTo:", values.timeTo);
-    primaryLoading.value = false;
-    reservationId.value = res.data?.data?.id;
+          position:
+            (useI18n() as any).locale.value == "en"
+              ? 'bottom-right'
+              : 'bottom-left',
     actions.resetForm();
     selectedBranch.value = null;
     openAddressModal.value = false;

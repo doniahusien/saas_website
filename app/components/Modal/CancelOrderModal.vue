@@ -84,7 +84,7 @@
 </template>
 
 <script setup lang="ts">
-import { useToast } from "vue-toastification";
+ 
 
 const props = defineProps({
   modelValue: Boolean,
@@ -98,7 +98,8 @@ const emit = defineEmits(["update:modelValue", "confirmed"]);
 
 const nuxtApp = useNuxtApp();
 const api = nuxtApp.$api;
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 
 const reasons = ref<any[]>([]);
 const loading = ref(false);

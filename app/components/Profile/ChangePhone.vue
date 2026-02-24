@@ -127,7 +127,7 @@
 <script setup>
 import * as yup from "yup";
 import { configure } from "vee-validate";
-import { useToast } from "vue-toastification";
+ 
 import { useAppStore } from "~/store/app";
 const appStore = useAppStore();
 
@@ -137,7 +137,8 @@ const seconds = ref(30);
 const minutes = ref(0);
 const loading = ref(false);
 const openSuccessModal = ref(false);
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 const {$api} = useNuxtApp();
 const localePath = useLocalePath();
 

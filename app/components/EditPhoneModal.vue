@@ -50,7 +50,8 @@ const emit = defineEmits(["update:modelValue"]);
 
 const { t } = useI18n();
 const appAuth = useAppAuth();
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 const router = useRouter();
 const { $api } = useNuxtApp();
 const localePath = useLocalePath();

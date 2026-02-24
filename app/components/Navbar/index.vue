@@ -331,7 +331,6 @@
 <script setup lang="ts">
 import { useAppAuth } from "~/store/auth";
 import { useAppStore } from "~/store/app";
-import { useToast } from "vue-toastification";
 
 const showTest = ref(false);
 
@@ -346,7 +345,8 @@ const localePath = useLocalePath();
 const cartCount = computed(() => appStore.getCartCount);
 const route = useRoute();
 const router = useRouter();
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 const isOpen = ref<boolean>(false);
 const showSelect = ref<boolean>(false);
 

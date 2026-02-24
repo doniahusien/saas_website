@@ -62,7 +62,8 @@ import { object, string } from "yup";
 import { useToast } from "vue-toastification";
 const { t } = useI18n();
 const { $api } = useNuxtApp();
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 defineProps({
   subscriptionContent: Object,
 });

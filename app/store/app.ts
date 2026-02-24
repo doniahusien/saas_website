@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { useNuxtApp } from "#app";
-import { useToast } from "vue-toastification";
+import { useToastStore } from "~/store/toast.js";
 export const useAppStore = defineStore("app", {
   state: () => ({
     cmsPages:null,
@@ -429,7 +429,7 @@ export const useAppStore = defineStore("app", {
         .then((res) => (this.cmsPages = res.data.data));
     },
     async addToFavourites(product_id: any) {
-      const toast = useToast();
+      const toast = useToastStore();
       const { $api } = useNuxtApp();
       this.favLoading = true;
 
@@ -447,7 +447,7 @@ export const useAppStore = defineStore("app", {
     },
 
     async deleteFav(favourite_id: any) {
-      const toast = useToast();
+      const toast = useToastStore();
       const { $api } = useNuxtApp();
       this.favLoading = true;
 
@@ -464,7 +464,7 @@ export const useAppStore = defineStore("app", {
     },
 
     async addToCart(payload: any) {
-      const toast = useToast();
+      const toast = useToastStore();
       const { $api } = useNuxtApp();
       this.cartLoading = true;
 
@@ -503,7 +503,7 @@ export const useAppStore = defineStore("app", {
       }
     },
     async removeFromCart(cartItemId: number) {
-      const toast = useToast();
+      const toast = useToastStore();
       const { $api } = useNuxtApp();
       this.cartLoading = true;
 
@@ -518,7 +518,7 @@ export const useAppStore = defineStore("app", {
       }
     },
     async updateCounter(cartProductId: number, quantity: number, type: string) {
-      const toast = useToast();
+      const toast = useToastStore();
       const { $api } = useNuxtApp();
       this.cartLoading = true;
 

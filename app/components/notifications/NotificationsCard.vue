@@ -72,8 +72,8 @@
 
 <script setup>
 import { useAppStore } from "~/store/app";
-import { useToast, POSITION } from "vue-toastification";
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 const localePath = useLocalePath()
 const {$api} = useNuxtApp();
 const appStore = useAppStore();
@@ -114,7 +114,7 @@ function copy(item) {
   toast.success(i18n.t("TITLES.code copied"), {
     timeout: 2000,
     position:
-      i18n.locale.value == "en" ? POSITION.BOTTOM_RIGHT : POSITION.BOTTOM_LEFT,
+      i18n.locale.value == "en" ? 'bottom-right' : 'bottom-left',
   });
 }
 </script>

@@ -94,7 +94,8 @@
 
 <script setup>
 import { useToast } from "vue-toastification";
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 
 const props = defineProps({
   accept: { type: String, default: "image/*" },

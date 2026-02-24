@@ -64,7 +64,8 @@
 const { t, locale } = useI18n();
 const nuxtApp = useNuxtApp();
 const api = nuxtApp.$api;
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 
 const props = defineProps({ modelValue: Boolean });
 const emit = defineEmits(["update:modelValue", "select"]);

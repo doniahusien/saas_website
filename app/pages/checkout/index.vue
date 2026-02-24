@@ -116,7 +116,6 @@ import { useAppStore } from "~/store/app";
 import { useNuxtApp } from "#app";
 import { useForm, useField } from "vee-validate";
 import { format } from "date-fns";
-import { useToast } from "vue-toastification";
 import { useAppAuth } from "~/store/auth";
 
 const appStore = useAppStore();
@@ -154,7 +153,8 @@ const timeValue = computed(() => formValues.timeTo);
 
 const nuxtApp = useNuxtApp();
 const api = nuxtApp.$api;
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 const authStore = useAppAuth();
 const userWallet = computed(() => authStore.userData?.wallet ?? 0);
 const showSuccessModal = ref(false);

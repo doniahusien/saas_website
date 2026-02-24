@@ -87,7 +87,8 @@
 <script setup>
 import { useToast } from "vue-toastification";
 import * as yup from "yup";
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 const {$api} = useNuxtApp();
 const i18n = useI18n();
 const { t } = useI18n();

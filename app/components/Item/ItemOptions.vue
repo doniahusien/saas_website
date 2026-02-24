@@ -122,7 +122,8 @@ const props = defineProps({
 const notes = ref("");
 const { t } = useI18n();
 const appStore = useAppStore();
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 const addingToCart = ref<boolean>(false);
 const quantity = ref<number>(1);
 const selectedItems = ref<Record<number, any>>({});

@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import * as yup from "yup";
-import { useToast } from "vue-toastification";
+ 
 import { useAppAuth } from "~/store/auth";
 definePageMeta({
   layout: "auth",
@@ -42,7 +42,8 @@ definePageMeta({
 
 const { t } = useI18n();
 const { $api } = useNuxtApp();
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 const router = useRouter();
 const route = useRoute();
 const appAuth = useAppAuth();

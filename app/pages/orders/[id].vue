@@ -184,11 +184,12 @@
 </template>
 
 <script setup lang="ts">
-import { useToast } from "vue-toastification";
+
 const { t } = useI18n();
 const route = useRoute();
 const id = route.params.id;
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 const { $api } = useNuxtApp();
 const router = useRouter();
 

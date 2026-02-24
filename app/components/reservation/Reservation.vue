@@ -241,10 +241,11 @@
 <script setup>
 import { useI18n } from "vue-i18n";
 import { useAppStore } from "~/store/app";
-import { useToast } from "vue-toastification";
+ 
 const { $api } = useNuxtApp();
 const appStore = useAppStore();
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 const i18n = useI18n();
 const { t } = useI18n();
 const showCardModal = ref(false);

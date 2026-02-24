@@ -34,8 +34,8 @@
 </template>
 
 <script setup>
-import { useToast } from "vue-toastification";
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 const {$api} = useNuxtApp();
 const route = useRoute();
 const orderLoading = ref(false);

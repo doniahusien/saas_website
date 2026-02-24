@@ -133,10 +133,10 @@
 
 <script setup>
 import * as yup from "yup";
-import { useToast } from "vue-toastification";
 import { useAppAuth } from "~/store/auth";
 
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 const appAuth = useAppAuth();
 const { $api } = useNuxtApp();
 const { t } = useI18n();

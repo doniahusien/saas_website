@@ -59,13 +59,14 @@
 </template>
 
 <script setup lang="ts">
-import { useToast } from "vue-toastification";
+ 
 
 const props = defineProps({ modelValue: Boolean });
 const emit = defineEmits(["update:modelValue", "selectAddress"]);
 
 const { t } = useI18n();
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 const nuxtApp = useNuxtApp();
 const api = nuxtApp.$api;
 
