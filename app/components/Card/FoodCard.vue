@@ -79,7 +79,8 @@ const props = defineProps({
 
 const { isfav, favourite_id, id } = toRefs(props);
 const appStore = useAppStore();
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 
 const localFav = ref(isfav.value);
 const favId = ref(favourite_id.value);

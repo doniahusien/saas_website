@@ -69,7 +69,8 @@ const props = defineProps({
 const emit = defineEmits(["reload", "select"]);
 const confirmModal = ref(false);
 const loading = ref(false);
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 const { $api } = useNuxtApp();
 const appAuth = useAppAuth();
 const { t } = useI18n();

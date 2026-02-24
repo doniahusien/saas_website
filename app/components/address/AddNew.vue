@@ -151,7 +151,8 @@ const props = defineProps({
 const emit = defineEmits(["reload"]);
 const { t } = useI18n();
 const { $api } = useNuxtApp();
-const toast = useToast();
+import { useToastStore } from "~/store/toast.js";
+const toast = useToastStore();
 const appAuth = useAppAuth();
 
 const successMessage = ref("");

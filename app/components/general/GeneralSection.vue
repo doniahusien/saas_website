@@ -1,9 +1,9 @@
 <template>
   <div
-    class="bg-bottom-right bg-no-repeat md:bg-[url('@/assets/media/images/bg2.png')]"
+    class="bg-bottom-right bg-no-repeat "
   >
     <div
-      class="bg-position-[left_3rem_top] bg-no-repeat md:bg-[url('@/assets/media/images/bg.png')]"
+      class="bg-position-[left_3rem_top] bg-no-repeat"
       :class="mainBg"
     >
       <div

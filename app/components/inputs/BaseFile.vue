@@ -93,7 +93,6 @@
 </template>
 
 <script setup>
-import { useToast } from "vue-toastification";
 import { useToastStore } from "~/store/toast.js";
 const toast = useToastStore();
 

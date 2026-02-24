@@ -69,7 +69,6 @@
 
 <script setup>
 import { useAppStore } from "~/store/app";
-import { useToast } from "vue-toastification";
 import { useToastStore } from "~/store/toast.js";
 const toast = useToastStore();
 const {$api} = useNuxtApp();
