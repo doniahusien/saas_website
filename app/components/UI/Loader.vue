@@ -1,6 +1,11 @@
 <template>
   <div class="flex justify-center items-center min-h-screen bg-white">
-    <span class="loader"></span>
+    <div class="text-center">
+      <div
+        class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"
+      ></div>
+      <p class="mt-4 text-gray-600"></p>
+    </div>
   </div>
 </template>
 
@@ -9,7 +14,7 @@
   width: 60px;
   height: 60px;
   border: 6px solid rgba(0, 0, 250, 0.2);
-  border-top-color: blue; 
+  border-top-color: blue;
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
@@ -27,7 +32,7 @@
 }
 
 .loader::after {
-  content: '';
+  content: "";
   display: block;
   width: 100%;
   height: 100%;
@@ -37,7 +42,8 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(0.9);
     opacity: 0.7;
   }

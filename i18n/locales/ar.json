@@ -390,6 +390,10 @@
     "confirm": "تأكيد",
     "resend": "إعادة الإرسال"
   },
+  "messages":{
+    "notification_preference_updated":"تم تحديث تفضيلات الإشعارات بنجاح",
+    "notification_deleted":"تم حذف الإشعار بنجاح"
+  },
   "contact": {
     "title": "تواصل معنا"
   },

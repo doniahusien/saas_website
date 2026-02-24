@@ -33,8 +33,8 @@
 import { VueDatePicker } from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 
-import en from "date-fns/locale/en-US";
-import ar from "date-fns/locale/ar";
+import en from "date-fns/locale/en-US/index.js";
+import ar from "date-fns/locale/ar/index.js";
 
 const props = defineProps({
   name: { type: String, required: true },

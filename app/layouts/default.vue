@@ -4,8 +4,8 @@
       <div class="flex min-h-screen flex-col md:mb-0">
         <Navbar />
         <NoInternetConnection v-if="!isOnline" />
-        <div v-else>
-          <div class="app_wrapper" id="app_wrapper">
+        <div v-else class="flex-1">
+          <div class="app_wrapper h-full" id="app_wrapper">
             <slot />
           </div>
         </div>
