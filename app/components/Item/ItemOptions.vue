@@ -108,7 +108,6 @@
 <script setup lang="ts">
 import { useCookie } from "#app";
 import { useAppStore } from "~/store/app";
-import { useToast } from "vue-toastification";
 
 const props = defineProps({
   subModifiers: {

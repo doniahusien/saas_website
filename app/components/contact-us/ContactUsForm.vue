@@ -96,7 +96,6 @@
 import { useAppStore } from "~/store/app";
 import * as yup from "yup";
 import { configure } from "vee-validate";
-import { useToast } from "vue-toastification";
 const appStore = useAppStore();
 import { useToastStore } from "~/store/toast.js";
 const toast = useToastStore();

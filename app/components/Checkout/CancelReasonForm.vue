@@ -85,7 +85,6 @@
 </template>
 
 <script setup>
-import { useToast } from "vue-toastification";
 import * as yup from "yup";
 import { useToastStore } from "~/store/toast.js";
 const toast = useToastStore();

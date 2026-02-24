@@ -48,7 +48,6 @@
 </template>
 
 <script setup>
-import { useToast } from "vue-toastification";
 import { useAppAuth } from "~/store/auth";
 
 const props = defineProps({

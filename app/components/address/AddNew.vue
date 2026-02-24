@@ -130,7 +130,6 @@
 <script setup>
 import * as yup from "yup";
 import { configure } from "vee-validate";
-import { useToast } from "vue-toastification";
 import { useAppAuth } from "~/store/auth";
 
 const props = defineProps({

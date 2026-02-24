@@ -59,7 +59,6 @@
 
 <script setup>
 import { useAppStore } from "~/store/app";
-import { useToast } from "vue-toastification";
 
 const props = defineProps({
   image: String,

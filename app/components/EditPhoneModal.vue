@@ -40,7 +40,6 @@
 
 <script setup>
 import { useAppAuth } from "~/store/auth";
-import { useToast } from "vue-toastification";
 import * as yup from "yup";
 
 const props = defineProps({
